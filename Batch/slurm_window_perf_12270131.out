@@ -1,0 +1,282 @@
+Starting theta performance analysis on 10 synthetic datasets
+Job ID: 12270131
+Configuration:
+  Window size: 100
+  Theta values: [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5]
+  Overlap: 0.5
+  Thresholds: 41 values from 0.0 to 40.0
+  Datasets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  Algorithms: ['zinb_cpd_v3']
+  Base output folder: Signal_processing/final/results/theta
+
+############################################################
+# Algorithm: zinb_cpd_v3
+# Output folder: Signal_processing/final/results/theta/zinb_cpd_v3
+############################################################
+
+============================================================
+Processing Dataset 1 [zinb_cpd_v3]
+============================================================
+  Data points: 500718
+  True change points: 968
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 1] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 1] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 1 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 2 [zinb_cpd_v3]
+============================================================
+  Data points: 500769
+  True change points: 992
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 2] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 2] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 2 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 3 [zinb_cpd_v3]
+============================================================
+  Data points: 500194
+  True change points: 938
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 3] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 3] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 3 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 4 [zinb_cpd_v3]
+============================================================
+  Data points: 500253
+  True change points: 957
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 4] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 4] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 4 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 5 [zinb_cpd_v3]
+============================================================
+  Data points: 500160
+  True change points: 963
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 5] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 5] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 5 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 6 [zinb_cpd_v3]
+============================================================
+  Data points: 500100
+  True change points: 955
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 6] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 6] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 6 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 7 [zinb_cpd_v3]
+============================================================
+  Data points: 500172
+  True change points: 948
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 7] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 5.0000
+    Threshold: 0.00
+  [Dataset 7] Processing theta: 0.7500
+    Threshold: 0.00
+
+Error processing dataset 7 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 8 [zinb_cpd_v3]
+============================================================
+  Data points: 500605
+  True change points: 958
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 8] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 8] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 8 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 9 [zinb_cpd_v3]
+============================================================
+  Data points: 500269
+  True change points: 946
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 9] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 9] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 9 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+============================================================
+Processing Dataset 10 [zinb_cpd_v3]
+============================================================
+  Data points: 500435
+  True change points: 933
+  Window size: 100
+  Using 8 parallel workers for theta values
+  [Dataset 10] Processing theta: 0.0100
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 0.1000
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 0.2500
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 0.5000
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 0.7500
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 2.5000
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 1.0000
+    Threshold: 0.00
+  [Dataset 10] Processing theta: 5.0000
+    Threshold: 0.00
+
+Error processing dataset 10 [zinb_cpd_v3]: "None of ['distance'] are in the columns"
+
+No datasets were successfully processed for zinb_cpd_v3!
+
+============================================================
+Processing Complete!
+============================================================
+All results saved under: Signal_processing/final/results/theta

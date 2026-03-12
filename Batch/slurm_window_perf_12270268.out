@@ -1,0 +1,23 @@
+Starting theta performance analysis on 10 synthetic datasets
+Job ID: 12270268
+Configuration:
+  Window size: 100
+  Theta values: [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5]
+  Overlap: 0.5
+  Thresholds: 41 values from 0.0 to 40.0
+  Datasets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  Algorithms: ['zinb_cpd_v3']
+  Base output folder: Signal_processing/final/results/theta
+
+############################################################
+# Algorithm: zinb_cpd_v3
+# Output folder: Signal_processing/final/results/theta/zinb_cpd_v3
+############################################################
+
+============================================================
+Processing Dataset 1 [zinb_cpd_v3]
+============================================================
+  Data points: 500718
+  True change points: 968
+  Window size: 100
+  Using 8 parallel workers for theta values

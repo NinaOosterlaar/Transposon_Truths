@@ -14,7 +14,7 @@ def load_density_lookup_tables(nucleosome_file):
     """Load the density lookup tables from CSV files.
     
     Returns:
-        nucleosome_df: DataFrame with 'distance' and 'mean_density' columns
+        nucleosome_df: DataFrame with 'Nucleosome_Distance_Bin' and 'NonZero_Density' columns
     """
     nucleosome_df = pd.read_csv(nucleosome_file)
     return nucleosome_df
@@ -25,7 +25,7 @@ def sliding_ZINB_CPD_v2(data, nucleosome_distances, window_size, overlap, thresh
     n = len(data)
     max_nucl_distance = np.max(np.array([nucleosome_distances]))
     nucleosome_df = load_density_lookup_tables(nucleosome_file)
-    distance_to_density = nucleosome_df.set_index('distance')['mean_density']
+    distance_to_density = nucleosome_df.set_index('Nucleosome_Distance_Bin')['NonZero_Density']
     # fill up all the missing values up until max_nucl_distance with a mean density of 0
     distance_to_density = distance_to_density.reindex(range(max_nucl_distance + 1), fill_value=0)
 

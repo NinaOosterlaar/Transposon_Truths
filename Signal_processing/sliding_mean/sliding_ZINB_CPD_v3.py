@@ -54,7 +54,7 @@ def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window
     max_nucl_distance = np.max(np.array([nucleosome_distances]))
     nucleosome_df, centromere_df = load_density_lookup_tables(nucleosome_file, centromere_file)
     # Create a lookup table for distance to mean density for nucleosomes
-    distance_to_density = nucleosome_df.set_index('distance')['NonZero_Density']
+    distance_to_density = nucleosome_df.set_index('Nucleosome_Distance_Bin')['NonZero_Density']
     # fill up all the missing values up until max_nucl_distance with a mean density of 0
     distance_to_density = distance_to_density.reindex(range(max_nucl_distance + 1), fill_value=0)
     # Create a lookup table for distance to mean density for centromeres

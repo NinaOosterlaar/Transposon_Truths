@@ -251,7 +251,7 @@ def aggregate_auc(auc_df):
 
 
 def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
-	"""Plot all methods on one PR curve with x/y standard deviation error bars."""
+	"""Plot all methods on one PR curve"""
 	method_meta = {
 		"ref": {"label": "ref", "color": COLORS["blue"]},
 		"v0": {"label": "v0", "color": COLORS["orange"]},
@@ -270,15 +270,13 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 		if not auc_row.empty:
 			auc_mean = auc_row["auc_mean"].iloc[0]
 			auc_std = auc_row["auc_std"].iloc[0]
-			legend_label = f"{method_meta[method]['label']} (AUC={auc_mean:.3f}±{auc_std:.3f})"
+			legend_label = f"{method_meta[method]['label']})"
 		else:
 			legend_label = method_meta[method]["label"]
 
-		ax.errorbar(
+		ax.plot(
 			method_curve["recall_mean"].values,
 			method_curve["precision_mean"].values,
-			xerr=method_curve["recall_std"].values,
-			yerr=method_curve["precision_std"].values,
 			fmt="o-",
 			linewidth=1.8,
 			markersize=4,
