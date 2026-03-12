@@ -154,3 +154,7 @@ AE/results/bayesian_optimization
 AE/results/
 Signal_processing/results/
 Data_exploration/results/
+/Data
+/Data_exploration/plot_SATAY
+/Signal_processing/final/results
+/Signal_processing/final/SATAY_synthetic
