@@ -1,0 +1,10 @@
+# Core dependencies
+torch>=2.4.0
+numpy
+matplotlib
+pandas
+scikit-learn
+statsmodels
+seaborn
+scikit-optimize
+sgd-rest
