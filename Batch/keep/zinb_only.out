@@ -61,7 +61,7 @@ Epoch [10/30], Total Loss: 0.9161, NLL: 0.9035, Masked: 12.5966, Reg: 0.080468
 Epoch [11/30], Total Loss: 0.9131, NLL: 0.9006, Masked: 12.5599, Reg: 0.079080
 Epoch [12/30], Total Loss: 0.9120, NLL: 0.8994, Masked: 12.5388, Reg: 0.077665
 Epoch [13/30], Total Loss: 0.9109, NLL: 0.8984, Masked: 12.5246, Reg: 0.076259
-Epoch [14/30], Total Loss: 0.9102, NLL: 0.8977, Masked: 12.5167, Reg: 0.074878
+Epoch [14/30], Total Loss: 0.9102, NLL: 0.8977, Masked: 12.5167, Reg: 0.074878  
 Epoch [15/30], Total Loss: 0.9092, NLL: 0.8967, Masked: 12.4989, Reg: 0.073534
 Epoch [16/30], Total Loss: 0.9078, NLL: 0.8953, Masked: 12.4783, Reg: 0.072254
 Epoch [17/30], Total Loss: 0.9066, NLL: 0.8942, Masked: 12.4618, Reg: 0.070996

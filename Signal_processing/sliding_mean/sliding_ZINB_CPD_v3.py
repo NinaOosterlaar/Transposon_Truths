@@ -61,8 +61,10 @@ def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window
     centromere_distance_to_density = centromere_df.set_index('Centromere_Distance_Bin')['NonZero_Density']
     # fill up all the missing values up until max_centromere_distance with a mean density of 0
 
-    if theta_global is None:
+    if theta_global is None or theta_global <= 0:
         theta_global = initialize_theta_global(data, eps=eps)
+        
+    print(theta_global)
 
     change_points, scores = [], []
     last_cp, last_score = -np.inf, 0.0

@@ -29,8 +29,10 @@ def sliding_ZINB_CPD_v2(data, nucleosome_distances, window_size, overlap, thresh
     # fill up all the missing values up until max_nucl_distance with a mean density of 0
     distance_to_density = distance_to_density.reindex(range(max_nucl_distance + 1), fill_value=0)
 
-    if theta_global is None:
+    if theta_global is None or theta_global <= 0:
         theta_global = initialize_theta_global(data, eps=eps)
+        
+    print(theta_global)
 
     change_points, scores = [], []
     last_cp, last_score = -np.inf, 0.0

@@ -106,7 +106,7 @@ def run_detector(
 			window_size,
 			overlap,
 			threshold,
-			theta_global=theta,
+			theta_global=0.5,
 			pi_file=pi_file,
 		)
 
@@ -393,6 +393,7 @@ def main():
 				centromere_file,
 			)
 			all_rows.extend(rows)
+		# break # Remove this break to process all datasets
 
 	results_df = pd.DataFrame(all_rows)
 	results_csv = os.path.join(args.output_folder, "all_results.csv")
