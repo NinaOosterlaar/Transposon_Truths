@@ -1,11 +1,3 @@
-"""
-Compare pi values between essential and non-essential genes across mu_offset values.
-
-This module analyzes how reconstruction quality (pi values) differs for essential
-vs non-essential genes across different mu_offset parameters, separately for
-train/test/val splits and per-strain vs combined analyses.
-"""
-
 import json
 import os
 import sys
@@ -40,6 +32,34 @@ SPLITS = ["train", "val", "test"]
 # Window parameters for position mapping
 WINDOW_SIZE = 19
 STEP_SIZE = 1
+
+
+def normalize_chromosome_name(chr_name: Optional[str]) -> Optional[str]:
+    """Normalize chromosome labels from SGD metadata to reconstruction labels."""
+    if not chr_name:
+        return None
+
+    if chr_name in CHROMOSOMES:
+        return chr_name
+
+    if chr_name.startswith("Chromosome_"):
+        return f"Chr{chr_name.split('_', 1)[1]}"
+
+    if chr_name.startswith("chr"):
+        suffix = chr_name[3:]
+        normalized = f"Chr{suffix}"
+        if normalized in CHROMOSOMES:
+            return normalized
+
+    return chr_name
+
+
+def concatenate_nonempty(arrays: List[np.ndarray]) -> np.ndarray:
+    """Concatenate non-empty arrays and return an empty array when none exist."""
+    nonempty_arrays = [np.asarray(array, dtype=float) for array in arrays if len(array) > 0]
+    if not nonempty_arrays:
+        return np.array([], dtype=float)
+    return np.concatenate(nonempty_arrays)
 
 
 def load_gene_data(mu_offset_root_dir: str) -> Dict:
@@ -83,12 +103,14 @@ def load_gene_data(mu_offset_root_dir: str) -> Dict:
     for gene_name, info in genes_dict.items():
         if "location" in info:
             loc = info["location"]
-            chr_name = loc.get("chromosome")
-            if chr_name:
+            chr_name = normalize_chromosome_name(loc.get("chromosome"))
+            start = loc.get("start")
+            end = loc.get("end")
+            if chr_name and start is not None and end is not None:
                 genes_by_chr[chr_name].append({
                     "gene": gene_name,
-                    "start": loc.get("start"),
-                    "end": loc.get("end"),
+                    "start": int(start),
+                    "end": int(end),
                     "essentiality": info.get("essentiality", None)
                 })
     
@@ -124,8 +146,8 @@ def get_genes_overlapping_position(
     if chr_name not in genes_by_chr:
         return []
     
-    # Map position index to genomic range
-    window_start = pos_index * step_size
+    # SGD coordinates are 1-based; reconstruction positions are zero-based indices.
+    window_start = pos_index * step_size + 1
     window_end = window_start + window_size - 1
     
     # Binary search to find genes in range (chromosomes sorted by start)
@@ -159,25 +181,51 @@ def assign_pi_to_genes(
     Returns:
         Dictionary mapping gene_name -> [list of pi values]
     """
-    df = pd.read_csv(csv_file, low_memory=False, dtype={
-        'position': int,
-        'reconstruction': float,
-        'mu': str,
-        'pi': str,
-        'theta': float
-    })
+    raw_df = pd.read_csv(
+        csv_file,
+        usecols=["position", "pi"],
+        low_memory=False,
+        dtype={"position": "string", "pi": "string"}
+    )
+    df = raw_df.copy()
+    df["position"] = pd.to_numeric(raw_df["position"], errors="coerce")
+    df["pi"] = pd.to_numeric(raw_df["pi"], errors="coerce")
+
+    invalid_mask = df["position"].isna() | df["pi"].isna()
+    invalid_count = int(invalid_mask.sum())
+    if invalid_count:
+        example_messages = []
+        for row_index in df.index[invalid_mask][:3]:
+            line_number = int(row_index) + 2
+            reasons = []
+
+            raw_position = raw_df.at[row_index, "position"]
+            raw_pi = raw_df.at[row_index, "pi"]
+
+            if pd.isna(raw_position):
+                reasons.append("missing position")
+            elif pd.isna(df.at[row_index, "position"]):
+                reasons.append(f"non-numeric position '{raw_position}'")
+
+            if pd.isna(raw_pi):
+                reasons.append("missing pi")
+            elif pd.isna(df.at[row_index, "pi"]):
+                reasons.append(f"non-numeric pi '{raw_pi}'")
+
+            example_messages.append(f"line {line_number} ({', '.join(reasons)})")
+
+        examples = "; ".join(example_messages)
+        print(f"    Skipping {invalid_count} malformed rows in {csv_file}: {examples}")
+
+    df = df.loc[~invalid_mask, ["position", "pi"]]
+    if df.empty:
+        return defaultdict(list)
     
     genes_pi = defaultdict(list)
     
-    for _, row in df.iterrows():
-        pos_index = int(row['position'])
-        
-        # Handle pi value which might be in scientific notation
-        try:
-            pi_value = float(row['pi'])
-        except ValueError:
-            # If conversion fails, skip this row
-            continue
+    for pos_index, pi_value in df.itertuples(index=False, name=None):
+        pos_index = int(pos_index)
+        pi_value = float(pi_value)
         
         # Find overlapping genes
         overlapping_genes = get_genes_overlapping_position(
@@ -377,10 +425,12 @@ def create_split_figure_combined(
         combined = results.get('combined', {})
         
         # Aggregate across all chromosomes
-        all_essential = np.concatenate([v['essential'] for v in combined.values() 
-                                       if len(v['essential']) > 0])
-        all_nonessential = np.concatenate([v['nonessential'] for v in combined.values() 
-                                          if len(v['nonessential']) > 0])
+        all_essential = concatenate_nonempty([
+            v['essential'] for v in combined.values()
+        ])
+        all_nonessential = concatenate_nonempty([
+            v['nonessential'] for v in combined.values()
+        ])
         
         if len(all_essential) > 0 and len(all_nonessential) > 0:
             create_comparison_boxplot(
@@ -448,10 +498,12 @@ def create_split_figure_per_strain(
         strain_results = per_strain[strain]
         
         # Aggregate across all chromosomes for this strain
-        all_essential = np.concatenate([v['essential'] for v in strain_results.values() 
-                                       if len(v['essential']) > 0])
-        all_nonessential = np.concatenate([v['nonessential'] for v in strain_results.values() 
-                                          if len(v['nonessential']) > 0])
+        all_essential = concatenate_nonempty([
+            v['essential'] for v in strain_results.values()
+        ])
+        all_nonessential = concatenate_nonempty([
+            v['nonessential'] for v in strain_results.values()
+        ])
         
         if len(all_essential) > 0 and len(all_nonessential) > 0:
             create_comparison_boxplot(
