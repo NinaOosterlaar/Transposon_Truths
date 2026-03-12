@@ -96,7 +96,7 @@ def run_detector(
 
 	Mapping used here follows the requested names:
 	- ref -> sliding_ZINB_CPD_ref
-	- v0  -> sliding_ZINB_CPD (file without version suffix)
+	- v0  -> sliding_ZINB_CPD 
 	- v1  -> sliding_ZINB_CPD_v2
 	- v2  -> sliding_ZINB_CPD_v3
 	"""
@@ -277,10 +277,9 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 		ax.plot(
 			method_curve["recall_mean"].values,
 			method_curve["precision_mean"].values,
-			fmt="o-",
+			"o-",
 			linewidth=1.8,
 			markersize=4,
-			capsize=2,
 			alpha=0.85,
 			color=method_meta[method]["color"],
 			label=legend_label,
