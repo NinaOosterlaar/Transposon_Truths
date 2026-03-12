@@ -23,33 +23,33 @@ VAL_CHROM = ['ChrVIII', 'ChrXIV', 'ChrXV']  # No validation set
 # TEST_CHROM = []
 
 # Preprocessing
-# INPUT_FOLDER = "Data/combined_strains"
-# FEATURES = ['Nucl']
-# BIN_SIZE = 17
-# MOVING_AVERAGE = False
-# DATA_POINT_LENGTH = 1000
-# STEP_SIZE = int(DATA_POINT_LENGTH*0.391)
-# SAMPLE_FRACTION = 1.0
+INPUT_FOLDER = "Data/combined_strains"
+FEATURES = ['Nucl']
+BIN_SIZE = 17
+MOVING_AVERAGE = False
+DATA_POINT_LENGTH = 2000
+STEP_SIZE = int(DATA_POINT_LENGTH*0.391)
+SAMPLE_FRACTION = 1.0
 
-# USE_CONV = True
-# CONV_CHANNEL = 48
-# POOL_SIZE = 6
-# POOLING_OPERATION = 'max'
-# KERNEL_SIZE = 3
-# PADDING = 'same'
-# STRIDE = 1
+USE_CONV = True
+CONV_CHANNEL = 48
+POOL_SIZE = 6
+POOLING_OPERATION = 'max'
+KERNEL_SIZE = 3
+PADDING = 'same'
+STRIDE = 1
 
-# EPOCHS = 92
-# BATCH_SIZE = 128
-# NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.38
-# MASKED_RECON_WEIGHT = 0.127# gamma: weight for masked reconstruction loss
-# LEARNING_RATE = 0.00619
-# DROPOUT_RATE = 0.219
-# LAYERS = [752]
-# REGULARIZER = 'none'
-# REGULARIZATION_WEIGHT = 1e-4
-# MU_OFFSET = 1.0  # Offset added to mu in ZINB loss to prevent zero variance
+EPOCHS = 92
+BATCH_SIZE = 128
+NOISE_LEVEL = 0.15
+PI_THRESHOLD = 0.38
+MASKED_RECON_WEIGHT = 0.127# gamma: weight for masked reconstruction loss
+LEARNING_RATE = 0.00619
+DROPOUT_RATE = 0.219
+LAYERS = [752]
+REGULARIZER = 'none'
+REGULARIZATION_WEIGHT = 1e-4
+MU_OFFSET = 0.0  # Offset added to mu in ZINB loss to prevent zero variance
 
 
 
@@ -92,33 +92,33 @@ VAL_CHROM = ['ChrVIII', 'ChrXIV', 'ChrXV']  # No validation set
 # MODEL_PATH_LOAD = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep141.pt"
 # MODEL_LOAD = False
 
-INPUT_FOLDER = "Data/combined_strains"
-FEATURES = ['Centr']
-BIN_SIZE = 19
-MOVING_AVERAGE = True
-DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(DATA_POINT_LENGTH * 0.45)
-SAMPLE_FRACTION = 1.0
+# INPUT_FOLDER = "Data/combined_strains"
+# FEATURES = ['Centr']
+# BIN_SIZE = 19
+# MOVING_AVERAGE = True
+# DATA_POINT_LENGTH = 2000
+# STEP_SIZE = int(DATA_POINT_LENGTH * 0.45)
+# SAMPLE_FRACTION = 1.0
 
-USE_CONV = False
-CONV_CHANNEL = 85
-POOL_SIZE = 8
-POOLING_OPERATION = 'max'
-KERNEL_SIZE = 7
-PADDING = 'same'
-STRIDE = 1
+# USE_CONV = False
+# CONV_CHANNEL = 85
+# POOL_SIZE = 8
+# POOLING_OPERATION = 'max'
+# KERNEL_SIZE = 7
+# PADDING = 'same'
+# STRIDE = 1
 
-EPOCHS = 141
-BATCH_SIZE = 128
-NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.7
-MASKED_RECON_WEIGHT = 0.008  # gamma: weight for masked reconstruction loss
-LEARNING_RATE = 1e-4
-DROPOUT_RATE = 0.008
-LAYERS = [752]
-REGULARIZER = 'none'
-REGULARIZATION_WEIGHT = 1e-5
-MU_OFFSET = 0.0
+# EPOCHS = 141
+# BATCH_SIZE = 128
+# NOISE_LEVEL = 0.15
+# PI_THRESHOLD = 0.7
+# MASKED_RECON_WEIGHT = 0.008  # gamma: weight for masked reconstruction loss
+# LEARNING_RATE = 1e-4
+# DROPOUT_RATE = 0.008
+# LAYERS = [752]
+# REGULARIZER = 'none'
+# REGULARIZATION_WEIGHT = 1e-5
+# MU_OFFSET = 0.0
 
 PLOT = True
 SAVE_MODEL = True

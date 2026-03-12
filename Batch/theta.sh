@@ -2,7 +2,7 @@
 #SBATCH --job-name=window_performance
 #SBATCH --partition=general,insy
 #SBATCH --account=ewi-insy-prb
-#SBATCH --time=36:00:00
+#SBATCH --time=12:00:00
 #SBATCH --qos=medium
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8

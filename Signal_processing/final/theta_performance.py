@@ -620,7 +620,7 @@ def main():
     overlap = 0.5
     thresholds = np.linspace(0, 40, 41)
     dataset_ids = range(1, 11)  # Datasets 1 through 10
-    algorithms = ['zinb_ref', 'zinb_cpd', 'zinb_cpd_v2', 'zinb_cpd_v3']
+    algorithms = ['zinb_cpd_v3']
     
     # Determine number of workers (leave some CPUs free for system)
     n_workers = max(1, multiprocessing.cpu_count() - 2)

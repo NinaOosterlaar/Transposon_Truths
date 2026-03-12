@@ -1,0 +1,1012 @@
+Device: cuda
+============================================================
+STEP 1: Preprocessing
+============================================================
+Cache miss — preprocessing from scratch...
+
+Clipping outliers using 95th percentile * 1.5...
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 61992
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 21808
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 24128
+  Cached train: shape=(61992, 2000, 4)
+  Cached val: shape=(21808, 2000, 4)
+  Cached test: shape=(24128, 2000, 4)
+
+============================================================
+STEP 2: Running inference
+============================================================
+
+--- Model: muoff0 ---
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.100020
+  - ZINB NLL: 1.091353
+Total number of masked values: 12656785
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 12656785
+  - Masked Reconstruction: 0.993988
+Mean Absolute Error (MAE): 0.746915
+R² Score: 0.796337
+==================================================
+
+Loaded metadata for 61992 windows
+Reconstructed 55475628 unique genomic positions from 61992 windows
+Average overlap per position: 2.23
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff0/train/strain_FD/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff0/train/strain_dnrp/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK19/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yEK23/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yTW001/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT03a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff0/train/strain_yWT04a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff0/train/strain_ylic137/ChrXVI.csv
+  Saved muoff0/train → Data/reconstruction/mu_offset/muoff0/train
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.112215
+  - ZINB NLL: 1.103023
+Total number of masked values: 4452830
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4452830
+  - Masked Reconstruction: 1.054102
+Mean Absolute Error (MAE): 0.785202
+R² Score: 0.684352
+==================================================
+
+Loaded metadata for 21808 windows
+Reconstructed 19505732 unique genomic positions from 21808 windows
+Average overlap per position: 2.24
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff0/val/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff0/val/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff0/val/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff0/val/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff0/val/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff0/val/strain_ylic137/ChrXV.csv
+  Saved muoff0/val → Data/reconstruction/mu_offset/muoff0/val
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.129365
+  - ZINB NLL: 1.119608
+Total number of masked values: 4926722
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4926722
+  - Masked Reconstruction: 1.118890
+Mean Absolute Error (MAE): 0.840909
+R² Score: 0.790510
+==================================================
+
+Loaded metadata for 24128 windows
+Reconstructed 21587037 unique genomic positions from 24128 windows
+Average overlap per position: 2.24
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff0/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/mu_offset/muoff0/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff0/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff0/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff0/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff0/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff0/test/strain_ylic137/ChrXII.csv
+  Saved muoff0/test → Data/reconstruction/mu_offset/muoff0/test
+
+--- Model: muoff1 ---
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.351915
+  - ZINB NLL: 1.341058
+Total number of masked values: 12656785
+  - Number of values with pi >= 0.7: 18895
+  - Number of values with pi < 0.7: 12637890
+  - Masked Reconstruction: 1.245106
+Mean Absolute Error (MAE): 1.143469
+R² Score: 0.865896
+==================================================
+
+Loaded metadata for 61992 windows
+Reconstructed 55475628 unique genomic positions from 61992 windows
+Average overlap per position: 2.23
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff1/train/strain_FD/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff1/train/strain_dnrp/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK19/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yEK23/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yTW001/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT03a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff1/train/strain_yWT04a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff1/train/strain_ylic137/ChrXVI.csv
+  Saved muoff1/train → Data/reconstruction/mu_offset/muoff1/train
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.410535
+  - ZINB NLL: 1.398072
+Total number of masked values: 4452830
+  - Number of values with pi >= 0.7: 9187
+  - Number of values with pi < 0.7: 4443643
+  - Masked Reconstruction: 1.429227
+Mean Absolute Error (MAE): 1.275636
+R² Score: -0.959235
+==================================================
+
+Loaded metadata for 21808 windows
+Reconstructed 19505732 unique genomic positions from 21808 windows
+Average overlap per position: 2.24
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff1/val/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff1/val/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff1/val/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff1/val/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff1/val/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff1/val/strain_ylic137/ChrXV.csv
+  Saved muoff1/val → Data/reconstruction/mu_offset/muoff1/val
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.451505
+  - ZINB NLL: 1.438018
+Total number of masked values: 4926722
+  - Number of values with pi >= 0.7: 13661
+  - Number of values with pi < 0.7: 4913061
+  - Masked Reconstruction: 1.546761
+Mean Absolute Error (MAE): 1.359502
+R² Score: 0.707963
+==================================================
+
+Loaded metadata for 24128 windows
+Reconstructed 21587037 unique genomic positions from 24128 windows
+Average overlap per position: 2.24
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff1/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/mu_offset/muoff1/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff1/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff1/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff1/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff1/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff1/test/strain_ylic137/ChrXII.csv
+  Saved muoff1/test → Data/reconstruction/mu_offset/muoff1/test
+
+--- Model: muoff2 ---
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.488953
+  - ZINB NLL: 1.472820
+Total number of masked values: 12656785
+  - Number of values with pi >= 0.7: 200245
+  - Number of values with pi < 0.7: 12456540
+  - Masked Reconstruction: 1.850163
+Mean Absolute Error (MAE): 1.608933
+R² Score: 0.776123
+==================================================
+
+Loaded metadata for 61992 windows
+Reconstructed 55475628 unique genomic positions from 61992 windows
+Average overlap per position: 2.23
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff2/train/strain_FD/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff2/train/strain_dnrp/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK19/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yEK23/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yTW001/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT03a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff2/train/strain_yWT04a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff2/train/strain_ylic137/ChrXVI.csv
+  Saved muoff2/train → Data/reconstruction/mu_offset/muoff2/train
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.572417
+  - ZINB NLL: 1.554715
+Total number of masked values: 4452830
+  - Number of values with pi >= 0.7: 111288
+  - Number of values with pi < 0.7: 4341542
+  - Masked Reconstruction: 2.030035
+Mean Absolute Error (MAE): 1.758329
+R² Score: 0.626140
+==================================================
+
+Loaded metadata for 21808 windows
+Reconstructed 19505732 unique genomic positions from 21808 windows
+Average overlap per position: 2.24
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff2/val/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff2/val/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff2/val/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff2/val/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff2/val/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff2/val/strain_ylic137/ChrXV.csv
+  Saved muoff2/val → Data/reconstruction/mu_offset/muoff2/val
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.614863
+  - ZINB NLL: 1.596137
+Total number of masked values: 4926722
+  - Number of values with pi >= 0.7: 119563
+  - Number of values with pi < 0.7: 4807159
+  - Masked Reconstruction: 2.147515
+Mean Absolute Error (MAE): 1.847710
+R² Score: 0.612508
+==================================================
+
+Loaded metadata for 24128 windows
+Reconstructed 21587037 unique genomic positions from 24128 windows
+Average overlap per position: 2.24
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff2/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/mu_offset/muoff2/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff2/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff2/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff2/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff2/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff2/test/strain_ylic137/ChrXII.csv
+  Saved muoff2/test → Data/reconstruction/mu_offset/muoff2/test
+
+--- Model: muoff4 ---
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.857987
+  - ZINB NLL: 1.825903
+Total number of masked values: 12656785
+  - Number of values with pi >= 0.7: 265679
+  - Number of values with pi < 0.7: 12391106
+  - Masked Reconstruction: 3.679393
+Mean Absolute Error (MAE): 3.192599
+R² Score: 0.009996
+==================================================
+
+Loaded metadata for 61992 windows
+Reconstructed 55475628 unique genomic positions from 61992 windows
+Average overlap per position: 2.23
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff4/train/strain_FD/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff4/train/strain_dnrp/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK19/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yEK23/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yTW001/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT03a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff4/train/strain_yWT04a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff4/train/strain_ylic137/ChrXVI.csv
+  Saved muoff4/train → Data/reconstruction/mu_offset/muoff4/train
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.908522
+  - ZINB NLL: 1.875802
+Total number of masked values: 4452830
+  - Number of values with pi >= 0.7: 137027
+  - Number of values with pi < 0.7: 4315803
+  - Masked Reconstruction: 3.752285
+Mean Absolute Error (MAE): 3.283234
+R² Score: -4.254920
+==================================================
+
+Loaded metadata for 21808 windows
+Reconstructed 19505732 unique genomic positions from 21808 windows
+Average overlap per position: 2.24
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff4/val/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff4/val/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff4/val/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff4/val/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff4/val/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff4/val/strain_ylic137/ChrXV.csv
+  Saved muoff4/val → Data/reconstruction/mu_offset/muoff4/val
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.943661
+  - ZINB NLL: 1.909655
+Total number of masked values: 4926722
+  - Number of values with pi >= 0.7: 167690
+  - Number of values with pi < 0.7: 4759032
+  - Masked Reconstruction: 3.899730
+Mean Absolute Error (MAE): 3.380103
+R² Score: -0.053203
+==================================================
+
+Loaded metadata for 24128 windows
+Reconstructed 21587037 unique genomic positions from 24128 windows
+Average overlap per position: 2.24
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff4/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/mu_offset/muoff4/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff4/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff4/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff4/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff4/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff4/test/strain_ylic137/ChrXII.csv
+  Saved muoff4/test → Data/reconstruction/mu_offset/muoff4/test
+
+--- Model: muoff5 ---
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.918397
+  - ZINB NLL: 1.881083
+Total number of masked values: 12656785
+  - Number of values with pi >= 0.7: 351614
+  - Number of values with pi < 0.7: 12305171
+  - Masked Reconstruction: 4.279117
+Mean Absolute Error (MAE): 3.697550
+R² Score: -0.140741
+==================================================
+
+Loaded metadata for 61992 windows
+Reconstructed 55475628 unique genomic positions from 61992 windows
+Average overlap per position: 2.23
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff5/train/strain_FD/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff5/train/strain_dnrp/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK19/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yEK23/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yTW001/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT03a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff5/train/strain_yWT04a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrX.csv
+Saved 666799 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/mu_offset/muoff5/train/strain_ylic137/ChrXVI.csv
+  Saved muoff5/train → Data/reconstruction/mu_offset/muoff5/train
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.969909
+  - ZINB NLL: 1.932329
+Total number of masked values: 4452830
+  - Number of values with pi >= 0.7: 176061
+  - Number of values with pi < 0.7: 4276769
+  - Masked Reconstruction: 4.309580
+Mean Absolute Error (MAE): 3.766999
+R² Score: -0.100393
+==================================================
+
+Loaded metadata for 21808 windows
+Reconstructed 19505732 unique genomic positions from 21808 windows
+Average overlap per position: 2.24
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff5/val/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff5/val/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/mu_offset/muoff5/val/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/mu_offset/muoff5/val/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/mu_offset/muoff5/val/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/mu_offset/muoff5/val/strain_ylic137/ChrXV.csv
+  Saved muoff5/val → Data/reconstruction/mu_offset/muoff5/val
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.998125
+  - ZINB NLL: 1.958898
+Total number of masked values: 4926722
+  - Number of values with pi >= 0.7: 178218
+  - Number of values with pi < 0.7: 4748504
+  - Masked Reconstruction: 4.498536
+Mean Absolute Error (MAE): 3.932903
+R² Score: -0.059121
+==================================================
+
+Loaded metadata for 24128 windows
+Reconstructed 21587037 unique genomic positions from 24128 windows
+Average overlap per position: 2.24
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff5/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/mu_offset/muoff5/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff5/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/mu_offset/muoff5/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/mu_offset/muoff5/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/mu_offset/muoff5/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/mu_offset/muoff5/test/strain_ylic137/ChrXII.csv
+  Saved muoff5/test → Data/reconstruction/mu_offset/muoff5/test
+
+============================================================
+STEP 3: Computing π correlations
+============================================================
+Loading pi reconstructions for correlation analysis...
+Correlation values saved to: AE/results/mu_offset/pi_correlations.json
+
+============================================================
+STEP 4: Generating plots
+============================================================
+Saved: AE/results/mu_offset/pi_correlation_pearson.png
+Saved: AE/results/mu_offset/pi_correlation_spearman.png
+Building merged pi DataFrame for track plots...
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrI.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrII.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrIII.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrIV.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrIX.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrV.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrVI.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrVII.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrVIII.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrX.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrXI.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrXII.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrXIII.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrXIV.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrXV.png
+Saved: AE/results/mu_offset/pi_tracks/pi_tracks_ChrXVI.png
+
+All outputs saved to: AE/results/mu_offset

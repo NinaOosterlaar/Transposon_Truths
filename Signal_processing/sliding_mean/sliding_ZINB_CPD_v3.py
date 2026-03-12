@@ -22,7 +22,7 @@ def load_density_lookup_tables(nucleosome_file, centromere_file):
     return nucleosome_df, centromere_df
 
 
-def interpolate_density(distance, lookup_df, distance_col, density_col='mean_density'):
+def interpolate_density(distance, lookup_df, distance_col, density_col='NonZero_Density'):
     """Interpolate density value for a given distance using linear interpolation.
     
     Args:
@@ -54,11 +54,11 @@ def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window
     max_nucl_distance = np.max(np.array([nucleosome_distances]))
     nucleosome_df, centromere_df = load_density_lookup_tables(nucleosome_file, centromere_file)
     # Create a lookup table for distance to mean density for nucleosomes
-    distance_to_density = nucleosome_df.set_index('distance')['mean_density']
+    distance_to_density = nucleosome_df.set_index('distance')['NonZero_Density']
     # fill up all the missing values up until max_nucl_distance with a mean density of 0
     distance_to_density = distance_to_density.reindex(range(max_nucl_distance + 1), fill_value=0)
     # Create a lookup table for distance to mean density for centromeres
-    centromere_distance_to_density = centromere_df.set_index('Centromere_Distance_Bin')['mean_Density']
+    centromere_distance_to_density = centromere_df.set_index('Centromere_Distance_Bin')['NonZero_Density']
     # fill up all the missing values up until max_centromere_distance with a mean density of 0
 
     if theta_global is None:
@@ -78,7 +78,7 @@ def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window
             centr_dist_middle = centromere_distance_to_density.index.max()
 
         # For the middle point of centromere, find the corresponding centromere distance, and interpolate from the centromere density lookup table to get the mean density for that distance, which we will use as pi0 for the ZINB model
-        pi0 = interpolate_density(centr_dist_middle, centromere_distance_to_density.reset_index(), 'Centromere_Distance_Bin', 'mean_Density')
+        pi0 = interpolate_density(centr_dist_middle, centromere_distance_to_density.reset_index(), 'Centromere_Distance_Bin', 'NonZero_Density')
         
         # Compute the mean densities for each window, adjusting for the zero-inflation using pi0. We divide the mean by (1-pi0) to get the mean of the non-zero part of the distribution, which is what we use for the log-likelihood calculation. We also clip the values to avoid issues with zero or negative means.
         mu1 = np.clip(np.mean(w1) / (1 - pi0), eps, None)
