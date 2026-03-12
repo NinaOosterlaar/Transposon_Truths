@@ -1,0 +1,9 @@
+torch
+numpy
+matplotlib
+pandas
+scikit-learn
+seaborn
+scikit-optimize
+
+

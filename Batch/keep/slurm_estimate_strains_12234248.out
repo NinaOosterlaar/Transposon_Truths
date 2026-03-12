@@ -1,0 +1,1809 @@
+Starting ZINB parameter estimation for all strains...
+Window size: 2000
+Estimating ZINB parameters for whole dataset
+Found 8 strain folders
+
+Processing strain_FD...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813185 data points
+  Added ChrIV: 1531934 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078172 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948066 data points
+  Added ChrXV: 1091291 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071323
+  Zero fraction: 0.6580
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.0000, mu=6.4388, ll=-21413250.00, converged=True
+theta=5.12e-02: pi=0.0000, mu=6.4388, ll=-21378112.96, converged=True
+theta=5.24e-02: pi=0.0000, mu=6.4388, ll=-21344061.47, converged=True
+theta=5.36e-02: pi=0.0000, mu=6.4388, ll=-21311116.59, converged=True
+theta=5.48e-02: pi=0.0000, mu=6.4388, ll=-21279293.53, converged=True
+theta=5.61e-02: pi=0.0000, mu=6.4388, ll=-21248612.34, converged=True
+theta=5.74e-02: pi=0.0000, mu=6.4388, ll=-21219091.74, converged=True
+theta=5.88e-02: pi=0.0000, mu=6.4388, ll=-21190750.76, converged=True
+theta=6.02e-02: pi=0.0000, mu=6.4388, ll=-21163608.66, converged=True
+theta=6.16e-02: pi=0.0000, mu=6.4388, ll=-21137685.03, converged=True
+theta=6.30e-02: pi=0.0000, mu=6.4388, ll=-21112998.36, converged=True
+theta=6.45e-02: pi=0.0000, mu=6.4388, ll=-21089570.11, converged=True
+theta=6.60e-02: pi=0.0000, mu=6.4388, ll=-21067420.65, converged=True
+theta=6.75e-02: pi=0.0000, mu=6.4388, ll=-21046569.44, converged=True
+theta=6.91e-02: pi=0.0000, mu=6.4388, ll=-21027038.64, converged=True
+theta=7.07e-02: pi=0.0000, mu=6.4388, ll=-21008848.43, converged=True
+theta=7.24e-02: pi=0.0000, mu=6.4388, ll=-20992021.38, converged=True
+theta=7.41e-02: pi=0.0000, mu=6.4388, ll=-20976579.26, converged=True
+theta=7.58e-02: pi=0.0000, mu=6.4388, ll=-20962542.39, converged=True
+theta=7.76e-02: pi=0.0000, mu=6.4388, ll=-20949934.25, converged=True
+theta=7.94e-02: pi=0.0000, mu=6.4389, ll=-20938777.63, converged=True
+theta=8.13e-02: pi=0.0000, mu=6.4389, ll=-20929095.66, converged=True
+theta=8.32e-02: pi=0.0000, mu=6.4389, ll=-20920909.85, converged=True
+theta=8.51e-02: pi=0.0000, mu=6.4389, ll=-20914245.61, converged=True
+theta=8.71e-02: pi=0.0000, mu=6.4389, ll=-20909125.70, converged=True
+theta=8.92e-02: pi=0.0000, mu=6.4389, ll=-20905574.83, converged=True
+theta=9.13e-02: pi=0.0000, mu=6.4390, ll=-20903616.63, converged=True
+theta=9.34e-02: pi=0.0000, mu=6.4391, ll=-20903276.23, converged=True
+theta=9.56e-02: pi=0.0001, mu=6.4392, ll=-20904578.44, converged=True
+theta=9.78e-02: pi=0.0001, mu=6.4396, ll=-20907548.71, converged=True
+theta=1.00e-01: pi=0.0023, mu=6.4533, ll=-20912215.97, converged=False
+theta=1.02e-01: pi=0.0173, mu=6.5521, ll=-20917814.11, converged=True
+theta=1.05e-01: pi=0.0342, mu=6.6667, ll=-20923580.84, converged=True
+theta=1.07e-01: pi=0.0507, mu=6.7830, ll=-20929505.17, converged=True
+theta=1.10e-01: pi=0.0669, mu=6.9006, ll=-20935591.69, converged=True
+theta=1.12e-01: pi=0.0827, mu=7.0194, ll=-20941845.15, converged=True
+theta=1.15e-01: pi=0.0981, mu=7.1395, ll=-20948270.45, converged=True
+theta=1.18e-01: pi=0.1132, mu=7.2608, ll=-20954872.63, converged=True
+theta=1.20e-01: pi=0.1279, mu=7.3832, ll=-20961656.90, converged=True
+theta=1.23e-01: pi=0.1423, mu=7.5068, ll=-20968628.62, converged=True
+theta=1.26e-01: pi=0.1563, mu=7.6316, ll=-20975793.32, converged=True
+theta=1.29e-01: pi=0.1700, mu=7.7575, ll=-20983156.71, converged=True
+theta=1.32e-01: pi=0.1834, mu=7.8844, ll=-20990724.65, converged=True
+theta=1.35e-01: pi=0.1964, mu=8.0125, ll=-20998503.20, converged=True
+theta=1.38e-01: pi=0.2091, mu=8.1415, ll=-21006498.60, converged=True
+theta=1.42e-01: pi=0.2216, mu=8.2715, ll=-21014717.27, converged=True
+theta=1.45e-01: pi=0.2337, mu=8.4025, ll=-21023165.86, converged=True
+theta=1.48e-01: pi=0.2456, mu=8.5345, ll=-21031851.17, converged=True
+theta=1.52e-01: pi=0.2571, mu=8.6673, ll=-21040780.25, converged=True
+theta=1.55e-01: pi=0.2684, mu=8.8010, ll=-21049960.36, converged=True
+theta=1.59e-01: pi=0.2794, mu=8.9355, ll=-21059398.95, converged=True
+theta=1.63e-01: pi=0.2902, mu=9.0708, ll=-21069103.72, converged=True
+theta=1.67e-01: pi=0.3006, mu=9.2068, ll=-21079082.60, converged=True
+theta=1.70e-01: pi=0.3109, mu=9.3435, ll=-21089343.77, converged=True
+theta=1.74e-01: pi=0.3209, mu=9.4809, ll=-21099895.62, converged=True
+theta=1.79e-01: pi=0.3306, mu=9.6188, ll=-21110746.82, converged=True
+theta=1.83e-01: pi=0.3401, mu=9.7574, ll=-21121906.30, converged=True
+theta=1.87e-01: pi=0.3494, mu=9.8964, ll=-21133383.24, converged=True
+theta=1.91e-01: pi=0.3584, mu=10.0359, ll=-21145187.09, converged=True
+theta=1.96e-01: pi=0.3672, mu=10.1758, ll=-21157327.61, converged=True
+theta=2.00e-01: pi=0.3759, mu=10.3161, ll=-21169814.82, converged=True
+theta=2.05e-01: pi=0.3842, mu=10.4567, ll=-21182659.03, converged=True
+theta=2.10e-01: pi=0.3924, mu=10.5975, ll=-21195870.87, converged=True
+theta=2.15e-01: pi=0.4004, mu=10.7385, ll=-21209461.27, converged=True
+theta=2.20e-01: pi=0.4082, mu=10.8797, ll=-21223441.48, converged=True
+theta=2.25e-01: pi=0.4158, mu=11.0210, ll=-21237823.06, converged=True
+theta=2.30e-01: pi=0.4232, mu=11.1622, ll=-21252617.93, converged=True
+theta=2.36e-01: pi=0.4304, mu=11.3035, ll=-21267838.32, converged=True
+theta=2.41e-01: pi=0.4374, mu=11.4447, ll=-21283496.83, converged=True
+theta=2.47e-01: pi=0.4442, mu=11.5857, ll=-21299606.40, converged=True
+theta=2.53e-01: pi=0.4509, mu=11.7265, ll=-21316180.34, converged=True
+theta=2.59e-01: pi=0.4574, mu=11.8670, ll=-21333232.33, converged=True
+theta=2.65e-01: pi=0.4638, mu=12.0072, ll=-21350776.45, converged=True
+theta=2.71e-01: pi=0.4699, mu=12.1470, ll=-21368827.12, converged=True
+theta=2.77e-01: pi=0.4759, mu=12.2863, ll=-21387399.20, converged=True
+theta=2.84e-01: pi=0.4818, mu=12.4251, ll=-21406507.94, converged=True
+theta=2.90e-01: pi=0.4875, mu=12.5634, ll=-21426168.99, converged=True
+theta=2.97e-01: pi=0.4930, mu=12.7009, ll=-21446398.43, converged=True
+theta=3.04e-01: pi=0.4985, mu=12.8378, ll=-21467212.76, converged=True
+theta=3.11e-01: pi=0.5037, mu=12.9740, ll=-21488628.94, converged=True
+theta=3.18e-01: pi=0.5088, mu=13.1092, ll=-21510664.34, converged=True
+theta=3.26e-01: pi=0.5138, mu=13.2436, ll=-21533336.79, converged=True
+theta=3.33e-01: pi=0.5187, mu=13.3771, ll=-21556664.60, converged=True
+theta=3.41e-01: pi=0.5234, mu=13.5095, ll=-21580666.51, converged=True
+theta=3.49e-01: pi=0.5280, mu=13.6409, ll=-21605361.76, converged=True
+theta=3.57e-01: pi=0.5324, mu=13.7712, ll=-21630770.07, converged=True
+theta=3.66e-01: pi=0.5368, mu=13.9002, ll=-21656911.62, converged=True
+theta=3.74e-01: pi=0.5410, mu=14.0281, ll=-21683807.12, converged=True
+theta=3.83e-01: pi=0.5451, mu=14.1546, ll=-21711477.76, converged=True
+theta=3.92e-01: pi=0.5491, mu=14.2798, ll=-21739945.24, converged=True
+theta=4.01e-01: pi=0.5530, mu=14.4036, ll=-21769231.77, converged=True
+theta=4.11e-01: pi=0.5567, mu=14.5259, ll=-21799360.09, converged=True
+theta=4.20e-01: pi=0.5604, mu=14.6468, ll=-21830353.45, converged=True
+theta=4.30e-01: pi=0.5639, mu=14.7661, ll=-21862235.65, converged=True
+theta=4.40e-01: pi=0.5674, mu=14.8838, ll=-21895031.00, converged=True
+theta=4.51e-01: pi=0.5707, mu=14.9999, ll=-21928764.37, converged=True
+theta=4.61e-01: pi=0.5740, mu=15.1143, ll=-21963461.17, converged=True
+theta=4.72e-01: pi=0.5771, mu=15.2270, ll=-21999147.34, converged=True
+theta=4.83e-01: pi=0.5802, mu=15.3379, ll=-22035849.41, converged=True
+theta=4.94e-01: pi=0.5832, mu=15.4471, ll=-22073594.42, converged=True
+theta=5.06e-01: pi=0.5860, mu=15.5544, ll=-22112409.99, converged=True
+theta=5.18e-01: pi=0.5888, mu=15.6599, ll=-22152324.30, converged=True
+theta=5.30e-01: pi=0.5915, mu=15.7635, ll=-22193366.09, converged=True
+theta=5.42e-01: pi=0.5942, mu=15.8652, ll=-22235564.66, converged=True
+theta=5.55e-01: pi=0.5967, mu=15.9649, ll=-22278949.87, converged=True
+theta=5.68e-01: pi=0.5991, mu=16.0627, ll=-22323552.14, converged=True
+theta=5.81e-01: pi=0.6015, mu=16.1586, ll=-22369402.48, converged=True
+theta=5.95e-01: pi=0.6038, mu=16.2524, ll=-22416532.41, converged=True
+theta=6.09e-01: pi=0.6061, mu=16.3442, ll=-22464974.07, converged=True
+theta=6.23e-01: pi=0.6082, mu=16.4340, ll=-22514760.12, converged=True
+theta=6.38e-01: pi=0.6103, mu=16.5218, ll=-22565923.78, converged=True
+theta=6.52e-01: pi=0.6123, mu=16.6075, ll=-22618498.84, converged=True
+theta=6.68e-01: pi=0.6142, mu=16.6913, ll=-22672519.62, converged=True
+theta=6.83e-01: pi=0.6161, mu=16.7729, ll=-22728020.99, converged=True
+theta=6.99e-01: pi=0.6179, mu=16.8525, ll=-22785038.36, converged=True
+theta=7.16e-01: pi=0.6197, mu=16.9301, ll=-22843607.68, converged=True
+theta=7.32e-01: pi=0.6214, mu=17.0056, ll=-22903765.43, converged=True
+theta=7.50e-01: pi=0.6230, mu=17.0791, ll=-22965548.58, converged=True
+theta=7.67e-01: pi=0.6246, mu=17.1505, ll=-23028994.65, converged=True
+theta=7.85e-01: pi=0.6261, mu=17.2200, ll=-23094141.65, converged=True
+theta=8.04e-01: pi=0.6275, mu=17.2874, ll=-23161028.08, converged=True
+theta=8.22e-01: pi=0.6290, mu=17.3529, ll=-23229692.92, converged=True
+theta=8.42e-01: pi=0.6303, mu=17.4164, ll=-23300175.64, converged=True
+theta=8.61e-01: pi=0.6316, mu=17.4779, ll=-23372516.17, converged=True
+theta=8.81e-01: pi=0.6329, mu=17.5375, ll=-23446754.90, converged=True
+theta=9.02e-01: pi=0.6341, mu=17.5952, ll=-23522932.64, converged=True
+theta=9.23e-01: pi=0.6352, mu=17.6510, ll=-23601090.64, converged=True
+theta=9.45e-01: pi=0.6363, mu=17.7049, ll=-23681270.57, converged=True
+theta=9.67e-01: pi=0.6374, mu=17.7570, ll=-23763514.50, converged=True
+theta=9.90e-01: pi=0.6384, mu=17.8073, ll=-23847864.87, converged=True
+theta=1.01e+00: pi=0.6394, mu=17.8558, ll=-23934364.52, converged=True
+theta=1.04e+00: pi=0.6403, mu=17.9026, ll=-24023056.61, converged=True
+theta=1.06e+00: pi=0.6412, mu=17.9477, ll=-24113984.68, converged=True
+theta=1.09e+00: pi=0.6421, mu=17.9910, ll=-24207192.56, converged=True
+theta=1.11e+00: pi=0.6429, mu=18.0327, ll=-24302724.40, converged=True
+theta=1.14e+00: pi=0.6437, mu=18.0729, ll=-24400624.63, converged=True
+theta=1.16e+00: pi=0.6445, mu=18.1114, ll=-24500937.98, converged=True
+theta=1.19e+00: pi=0.6452, mu=18.1484, ll=-24603709.39, converged=True
+theta=1.22e+00: pi=0.6459, mu=18.1838, ll=-24708984.07, converged=True
+theta=1.25e+00: pi=0.6466, mu=18.2179, ll=-24816807.41, converged=True
+theta=1.28e+00: pi=0.6472, mu=18.2504, ll=-24927225.04, converged=True
+theta=1.31e+00: pi=0.6478, mu=18.2816, ll=-25040282.72, converged=True
+theta=1.34e+00: pi=0.6484, mu=18.3115, ll=-25156026.39, converged=True
+theta=1.37e+00: pi=0.6489, mu=18.3400, ll=-25274502.13, converged=True
+theta=1.40e+00: pi=0.6494, mu=18.3672, ll=-25395756.12, converged=True
+theta=1.43e+00: pi=0.6499, mu=18.3932, ll=-25519834.65, converged=True
+theta=1.47e+00: pi=0.6504, mu=18.4180, ll=-25646784.06, converged=True
+theta=1.50e+00: pi=0.6509, mu=18.4416, ll=-25776650.76, converged=True
+theta=1.54e+00: pi=0.6513, mu=18.4641, ll=-25909481.19, converged=True
+theta=1.57e+00: pi=0.6517, mu=18.4856, ll=-26045321.81, converged=True
+theta=1.61e+00: pi=0.6521, mu=18.5059, ll=-26184219.03, converged=True
+theta=1.65e+00: pi=0.6524, mu=18.5253, ll=-26326219.28, converged=True
+theta=1.69e+00: pi=0.6528, mu=18.5437, ll=-26471368.89, converged=True
+theta=1.72e+00: pi=0.6531, mu=18.5611, ll=-26619714.13, converged=True
+theta=1.76e+00: pi=0.6534, mu=18.5777, ll=-26771301.19, converged=True
+theta=1.81e+00: pi=0.6537, mu=18.5933, ll=-26926176.10, converged=True
+theta=1.85e+00: pi=0.6540, mu=18.6082, ll=-27084384.79, converged=True
+theta=1.89e+00: pi=0.6542, mu=18.6222, ll=-27245973.01, converged=True
+theta=1.94e+00: pi=0.6545, mu=18.6355, ll=-27410986.31, converged=True
+theta=1.98e+00: pi=0.6547, mu=18.6480, ll=-27579470.05, converged=True
+theta=2.03e+00: pi=0.6549, mu=18.6599, ll=-27751469.36, converged=True
+theta=2.08e+00: pi=0.6551, mu=18.6710, ll=-27927029.12, converged=True
+theta=2.12e+00: pi=0.6553, mu=18.6816, ll=-28106193.94, converged=True
+theta=2.17e+00: pi=0.6555, mu=18.6915, ll=-28289008.12, converged=True
+theta=2.22e+00: pi=0.6557, mu=18.7008, ll=-28475515.66, converged=True
+theta=2.28e+00: pi=0.6559, mu=18.7096, ll=-28665760.23, converged=True
+theta=2.33e+00: pi=0.6560, mu=18.7178, ll=-28859785.12, converged=True
+theta=2.38e+00: pi=0.6562, mu=18.7256, ll=-29057633.27, converged=True
+theta=2.44e+00: pi=0.6563, mu=18.7329, ll=-29259347.19, converged=True
+theta=2.50e+00: pi=0.6564, mu=18.7397, ll=-29464968.99, converged=True
+theta=2.56e+00: pi=0.6565, mu=18.7461, ll=-29674540.32, converged=True
+theta=2.62e+00: pi=0.6566, mu=18.7520, ll=-29888102.37, converged=True
+theta=2.68e+00: pi=0.6567, mu=18.7576, ll=-30105695.86, converged=True
+theta=2.74e+00: pi=0.6568, mu=18.7629, ll=-30327360.97, converged=True
+theta=2.80e+00: pi=0.6569, mu=18.7678, ll=-30553137.38, converged=True
+theta=2.87e+00: pi=0.6570, mu=18.7723, ll=-30783064.20, converged=True
+theta=2.94e+00: pi=0.6571, mu=18.7766, ll=-31017179.99, converged=True
+theta=3.01e+00: pi=0.6572, mu=18.7806, ll=-31255522.71, converged=True
+theta=3.08e+00: pi=0.6572, mu=18.7843, ll=-31498129.68, converged=True
+theta=3.15e+00: pi=0.6573, mu=18.7877, ll=-31745037.62, converged=True
+theta=3.22e+00: pi=0.6573, mu=18.7909, ll=-31996282.57, converged=True
+theta=3.30e+00: pi=0.6574, mu=18.7939, ll=-32251899.91, converged=True
+theta=3.37e+00: pi=0.6575, mu=18.7967, ll=-32511924.31, converged=True
+theta=3.45e+00: pi=0.6575, mu=18.7992, ll=-32776389.72, converged=True
+theta=3.53e+00: pi=0.6575, mu=18.8016, ll=-33045329.35, converged=True
+theta=3.62e+00: pi=0.6576, mu=18.8038, ll=-33318775.64, converged=True
+theta=3.70e+00: pi=0.6576, mu=18.8059, ll=-33596760.25, converged=True
+theta=3.79e+00: pi=0.6577, mu=18.8078, ll=-33879314.04, converged=True
+theta=3.88e+00: pi=0.6577, mu=18.8095, ll=-34166467.03, converged=True
+theta=3.97e+00: pi=0.6577, mu=18.8111, ll=-34458248.41, converged=True
+theta=4.06e+00: pi=0.6577, mu=18.8126, ll=-34754686.48, converged=True
+theta=4.15e+00: pi=0.6578, mu=18.8140, ll=-35055808.66, converged=True
+theta=4.25e+00: pi=0.6578, mu=18.8153, ll=-35361641.44, converged=True
+theta=4.35e+00: pi=0.6578, mu=18.8165, ll=-35672210.41, converged=True
+theta=4.45e+00: pi=0.6578, mu=18.8176, ll=-35987540.18, converged=True
+theta=4.56e+00: pi=0.6578, mu=18.8186, ll=-36307654.39, converged=True
+theta=4.66e+00: pi=0.6579, mu=18.8195, ll=-36632575.68, converged=True
+theta=4.77e+00: pi=0.6579, mu=18.8203, ll=-36962325.69, converged=True
+theta=4.89e+00: pi=0.6579, mu=18.8211, ll=-37296925.00, converged=True
+theta=5.00e+00: pi=0.6579, mu=18.8218, ll=-37636393.17, converged=True
+
+Best theta: 9.34e-02 with ll=-20903276.23
+Final parameters: pi=0.0000, mu=6.4391, theta=0.0934
+  SUCCESS: pi=0.0000, mu=6.4391, theta=0.0934
+
+Processing strain_dnrp...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813184 data points
+  Added ChrIV: 1531934 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948066 data points
+  Added ChrXV: 1091291 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071321
+  Zero fraction: 0.9073
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.6071, mu=10.8488, ll=-8727422.63, converged=True
+theta=5.12e-02: pi=0.6147, mu=11.0630, ll=-8727216.65, converged=True
+theta=5.24e-02: pi=0.6221, mu=11.2807, ll=-8727008.97, converged=True
+theta=5.36e-02: pi=0.6294, mu=11.5017, ll=-8726799.67, converged=True
+theta=5.48e-02: pi=0.6365, mu=11.7261, ll=-8726588.88, converged=True
+theta=5.61e-02: pi=0.6434, mu=11.9540, ll=-8726376.70, converged=True
+theta=5.74e-02: pi=0.6502, mu=12.1853, ll=-8726163.27, converged=True
+theta=5.88e-02: pi=0.6568, mu=12.4200, ll=-8725948.71, converged=True
+theta=6.02e-02: pi=0.6633, mu=12.6582, ll=-8725733.17, converged=True
+theta=6.16e-02: pi=0.6696, mu=12.8999, ll=-8725516.82, converged=True
+theta=6.30e-02: pi=0.6757, mu=13.1450, ll=-8725299.80, converged=True
+theta=6.45e-02: pi=0.6817, mu=13.3936, ll=-8725082.32, converged=True
+theta=6.60e-02: pi=0.6876, mu=13.6456, ll=-8724864.54, converged=True
+theta=6.75e-02: pi=0.6934, mu=13.9011, ll=-8724646.69, converged=True
+theta=6.91e-02: pi=0.6990, mu=14.1601, ll=-8724428.98, converged=True
+theta=7.07e-02: pi=0.7044, mu=14.4225, ll=-8724211.63, converged=True
+theta=7.24e-02: pi=0.7098, mu=14.6884, ll=-8723994.91, converged=True
+theta=7.41e-02: pi=0.7150, mu=14.9576, ll=-8723779.06, converged=True
+theta=7.58e-02: pi=0.7201, mu=15.2303, ll=-8723564.38, converged=True
+theta=7.76e-02: pi=0.7251, mu=15.5064, ll=-8723351.15, converged=True
+theta=7.94e-02: pi=0.7300, mu=15.7858, ll=-8723139.70, converged=True
+theta=8.13e-02: pi=0.7347, mu=16.0686, ll=-8722930.35, converged=True
+theta=8.32e-02: pi=0.7394, mu=16.3547, ll=-8722723.45, converged=True
+theta=8.51e-02: pi=0.7439, mu=16.6441, ll=-8722519.40, converged=True
+theta=8.71e-02: pi=0.7483, mu=16.9367, ll=-8722318.57, converged=True
+theta=8.92e-02: pi=0.7526, mu=17.2325, ll=-8722121.39, converged=True
+theta=9.13e-02: pi=0.7569, mu=17.5315, ll=-8721928.30, converged=True
+theta=9.34e-02: pi=0.7610, mu=17.8336, ll=-8721739.76, converged=True
+theta=9.56e-02: pi=0.7650, mu=18.1388, ll=-8721556.27, converged=True
+theta=9.78e-02: pi=0.7689, mu=18.4470, ll=-8721378.35, converged=True
+theta=1.00e-01: pi=0.7728, mu=18.7582, ll=-8721206.55, converged=True
+theta=1.02e-01: pi=0.7765, mu=19.0722, ll=-8721041.43, converged=True
+theta=1.05e-01: pi=0.7802, mu=19.3891, ll=-8720883.62, converged=True
+theta=1.07e-01: pi=0.7837, mu=19.7088, ll=-8720733.73, converged=True
+theta=1.10e-01: pi=0.7872, mu=20.0312, ll=-8720592.46, converged=True
+theta=1.12e-01: pi=0.7906, mu=20.3562, ll=-8720460.50, converged=True
+theta=1.15e-01: pi=0.7939, mu=20.6838, ll=-8720338.60, converged=True
+theta=1.18e-01: pi=0.7972, mu=21.0138, ll=-8720227.53, converged=True
+theta=1.20e-01: pi=0.8003, mu=21.3462, ll=-8720128.11, converged=True
+theta=1.23e-01: pi=0.8034, mu=21.6808, ll=-8720041.21, converged=True
+theta=1.26e-01: pi=0.8064, mu=22.0177, ll=-8719967.72, converged=True
+theta=1.29e-01: pi=0.8093, mu=22.3566, ll=-8719908.59, converged=True
+theta=1.32e-01: pi=0.8122, mu=22.6976, ll=-8719864.81, converged=True
+theta=1.35e-01: pi=0.8150, mu=23.0404, ll=-8719837.40, converged=True
+theta=1.38e-01: pi=0.8177, mu=23.3849, ll=-8719827.47, converged=True
+theta=1.42e-01: pi=0.8204, mu=23.7312, ll=-8719836.15, converged=True
+theta=1.45e-01: pi=0.8230, mu=24.0789, ll=-8719864.63, converged=True
+theta=1.48e-01: pi=0.8255, mu=24.4281, ll=-8719914.14, converged=True
+theta=1.52e-01: pi=0.8280, mu=24.7785, ll=-8719986.00, converged=True
+theta=1.55e-01: pi=0.8304, mu=25.1301, ll=-8720081.57, converged=True
+theta=1.59e-01: pi=0.8327, mu=25.4827, ll=-8720202.26, converged=True
+theta=1.63e-01: pi=0.8350, mu=25.8362, ll=-8720349.56, converged=True
+theta=1.67e-01: pi=0.8372, mu=26.1904, ll=-8720525.01, converged=True
+theta=1.70e-01: pi=0.8394, mu=26.5453, ll=-8720730.25, converged=True
+theta=1.74e-01: pi=0.8415, mu=26.9006, ll=-8720966.95, converged=True
+theta=1.79e-01: pi=0.8436, mu=27.2561, ll=-8721236.88, converged=True
+theta=1.83e-01: pi=0.8456, mu=27.6119, ll=-8721541.86, converged=True
+theta=1.87e-01: pi=0.8476, mu=27.9676, ll=-8721883.82, converged=True
+theta=1.91e-01: pi=0.8495, mu=28.3231, ll=-8722264.74, converged=True
+theta=1.96e-01: pi=0.8514, mu=28.6784, ll=-8722686.71, converged=True
+theta=2.00e-01: pi=0.8532, mu=29.0331, ll=-8723151.87, converged=True
+theta=2.05e-01: pi=0.8550, mu=29.3872, ll=-8723662.49, converged=True
+theta=2.10e-01: pi=0.8567, mu=29.7405, ll=-8724220.89, converged=True
+theta=2.15e-01: pi=0.8584, mu=30.0929, ll=-8724829.51, converged=True
+theta=2.20e-01: pi=0.8600, mu=30.4441, ll=-8725490.87, converged=True
+theta=2.25e-01: pi=0.8616, mu=30.7939, ll=-8726207.62, converged=True
+theta=2.30e-01: pi=0.8631, mu=31.1423, ll=-8726982.46, converged=True
+theta=2.36e-01: pi=0.8646, mu=31.4891, ll=-8727818.25, converged=True
+theta=2.41e-01: pi=0.8661, mu=31.8340, ll=-8728717.91, converged=True
+theta=2.47e-01: pi=0.8675, mu=32.1770, ll=-8729684.51, converged=True
+theta=2.53e-01: pi=0.8689, mu=32.5178, ll=-8730721.20, converged=True
+theta=2.59e-01: pi=0.8703, mu=32.8563, ll=-8731831.27, converged=True
+theta=2.65e-01: pi=0.8716, mu=33.1923, ll=-8733018.13, converged=True
+theta=2.71e-01: pi=0.8729, mu=33.5257, ll=-8734285.30, converged=True
+theta=2.77e-01: pi=0.8741, mu=33.8563, ll=-8735636.43, converged=True
+theta=2.84e-01: pi=0.8753, mu=34.1839, ll=-8737075.30, converged=True
+theta=2.90e-01: pi=0.8765, mu=34.5083, ll=-8738605.83, converged=True
+theta=2.97e-01: pi=0.8776, mu=34.8296, ll=-8740232.05, converged=True
+theta=3.04e-01: pi=0.8787, mu=35.1473, ll=-8741958.17, converged=True
+theta=3.11e-01: pi=0.8798, mu=35.4615, ll=-8743788.49, converged=True
+theta=3.18e-01: pi=0.8808, mu=35.7720, ll=-8745727.50, converged=True
+theta=3.26e-01: pi=0.8819, mu=36.0787, ll=-8747779.82, converged=True
+theta=3.33e-01: pi=0.8828, mu=36.3813, ll=-8749950.20, converged=True
+theta=3.41e-01: pi=0.8838, mu=36.6798, ll=-8752243.57, converged=True
+theta=3.49e-01: pi=0.8847, mu=36.9740, ll=-8754665.00, converged=True
+theta=3.57e-01: pi=0.8856, mu=37.2639, ll=-8757219.74, converged=True
+theta=3.66e-01: pi=0.8865, mu=37.5492, ll=-8759913.17, converged=True
+theta=3.74e-01: pi=0.8873, mu=37.8299, ll=-8762750.86, converged=True
+theta=3.83e-01: pi=0.8881, mu=38.1060, ll=-8765738.53, converged=True
+theta=3.92e-01: pi=0.8889, mu=38.3772, ll=-8768882.08, converged=True
+theta=4.01e-01: pi=0.8897, mu=38.6435, ll=-8772187.57, converged=True
+theta=4.11e-01: pi=0.8904, mu=38.9047, ll=-8775661.24, converged=True
+theta=4.20e-01: pi=0.8912, mu=39.1609, ll=-8779309.51, converged=True
+theta=4.30e-01: pi=0.8918, mu=39.4120, ll=-8783138.97, converged=True
+theta=4.40e-01: pi=0.8925, mu=39.6578, ll=-8787156.40, converged=True
+theta=4.51e-01: pi=0.8932, mu=39.8983, ll=-8791368.75, converged=True
+theta=4.61e-01: pi=0.8938, mu=40.1335, ll=-8795783.16, converged=True
+theta=4.72e-01: pi=0.8944, mu=40.3633, ll=-8800406.95, converged=True
+theta=4.83e-01: pi=0.8950, mu=40.5876, ll=-8805247.64, converged=True
+theta=4.94e-01: pi=0.8955, mu=40.8065, ll=-8810312.92, converged=True
+theta=5.06e-01: pi=0.8961, mu=41.0199, ll=-8815610.68, converged=True
+theta=5.18e-01: pi=0.8966, mu=41.2278, ll=-8821149.00, converged=True
+theta=5.30e-01: pi=0.8971, mu=41.4301, ll=-8826936.14, converged=True
+theta=5.42e-01: pi=0.8976, mu=41.6269, ll=-8832980.56, converged=True
+theta=5.55e-01: pi=0.8981, mu=41.8182, ll=-8839290.92, converged=True
+theta=5.68e-01: pi=0.8985, mu=42.0039, ll=-8845876.06, converged=True
+theta=5.81e-01: pi=0.8990, mu=42.1842, ll=-8852745.02, converged=True
+theta=5.95e-01: pi=0.8994, mu=42.3590, ll=-8859907.01, converged=True
+theta=6.09e-01: pi=0.8998, mu=42.5283, ll=-8867371.46, converged=True
+theta=6.23e-01: pi=0.9002, mu=42.6921, ll=-8875147.99, converged=True
+theta=6.38e-01: pi=0.9005, mu=42.8506, ll=-8883246.39, converged=True
+theta=6.52e-01: pi=0.9009, mu=43.0038, ll=-8891676.65, converged=True
+theta=6.68e-01: pi=0.9012, mu=43.1517, ll=-8900448.96, converged=True
+theta=6.83e-01: pi=0.9015, mu=43.2944, ll=-8909573.68, converged=True
+theta=6.99e-01: pi=0.9019, mu=43.4319, ll=-8919061.37, converged=True
+theta=7.16e-01: pi=0.9022, mu=43.5643, ll=-8928922.77, converged=True
+theta=7.32e-01: pi=0.9024, mu=43.6917, ll=-8939168.79, converged=True
+theta=7.50e-01: pi=0.9027, mu=43.8142, ll=-8949810.55, converged=True
+theta=7.67e-01: pi=0.9030, mu=43.9318, ll=-8960859.32, converged=True
+theta=7.85e-01: pi=0.9032, mu=44.0447, ll=-8972326.56, converged=True
+theta=8.04e-01: pi=0.9035, mu=44.1529, ll=-8984223.91, converged=True
+theta=8.22e-01: pi=0.9037, mu=44.2566, ll=-8996563.18, converged=True
+theta=8.42e-01: pi=0.9039, mu=44.3557, ll=-9009356.33, converged=True
+theta=8.61e-01: pi=0.9041, mu=44.4505, ll=-9022615.50, converged=True
+theta=8.81e-01: pi=0.9043, mu=44.5410, ll=-9036353.01, converged=True
+theta=9.02e-01: pi=0.9045, mu=44.6274, ll=-9050581.32, converged=True
+theta=9.23e-01: pi=0.9047, mu=44.7097, ll=-9065313.04, converged=True
+theta=9.45e-01: pi=0.9048, mu=44.7881, ll=-9080560.96, converged=True
+theta=9.67e-01: pi=0.9050, mu=44.8627, ll=-9096338.00, converged=True
+theta=9.90e-01: pi=0.9051, mu=44.9335, ll=-9112657.24, converged=True
+theta=1.01e+00: pi=0.9053, mu=45.0007, ll=-9129531.90, converged=True
+theta=1.04e+00: pi=0.9054, mu=45.0645, ll=-9146975.33, converged=True
+theta=1.06e+00: pi=0.9055, mu=45.1249, ll=-9165001.04, converged=True
+theta=1.09e+00: pi=0.9057, mu=45.1821, ll=-9183622.66, converged=True
+theta=1.11e+00: pi=0.9058, mu=45.2361, ll=-9202853.95, converged=True
+theta=1.14e+00: pi=0.9059, mu=45.2871, ll=-9222708.80, converged=True
+theta=1.16e+00: pi=0.9060, mu=45.3352, ll=-9243201.23, converged=True
+theta=1.19e+00: pi=0.9061, mu=45.3805, ll=-9264345.36, converged=True
+theta=1.22e+00: pi=0.9062, mu=45.4232, ll=-9286155.47, converged=True
+theta=1.25e+00: pi=0.9062, mu=45.4633, ll=-9308645.90, converged=True
+theta=1.28e+00: pi=0.9063, mu=45.5009, ll=-9331831.14, converged=True
+theta=1.31e+00: pi=0.9064, mu=45.5362, ll=-9355725.79, converged=True
+theta=1.34e+00: pi=0.9065, mu=45.5693, ll=-9380344.52, converged=True
+theta=1.37e+00: pi=0.9065, mu=45.6002, ll=-9405702.14, converged=True
+theta=1.40e+00: pi=0.9066, mu=45.6291, ll=-9431813.54, converged=True
+theta=1.43e+00: pi=0.9066, mu=45.6561, ll=-9458693.72, converged=True
+theta=1.47e+00: pi=0.9067, mu=45.6812, ll=-9486357.76, converged=True
+theta=1.50e+00: pi=0.9067, mu=45.7046, ll=-9514820.85, converged=True
+theta=1.54e+00: pi=0.9068, mu=45.7264, ll=-9544098.25, converged=True
+theta=1.57e+00: pi=0.9068, mu=45.7466, ll=-9574205.33, converged=True
+theta=1.61e+00: pi=0.9069, mu=45.7653, ll=-9605157.53, converged=True
+theta=1.65e+00: pi=0.9069, mu=45.7827, ll=-9636970.39, converged=True
+theta=1.69e+00: pi=0.9069, mu=45.7987, ll=-9669659.51, converged=True
+theta=1.72e+00: pi=0.9070, mu=45.8135, ll=-9703240.59, converged=True
+theta=1.76e+00: pi=0.9070, mu=45.8272, ll=-9737729.42, converged=True
+theta=1.81e+00: pi=0.9070, mu=45.8398, ll=-9773141.83, converged=True
+theta=1.85e+00: pi=0.9070, mu=45.8514, ll=-9809493.76, converged=True
+theta=1.89e+00: pi=0.9071, mu=45.8621, ll=-9846801.23, converged=True
+theta=1.94e+00: pi=0.9071, mu=45.8718, ll=-9885080.29, converged=True
+theta=1.98e+00: pi=0.9071, mu=45.8808, ll=-9924347.12, converged=True
+theta=2.03e+00: pi=0.9071, mu=45.8890, ll=-9964617.94, converged=True
+theta=2.08e+00: pi=0.9071, mu=45.8964, ll=-10005909.03, converged=True
+theta=2.12e+00: pi=0.9071, mu=45.9033, ll=-10048236.77, converged=True
+theta=2.17e+00: pi=0.9072, mu=45.9095, ll=-10091617.59, converged=True
+theta=2.22e+00: pi=0.9072, mu=45.9151, ll=-10136068.00, converged=True
+theta=2.28e+00: pi=0.9072, mu=45.9203, ll=-10181604.55, converged=True
+theta=2.33e+00: pi=0.9072, mu=45.9249, ll=-10228243.88, converged=True
+theta=2.38e+00: pi=0.9072, mu=45.9291, ll=-10276002.69, converged=True
+theta=2.44e+00: pi=0.9072, mu=45.9330, ll=-10324897.72, converged=True
+theta=2.50e+00: pi=0.9072, mu=45.9364, ll=-10374945.80, converged=True
+theta=2.56e+00: pi=0.9072, mu=45.9395, ll=-10426163.80, converged=True
+theta=2.62e+00: pi=0.9072, mu=45.9423, ll=-10478568.65, converged=True
+theta=2.68e+00: pi=0.9072, mu=45.9448, ll=-10532177.33, converged=True
+theta=2.74e+00: pi=0.9072, mu=45.9470, ll=-10587006.87, converged=True
+theta=2.80e+00: pi=0.9072, mu=45.9491, ll=-10643074.37, converged=True
+theta=2.87e+00: pi=0.9072, mu=45.9509, ll=-10700396.94, converged=True
+theta=2.94e+00: pi=0.9072, mu=45.9525, ll=-10758991.76, converged=True
+theta=3.01e+00: pi=0.9072, mu=45.9539, ll=-10818876.05, converged=True
+theta=3.08e+00: pi=0.9072, mu=45.9552, ll=-10880067.04, converged=True
+theta=3.15e+00: pi=0.9072, mu=45.9563, ll=-10942582.03, converged=True
+theta=3.22e+00: pi=0.9072, mu=45.9573, ll=-11006438.31, converged=True
+theta=3.30e+00: pi=0.9073, mu=45.9582, ll=-11071653.23, converged=True
+theta=3.37e+00: pi=0.9073, mu=45.9590, ll=-11138244.13, converged=True
+theta=3.45e+00: pi=0.9073, mu=45.9597, ll=-11206228.37, converged=True
+theta=3.53e+00: pi=0.9073, mu=45.9603, ll=-11275623.33, converged=True
+theta=3.62e+00: pi=0.9073, mu=45.9608, ll=-11346446.40, converged=True
+theta=3.70e+00: pi=0.9073, mu=45.9613, ll=-11418714.93, converged=True
+theta=3.79e+00: pi=0.9073, mu=45.9617, ll=-11492446.29, converged=True
+theta=3.88e+00: pi=0.9073, mu=45.9621, ll=-11567657.84, converged=True
+theta=3.97e+00: pi=0.9073, mu=45.9624, ll=-11644366.90, converged=True
+theta=4.06e+00: pi=0.9073, mu=45.9627, ll=-11722590.76, converged=True
+theta=4.15e+00: pi=0.9073, mu=45.9629, ll=-11802346.68, converged=True
+theta=4.25e+00: pi=0.9073, mu=45.9631, ll=-11883651.88, converged=True
+theta=4.35e+00: pi=0.9073, mu=45.9633, ll=-11966523.50, converged=True
+theta=4.45e+00: pi=0.9073, mu=45.9634, ll=-12050978.65, converged=True
+theta=4.56e+00: pi=0.9073, mu=45.9636, ll=-12137034.34, converged=True
+theta=4.66e+00: pi=0.9073, mu=45.9637, ll=-12224707.51, converged=True
+theta=4.77e+00: pi=0.9073, mu=45.9638, ll=-12314015.03, converged=True
+theta=4.89e+00: pi=0.9073, mu=45.9639, ll=-12404973.63, converged=True
+theta=5.00e+00: pi=0.9073, mu=45.9640, ll=-12497599.95, converged=True
+
+Best theta: 1.38e-01 with ll=-8719827.47
+Final parameters: pi=0.8177, mu=23.3849, theta=0.1384
+  SUCCESS: pi=0.8177, mu=23.3849, theta=0.1384
+
+Processing strain_yEK19...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813185 data points
+  Added ChrIV: 1531933 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948067 data points
+  Added ChrXV: 1091292 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071323
+  Zero fraction: 0.6774
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.0000, mu=6.8264, ll=-21304194.86, converged=True
+theta=5.12e-02: pi=0.0000, mu=6.8264, ll=-21274542.81, converged=True
+theta=5.24e-02: pi=0.0000, mu=6.8264, ll=-21245979.53, converged=True
+theta=5.36e-02: pi=0.0000, mu=6.8264, ll=-21218523.06, converged=True
+theta=5.48e-02: pi=0.0000, mu=6.8264, ll=-21192190.41, converged=True
+theta=5.61e-02: pi=0.0000, mu=6.8264, ll=-21167001.47, converged=True
+theta=5.74e-02: pi=0.0000, mu=6.8264, ll=-21142975.00, converged=True
+theta=5.88e-02: pi=0.0000, mu=6.8264, ll=-21120130.09, converged=True
+theta=6.02e-02: pi=0.0000, mu=6.8264, ll=-21098484.98, converged=True
+theta=6.16e-02: pi=0.0000, mu=6.8264, ll=-21078060.44, converged=True
+theta=6.30e-02: pi=0.0000, mu=6.8264, ll=-21058875.34, converged=True
+theta=6.45e-02: pi=0.0000, mu=6.8264, ll=-21040950.89, converged=True
+theta=6.60e-02: pi=0.0000, mu=6.8264, ll=-21024306.63, converged=True
+theta=6.75e-02: pi=0.0000, mu=6.8264, ll=-21008963.41, converged=True
+theta=6.91e-02: pi=0.0000, mu=6.8264, ll=-20994942.36, converged=True
+theta=7.07e-02: pi=0.0000, mu=6.8264, ll=-20982264.90, converged=True
+theta=7.24e-02: pi=0.0000, mu=6.8264, ll=-20970952.07, converged=True
+theta=7.41e-02: pi=0.0000, mu=6.8264, ll=-20961026.06, converged=True
+theta=7.58e-02: pi=0.0000, mu=6.8265, ll=-20952508.81, converged=True
+theta=7.76e-02: pi=0.0000, mu=6.8265, ll=-20945422.34, converged=True
+theta=7.94e-02: pi=0.0000, mu=6.8265, ll=-20939789.50, converged=True
+theta=8.13e-02: pi=0.0000, mu=6.8266, ll=-20935633.66, converged=True
+theta=8.32e-02: pi=0.0000, mu=6.8266, ll=-20932977.71, converged=True
+theta=8.51e-02: pi=0.0001, mu=6.8268, ll=-20931845.23, converged=True
+theta=8.71e-02: pi=0.0001, mu=6.8271, ll=-20932260.21, converged=True
+theta=8.92e-02: pi=0.0011, mu=6.8342, ll=-20934257.59, converged=False
+theta=9.13e-02: pi=0.0143, mu=6.9253, ll=-20937340.29, converged=True
+theta=9.34e-02: pi=0.0316, mu=7.0492, ll=-20940570.96, converged=True
+theta=9.56e-02: pi=0.0486, mu=7.1751, ll=-20943897.42, converged=True
+theta=9.78e-02: pi=0.0652, mu=7.3025, ll=-20947322.71, converged=True
+theta=1.00e-01: pi=0.0814, mu=7.4315, ll=-20950850.03, converged=True
+theta=1.02e-01: pi=0.0973, mu=7.5619, ll=-20954482.65, converged=True
+theta=1.05e-01: pi=0.1127, mu=7.6938, ll=-20958223.99, converged=True
+theta=1.07e-01: pi=0.1279, mu=7.8271, ll=-20962077.56, converged=True
+theta=1.10e-01: pi=0.1426, mu=7.9618, ll=-20966047.02, converged=True
+theta=1.12e-01: pi=0.1570, mu=8.0979, ll=-20970136.13, converged=True
+theta=1.15e-01: pi=0.1711, mu=8.2353, ll=-20974348.78, converged=True
+theta=1.18e-01: pi=0.1848, mu=8.3741, ll=-20978688.99, converged=True
+theta=1.20e-01: pi=0.1982, mu=8.5141, ll=-20983160.93, converged=True
+theta=1.23e-01: pi=0.2113, mu=8.6555, ll=-20987768.90, converged=True
+theta=1.26e-01: pi=0.2241, mu=8.7981, ll=-20992517.33, converged=True
+theta=1.29e-01: pi=0.2366, mu=8.9419, ll=-20997410.84, converged=True
+theta=1.32e-01: pi=0.2488, mu=9.0869, ll=-21002454.16, converged=True
+theta=1.35e-01: pi=0.2607, mu=9.2330, ll=-21007652.21, converged=True
+theta=1.38e-01: pi=0.2723, mu=9.3803, ll=-21013010.07, converged=True
+theta=1.42e-01: pi=0.2836, mu=9.5286, ll=-21018532.97, converged=True
+theta=1.45e-01: pi=0.2947, mu=9.6780, ll=-21024226.33, converged=True
+theta=1.48e-01: pi=0.3054, mu=9.8284, ll=-21030095.75, converged=True
+theta=1.52e-01: pi=0.3160, mu=9.9798, ll=-21036147.01, converged=True
+theta=1.55e-01: pi=0.3263, mu=10.1320, ll=-21042386.10, converged=True
+theta=1.59e-01: pi=0.3363, mu=10.2851, ll=-21048819.18, converged=True
+theta=1.63e-01: pi=0.3461, mu=10.4391, ll=-21055452.63, converged=True
+theta=1.67e-01: pi=0.3556, mu=10.5938, ll=-21062293.04, converged=True
+theta=1.70e-01: pi=0.3649, mu=10.7492, ll=-21069347.20, converged=True
+theta=1.74e-01: pi=0.3740, mu=10.9053, ll=-21076622.14, converged=True
+theta=1.79e-01: pi=0.3829, mu=11.0621, ll=-21084125.11, converged=True
+theta=1.83e-01: pi=0.3916, mu=11.2193, ll=-21091863.60, converged=True
+theta=1.87e-01: pi=0.4000, mu=11.3771, ll=-21099845.33, converged=True
+theta=1.91e-01: pi=0.4082, mu=11.5353, ll=-21108078.28, converged=True
+theta=1.96e-01: pi=0.4163, mu=11.6940, ll=-21116570.67, converged=True
+theta=2.00e-01: pi=0.4241, mu=11.8529, ll=-21125331.01, converged=True
+theta=2.05e-01: pi=0.4317, mu=12.0121, ll=-21134368.05, converged=True
+theta=2.10e-01: pi=0.4392, mu=12.1715, ll=-21143690.84, converged=True
+theta=2.15e-01: pi=0.4464, mu=12.3310, ll=-21153308.69, converged=True
+theta=2.20e-01: pi=0.4535, mu=12.4907, ll=-21163231.22, converged=True
+theta=2.25e-01: pi=0.4604, mu=12.6503, ll=-21173468.34, converged=True
+theta=2.30e-01: pi=0.4671, mu=12.8098, ll=-21184030.27, converged=True
+theta=2.36e-01: pi=0.4737, mu=12.9692, ll=-21194927.54, converged=True
+theta=2.41e-01: pi=0.4800, mu=13.1285, ll=-21206171.02, converged=True
+theta=2.47e-01: pi=0.4863, mu=13.2874, ll=-21217771.88, converged=True
+theta=2.53e-01: pi=0.4923, mu=13.4460, ll=-21229741.64, converged=True
+theta=2.59e-01: pi=0.4982, mu=13.6042, ll=-21242092.18, converged=True
+theta=2.65e-01: pi=0.5040, mu=13.7620, ll=-21254835.71, converged=True
+theta=2.71e-01: pi=0.5096, mu=13.9192, ll=-21267984.82, converged=True
+theta=2.77e-01: pi=0.5150, mu=14.0757, ll=-21281552.45, converged=True
+theta=2.84e-01: pi=0.5203, mu=14.2316, ll=-21295551.94, converged=True
+theta=2.90e-01: pi=0.5255, mu=14.3867, ll=-21309996.99, converged=True
+theta=2.97e-01: pi=0.5305, mu=14.5410, ll=-21324901.73, converged=True
+theta=3.04e-01: pi=0.5354, mu=14.6943, ll=-21340280.64, converged=True
+theta=3.11e-01: pi=0.5402, mu=14.8467, ll=-21356148.66, converged=True
+theta=3.18e-01: pi=0.5449, mu=14.9981, ll=-21372521.11, converged=True
+theta=3.26e-01: pi=0.5494, mu=15.1483, ll=-21389413.75, converged=True
+theta=3.33e-01: pi=0.5538, mu=15.2974, ll=-21406842.77, converged=True
+theta=3.41e-01: pi=0.5580, mu=15.4452, ll=-21424824.80, converged=True
+theta=3.49e-01: pi=0.5622, mu=15.5917, ll=-21443376.92, converged=True
+theta=3.57e-01: pi=0.5662, mu=15.7369, ll=-21462516.66, converged=True
+theta=3.66e-01: pi=0.5701, mu=15.8806, ll=-21482262.00, converged=True
+theta=3.74e-01: pi=0.5740, mu=16.0228, ll=-21502631.42, converged=True
+theta=3.83e-01: pi=0.5777, mu=16.1634, ll=-21523643.85, converged=True
+theta=3.92e-01: pi=0.5813, mu=16.3024, ll=-21545318.71, converged=True
+theta=4.01e-01: pi=0.5848, mu=16.4397, ll=-21567675.90, converged=True
+theta=4.11e-01: pi=0.5882, mu=16.5753, ll=-21590735.83, converged=True
+theta=4.20e-01: pi=0.5915, mu=16.7091, ll=-21614519.40, converged=True
+theta=4.30e-01: pi=0.5947, mu=16.8411, ll=-21639048.01, converged=True
+theta=4.40e-01: pi=0.5978, mu=16.9712, ll=-21664343.58, converged=True
+theta=4.51e-01: pi=0.6008, mu=17.0994, ll=-21690428.55, converged=True
+theta=4.61e-01: pi=0.6037, mu=17.2255, ll=-21717325.88, converged=True
+theta=4.72e-01: pi=0.6065, mu=17.3497, ll=-21745059.04, converged=True
+theta=4.83e-01: pi=0.6093, mu=17.4718, ll=-21773652.05, converged=True
+theta=4.94e-01: pi=0.6120, mu=17.5918, ll=-21803129.44, converged=True
+theta=5.06e-01: pi=0.6145, mu=17.7096, ll=-21833516.30, converged=True
+theta=5.18e-01: pi=0.6170, mu=17.8253, ll=-21864838.23, converged=True
+theta=5.30e-01: pi=0.6195, mu=17.9388, ll=-21897121.41, converged=True
+theta=5.42e-01: pi=0.6218, mu=18.0501, ll=-21930392.52, converged=True
+theta=5.55e-01: pi=0.6241, mu=18.1592, ll=-21964678.81, converged=True
+theta=5.68e-01: pi=0.6263, mu=18.2659, ll=-22000008.07, converged=True
+theta=5.81e-01: pi=0.6284, mu=18.3704, ll=-22036408.62, converged=True
+theta=5.95e-01: pi=0.6305, mu=18.4726, ll=-22073909.35, converged=True
+theta=6.09e-01: pi=0.6324, mu=18.5725, ll=-22112539.68, converged=True
+theta=6.23e-01: pi=0.6344, mu=18.6700, ll=-22152329.56, converged=True
+theta=6.38e-01: pi=0.6362, mu=18.7652, ll=-22193309.51, converged=True
+theta=6.52e-01: pi=0.6380, mu=18.8581, ll=-22235510.56, converged=True
+theta=6.68e-01: pi=0.6397, mu=18.9486, ll=-22278964.29, converged=True
+theta=6.83e-01: pi=0.6414, mu=19.0368, ll=-22323702.80, converged=True
+theta=6.99e-01: pi=0.6430, mu=19.1227, ll=-22369758.75, converged=True
+theta=7.16e-01: pi=0.6446, mu=19.2062, ll=-22417165.28, converged=True
+theta=7.32e-01: pi=0.6461, mu=19.2874, ll=-22465956.06, converged=True
+theta=7.50e-01: pi=0.6475, mu=19.3664, ll=-22516165.30, converged=True
+theta=7.67e-01: pi=0.6489, mu=19.4430, ll=-22567827.67, converged=True
+theta=7.85e-01: pi=0.6502, mu=19.5173, ll=-22620978.38, converged=True
+theta=8.04e-01: pi=0.6515, mu=19.5894, ll=-22675653.09, converged=True
+theta=8.22e-01: pi=0.6528, mu=19.6592, ll=-22731887.98, converged=True
+theta=8.42e-01: pi=0.6540, mu=19.7268, ll=-22789719.68, converged=True
+theta=8.61e-01: pi=0.6551, mu=19.7922, ll=-22849185.27, converged=True
+theta=8.81e-01: pi=0.6562, mu=19.8555, ll=-22910322.32, converged=True
+theta=9.02e-01: pi=0.6573, mu=19.9166, ll=-22973168.82, converged=True
+theta=9.23e-01: pi=0.6583, mu=19.9756, ll=-23037763.19, converged=True
+theta=9.45e-01: pi=0.6592, mu=20.0325, ll=-23104144.28, converged=True
+theta=9.67e-01: pi=0.6602, mu=20.0874, ll=-23172351.33, converged=True
+theta=9.90e-01: pi=0.6611, mu=20.1403, ll=-23242423.99, converged=True
+theta=1.01e+00: pi=0.6619, mu=20.1912, ll=-23314402.29, converged=True
+theta=1.04e+00: pi=0.6627, mu=20.2401, ll=-23388326.63, converged=True
+theta=1.06e+00: pi=0.6635, mu=20.2872, ll=-23464237.75, converged=True
+theta=1.09e+00: pi=0.6643, mu=20.3324, ll=-23542176.74, converged=True
+theta=1.11e+00: pi=0.6650, mu=20.3758, ll=-23622185.01, converged=True
+theta=1.14e+00: pi=0.6657, mu=20.4175, ll=-23704304.29, converged=True
+theta=1.16e+00: pi=0.6663, mu=20.4574, ll=-23788576.58, converged=True
+theta=1.19e+00: pi=0.6669, mu=20.4956, ll=-23875044.19, converged=True
+theta=1.22e+00: pi=0.6675, mu=20.5322, ll=-23963749.65, converged=True
+theta=1.25e+00: pi=0.6681, mu=20.5672, ll=-24054735.77, converged=True
+theta=1.28e+00: pi=0.6686, mu=20.6006, ll=-24148045.58, converged=True
+theta=1.31e+00: pi=0.6691, mu=20.6325, ll=-24243722.30, converged=True
+theta=1.34e+00: pi=0.6696, mu=20.6630, ll=-24341809.36, converged=True
+theta=1.37e+00: pi=0.6701, mu=20.6920, ll=-24442350.37, converged=True
+theta=1.40e+00: pi=0.6705, mu=20.7196, ll=-24545389.08, converged=True
+theta=1.43e+00: pi=0.6710, mu=20.7460, ll=-24650969.40, converged=True
+theta=1.47e+00: pi=0.6714, mu=20.7710, ll=-24759135.36, converged=True
+theta=1.50e+00: pi=0.6717, mu=20.7948, ll=-24869931.07, converged=True
+theta=1.54e+00: pi=0.6721, mu=20.8174, ll=-24983400.76, converged=True
+theta=1.57e+00: pi=0.6724, mu=20.8388, ll=-25099588.69, converged=True
+theta=1.61e+00: pi=0.6727, mu=20.8592, ll=-25218539.21, converged=True
+theta=1.65e+00: pi=0.6730, mu=20.8784, ll=-25340296.68, converged=True
+theta=1.69e+00: pi=0.6733, mu=20.8967, ll=-25464905.46, converged=True
+theta=1.72e+00: pi=0.6736, mu=20.9139, ll=-25592409.94, converged=True
+theta=1.76e+00: pi=0.6739, mu=20.9302, ll=-25722854.45, converged=True
+theta=1.81e+00: pi=0.6741, mu=20.9456, ll=-25856283.31, converged=True
+theta=1.85e+00: pi=0.6743, mu=20.9601, ll=-25992740.75, converged=True
+theta=1.89e+00: pi=0.6745, mu=20.9738, ll=-26132270.95, converged=True
+theta=1.94e+00: pi=0.6747, mu=20.9867, ll=-26274917.96, converged=True
+theta=1.98e+00: pi=0.6749, mu=20.9988, ll=-26420725.75, converged=True
+theta=2.03e+00: pi=0.6751, mu=21.0103, ll=-26569738.15, converged=True
+theta=2.08e+00: pi=0.6753, mu=21.0210, ll=-26721998.81, converged=True
+theta=2.12e+00: pi=0.6754, mu=21.0311, ll=-26877551.25, converged=True
+theta=2.17e+00: pi=0.6756, mu=21.0405, ll=-27036438.78, converged=True
+theta=2.22e+00: pi=0.6757, mu=21.0494, ll=-27198704.50, converged=True
+theta=2.28e+00: pi=0.6758, mu=21.0577, ll=-27364391.31, converged=True
+theta=2.33e+00: pi=0.6759, mu=21.0654, ll=-27533541.86, converged=True
+theta=2.38e+00: pi=0.6761, mu=21.0727, ll=-27706198.52, converged=True
+theta=2.44e+00: pi=0.6762, mu=21.0795, ll=-27882403.41, converged=True
+theta=2.50e+00: pi=0.6763, mu=21.0858, ll=-28062198.35, converged=True
+theta=2.56e+00: pi=0.6764, mu=21.0917, ll=-28245624.83, converged=True
+theta=2.62e+00: pi=0.6764, mu=21.0972, ll=-28432724.03, converged=True
+theta=2.68e+00: pi=0.6765, mu=21.1024, ll=-28623536.75, converged=True
+theta=2.74e+00: pi=0.6766, mu=21.1071, ll=-28818103.46, converged=True
+theta=2.80e+00: pi=0.6767, mu=21.1116, ll=-29016464.22, converged=True
+theta=2.87e+00: pi=0.6767, mu=21.1157, ll=-29218658.69, converged=True
+theta=2.94e+00: pi=0.6768, mu=21.1195, ll=-29424726.10, converged=True
+theta=3.01e+00: pi=0.6768, mu=21.1231, ll=-29634705.25, converged=True
+theta=3.08e+00: pi=0.6769, mu=21.1264, ll=-29848634.47, converged=True
+theta=3.15e+00: pi=0.6769, mu=21.1294, ll=-30066551.61, converged=True
+theta=3.22e+00: pi=0.6770, mu=21.1322, ll=-30288494.02, converged=True
+theta=3.30e+00: pi=0.6770, mu=21.1348, ll=-30514498.54, converged=True
+theta=3.37e+00: pi=0.6770, mu=21.1372, ll=-30744601.45, converged=True
+theta=3.45e+00: pi=0.6771, mu=21.1395, ll=-30978838.51, converged=True
+theta=3.53e+00: pi=0.6771, mu=21.1415, ll=-31217244.86, converged=True
+theta=3.62e+00: pi=0.6771, mu=21.1434, ll=-31459855.07, converged=True
+theta=3.70e+00: pi=0.6772, mu=21.1451, ll=-31706703.07, converged=True
+theta=3.79e+00: pi=0.6772, mu=21.1467, ll=-31957822.18, converged=True
+theta=3.88e+00: pi=0.6772, mu=21.1482, ll=-32213245.03, converged=True
+theta=3.97e+00: pi=0.6772, mu=21.1495, ll=-32473003.59, converged=True
+theta=4.06e+00: pi=0.6773, mu=21.1508, ll=-32737129.12, converged=True
+theta=4.15e+00: pi=0.6773, mu=21.1519, ll=-33005652.17, converged=True
+theta=4.25e+00: pi=0.6773, mu=21.1529, ll=-33278602.52, converged=True
+theta=4.35e+00: pi=0.6773, mu=21.1539, ll=-33556009.22, converged=True
+theta=4.45e+00: pi=0.6773, mu=21.1548, ll=-33837900.52, converged=True
+theta=4.56e+00: pi=0.6773, mu=21.1556, ll=-34124303.84, converged=True
+theta=4.66e+00: pi=0.6773, mu=21.1563, ll=-34415245.81, converged=True
+theta=4.77e+00: pi=0.6773, mu=21.1570, ll=-34710752.19, converged=True
+theta=4.89e+00: pi=0.6774, mu=21.1576, ll=-35010847.87, converged=True
+theta=5.00e+00: pi=0.6774, mu=21.1581, ll=-35315556.83, converged=True
+
+Best theta: 8.51e-02 with ll=-20931845.23
+Final parameters: pi=0.0001, mu=6.8268, theta=0.0851
+  SUCCESS: pi=0.0001, mu=6.8268, theta=0.0851
+
+Processing strain_yEK23...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813185 data points
+  Added ChrIV: 1531933 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948067 data points
+  Added ChrXV: 1091292 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071323
+  Zero fraction: 0.7052
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.0000, mu=6.6259, ll=-19594923.96, converged=True
+theta=5.12e-02: pi=0.0000, mu=6.6259, ll=-19573592.70, converged=True
+theta=5.24e-02: pi=0.0000, mu=6.6259, ll=-19553362.10, converged=True
+theta=5.36e-02: pi=0.0000, mu=6.6259, ll=-19534250.58, converged=True
+theta=5.48e-02: pi=0.0000, mu=6.6259, ll=-19516277.77, converged=True
+theta=5.61e-02: pi=0.0000, mu=6.6259, ll=-19499462.49, converged=True
+theta=5.74e-02: pi=0.0000, mu=6.6259, ll=-19483822.22, converged=True
+theta=5.88e-02: pi=0.0000, mu=6.6259, ll=-19469378.14, converged=True
+theta=6.02e-02: pi=0.0000, mu=6.6259, ll=-19456149.18, converged=True
+theta=6.16e-02: pi=0.0000, mu=6.6259, ll=-19444154.75, converged=True
+theta=6.30e-02: pi=0.0000, mu=6.6260, ll=-19433415.95, converged=True
+theta=6.45e-02: pi=0.0000, mu=6.6260, ll=-19423952.32, converged=True
+theta=6.60e-02: pi=0.0000, mu=6.6260, ll=-19415785.60, converged=True
+theta=6.75e-02: pi=0.0000, mu=6.6260, ll=-19408935.39, converged=True
+theta=6.91e-02: pi=0.0000, mu=6.6260, ll=-19403424.45, converged=True
+theta=7.07e-02: pi=0.0000, mu=6.6261, ll=-19399273.34, converged=True
+theta=7.24e-02: pi=0.0000, mu=6.6262, ll=-19396504.63, converged=True
+theta=7.41e-02: pi=0.0001, mu=6.6263, ll=-19395139.96, converged=True
+theta=7.58e-02: pi=0.0001, mu=6.6265, ll=-19395202.14, converged=True
+theta=7.76e-02: pi=0.0004, mu=6.6285, ll=-19396717.25, converged=False
+theta=7.94e-02: pi=0.0094, mu=6.6886, ll=-19399518.91, converged=False
+theta=8.13e-02: pi=0.0271, mu=6.8104, ll=-19402603.03, converged=True
+theta=8.32e-02: pi=0.0447, mu=6.9358, ll=-19405774.43, converged=True
+theta=8.51e-02: pi=0.0619, mu=7.0629, ll=-19409035.45, converged=True
+theta=8.71e-02: pi=0.0787, mu=7.1917, ll=-19412388.83, converged=True
+theta=8.92e-02: pi=0.0951, mu=7.3221, ll=-19415837.40, converged=True
+theta=9.13e-02: pi=0.1111, mu=7.4542, ll=-19419384.10, converged=True
+theta=9.34e-02: pi=0.1268, mu=7.5878, ll=-19423031.96, converged=True
+theta=9.56e-02: pi=0.1421, mu=7.7230, ll=-19426784.11, converged=True
+theta=9.78e-02: pi=0.1570, mu=7.8598, ll=-19430643.77, converged=True
+theta=1.00e-01: pi=0.1716, mu=7.9982, ll=-19434614.28, converged=True
+theta=1.02e-01: pi=0.1858, mu=8.1381, ll=-19438699.09, converged=True
+theta=1.05e-01: pi=0.1997, mu=8.2795, ll=-19442901.77, converged=True
+theta=1.07e-01: pi=0.2133, mu=8.4224, ll=-19447225.98, converged=True
+theta=1.10e-01: pi=0.2266, mu=8.5668, ll=-19451675.53, converged=True
+theta=1.12e-01: pi=0.2395, mu=8.7126, ll=-19456254.33, converged=True
+theta=1.15e-01: pi=0.2522, mu=8.8599, ll=-19460966.44, converged=True
+theta=1.18e-01: pi=0.2645, mu=9.0085, ll=-19465816.05, converged=True
+theta=1.20e-01: pi=0.2765, mu=9.1586, ll=-19470807.47, converged=True
+theta=1.23e-01: pi=0.2883, mu=9.3099, ll=-19475945.17, converged=True
+theta=1.26e-01: pi=0.2998, mu=9.4626, ll=-19481233.75, converged=True
+theta=1.29e-01: pi=0.3110, mu=9.6166, ll=-19486677.98, converged=True
+theta=1.32e-01: pi=0.3219, mu=9.7718, ll=-19492282.77, converged=True
+theta=1.35e-01: pi=0.3326, mu=9.9282, ll=-19498053.19, converged=True
+theta=1.38e-01: pi=0.3430, mu=10.0857, ll=-19503994.49, converged=True
+theta=1.42e-01: pi=0.3532, mu=10.2444, ll=-19510112.07, converged=True
+theta=1.45e-01: pi=0.3632, mu=10.4042, ll=-19516411.53, converged=True
+theta=1.48e-01: pi=0.3728, mu=10.5650, ll=-19522898.62, converged=True
+theta=1.52e-01: pi=0.3823, mu=10.7268, ll=-19529579.30, converged=True
+theta=1.55e-01: pi=0.3915, mu=10.8895, ll=-19536459.72, converged=True
+theta=1.59e-01: pi=0.4005, mu=11.0532, ll=-19543546.21, converged=True
+theta=1.63e-01: pi=0.4093, mu=11.2176, ll=-19550845.33, converged=True
+theta=1.67e-01: pi=0.4179, mu=11.3829, ll=-19558363.83, converged=True
+theta=1.70e-01: pi=0.4263, mu=11.5489, ll=-19566108.67, converged=True
+theta=1.74e-01: pi=0.4344, mu=11.7155, ll=-19574087.06, converged=True
+theta=1.79e-01: pi=0.4424, mu=11.8828, ll=-19582306.42, converged=True
+theta=1.83e-01: pi=0.4502, mu=12.0506, ll=-19590774.39, converged=True
+theta=1.87e-01: pi=0.4577, mu=12.2190, ll=-19599498.88, converged=True
+theta=1.91e-01: pi=0.4651, mu=12.3877, ll=-19608488.03, converged=True
+theta=1.96e-01: pi=0.4723, mu=12.5568, ll=-19617750.25, converged=True
+theta=2.00e-01: pi=0.4794, mu=12.7263, ll=-19627294.18, converged=True
+theta=2.05e-01: pi=0.4862, mu=12.8959, ll=-19637128.77, converged=True
+theta=2.10e-01: pi=0.4929, mu=13.0658, ll=-19647263.21, converged=True
+theta=2.15e-01: pi=0.4994, mu=13.2357, ll=-19657707.00, converged=True
+theta=2.20e-01: pi=0.5057, mu=13.4056, ll=-19668469.91, converged=True
+theta=2.25e-01: pi=0.5119, mu=13.5756, ll=-19679562.03, converged=True
+theta=2.30e-01: pi=0.5180, mu=13.7454, ll=-19690993.73, converged=True
+theta=2.36e-01: pi=0.5238, mu=13.9150, ll=-19702775.70, converged=True
+theta=2.41e-01: pi=0.5296, mu=14.0843, ll=-19714918.97, converged=True
+theta=2.47e-01: pi=0.5351, mu=14.2533, ll=-19727434.88, converged=True
+theta=2.53e-01: pi=0.5406, mu=14.4219, ll=-19740335.10, converged=True
+theta=2.59e-01: pi=0.5459, mu=14.5900, ll=-19753631.66, converged=True
+theta=2.65e-01: pi=0.5510, mu=14.7575, ll=-19767336.94, converged=True
+theta=2.71e-01: pi=0.5560, mu=14.9244, ll=-19781463.67, converged=True
+theta=2.77e-01: pi=0.5609, mu=15.0906, ll=-19796024.94, converged=True
+theta=2.84e-01: pi=0.5657, mu=15.2560, ll=-19811034.25, converged=True
+theta=2.90e-01: pi=0.5703, mu=15.4205, ll=-19826505.44, converged=True
+theta=2.97e-01: pi=0.5748, mu=15.5840, ll=-19842452.77, converged=True
+theta=3.04e-01: pi=0.5792, mu=15.7466, ll=-19858890.90, converged=True
+theta=3.11e-01: pi=0.5835, mu=15.9080, ll=-19875834.87, converged=True
+theta=3.18e-01: pi=0.5876, mu=16.0683, ll=-19893300.16, converged=True
+theta=3.26e-01: pi=0.5917, mu=16.2274, ll=-19911302.66, converged=True
+theta=3.33e-01: pi=0.5956, mu=16.3851, ll=-19929858.71, converged=True
+theta=3.41e-01: pi=0.5994, mu=16.5415, ll=-19948985.05, converged=True
+theta=3.49e-01: pi=0.6032, mu=16.6964, ll=-19968698.90, converged=True
+theta=3.57e-01: pi=0.6068, mu=16.8498, ll=-19989017.92, converged=True
+theta=3.66e-01: pi=0.6103, mu=17.0015, ll=-20009960.23, converged=True
+theta=3.74e-01: pi=0.6137, mu=17.1517, ll=-20031544.41, converged=True
+theta=3.83e-01: pi=0.6170, mu=17.3001, ll=-20053789.52, converged=True
+theta=3.92e-01: pi=0.6202, mu=17.4468, ll=-20076715.09, converged=True
+theta=4.01e-01: pi=0.6234, mu=17.5916, ll=-20100341.17, converged=True
+theta=4.11e-01: pi=0.6264, mu=17.7345, ll=-20124688.26, converged=True
+theta=4.20e-01: pi=0.6293, mu=17.8754, ll=-20149777.37, converged=True
+theta=4.30e-01: pi=0.6322, mu=18.0144, ll=-20175630.05, converged=True
+theta=4.40e-01: pi=0.6350, mu=18.1513, ll=-20202268.31, converged=True
+theta=4.51e-01: pi=0.6377, mu=18.2861, ll=-20229714.70, converged=True
+theta=4.61e-01: pi=0.6403, mu=18.4187, ll=-20257992.29, converged=True
+theta=4.72e-01: pi=0.6428, mu=18.5492, ll=-20287124.67, converged=True
+theta=4.83e-01: pi=0.6452, mu=18.6774, ll=-20317135.97, converged=True
+theta=4.94e-01: pi=0.6476, mu=18.8033, ll=-20348050.84, converged=True
+theta=5.06e-01: pi=0.6499, mu=18.9269, ll=-20379894.46, converged=True
+theta=5.18e-01: pi=0.6522, mu=19.0482, ll=-20412692.57, converged=True
+theta=5.30e-01: pi=0.6543, mu=19.1672, ll=-20446471.44, converged=True
+theta=5.42e-01: pi=0.6564, mu=19.2837, ll=-20481257.88, converged=True
+theta=5.55e-01: pi=0.6584, mu=19.3978, ll=-20517079.26, converged=True
+theta=5.68e-01: pi=0.6604, mu=19.5094, ll=-20553963.48, converged=True
+theta=5.81e-01: pi=0.6623, mu=19.6186, ll=-20591938.99, converged=True
+theta=5.95e-01: pi=0.6641, mu=19.7253, ll=-20631034.81, converged=True
+theta=6.09e-01: pi=0.6659, mu=19.8295, ll=-20671280.48, converged=True
+theta=6.23e-01: pi=0.6676, mu=19.9313, ll=-20712706.11, converged=True
+theta=6.38e-01: pi=0.6692, mu=20.0305, ll=-20755342.33, converged=True
+theta=6.52e-01: pi=0.6708, mu=20.1272, ll=-20799220.35, converged=True
+theta=6.68e-01: pi=0.6723, mu=20.2215, ll=-20844371.89, converged=True
+theta=6.83e-01: pi=0.6738, mu=20.3132, ll=-20890829.22, converged=True
+theta=6.99e-01: pi=0.6752, mu=20.4024, ll=-20938625.16, converged=True
+theta=7.16e-01: pi=0.6766, mu=20.4892, ll=-20987793.04, converged=True
+theta=7.32e-01: pi=0.6779, mu=20.5734, ll=-21038366.73, converged=True
+theta=7.50e-01: pi=0.6792, mu=20.6552, ll=-21090380.63, converged=True
+theta=7.67e-01: pi=0.6804, mu=20.7346, ll=-21143869.63, converged=True
+theta=7.85e-01: pi=0.6816, mu=20.8115, ll=-21198869.16, converged=True
+theta=8.04e-01: pi=0.6828, mu=20.8860, ll=-21255415.13, converged=True
+theta=8.22e-01: pi=0.6839, mu=20.9582, ll=-21313543.98, converged=True
+theta=8.42e-01: pi=0.6849, mu=21.0280, ll=-21373292.60, converged=True
+theta=8.61e-01: pi=0.6859, mu=21.0955, ll=-21434698.39, converged=True
+theta=8.81e-01: pi=0.6869, mu=21.1606, ll=-21497799.21, converged=True
+theta=9.02e-01: pi=0.6878, mu=21.2235, ll=-21562633.37, converged=True
+theta=9.23e-01: pi=0.6887, mu=21.2842, ll=-21629239.66, converged=True
+theta=9.45e-01: pi=0.6895, mu=21.3427, ll=-21697657.30, converged=True
+theta=9.67e-01: pi=0.6904, mu=21.3991, ll=-21767925.93, converged=True
+theta=9.90e-01: pi=0.6911, mu=21.4533, ll=-21840085.62, converged=True
+theta=1.01e+00: pi=0.6919, mu=21.5054, ll=-21914176.85, converged=True
+theta=1.04e+00: pi=0.6926, mu=21.5555, ll=-21990240.49, converged=True
+theta=1.06e+00: pi=0.6933, mu=21.6037, ll=-22068317.81, converged=True
+theta=1.09e+00: pi=0.6940, mu=21.6498, ll=-22148450.42, converged=True
+theta=1.11e+00: pi=0.6946, mu=21.6941, ll=-22230680.31, converged=True
+theta=1.14e+00: pi=0.6952, mu=21.7365, ll=-22315049.82, converged=True
+theta=1.16e+00: pi=0.6957, mu=21.7771, ll=-22401601.59, converged=True
+theta=1.19e+00: pi=0.6963, mu=21.8160, ll=-22490378.60, converged=True
+theta=1.22e+00: pi=0.6968, mu=21.8531, ll=-22581424.12, converged=True
+theta=1.25e+00: pi=0.6973, mu=21.8885, ll=-22674781.70, converged=True
+theta=1.28e+00: pi=0.6978, mu=21.9224, ll=-22770495.19, converged=True
+theta=1.31e+00: pi=0.6982, mu=21.9546, ll=-22868608.65, converged=True
+theta=1.34e+00: pi=0.6986, mu=21.9854, ll=-22969166.41, converged=True
+theta=1.37e+00: pi=0.6990, mu=22.0147, ll=-23072213.02, converged=True
+theta=1.40e+00: pi=0.6994, mu=22.0425, ll=-23177793.23, converged=True
+theta=1.43e+00: pi=0.6998, mu=22.0690, ll=-23285951.99, converged=True
+theta=1.47e+00: pi=0.7001, mu=22.0941, ll=-23396734.40, converged=True
+theta=1.50e+00: pi=0.7004, mu=22.1180, ll=-23510185.77, converged=True
+theta=1.54e+00: pi=0.7007, mu=22.1406, ll=-23626351.50, converged=True
+theta=1.57e+00: pi=0.7010, mu=22.1620, ll=-23745277.15, converged=True
+theta=1.61e+00: pi=0.7013, mu=22.1823, ll=-23867008.38, converged=True
+theta=1.65e+00: pi=0.7016, mu=22.2015, ll=-23991590.94, converged=True
+theta=1.69e+00: pi=0.7018, mu=22.2196, ll=-24119070.66, converged=True
+theta=1.72e+00: pi=0.7020, mu=22.2367, ll=-24249493.44, converged=True
+theta=1.76e+00: pi=0.7022, mu=22.2529, ll=-24382905.21, converged=True
+theta=1.81e+00: pi=0.7025, mu=22.2681, ll=-24519351.94, converged=True
+theta=1.85e+00: pi=0.7026, mu=22.2825, ll=-24658879.60, converged=True
+theta=1.89e+00: pi=0.7028, mu=22.2960, ll=-24801534.16, converged=True
+theta=1.94e+00: pi=0.7030, mu=22.3086, ll=-24947361.57, converged=True
+theta=1.98e+00: pi=0.7032, mu=22.3206, ll=-25096407.74, converged=True
+theta=2.03e+00: pi=0.7033, mu=22.3318, ll=-25248718.53, converged=True
+theta=2.08e+00: pi=0.7034, mu=22.3422, ll=-25404339.71, converged=True
+theta=2.12e+00: pi=0.7036, mu=22.3521, ll=-25563316.99, converged=True
+theta=2.17e+00: pi=0.7037, mu=22.3613, ll=-25725695.95, converged=True
+theta=2.22e+00: pi=0.7038, mu=22.3699, ll=-25891522.07, converged=True
+theta=2.28e+00: pi=0.7039, mu=22.3779, ll=-26060840.67, converged=True
+theta=2.33e+00: pi=0.7040, mu=22.3855, ll=-26233696.94, converged=True
+theta=2.38e+00: pi=0.7041, mu=22.3925, ll=-26410135.88, converged=True
+theta=2.44e+00: pi=0.7042, mu=22.3990, ll=-26590202.30, converged=True
+theta=2.50e+00: pi=0.7043, mu=22.4051, ll=-26773940.82, converged=True
+theta=2.56e+00: pi=0.7043, mu=22.4108, ll=-26961395.83, converged=True
+theta=2.62e+00: pi=0.7044, mu=22.4160, ll=-27152611.48, converged=True
+theta=2.68e+00: pi=0.7045, mu=22.4209, ll=-27347631.66, converged=True
+theta=2.74e+00: pi=0.7045, mu=22.4254, ll=-27546500.00, converged=True
+theta=2.80e+00: pi=0.7046, mu=22.4297, ll=-27749259.82, converged=True
+theta=2.87e+00: pi=0.7046, mu=22.4336, ll=-27955954.14, converged=True
+theta=2.94e+00: pi=0.7047, mu=22.4372, ll=-28166625.64, converged=True
+theta=3.01e+00: pi=0.7047, mu=22.4405, ll=-28381316.68, converged=True
+theta=3.08e+00: pi=0.7048, mu=22.4436, ll=-28600069.23, converged=True
+theta=3.15e+00: pi=0.7048, mu=22.4464, ll=-28822924.90, converged=True
+theta=3.22e+00: pi=0.7048, mu=22.4491, ll=-29049924.86, converged=True
+theta=3.30e+00: pi=0.7049, mu=22.4515, ll=-29281109.91, converged=True
+theta=3.37e+00: pi=0.7049, mu=22.4537, ll=-29516520.36, converged=True
+theta=3.45e+00: pi=0.7049, mu=22.4558, ll=-29756196.09, converged=True
+theta=3.53e+00: pi=0.7050, mu=22.4576, ll=-30000176.50, converged=True
+theta=3.62e+00: pi=0.7050, mu=22.4594, ll=-30248500.47, converged=True
+theta=3.70e+00: pi=0.7050, mu=22.4610, ll=-30501206.36, converged=True
+theta=3.79e+00: pi=0.7050, mu=22.4624, ll=-30758332.01, converged=True
+theta=3.88e+00: pi=0.7050, mu=22.4638, ll=-31019914.68, converged=True
+theta=3.97e+00: pi=0.7051, mu=22.4650, ll=-31285991.04, converged=True
+theta=4.06e+00: pi=0.7051, mu=22.4661, ll=-31556597.16, converged=True
+theta=4.15e+00: pi=0.7051, mu=22.4671, ll=-31831768.48, converged=True
+theta=4.25e+00: pi=0.7051, mu=22.4681, ll=-32111539.80, converged=True
+theta=4.35e+00: pi=0.7051, mu=22.4689, ll=-32395945.23, converged=True
+theta=4.45e+00: pi=0.7051, mu=22.4697, ll=-32685018.18, converged=True
+theta=4.56e+00: pi=0.7051, mu=22.4704, ll=-32978791.36, converged=True
+theta=4.66e+00: pi=0.7051, mu=22.4710, ll=-33277296.73, converged=True
+theta=4.77e+00: pi=0.7051, mu=22.4716, ll=-33580565.48, converged=True
+theta=4.89e+00: pi=0.7052, mu=22.4722, ll=-33888628.02, converged=True
+theta=5.00e+00: pi=0.7052, mu=22.4726, ll=-34201513.93, converged=True
+
+Best theta: 7.41e-02 with ll=-19395139.96
+Final parameters: pi=0.0001, mu=6.6263, theta=0.0741
+  SUCCESS: pi=0.0001, mu=6.6263, theta=0.0741
+
+Processing strain_yTW001...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813185 data points
+  Added ChrIV: 1531933 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948066 data points
+  Added ChrXV: 1091292 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071322
+  Zero fraction: 0.9011
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.5825, mu=11.0648, ll=-8411400.61, converged=True
+theta=5.12e-02: pi=0.5905, mu=11.2832, ll=-8412308.80, converged=True
+theta=5.24e-02: pi=0.5984, mu=11.5050, ll=-8413241.23, converged=True
+theta=5.36e-02: pi=0.6062, mu=11.7303, ll=-8414198.60, converged=True
+theta=5.48e-02: pi=0.6137, mu=11.9591, ll=-8415181.62, converged=True
+theta=5.61e-02: pi=0.6210, mu=12.1914, ll=-8416191.05, converged=True
+theta=5.74e-02: pi=0.6282, mu=12.4271, ll=-8417227.64, converged=True
+theta=5.88e-02: pi=0.6353, mu=12.6664, ll=-8418292.20, converged=True
+theta=6.02e-02: pi=0.6421, mu=12.9092, ll=-8419385.54, converged=True
+theta=6.16e-02: pi=0.6488, mu=13.1555, ll=-8420508.50, converged=True
+theta=6.30e-02: pi=0.6554, mu=13.4053, ll=-8421661.95, converged=True
+theta=6.45e-02: pi=0.6618, mu=13.6586, ll=-8422846.80, converged=True
+theta=6.60e-02: pi=0.6680, mu=13.9155, ll=-8424063.97, converged=True
+theta=6.75e-02: pi=0.6741, mu=14.1759, ll=-8425314.42, converged=True
+theta=6.91e-02: pi=0.6801, mu=14.4398, ll=-8426599.13, converged=True
+theta=7.07e-02: pi=0.6859, mu=14.7072, ll=-8427919.12, converged=True
+theta=7.24e-02: pi=0.6916, mu=14.9781, ll=-8429275.45, converged=True
+theta=7.41e-02: pi=0.6971, mu=15.2525, ll=-8430669.20, converged=True
+theta=7.58e-02: pi=0.7025, mu=15.5304, ll=-8432101.50, converged=True
+theta=7.76e-02: pi=0.7078, mu=15.8117, ll=-8433573.49, converged=True
+theta=7.94e-02: pi=0.7130, mu=16.0964, ll=-8435086.39, converged=True
+theta=8.13e-02: pi=0.7180, mu=16.3845, ll=-8436641.41, converged=True
+theta=8.32e-02: pi=0.7230, mu=16.6760, ll=-8438239.84, converged=True
+theta=8.51e-02: pi=0.7278, mu=16.9708, ll=-8439882.99, converged=True
+theta=8.71e-02: pi=0.7325, mu=17.2689, ll=-8441572.22, converged=True
+theta=8.92e-02: pi=0.7371, mu=17.5702, ll=-8443308.93, converged=True
+theta=9.13e-02: pi=0.7415, mu=17.8748, ll=-8445094.57, converged=True
+theta=9.34e-02: pi=0.7459, mu=18.1826, ll=-8446930.63, converged=True
+theta=9.56e-02: pi=0.7502, mu=18.4934, ll=-8448818.66, converged=True
+theta=9.78e-02: pi=0.7544, mu=18.8073, ll=-8450760.26, converged=True
+theta=1.00e-01: pi=0.7584, mu=19.1243, ll=-8452757.07, converged=True
+theta=1.02e-01: pi=0.7624, mu=19.4442, ll=-8454810.79, converged=True
+theta=1.05e-01: pi=0.7663, mu=19.7669, ll=-8456923.18, converged=True
+theta=1.07e-01: pi=0.7701, mu=20.0925, ll=-8459096.05, converged=True
+theta=1.10e-01: pi=0.7738, mu=20.4208, ll=-8461331.28, converged=True
+theta=1.12e-01: pi=0.7774, mu=20.7517, ll=-8463630.79, converged=True
+theta=1.15e-01: pi=0.7809, mu=21.0853, ll=-8465996.60, converged=True
+theta=1.18e-01: pi=0.7843, mu=21.4213, ll=-8468430.75, converged=True
+theta=1.20e-01: pi=0.7877, mu=21.7597, ll=-8470935.38, converged=True
+theta=1.23e-01: pi=0.7910, mu=22.1005, ll=-8473512.68, converged=True
+theta=1.26e-01: pi=0.7941, mu=22.4434, ll=-8476164.94, converged=True
+theta=1.29e-01: pi=0.7973, mu=22.7885, ll=-8478894.50, converged=True
+theta=1.32e-01: pi=0.8003, mu=23.1355, ll=-8481703.76, converged=True
+theta=1.35e-01: pi=0.8033, mu=23.4845, ll=-8484595.25, converged=True
+theta=1.38e-01: pi=0.8062, mu=23.8352, ll=-8487571.53, converged=True
+theta=1.42e-01: pi=0.8090, mu=24.1876, ll=-8490635.28, converged=True
+theta=1.45e-01: pi=0.8117, mu=24.5415, ll=-8493789.24, converged=True
+theta=1.48e-01: pi=0.8144, mu=24.8969, ll=-8497036.25, converged=True
+theta=1.52e-01: pi=0.8171, mu=25.2535, ll=-8500379.25, converged=True
+theta=1.55e-01: pi=0.8196, mu=25.6113, ll=-8503821.25, converged=True
+theta=1.59e-01: pi=0.8221, mu=25.9701, ll=-8507365.40, converged=True
+theta=1.63e-01: pi=0.8245, mu=26.3297, ll=-8511014.90, converged=True
+theta=1.67e-01: pi=0.8269, mu=26.6902, ll=-8514773.09, converged=True
+theta=1.70e-01: pi=0.8292, mu=27.0511, ll=-8518643.39, converged=True
+theta=1.74e-01: pi=0.8315, mu=27.4126, ll=-8522629.35, converged=True
+theta=1.79e-01: pi=0.8337, mu=27.7742, ll=-8526734.63, converged=True
+theta=1.83e-01: pi=0.8358, mu=28.1361, ll=-8530962.99, converged=True
+theta=1.87e-01: pi=0.8379, mu=28.4979, ll=-8535318.32, converged=True
+theta=1.91e-01: pi=0.8399, mu=28.8595, ll=-8539804.63, converged=True
+theta=1.96e-01: pi=0.8419, mu=29.2207, ll=-8544426.06, converged=True
+theta=2.00e-01: pi=0.8438, mu=29.5815, ll=-8549186.87, converged=True
+theta=2.05e-01: pi=0.8457, mu=29.9415, ll=-8554091.47, converged=True
+theta=2.10e-01: pi=0.8475, mu=30.3007, ll=-8559144.37, converged=True
+theta=2.15e-01: pi=0.8493, mu=30.6589, ll=-8564350.27, converged=True
+theta=2.20e-01: pi=0.8510, mu=31.0159, ll=-8569713.97, converged=True
+theta=2.25e-01: pi=0.8527, mu=31.3715, ll=-8575240.43, converged=True
+theta=2.30e-01: pi=0.8544, mu=31.7256, ll=-8580934.77, converged=True
+theta=2.36e-01: pi=0.8560, mu=32.0780, ll=-8586802.27, converged=True
+theta=2.41e-01: pi=0.8575, mu=32.4286, ll=-8592848.34, converged=True
+theta=2.47e-01: pi=0.8590, mu=32.7771, ll=-8599078.58, converged=True
+theta=2.53e-01: pi=0.8605, mu=33.1233, ll=-8605498.73, converged=True
+theta=2.59e-01: pi=0.8620, mu=33.4672, ll=-8612114.74, converged=True
+theta=2.65e-01: pi=0.8633, mu=33.8086, ll=-8618932.69, converged=True
+theta=2.71e-01: pi=0.8647, mu=34.1472, ll=-8625958.85, converged=True
+theta=2.77e-01: pi=0.8660, mu=34.4830, ll=-8633199.70, converged=True
+theta=2.84e-01: pi=0.8673, mu=34.8157, ll=-8640661.87, converged=True
+theta=2.90e-01: pi=0.8685, mu=35.1452, ll=-8648352.20, converged=True
+theta=2.97e-01: pi=0.8698, mu=35.4713, ll=-8656277.72, converged=True
+theta=3.04e-01: pi=0.8709, mu=35.7939, ll=-8664445.65, converged=True
+theta=3.11e-01: pi=0.8721, mu=36.1129, ll=-8672863.41, converged=True
+theta=3.18e-01: pi=0.8732, mu=36.4281, ll=-8681538.65, converged=True
+theta=3.26e-01: pi=0.8742, mu=36.7393, ll=-8690479.20, converged=True
+theta=3.33e-01: pi=0.8753, mu=37.0464, ll=-8699693.12, converged=True
+theta=3.41e-01: pi=0.8763, mu=37.3492, ll=-8709188.68, converged=True
+theta=3.49e-01: pi=0.8773, mu=37.6477, ll=-8718974.37, converged=True
+theta=3.57e-01: pi=0.8782, mu=37.9418, ll=-8729058.92, converged=True
+theta=3.66e-01: pi=0.8792, mu=38.2312, ll=-8739451.27, converged=True
+theta=3.74e-01: pi=0.8800, mu=38.5160, ll=-8750160.59, converged=True
+theta=3.83e-01: pi=0.8809, mu=38.7959, ll=-8761196.31, converged=True
+theta=3.92e-01: pi=0.8818, mu=39.0708, ll=-8772568.07, converged=True
+theta=4.01e-01: pi=0.8826, mu=39.3408, ll=-8784285.77, converged=True
+theta=4.11e-01: pi=0.8834, mu=39.6057, ll=-8796359.54, converged=True
+theta=4.20e-01: pi=0.8841, mu=39.8653, ll=-8808799.79, converged=True
+theta=4.30e-01: pi=0.8848, mu=40.1197, ll=-8821617.15, converged=True
+theta=4.40e-01: pi=0.8856, mu=40.3688, ll=-8834822.51, converged=True
+theta=4.51e-01: pi=0.8862, mu=40.6125, ll=-8848427.03, converged=True
+theta=4.61e-01: pi=0.8869, mu=40.8507, ll=-8862442.12, converged=True
+theta=4.72e-01: pi=0.8875, mu=41.0834, ll=-8876879.45, converged=True
+theta=4.83e-01: pi=0.8882, mu=41.3106, ll=-8891750.97, converged=True
+theta=4.94e-01: pi=0.8888, mu=41.5322, ll=-8907068.88, converged=True
+theta=5.06e-01: pi=0.8893, mu=41.7482, ll=-8922845.65, converged=True
+theta=5.18e-01: pi=0.8899, mu=41.9586, ll=-8939094.04, converged=True
+theta=5.30e-01: pi=0.8904, mu=42.1634, ll=-8955827.05, converged=True
+theta=5.42e-01: pi=0.8909, mu=42.3625, ll=-8973057.99, converged=True
+theta=5.55e-01: pi=0.8914, mu=42.5560, ll=-8990800.42, converged=True
+theta=5.68e-01: pi=0.8919, mu=42.7439, ll=-9009068.19, converged=True
+theta=5.81e-01: pi=0.8924, mu=42.9261, ll=-9027875.41, converged=True
+theta=5.95e-01: pi=0.8928, mu=43.1028, ll=-9047236.48, converged=True
+theta=6.09e-01: pi=0.8932, mu=43.2740, ll=-9067166.09, converged=True
+theta=6.23e-01: pi=0.8936, mu=43.4396, ll=-9087679.19, converged=True
+theta=6.38e-01: pi=0.8940, mu=43.5998, ll=-9108791.01, converged=True
+theta=6.52e-01: pi=0.8944, mu=43.7545, ll=-9130517.07, converged=True
+theta=6.68e-01: pi=0.8948, mu=43.9039, ll=-9152873.16, converged=True
+theta=6.83e-01: pi=0.8951, mu=44.0480, ll=-9175875.35, converged=True
+theta=6.99e-01: pi=0.8954, mu=44.1868, ll=-9199539.99, converged=True
+theta=7.16e-01: pi=0.8958, mu=44.3205, ll=-9223883.71, converged=True
+theta=7.32e-01: pi=0.8961, mu=44.4490, ll=-9248923.40, converged=True
+theta=7.50e-01: pi=0.8963, mu=44.5726, ll=-9274676.23, converged=True
+theta=7.67e-01: pi=0.8966, mu=44.6913, ll=-9301159.67, converged=True
+theta=7.85e-01: pi=0.8969, mu=44.8051, ll=-9328391.42, converged=True
+theta=8.04e-01: pi=0.8971, mu=44.9142, ll=-9356389.47, converged=True
+theta=8.22e-01: pi=0.8974, mu=45.0186, ll=-9385172.08, converged=True
+theta=8.42e-01: pi=0.8976, mu=45.1185, ll=-9414757.77, converged=True
+theta=8.61e-01: pi=0.8978, mu=45.2140, ll=-9445165.32, converged=True
+theta=8.81e-01: pi=0.8980, mu=45.3052, ll=-9476413.79, converged=True
+theta=9.02e-01: pi=0.8982, mu=45.3922, ll=-9508522.47, converged=True
+theta=9.23e-01: pi=0.8984, mu=45.4750, ll=-9541510.93, converged=True
+theta=9.45e-01: pi=0.8986, mu=45.5539, ll=-9575398.97, converged=True
+theta=9.67e-01: pi=0.8987, mu=45.6289, ll=-9610206.68, converged=True
+theta=9.90e-01: pi=0.8989, mu=45.7001, ll=-9645954.35, converged=True
+theta=1.01e+00: pi=0.8991, mu=45.7677, ll=-9682662.56, converged=True
+theta=1.04e+00: pi=0.8992, mu=45.8318, ll=-9720352.10, converged=True
+theta=1.06e+00: pi=0.8993, mu=45.8925, ll=-9759044.02, converged=True
+theta=1.09e+00: pi=0.8995, mu=45.9499, ll=-9798759.60, converged=True
+theta=1.11e+00: pi=0.8996, mu=46.0041, ll=-9839520.35, converged=True
+theta=1.14e+00: pi=0.8997, mu=46.0553, ll=-9881348.01, converged=True
+theta=1.16e+00: pi=0.8998, mu=46.1036, ll=-9924264.57, converged=True
+theta=1.19e+00: pi=0.8999, mu=46.1490, ll=-9968292.22, converged=True
+theta=1.22e+00: pi=0.9000, mu=46.1918, ll=-10013453.39, converged=True
+theta=1.25e+00: pi=0.9001, mu=46.2320, ll=-10059770.73, converged=True
+theta=1.28e+00: pi=0.9002, mu=46.2697, ll=-10107267.09, converged=True
+theta=1.31e+00: pi=0.9002, mu=46.3050, ll=-10155965.56, converged=True
+theta=1.34e+00: pi=0.9003, mu=46.3381, ll=-10205889.43, converged=True
+theta=1.37e+00: pi=0.9004, mu=46.3690, ll=-10257062.21, converged=True
+theta=1.40e+00: pi=0.9004, mu=46.3979, ll=-10309507.62, converged=True
+theta=1.43e+00: pi=0.9005, mu=46.4249, ll=-10363249.57, converged=True
+theta=1.47e+00: pi=0.9005, mu=46.4500, ll=-10418312.19, converged=True
+theta=1.50e+00: pi=0.9006, mu=46.4734, ll=-10474719.82, converged=True
+theta=1.54e+00: pi=0.9006, mu=46.4951, ll=-10532496.99, converged=True
+theta=1.57e+00: pi=0.9007, mu=46.5152, ll=-10591668.43, converged=True
+theta=1.61e+00: pi=0.9007, mu=46.5339, ll=-10652259.08, converged=True
+theta=1.65e+00: pi=0.9008, mu=46.5512, ll=-10714294.07, converged=True
+theta=1.69e+00: pi=0.9008, mu=46.5672, ll=-10777798.74, converged=True
+theta=1.72e+00: pi=0.9008, mu=46.5820, ll=-10842798.60, converged=True
+theta=1.76e+00: pi=0.9008, mu=46.5956, ll=-10909319.38, converged=True
+theta=1.81e+00: pi=0.9009, mu=46.6081, ll=-10977386.99, converged=True
+theta=1.85e+00: pi=0.9009, mu=46.6196, ll=-11047027.53, converged=True
+theta=1.89e+00: pi=0.9009, mu=46.6302, ll=-11118267.31, converged=True
+theta=1.94e+00: pi=0.9009, mu=46.6399, ll=-11191132.82, converged=True
+theta=1.98e+00: pi=0.9010, mu=46.6488, ll=-11265650.73, converged=True
+theta=2.03e+00: pi=0.9010, mu=46.6569, ll=-11341847.93, converged=True
+theta=2.08e+00: pi=0.9010, mu=46.6643, ll=-11419751.46, converged=True
+theta=2.12e+00: pi=0.9010, mu=46.6711, ll=-11499388.58, converged=True
+theta=2.17e+00: pi=0.9010, mu=46.6772, ll=-11580786.73, converged=True
+theta=2.22e+00: pi=0.9010, mu=46.6828, ll=-11663973.53, converged=True
+theta=2.28e+00: pi=0.9010, mu=46.6879, ll=-11748976.78, converged=True
+theta=2.33e+00: pi=0.9011, mu=46.6925, ll=-11835824.48, converged=True
+theta=2.38e+00: pi=0.9011, mu=46.6967, ll=-11924544.81, converged=True
+theta=2.44e+00: pi=0.9011, mu=46.7004, ll=-12015166.13, converged=True
+theta=2.50e+00: pi=0.9011, mu=46.7038, ll=-12107716.97, converged=True
+theta=2.56e+00: pi=0.9011, mu=46.7069, ll=-12202226.06, converged=True
+theta=2.62e+00: pi=0.9011, mu=46.7096, ll=-12298722.28, converged=True
+theta=2.68e+00: pi=0.9011, mu=46.7121, ll=-12397234.71, converged=True
+theta=2.74e+00: pi=0.9011, mu=46.7143, ll=-12497792.60, converged=True
+theta=2.80e+00: pi=0.9011, mu=46.7162, ll=-12600425.34, converged=True
+theta=2.87e+00: pi=0.9011, mu=46.7180, ll=-12705162.53, converged=True
+theta=2.94e+00: pi=0.9011, mu=46.7196, ll=-12812033.90, converged=True
+theta=3.01e+00: pi=0.9011, mu=46.7210, ll=-12921069.35, converged=True
+theta=3.08e+00: pi=0.9011, mu=46.7222, ll=-13032298.94, converged=True
+theta=3.15e+00: pi=0.9011, mu=46.7233, ll=-13145752.88, converged=True
+theta=3.22e+00: pi=0.9011, mu=46.7243, ll=-13261461.53, converged=True
+theta=3.30e+00: pi=0.9011, mu=46.7252, ll=-13379455.38, converged=True
+theta=3.37e+00: pi=0.9011, mu=46.7259, ll=-13499765.07, converged=True
+theta=3.45e+00: pi=0.9011, mu=46.7266, ll=-13622421.37, converged=True
+theta=3.53e+00: pi=0.9011, mu=46.7272, ll=-13747455.17, converged=True
+theta=3.62e+00: pi=0.9011, mu=46.7277, ll=-13874897.48, converged=True
+theta=3.70e+00: pi=0.9011, mu=46.7282, ll=-14004779.43, converged=True
+theta=3.79e+00: pi=0.9011, mu=46.7286, ll=-14137132.24, converged=True
+theta=3.88e+00: pi=0.9011, mu=46.7289, ll=-14271987.23, converged=True
+theta=3.97e+00: pi=0.9011, mu=46.7292, ll=-14409375.84, converged=True
+theta=4.06e+00: pi=0.9011, mu=46.7295, ll=-14549329.54, converged=True
+theta=4.15e+00: pi=0.9011, mu=46.7297, ll=-14691879.90, converged=True
+theta=4.25e+00: pi=0.9011, mu=46.7299, ll=-14837058.56, converged=True
+theta=4.35e+00: pi=0.9011, mu=46.7301, ll=-14984897.20, converged=True
+theta=4.45e+00: pi=0.9011, mu=46.7303, ll=-15135427.55, converged=True
+theta=4.56e+00: pi=0.9011, mu=46.7304, ll=-15288681.36, converged=True
+theta=4.66e+00: pi=0.9011, mu=46.7305, ll=-15444690.40, converged=True
+theta=4.77e+00: pi=0.9011, mu=46.7306, ll=-15603486.48, converged=True
+theta=4.89e+00: pi=0.9011, mu=46.7307, ll=-15765101.38, converged=True
+theta=5.00e+00: pi=0.9011, mu=46.7308, ll=-15929566.87, converged=True
+
+Best theta: 5.00e-02 with ll=-8411400.61
+Final parameters: pi=0.5825, mu=11.0648, theta=0.0500
+  SUCCESS: pi=0.5825, mu=11.0648, theta=0.0500
+
+Processing strain_yWT03a...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813184 data points
+  Added ChrIV: 1531933 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948066 data points
+  Added ChrXV: 1091291 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071320
+  Zero fraction: 0.9712
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.8818, mu=13.3034, ll=-2482884.38, converged=True
+theta=5.12e-02: pi=0.8841, mu=13.5647, ll=-2483778.17, converged=True
+theta=5.24e-02: pi=0.8863, mu=13.8302, ll=-2484693.57, converged=True
+theta=5.36e-02: pi=0.8885, mu=14.0997, ll=-2485631.10, converged=True
+theta=5.48e-02: pi=0.8906, mu=14.3733, ll=-2486591.32, converged=True
+theta=5.61e-02: pi=0.8927, mu=14.6510, ll=-2487574.80, converged=True
+theta=5.74e-02: pi=0.8947, mu=14.9329, ll=-2488582.10, converged=True
+theta=5.88e-02: pi=0.8967, mu=15.2189, ll=-2489613.83, converged=True
+theta=6.02e-02: pi=0.8986, mu=15.5090, ll=-2490670.58, converged=True
+theta=6.16e-02: pi=0.9005, mu=15.8032, ll=-2491753.00, converged=True
+theta=6.30e-02: pi=0.9024, mu=16.1016, ll=-2492861.71, converged=True
+theta=6.45e-02: pi=0.9042, mu=16.4041, ll=-2493997.37, converged=True
+theta=6.60e-02: pi=0.9059, mu=16.7107, ll=-2495160.66, converged=True
+theta=6.75e-02: pi=0.9076, mu=17.0215, ll=-2496352.27, converged=True
+theta=6.91e-02: pi=0.9093, mu=17.3364, ll=-2497572.90, converged=True
+theta=7.07e-02: pi=0.9110, mu=17.6554, ll=-2498823.30, converged=True
+theta=7.24e-02: pi=0.9126, mu=17.9784, ll=-2500104.20, converged=True
+theta=7.41e-02: pi=0.9141, mu=18.3055, ll=-2501416.37, converged=True
+theta=7.58e-02: pi=0.9157, mu=18.6367, ll=-2502760.59, converged=True
+theta=7.76e-02: pi=0.9171, mu=18.9719, ll=-2504137.68, converged=True
+theta=7.94e-02: pi=0.9186, mu=19.3110, ll=-2505548.47, converged=True
+theta=8.13e-02: pi=0.9200, mu=19.6541, ll=-2506993.80, converged=True
+theta=8.32e-02: pi=0.9214, mu=20.0010, ll=-2508474.54, converged=True
+theta=8.51e-02: pi=0.9228, mu=20.3519, ll=-2509991.60, converged=True
+theta=8.71e-02: pi=0.9241, mu=20.7065, ll=-2511545.89, converged=True
+theta=8.92e-02: pi=0.9254, mu=21.0649, ll=-2513138.35, converged=True
+theta=9.13e-02: pi=0.9266, mu=21.4270, ll=-2514769.96, converged=True
+theta=9.34e-02: pi=0.9279, mu=21.7928, ll=-2516441.70, converged=True
+theta=9.56e-02: pi=0.9291, mu=22.1621, ll=-2518154.59, converged=True
+theta=9.78e-02: pi=0.9302, mu=22.5349, ll=-2519909.69, converged=True
+theta=1.00e-01: pi=0.9314, mu=22.9111, ll=-2521708.07, converged=True
+theta=1.02e-01: pi=0.9325, mu=23.2908, ll=-2523550.82, converged=True
+theta=1.05e-01: pi=0.9336, mu=23.6736, ll=-2525439.09, converged=True
+theta=1.07e-01: pi=0.9347, mu=24.0597, ll=-2527374.03, converged=True
+theta=1.10e-01: pi=0.9357, mu=24.4488, ll=-2529356.83, converged=True
+theta=1.12e-01: pi=0.9367, mu=24.8410, ll=-2531388.73, converged=True
+theta=1.15e-01: pi=0.9377, mu=25.2360, ll=-2533470.97, converged=True
+theta=1.18e-01: pi=0.9387, mu=25.6338, ll=-2535604.84, converged=True
+theta=1.20e-01: pi=0.9396, mu=26.0343, ll=-2537791.67, converged=True
+theta=1.23e-01: pi=0.9405, mu=26.4373, ll=-2540032.82, converged=True
+theta=1.26e-01: pi=0.9414, mu=26.8428, ll=-2542329.67, converged=True
+theta=1.29e-01: pi=0.9423, mu=27.2506, ll=-2544683.67, converged=True
+theta=1.32e-01: pi=0.9432, mu=27.6605, ll=-2547096.28, converged=True
+theta=1.35e-01: pi=0.9440, mu=28.0725, ll=-2549569.01, converged=True
+theta=1.38e-01: pi=0.9448, mu=28.4864, ll=-2552103.41, converged=True
+theta=1.42e-01: pi=0.9456, mu=28.9020, ll=-2554701.05, converged=True
+theta=1.45e-01: pi=0.9464, mu=29.3192, ll=-2557363.59, converged=True
+theta=1.48e-01: pi=0.9471, mu=29.7379, ll=-2560092.68, converged=True
+theta=1.52e-01: pi=0.9479, mu=30.1579, ll=-2562890.04, converged=True
+theta=1.55e-01: pi=0.9486, mu=30.5790, ll=-2565757.44, converged=True
+theta=1.59e-01: pi=0.9493, mu=31.0010, ll=-2568696.69, converged=True
+theta=1.63e-01: pi=0.9500, mu=31.4239, ll=-2571709.64, converged=True
+theta=1.67e-01: pi=0.9506, mu=31.8473, ll=-2574798.19, converged=True
+theta=1.70e-01: pi=0.9513, mu=32.2712, ll=-2577964.30, converged=True
+theta=1.74e-01: pi=0.9519, mu=32.6954, ll=-2581209.98, converged=True
+theta=1.79e-01: pi=0.9525, mu=33.1196, ll=-2584537.27, converged=True
+theta=1.83e-01: pi=0.9531, mu=33.5437, ll=-2587948.30, converged=True
+theta=1.87e-01: pi=0.9537, mu=33.9675, ll=-2591445.23, converged=True
+theta=1.91e-01: pi=0.9543, mu=34.3908, ll=-2595030.27, converged=True
+theta=1.96e-01: pi=0.9548, mu=34.8134, ll=-2598705.71, converged=True
+theta=2.00e-01: pi=0.9554, mu=35.2351, ll=-2602473.89, converged=True
+theta=2.05e-01: pi=0.9559, mu=35.6557, ll=-2606337.20, converged=True
+theta=2.10e-01: pi=0.9564, mu=36.0751, ll=-2610298.11, converged=True
+theta=2.15e-01: pi=0.9569, mu=36.4929, ll=-2614359.12, converged=True
+theta=2.20e-01: pi=0.9574, mu=36.9091, ll=-2618522.84, converged=True
+theta=2.25e-01: pi=0.9579, mu=37.3233, ll=-2622791.91, converged=True
+theta=2.30e-01: pi=0.9583, mu=37.7355, ll=-2627169.05, converged=True
+theta=2.36e-01: pi=0.9588, mu=38.1453, ll=-2631657.05, converged=True
+theta=2.41e-01: pi=0.9592, mu=38.5527, ll=-2636258.76, converged=True
+theta=2.47e-01: pi=0.9596, mu=38.9573, ll=-2640977.12, converged=True
+theta=2.53e-01: pi=0.9601, mu=39.3591, ll=-2645815.12, converged=True
+theta=2.59e-01: pi=0.9605, mu=39.7577, ll=-2650775.84, converged=True
+theta=2.65e-01: pi=0.9609, mu=40.1531, ll=-2655862.44, converged=True
+theta=2.71e-01: pi=0.9612, mu=40.5449, ll=-2661078.14, converged=True
+theta=2.77e-01: pi=0.9616, mu=40.9331, ll=-2666426.25, converged=True
+theta=2.84e-01: pi=0.9620, mu=41.3174, ll=-2671910.16, converged=True
+theta=2.90e-01: pi=0.9623, mu=41.6976, ll=-2677533.34, converged=True
+theta=2.97e-01: pi=0.9626, mu=42.0737, ll=-2683299.34, converged=True
+theta=3.04e-01: pi=0.9630, mu=42.4453, ll=-2689211.81, converged=True
+theta=3.11e-01: pi=0.9633, mu=42.8123, ll=-2695274.46, converged=True
+theta=3.18e-01: pi=0.9636, mu=43.1745, ll=-2701491.11, converged=True
+theta=3.26e-01: pi=0.9639, mu=43.5318, ll=-2707865.67, converged=True
+theta=3.33e-01: pi=0.9642, mu=43.8841, ll=-2714402.12, converged=True
+theta=3.41e-01: pi=0.9645, mu=44.2312, ll=-2721104.55, converged=True
+theta=3.49e-01: pi=0.9647, mu=44.5728, ll=-2727977.14, converged=True
+theta=3.57e-01: pi=0.9650, mu=44.9090, ll=-2735024.16, converged=True
+theta=3.66e-01: pi=0.9653, mu=45.2395, ll=-2742250.00, converged=True
+theta=3.74e-01: pi=0.9655, mu=45.5643, ll=-2749659.10, converged=True
+theta=3.83e-01: pi=0.9657, mu=45.8832, ll=-2757256.04, converged=True
+theta=3.92e-01: pi=0.9660, mu=46.1961, ll=-2765045.50, converged=True
+theta=4.01e-01: pi=0.9662, mu=46.5029, ll=-2773032.23, converged=True
+theta=4.11e-01: pi=0.9664, mu=46.8035, ll=-2781221.11, converged=True
+theta=4.20e-01: pi=0.9666, mu=47.0979, ll=-2789617.12, converged=True
+theta=4.30e-01: pi=0.9668, mu=47.3859, ll=-2798225.34, converged=True
+theta=4.40e-01: pi=0.9670, mu=47.6675, ll=-2807050.96, converged=True
+theta=4.51e-01: pi=0.9672, mu=47.9426, ll=-2816099.28, converged=True
+theta=4.61e-01: pi=0.9674, mu=48.2112, ll=-2825375.71, converged=True
+theta=4.72e-01: pi=0.9676, mu=48.4731, ll=-2834885.74, converged=True
+theta=4.83e-01: pi=0.9677, mu=48.7285, ll=-2844635.03, converged=True
+theta=4.94e-01: pi=0.9679, mu=48.9773, ll=-2854629.29, converged=True
+theta=5.06e-01: pi=0.9681, mu=49.2194, ll=-2864874.38, converged=True
+theta=5.18e-01: pi=0.9682, mu=49.4548, ll=-2875376.26, converged=True
+theta=5.30e-01: pi=0.9684, mu=49.6836, ll=-2886141.01, converged=True
+theta=5.42e-01: pi=0.9685, mu=49.9057, ll=-2897174.83, converged=True
+theta=5.55e-01: pi=0.9686, mu=50.1212, ll=-2908484.00, converged=True
+theta=5.68e-01: pi=0.9688, mu=50.3300, ll=-2920074.97, converged=True
+theta=5.81e-01: pi=0.9689, mu=50.5323, ll=-2931954.26, converged=True
+theta=5.95e-01: pi=0.9690, mu=50.7280, ll=-2944128.53, converged=True
+theta=6.09e-01: pi=0.9691, mu=50.9173, ll=-2956604.55, converged=True
+theta=6.23e-01: pi=0.9692, mu=51.1001, ll=-2969389.21, converged=True
+theta=6.38e-01: pi=0.9693, mu=51.2765, ll=-2982489.52, converged=True
+theta=6.52e-01: pi=0.9694, mu=51.4467, ll=-2995912.60, converged=True
+theta=6.68e-01: pi=0.9695, mu=51.6106, ll=-3009665.69, converged=True
+theta=6.83e-01: pi=0.9696, mu=51.7683, ll=-3023756.15, converged=True
+theta=6.99e-01: pi=0.9697, mu=51.9201, ll=-3038191.45, converged=True
+theta=7.16e-01: pi=0.9698, mu=52.0658, ll=-3052979.20, converged=True
+theta=7.32e-01: pi=0.9699, mu=52.2058, ll=-3068127.11, converged=True
+theta=7.50e-01: pi=0.9700, mu=52.3399, ll=-3083642.99, converged=True
+theta=7.67e-01: pi=0.9700, mu=52.4685, ll=-3099534.81, converged=True
+theta=7.85e-01: pi=0.9701, mu=52.5915, ll=-3115810.62, converged=True
+theta=8.04e-01: pi=0.9702, mu=52.7091, ll=-3132478.61, converged=True
+theta=8.22e-01: pi=0.9702, mu=52.8215, ll=-3149547.07, converged=True
+theta=8.42e-01: pi=0.9703, mu=52.9287, ll=-3167024.40, converged=True
+theta=8.61e-01: pi=0.9704, mu=53.0309, ll=-3184919.15, converged=True
+theta=8.81e-01: pi=0.9704, mu=53.1282, ll=-3203239.95, converged=True
+theta=9.02e-01: pi=0.9705, mu=53.2208, ll=-3221995.55, converged=True
+theta=9.23e-01: pi=0.9705, mu=53.3088, ll=-3241194.83, converged=True
+theta=9.45e-01: pi=0.9706, mu=53.3923, ll=-3260846.76, converged=True
+theta=9.67e-01: pi=0.9706, mu=53.4715, ll=-3280960.45, converged=True
+theta=9.90e-01: pi=0.9706, mu=53.5465, ll=-3301545.10, converged=True
+theta=1.01e+00: pi=0.9707, mu=53.6174, ll=-3322610.02, converged=True
+theta=1.04e+00: pi=0.9707, mu=53.6845, ll=-3344164.64, converged=True
+theta=1.06e+00: pi=0.9708, mu=53.7478, ll=-3366218.51, converged=True
+theta=1.09e+00: pi=0.9708, mu=53.8075, ll=-3388781.27, converged=True
+theta=1.11e+00: pi=0.9708, mu=53.8637, ll=-3411862.67, converged=True
+theta=1.14e+00: pi=0.9708, mu=53.9166, ll=-3435472.58, converged=True
+theta=1.16e+00: pi=0.9709, mu=53.9663, ll=-3459620.98, converged=True
+theta=1.19e+00: pi=0.9709, mu=54.0129, ll=-3484317.93, converged=True
+theta=1.22e+00: pi=0.9709, mu=54.0566, ll=-3509573.62, converged=True
+theta=1.25e+00: pi=0.9709, mu=54.0975, ll=-3535398.35, converged=True
+theta=1.28e+00: pi=0.9710, mu=54.1358, ll=-3561802.50, converged=True
+theta=1.31e+00: pi=0.9710, mu=54.1715, ll=-3588796.59, converged=True
+theta=1.34e+00: pi=0.9710, mu=54.2048, ll=-3616391.20, converged=True
+theta=1.37e+00: pi=0.9710, mu=54.2358, ll=-3644597.06, converged=True
+theta=1.40e+00: pi=0.9710, mu=54.2647, ll=-3673424.97, converged=True
+theta=1.43e+00: pi=0.9710, mu=54.2915, ll=-3702885.85, converged=True
+theta=1.47e+00: pi=0.9711, mu=54.3163, ll=-3732990.71, converged=True
+theta=1.50e+00: pi=0.9711, mu=54.3394, ll=-3763750.68, converged=True
+theta=1.54e+00: pi=0.9711, mu=54.3607, ll=-3795176.98, converged=True
+theta=1.57e+00: pi=0.9711, mu=54.3803, ll=-3827280.93, converged=True
+theta=1.61e+00: pi=0.9711, mu=54.3985, ll=-3860073.96, converged=True
+theta=1.65e+00: pi=0.9711, mu=54.4152, ll=-3893567.60, converged=True
+theta=1.69e+00: pi=0.9711, mu=54.4306, ll=-3927773.48, converged=True
+theta=1.72e+00: pi=0.9711, mu=54.4448, ll=-3962703.33, converged=True
+theta=1.76e+00: pi=0.9711, mu=54.4577, ll=-3998368.98, converged=True
+theta=1.81e+00: pi=0.9711, mu=54.4696, ll=-4034782.36, converged=True
+theta=1.85e+00: pi=0.9711, mu=54.4804, ll=-4071955.52, converged=True
+theta=1.89e+00: pi=0.9712, mu=54.4903, ll=-4109900.59, converged=True
+theta=1.94e+00: pi=0.9712, mu=54.4994, ll=-4148629.81, converged=True
+theta=1.98e+00: pi=0.9712, mu=54.5076, ll=-4188155.51, converged=True
+theta=2.03e+00: pi=0.9712, mu=54.5151, ll=-4228490.14, converged=True
+theta=2.08e+00: pi=0.9712, mu=54.5219, ll=-4269646.23, converged=True
+theta=2.12e+00: pi=0.9712, mu=54.5280, ll=-4311636.43, converged=True
+theta=2.17e+00: pi=0.9712, mu=54.5335, ll=-4354473.48, converged=True
+theta=2.22e+00: pi=0.9712, mu=54.5386, ll=-4398170.22, converged=True
+theta=2.28e+00: pi=0.9712, mu=54.5431, ll=-4442739.59, converged=True
+theta=2.33e+00: pi=0.9712, mu=54.5471, ll=-4488194.64, converged=True
+theta=2.38e+00: pi=0.9712, mu=54.5508, ll=-4534548.50, converged=True
+theta=2.44e+00: pi=0.9712, mu=54.5541, ll=-4581814.42, converged=True
+theta=2.50e+00: pi=0.9712, mu=54.5570, ll=-4630005.73, converged=True
+theta=2.56e+00: pi=0.9712, mu=54.5596, ll=-4679135.86, converged=True
+theta=2.62e+00: pi=0.9712, mu=54.5620, ll=-4729218.36, converged=True
+theta=2.68e+00: pi=0.9712, mu=54.5641, ll=-4780266.85, converged=True
+theta=2.74e+00: pi=0.9712, mu=54.5659, ll=-4832295.04, converged=True
+theta=2.80e+00: pi=0.9712, mu=54.5676, ll=-4885316.77, converged=True
+theta=2.87e+00: pi=0.9712, mu=54.5690, ll=-4939345.94, converged=True
+theta=2.94e+00: pi=0.9712, mu=54.5703, ll=-4994396.56, converged=True
+theta=3.01e+00: pi=0.9712, mu=54.5714, ll=-5050482.71, converged=True
+theta=3.08e+00: pi=0.9712, mu=54.5724, ll=-5107618.59, converged=True
+theta=3.15e+00: pi=0.9712, mu=54.5733, ll=-5165818.46, converged=True
+theta=3.22e+00: pi=0.9712, mu=54.5741, ll=-5225096.68, converged=True
+theta=3.30e+00: pi=0.9712, mu=54.5748, ll=-5285467.69, converged=True
+theta=3.37e+00: pi=0.9712, mu=54.5754, ll=-5346946.01, converged=True
+theta=3.45e+00: pi=0.9712, mu=54.5759, ll=-5409546.24, converged=True
+theta=3.53e+00: pi=0.9712, mu=54.5763, ll=-5473283.07, converged=True
+theta=3.62e+00: pi=0.9712, mu=54.5767, ll=-5538171.25, converged=True
+theta=3.70e+00: pi=0.9712, mu=54.5771, ll=-5604225.61, converged=True
+theta=3.79e+00: pi=0.9712, mu=54.5773, ll=-5671461.04, converged=True
+theta=3.88e+00: pi=0.9712, mu=54.5776, ll=-5739892.51, converged=True
+theta=3.97e+00: pi=0.9712, mu=54.5778, ll=-5809535.05, converged=True
+theta=4.06e+00: pi=0.9712, mu=54.5780, ll=-5880403.75, converged=True
+theta=4.15e+00: pi=0.9712, mu=54.5782, ll=-5952513.76, converged=True
+theta=4.25e+00: pi=0.9712, mu=54.5783, ll=-6025880.27, converged=True
+theta=4.35e+00: pi=0.9712, mu=54.5784, ll=-6100518.54, converged=True
+theta=4.45e+00: pi=0.9712, mu=54.5785, ll=-6176443.88, converged=True
+theta=4.56e+00: pi=0.9712, mu=54.5786, ll=-6253671.61, converged=True
+theta=4.66e+00: pi=0.9712, mu=54.5787, ll=-6332217.13, converged=True
+theta=4.77e+00: pi=0.9712, mu=54.5788, ll=-6412095.85, converged=True
+theta=4.89e+00: pi=0.9712, mu=54.5788, ll=-6493323.21, converged=True
+theta=5.00e+00: pi=0.9712, mu=54.5789, ll=-6575914.69, converged=True
+
+Best theta: 5.00e-02 with ll=-2482884.38
+Final parameters: pi=0.8818, mu=13.3034, theta=0.0500
+  SUCCESS: pi=0.8818, mu=13.3034, theta=0.0500
+
+Processing strain_yWT04a...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813184 data points
+  Added ChrIV: 1531933 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948066 data points
+  Added ChrXV: 1091291 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071320
+  Zero fraction: 0.9399
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.7510, mu=12.4685, ll=-5011921.98, converged=True
+theta=5.12e-02: pi=0.7558, mu=12.7139, ll=-5013208.21, converged=True
+theta=5.24e-02: pi=0.7605, mu=12.9631, ll=-5014526.18, converged=True
+theta=5.36e-02: pi=0.7650, mu=13.2161, ll=-5015876.72, converged=True
+theta=5.48e-02: pi=0.7695, mu=13.4731, ll=-5017260.66, converged=True
+theta=5.61e-02: pi=0.7739, mu=13.7339, ll=-5018678.86, converged=True
+theta=5.74e-02: pi=0.7782, mu=13.9986, ll=-5020132.20, converged=True
+theta=5.88e-02: pi=0.7824, mu=14.2671, ll=-5021621.60, converged=True
+theta=6.02e-02: pi=0.7864, mu=14.5396, ll=-5023147.99, converged=True
+theta=6.16e-02: pi=0.7904, mu=14.8160, ll=-5024712.32, converged=True
+theta=6.30e-02: pi=0.7943, mu=15.0963, ll=-5026315.58, converged=True
+theta=6.45e-02: pi=0.7981, mu=15.3806, ll=-5027958.78, converged=True
+theta=6.60e-02: pi=0.8018, mu=15.6687, ll=-5029642.97, converged=True
+theta=6.75e-02: pi=0.8054, mu=15.9607, ll=-5031369.21, converged=True
+theta=6.91e-02: pi=0.8090, mu=16.2566, ll=-5033138.60, converged=True
+theta=7.07e-02: pi=0.8124, mu=16.5564, ll=-5034952.26, converged=True
+theta=7.24e-02: pi=0.8158, mu=16.8601, ll=-5036811.37, converged=True
+theta=7.41e-02: pi=0.8191, mu=17.1676, ll=-5038717.10, converged=True
+theta=7.58e-02: pi=0.8223, mu=17.4789, ll=-5040670.69, converged=True
+theta=7.76e-02: pi=0.8255, mu=17.7940, ll=-5042673.39, converged=True
+theta=7.94e-02: pi=0.8286, mu=18.1129, ll=-5044726.51, converged=True
+theta=8.13e-02: pi=0.8316, mu=18.4356, ll=-5046831.36, converged=True
+theta=8.32e-02: pi=0.8345, mu=18.7619, ll=-5048989.32, converged=True
+theta=8.51e-02: pi=0.8374, mu=19.0919, ll=-5051201.79, converged=True
+theta=8.71e-02: pi=0.8402, mu=19.4255, ll=-5053470.23, converged=True
+theta=8.92e-02: pi=0.8429, mu=19.7627, ll=-5055796.10, converged=True
+theta=9.13e-02: pi=0.8455, mu=20.1035, ll=-5058180.95, converged=True
+theta=9.34e-02: pi=0.8481, mu=20.4477, ll=-5060626.34, converged=True
+theta=9.56e-02: pi=0.8507, mu=20.7953, ll=-5063133.88, converged=True
+theta=9.78e-02: pi=0.8532, mu=21.1462, ll=-5065705.24, converged=True
+theta=1.00e-01: pi=0.8556, mu=21.5004, ll=-5068342.13, converged=True
+theta=1.02e-01: pi=0.8579, mu=21.8579, ll=-5071046.29, converged=True
+theta=1.05e-01: pi=0.8602, mu=22.2184, ll=-5073819.53, converged=True
+theta=1.07e-01: pi=0.8625, mu=22.5820, ll=-5076663.70, converged=True
+theta=1.10e-01: pi=0.8647, mu=22.9486, ll=-5079580.72, converged=True
+theta=1.12e-01: pi=0.8668, mu=23.3180, ll=-5082572.55, converged=True
+theta=1.15e-01: pi=0.8689, mu=23.6902, ll=-5085641.19, converged=True
+theta=1.18e-01: pi=0.8710, mu=24.0651, ll=-5088788.72, converged=True
+theta=1.20e-01: pi=0.8730, mu=24.4425, ll=-5092017.28, converged=True
+theta=1.23e-01: pi=0.8749, mu=24.8225, ll=-5095329.06, converged=True
+theta=1.26e-01: pi=0.8768, mu=25.2047, ll=-5098726.31, converged=True
+theta=1.29e-01: pi=0.8787, mu=25.5893, ll=-5102211.34, converged=True
+theta=1.32e-01: pi=0.8805, mu=25.9759, ll=-5105786.55, converged=True
+theta=1.35e-01: pi=0.8822, mu=26.3645, ll=-5109454.37, converged=True
+theta=1.38e-01: pi=0.8839, mu=26.7550, ll=-5113217.34, converged=True
+theta=1.42e-01: pi=0.8856, mu=27.1471, ll=-5117078.03, converged=True
+theta=1.45e-01: pi=0.8873, mu=27.5409, ll=-5121039.11, converged=True
+theta=1.48e-01: pi=0.8888, mu=27.9361, ll=-5125103.33, converged=True
+theta=1.52e-01: pi=0.8904, mu=28.3326, ll=-5129273.49, converged=True
+theta=1.55e-01: pi=0.8919, mu=28.7303, ll=-5133552.48, converged=True
+theta=1.59e-01: pi=0.8934, mu=29.1289, ll=-5137943.29, converged=True
+theta=1.63e-01: pi=0.8948, mu=29.5283, ll=-5142448.98, converged=True
+theta=1.67e-01: pi=0.8962, mu=29.9285, ll=-5147072.67, converged=True
+theta=1.70e-01: pi=0.8976, mu=30.3291, ll=-5151817.62, converged=True
+theta=1.74e-01: pi=0.8990, mu=30.7300, ll=-5156687.13, converged=True
+theta=1.79e-01: pi=0.9003, mu=31.1311, ll=-5161684.62, converged=True
+theta=1.83e-01: pi=0.9015, mu=31.5322, ll=-5166813.60, converged=True
+theta=1.87e-01: pi=0.9028, mu=31.9330, ll=-5172077.68, converged=True
+theta=1.91e-01: pi=0.9040, mu=32.3335, ll=-5177480.57, converged=True
+theta=1.96e-01: pi=0.9051, mu=32.7334, ll=-5183026.06, converged=True
+theta=2.00e-01: pi=0.9063, mu=33.1326, ll=-5188718.08, converged=True
+theta=2.05e-01: pi=0.9074, mu=33.5309, ll=-5194560.63, converged=True
+theta=2.10e-01: pi=0.9085, mu=33.9280, ll=-5200557.86, converged=True
+theta=2.15e-01: pi=0.9095, mu=34.3238, ll=-5206714.01, converged=True
+theta=2.20e-01: pi=0.9106, mu=34.7181, ll=-5213033.42, converged=True
+theta=2.25e-01: pi=0.9116, mu=35.1107, ll=-5219520.58, converged=True
+theta=2.30e-01: pi=0.9125, mu=35.5014, ll=-5226180.09, converged=True
+theta=2.36e-01: pi=0.9135, mu=35.8901, ll=-5233016.66, converged=True
+theta=2.41e-01: pi=0.9144, mu=36.2765, ll=-5240035.13, converged=True
+theta=2.47e-01: pi=0.9153, mu=36.6604, ll=-5247240.49, converged=True
+theta=2.53e-01: pi=0.9162, mu=37.0417, ll=-5254637.83, converged=True
+theta=2.59e-01: pi=0.9170, mu=37.4202, ll=-5262232.41, converged=True
+theta=2.65e-01: pi=0.9178, mu=37.7956, ll=-5270029.60, converged=True
+theta=2.71e-01: pi=0.9186, mu=38.1679, ll=-5278034.91, converged=True
+theta=2.77e-01: pi=0.9194, mu=38.5367, ll=-5286254.02, converged=True
+theta=2.84e-01: pi=0.9202, mu=38.9021, ll=-5294692.72, converged=True
+theta=2.90e-01: pi=0.9209, mu=39.2636, ll=-5303356.99, converged=True
+theta=2.97e-01: pi=0.9216, mu=39.6213, ll=-5312252.92, converged=True
+theta=3.04e-01: pi=0.9223, mu=39.9749, ll=-5321386.79, converged=True
+theta=3.11e-01: pi=0.9230, mu=40.3242, ll=-5330765.02, converged=True
+theta=3.18e-01: pi=0.9236, mu=40.6692, ll=-5340394.19, converged=True
+theta=3.26e-01: pi=0.9243, mu=41.0095, ll=-5350281.05, converged=True
+theta=3.33e-01: pi=0.9249, mu=41.3452, ll=-5360432.51, converged=True
+theta=3.41e-01: pi=0.9255, mu=41.6760, ll=-5370855.66, converged=True
+theta=3.49e-01: pi=0.9261, mu=42.0019, ll=-5381557.75, converged=True
+theta=3.57e-01: pi=0.9266, mu=42.3226, ll=-5392546.21, converged=True
+theta=3.66e-01: pi=0.9272, mu=42.6381, ll=-5403828.66, converged=True
+theta=3.74e-01: pi=0.9277, mu=42.9482, ll=-5415412.87, converged=True
+theta=3.83e-01: pi=0.9282, mu=43.2528, ll=-5427306.82, converged=True
+theta=3.92e-01: pi=0.9287, mu=43.5518, ll=-5439518.67, converged=True
+theta=4.01e-01: pi=0.9292, mu=43.8451, ll=-5452056.75, converged=True
+theta=4.11e-01: pi=0.9296, mu=44.1326, ll=-5464929.61, converged=True
+theta=4.20e-01: pi=0.9301, mu=44.4143, ll=-5478145.96, converged=True
+theta=4.30e-01: pi=0.9305, mu=44.6900, ll=-5491714.74, converged=True
+theta=4.40e-01: pi=0.9309, mu=44.9597, ll=-5505645.06, converged=True
+theta=4.51e-01: pi=0.9313, mu=45.2233, ll=-5519946.24, converged=True
+theta=4.61e-01: pi=0.9317, mu=45.4808, ll=-5534627.79, converged=True
+theta=4.72e-01: pi=0.9321, mu=45.7321, ll=-5549699.45, converged=True
+theta=4.83e-01: pi=0.9325, mu=45.9772, ll=-5565171.13, converged=True
+theta=4.94e-01: pi=0.9328, mu=46.2161, ll=-5581052.98, converged=True
+theta=5.06e-01: pi=0.9331, mu=46.4487, ll=-5597355.33, converged=True
+theta=5.18e-01: pi=0.9335, mu=46.6750, ll=-5614088.75, converged=True
+theta=5.30e-01: pi=0.9338, mu=46.8950, ll=-5631263.99, converged=True
+theta=5.42e-01: pi=0.9341, mu=47.1088, ll=-5648892.03, converged=True
+theta=5.55e-01: pi=0.9344, mu=47.3163, ll=-5666984.06, converged=True
+theta=5.68e-01: pi=0.9347, mu=47.5175, ll=-5685551.49, converged=True
+theta=5.81e-01: pi=0.9349, mu=47.7125, ll=-5704605.95, converged=True
+theta=5.95e-01: pi=0.9352, mu=47.9014, ll=-5724159.27, converged=True
+theta=6.09e-01: pi=0.9354, mu=48.0840, ll=-5744223.50, converged=True
+theta=6.23e-01: pi=0.9357, mu=48.2606, ll=-5764810.93, converged=True
+theta=6.38e-01: pi=0.9359, mu=48.4312, ll=-5785934.05, converged=True
+theta=6.52e-01: pi=0.9361, mu=48.5957, ll=-5807605.57, converged=True
+theta=6.68e-01: pi=0.9363, mu=48.7544, ll=-5829838.41, converged=True
+theta=6.83e-01: pi=0.9365, mu=48.9072, ll=-5852645.73, converged=True
+theta=6.99e-01: pi=0.9367, mu=49.0543, ll=-5876040.91, converged=True
+theta=7.16e-01: pi=0.9369, mu=49.1957, ll=-5900037.52, converged=True
+theta=7.32e-01: pi=0.9371, mu=49.3315, ll=-5924649.37, converged=True
+theta=7.50e-01: pi=0.9372, mu=49.4619, ll=-5949890.49, converged=True
+theta=7.67e-01: pi=0.9374, mu=49.5869, ll=-5975775.12, converged=True
+theta=7.85e-01: pi=0.9375, mu=49.7066, ll=-6002317.72, converged=True
+theta=8.04e-01: pi=0.9377, mu=49.8212, ll=-6029532.97, converged=True
+theta=8.22e-01: pi=0.9378, mu=49.9307, ll=-6057435.75, converged=True
+theta=8.42e-01: pi=0.9379, mu=50.0353, ll=-6086041.17, converged=True
+theta=8.61e-01: pi=0.9381, mu=50.1351, ll=-6115364.55, converged=True
+theta=8.81e-01: pi=0.9382, mu=50.2302, ll=-6145421.43, converged=True
+theta=9.02e-01: pi=0.9383, mu=50.3208, ll=-6176227.54, converged=True
+theta=9.23e-01: pi=0.9384, mu=50.4070, ll=-6207798.84, converged=True
+theta=9.45e-01: pi=0.9385, mu=50.4888, ll=-6240151.49, converged=True
+theta=9.67e-01: pi=0.9386, mu=50.5665, ll=-6273301.87, converged=True
+theta=9.90e-01: pi=0.9387, mu=50.6402, ll=-6307266.55, converged=True
+theta=1.01e+00: pi=0.9388, mu=50.7100, ll=-6342062.31, converged=True
+theta=1.04e+00: pi=0.9388, mu=50.7760, ll=-6377706.14, converged=True
+theta=1.06e+00: pi=0.9389, mu=50.8384, ll=-6414215.23, converged=True
+theta=1.09e+00: pi=0.9390, mu=50.8972, ll=-6451606.97, converged=True
+theta=1.11e+00: pi=0.9391, mu=50.9528, ll=-6489898.96, converged=True
+theta=1.14e+00: pi=0.9391, mu=51.0051, ll=-6529108.97, converged=True
+theta=1.16e+00: pi=0.9392, mu=51.0543, ll=-6569255.00, converged=True
+theta=1.19e+00: pi=0.9392, mu=51.1005, ll=-6610355.23, converged=True
+theta=1.22e+00: pi=0.9393, mu=51.1439, ll=-6652428.05, converged=True
+theta=1.25e+00: pi=0.9393, mu=51.1845, ll=-6695492.01, converged=True
+theta=1.28e+00: pi=0.9394, mu=51.2226, ll=-6739565.90, converged=True
+theta=1.31e+00: pi=0.9394, mu=51.2582, ll=-6784668.66, converged=True
+theta=1.34e+00: pi=0.9395, mu=51.2914, ll=-6830819.44, converged=True
+theta=1.37e+00: pi=0.9395, mu=51.3224, ll=-6878037.58, converged=True
+theta=1.40e+00: pi=0.9395, mu=51.3513, ll=-6926342.62, converged=True
+theta=1.43e+00: pi=0.9396, mu=51.3782, ll=-6975754.26, converged=True
+theta=1.47e+00: pi=0.9396, mu=51.4031, ll=-7026292.41, converged=True
+theta=1.50e+00: pi=0.9396, mu=51.4263, ll=-7077977.17, converged=True
+theta=1.54e+00: pi=0.9396, mu=51.4477, ll=-7130828.80, converged=True
+theta=1.57e+00: pi=0.9397, mu=51.4676, ll=-7184867.78, converged=True
+theta=1.61e+00: pi=0.9397, mu=51.4859, ll=-7240114.75, converged=True
+theta=1.65e+00: pi=0.9397, mu=51.5029, ll=-7296590.55, converged=True
+theta=1.69e+00: pi=0.9397, mu=51.5185, ll=-7354316.21, converged=True
+theta=1.72e+00: pi=0.9397, mu=51.5328, ll=-7413312.92, converged=True
+theta=1.76e+00: pi=0.9398, mu=51.5460, ll=-7473602.07, converged=True
+theta=1.81e+00: pi=0.9398, mu=51.5581, ll=-7535205.25, converged=True
+theta=1.85e+00: pi=0.9398, mu=51.5692, ll=-7598144.21, converged=True
+theta=1.89e+00: pi=0.9398, mu=51.5794, ll=-7662440.89, converged=True
+theta=1.94e+00: pi=0.9398, mu=51.5886, ll=-7728117.43, converged=True
+theta=1.98e+00: pi=0.9398, mu=51.5971, ll=-7795196.14, converged=True
+theta=2.03e+00: pi=0.9398, mu=51.6048, ll=-7863699.50, converged=True
+theta=2.08e+00: pi=0.9398, mu=51.6118, ll=-7933650.21, converged=True
+theta=2.12e+00: pi=0.9398, mu=51.6181, ll=-8005071.13, converged=True
+theta=2.17e+00: pi=0.9399, mu=51.6239, ll=-8077985.29, converged=True
+theta=2.22e+00: pi=0.9399, mu=51.6291, ll=-8152415.94, converged=True
+theta=2.28e+00: pi=0.9399, mu=51.6338, ll=-8228386.49, converged=True
+theta=2.33e+00: pi=0.9399, mu=51.6381, ll=-8305920.52, converged=True
+theta=2.38e+00: pi=0.9399, mu=51.6419, ll=-8385041.81, converged=True
+theta=2.44e+00: pi=0.9399, mu=51.6453, ll=-8465774.32, converged=True
+theta=2.50e+00: pi=0.9399, mu=51.6484, ll=-8548142.18, converged=True
+theta=2.56e+00: pi=0.9399, mu=51.6512, ll=-8632169.70, converged=True
+theta=2.62e+00: pi=0.9399, mu=51.6537, ll=-8717881.39, converged=True
+theta=2.68e+00: pi=0.9399, mu=51.6559, ll=-8805301.89, converged=True
+theta=2.74e+00: pi=0.9399, mu=51.6579, ll=-8894456.05, converged=True
+theta=2.80e+00: pi=0.9399, mu=51.6596, ll=-8985368.89, converged=True
+theta=2.87e+00: pi=0.9399, mu=51.6612, ll=-9078065.58, converged=True
+theta=2.94e+00: pi=0.9399, mu=51.6626, ll=-9172571.48, converged=True
+theta=3.01e+00: pi=0.9399, mu=51.6638, ll=-9268912.10, converged=True
+theta=3.08e+00: pi=0.9399, mu=51.6649, ll=-9367113.12, converged=True
+theta=3.15e+00: pi=0.9399, mu=51.6658, ll=-9467200.38, converged=True
+theta=3.22e+00: pi=0.9399, mu=51.6667, ll=-9569199.87, converged=True
+theta=3.30e+00: pi=0.9399, mu=51.6674, ll=-9673137.74, converged=True
+theta=3.37e+00: pi=0.9399, mu=51.6680, ll=-9779040.29, converged=True
+theta=3.45e+00: pi=0.9399, mu=51.6686, ll=-9886933.96, converged=True
+theta=3.53e+00: pi=0.9399, mu=51.6691, ll=-9996845.34, converged=True
+theta=3.62e+00: pi=0.9399, mu=51.6695, ll=-10108801.14, converged=True
+theta=3.70e+00: pi=0.9399, mu=51.6699, ll=-10222828.21, converged=True
+theta=3.79e+00: pi=0.9399, mu=51.6702, ll=-10338953.53, converged=True
+theta=3.88e+00: pi=0.9399, mu=51.6705, ll=-10457204.20, converged=True
+theta=3.97e+00: pi=0.9399, mu=51.6708, ll=-10577607.43, converged=True
+theta=4.06e+00: pi=0.9399, mu=51.6710, ll=-10700190.54, converged=True
+theta=4.15e+00: pi=0.9399, mu=51.6712, ll=-10824980.95, converged=True
+theta=4.25e+00: pi=0.9399, mu=51.6713, ll=-10952006.19, converged=True
+theta=4.35e+00: pi=0.9399, mu=51.6715, ll=-11081293.87, converged=True
+theta=4.45e+00: pi=0.9399, mu=51.6716, ll=-11212871.66, converged=True
+theta=4.56e+00: pi=0.9399, mu=51.6717, ll=-11346767.34, converged=True
+theta=4.66e+00: pi=0.9399, mu=51.6718, ll=-11483008.74, converged=True
+theta=4.77e+00: pi=0.9399, mu=51.6718, ll=-11621623.74, converged=True
+theta=4.89e+00: pi=0.9399, mu=51.6719, ll=-11762640.29, converged=True
+theta=5.00e+00: pi=0.9399, mu=51.6720, ll=-11906086.35, converged=True
+
+Best theta: 5.00e-02 with ll=-5011921.98
+Final parameters: pi=0.7510, mu=12.4685, theta=0.0500
+  SUCCESS: pi=0.7510, mu=12.4685, theta=0.0500
+
+Processing strain_ylic137...
+  Added ChrIII: 316620 data points
+  Added ChrII: 813184 data points
+  Added ChrIV: 1531933 data points
+  Added ChrIX: 439888 data points
+  Added ChrI: 230218 data points
+  Added ChrVIII: 562643 data points
+  Added ChrVII: 1090940 data points
+  Added ChrVI: 270161 data points
+  Added ChrV: 576874 data points
+  Added ChrXIII: 924431 data points
+  Added ChrXII: 1078171 data points
+  Added ChrXIV: 784333 data points
+  Added ChrXI: 666816 data points
+  Added ChrXVI: 948066 data points
+  Added ChrXV: 1091292 data points
+  Added ChrX: 745751 data points
+  Total observations: 12071321
+  Zero fraction: 0.9078
+  Estimating ZINB parameters...
+theta=5.00e-02: pi=0.6274, mu=14.6559, ll=-7706843.48, converged=True
+theta=5.12e-02: pi=0.6346, mu=14.9432, ll=-7708286.68, converged=True
+theta=5.24e-02: pi=0.6416, mu=15.2349, ll=-7709766.51, converged=True
+theta=5.36e-02: pi=0.6484, mu=15.5310, ll=-7711283.95, converged=True
+theta=5.48e-02: pi=0.6551, mu=15.8316, ll=-7712840.01, converged=True
+theta=5.61e-02: pi=0.6616, mu=16.1367, ll=-7714435.73, converged=True
+theta=5.74e-02: pi=0.6680, mu=16.4462, ll=-7716072.19, converged=True
+theta=5.88e-02: pi=0.6742, mu=16.7603, ll=-7717750.47, converged=True
+theta=6.02e-02: pi=0.6803, mu=17.0789, ll=-7719471.73, converged=True
+theta=6.16e-02: pi=0.6862, mu=17.4019, ll=-7721237.13, converged=True
+theta=6.30e-02: pi=0.6920, mu=17.7295, ll=-7723047.87, converged=True
+theta=6.45e-02: pi=0.6977, mu=18.0615, ll=-7724905.19, converged=True
+theta=6.60e-02: pi=0.7032, mu=18.3981, ll=-7726810.35, converged=True
+theta=6.75e-02: pi=0.7086, mu=18.7391, ll=-7728764.68, converged=True
+theta=6.91e-02: pi=0.7139, mu=19.0846, ll=-7730769.52, converged=True
+theta=7.07e-02: pi=0.7190, mu=19.4346, ll=-7732826.26, converged=True
+theta=7.24e-02: pi=0.7240, mu=19.7889, ll=-7734936.33, converged=True
+theta=7.41e-02: pi=0.7290, mu=20.1477, ll=-7737101.20, converged=True
+theta=7.58e-02: pi=0.7338, mu=20.5108, ll=-7739322.40, converged=True
+theta=7.76e-02: pi=0.7384, mu=20.8783, ll=-7741601.47, converged=True
+theta=7.94e-02: pi=0.7430, mu=21.2501, ll=-7743940.04, converged=True
+theta=8.13e-02: pi=0.7475, mu=21.6261, ll=-7746339.75, converged=True
+theta=8.32e-02: pi=0.7519, mu=22.0064, ll=-7748802.31, converged=True
+theta=8.51e-02: pi=0.7561, mu=22.3908, ll=-7751329.47, converged=True
+theta=8.71e-02: pi=0.7603, mu=22.7793, ll=-7753923.05, converged=True
+theta=8.92e-02: pi=0.7643, mu=23.1719, ll=-7756584.91, converged=True
+theta=9.13e-02: pi=0.7683, mu=23.5685, ll=-7759316.97, converged=True
+theta=9.34e-02: pi=0.7722, mu=23.9689, ll=-7762121.19, converged=True
+theta=9.56e-02: pi=0.7759, mu=24.3732, ll=-7764999.63, converged=True
+theta=9.78e-02: pi=0.7796, mu=24.7813, ll=-7767954.36, converged=True
+theta=1.00e-01: pi=0.7832, mu=25.1930, ll=-7770987.56, converged=True
+theta=1.02e-01: pi=0.7868, mu=25.6084, ll=-7774101.45, converged=True
+theta=1.05e-01: pi=0.7902, mu=26.0272, ll=-7777298.31, converged=True
+theta=1.07e-01: pi=0.7935, mu=26.4494, ll=-7780580.51, converged=True
+theta=1.10e-01: pi=0.7968, mu=26.8749, ll=-7783950.48, converged=True
+theta=1.12e-01: pi=0.8000, mu=27.3036, ll=-7787410.73, converged=True
+theta=1.15e-01: pi=0.8031, mu=27.7354, ll=-7790963.83, converged=True
+theta=1.18e-01: pi=0.8061, mu=28.1701, ll=-7794612.44, converged=True
+theta=1.20e-01: pi=0.8091, mu=28.6076, ll=-7798359.30, converged=True
+theta=1.23e-01: pi=0.8120, mu=29.0478, ll=-7802207.23, converged=True
+theta=1.26e-01: pi=0.8148, mu=29.4906, ll=-7806159.13, converged=True
+theta=1.29e-01: pi=0.8176, mu=29.9357, ll=-7810218.01, converged=True
+theta=1.32e-01: pi=0.8203, mu=30.3831, ll=-7814386.93, converged=True
+theta=1.35e-01: pi=0.8229, mu=30.8327, ll=-7818669.08, converged=True
+theta=1.38e-01: pi=0.8254, mu=31.2841, ll=-7823067.73, converged=True
+theta=1.42e-01: pi=0.8279, mu=31.7374, ll=-7827586.24, converged=True
+theta=1.45e-01: pi=0.8304, mu=32.1923, ll=-7832228.09, converged=True
+theta=1.48e-01: pi=0.8327, mu=32.6487, ll=-7836996.85, converged=True
+theta=1.52e-01: pi=0.8351, mu=33.1063, ll=-7841896.21, converged=True
+theta=1.55e-01: pi=0.8373, mu=33.5650, ll=-7846929.94, converged=True
+theta=1.59e-01: pi=0.8395, mu=34.0247, ll=-7852101.97, converged=True
+theta=1.63e-01: pi=0.8416, mu=34.4850, ll=-7857416.31, converged=True
+theta=1.67e-01: pi=0.8437, mu=34.9459, ll=-7862877.09, converged=True
+theta=1.70e-01: pi=0.8458, mu=35.4071, ll=-7868488.59, converged=True
+theta=1.74e-01: pi=0.8478, mu=35.8685, ll=-7874255.20, converged=True
+theta=1.79e-01: pi=0.8497, mu=36.3298, ll=-7880181.42, converged=True
+theta=1.83e-01: pi=0.8516, mu=36.7908, ll=-7886271.93, converged=True
+theta=1.87e-01: pi=0.8534, mu=37.2513, ll=-7892531.49, converged=True
+theta=1.91e-01: pi=0.8552, mu=37.7111, ll=-7898965.06, converged=True
+theta=1.96e-01: pi=0.8569, mu=38.1700, ll=-7905577.69, converged=True
+theta=2.00e-01: pi=0.8586, mu=38.6277, ll=-7912374.62, converged=True
+theta=2.05e-01: pi=0.8603, mu=39.0841, ll=-7919361.21, converged=True
+theta=2.10e-01: pi=0.8619, mu=39.5390, ll=-7926543.00, converged=True
+theta=2.15e-01: pi=0.8635, mu=39.9920, ll=-7933925.67, converged=True
+theta=2.20e-01: pi=0.8650, mu=40.4431, ll=-7941515.09, converged=True
+theta=2.25e-01: pi=0.8665, mu=40.8919, ll=-7949317.25, converged=True
+theta=2.30e-01: pi=0.8679, mu=41.3382, ll=-7957338.37, converged=True
+theta=2.36e-01: pi=0.8693, mu=41.7819, ll=-7965584.81, converged=True
+theta=2.41e-01: pi=0.8707, mu=42.2227, ll=-7974063.11, converged=True
+theta=2.47e-01: pi=0.8720, mu=42.6604, ll=-7982780.00, converged=True
+theta=2.53e-01: pi=0.8733, mu=43.0947, ll=-7991742.40, converged=True
+theta=2.59e-01: pi=0.8745, mu=43.5255, ll=-8000957.43, converged=True
+theta=2.65e-01: pi=0.8758, mu=43.9526, ll=-8010432.40, converged=True
+theta=2.71e-01: pi=0.8769, mu=44.3756, ll=-8020174.80, converged=True
+theta=2.77e-01: pi=0.8781, mu=44.7945, ll=-8030192.36, converged=True
+theta=2.84e-01: pi=0.8792, mu=45.2090, ll=-8040493.00, converged=True
+theta=2.90e-01: pi=0.8803, mu=45.6190, ll=-8051084.85, converged=True
+theta=2.97e-01: pi=0.8813, mu=46.0241, ll=-8061976.27, converged=True
+theta=3.04e-01: pi=0.8824, mu=46.4243, ll=-8073175.84, converged=True
+theta=3.11e-01: pi=0.8834, mu=46.8194, ll=-8084692.37, converged=True
+theta=3.18e-01: pi=0.8843, mu=47.2091, ll=-8096534.87, converged=True
+theta=3.26e-01: pi=0.8853, mu=47.5934, ll=-8108712.63, converged=True
+theta=3.33e-01: pi=0.8862, mu=47.9719, ll=-8121235.16, converged=True
+theta=3.41e-01: pi=0.8870, mu=48.3447, ll=-8134112.20, converged=True
+theta=3.49e-01: pi=0.8879, mu=48.7114, ll=-8147353.74, converged=True
+theta=3.57e-01: pi=0.8887, mu=49.0721, ll=-8160970.05, converged=True
+theta=3.66e-01: pi=0.8895, mu=49.4264, ll=-8174971.63, converged=True
+theta=3.74e-01: pi=0.8903, mu=49.7744, ll=-8189369.23, converged=True
+theta=3.83e-01: pi=0.8910, mu=50.1159, ll=-8204173.89, converged=True
+theta=3.92e-01: pi=0.8918, mu=50.4507, ll=-8219396.89, converged=True
+theta=4.01e-01: pi=0.8925, mu=50.7788, ll=-8235049.81, converged=True
+theta=4.11e-01: pi=0.8931, mu=51.1001, ll=-8251144.46, converged=True
+theta=4.20e-01: pi=0.8938, mu=51.4145, ll=-8267692.98, converged=True
+theta=4.30e-01: pi=0.8944, mu=51.7218, ll=-8284707.74, converged=True
+theta=4.40e-01: pi=0.8950, mu=52.0221, ll=-8302201.42, converged=True
+theta=4.51e-01: pi=0.8956, mu=52.3153, ll=-8320186.99, converged=True
+theta=4.61e-01: pi=0.8962, mu=52.6013, ll=-8338677.70, converged=True
+theta=4.72e-01: pi=0.8967, mu=52.8800, ll=-8357687.08, converged=True
+theta=4.83e-01: pi=0.8973, mu=53.1516, ll=-8377228.97, converged=True
+theta=4.94e-01: pi=0.8978, mu=53.4159, ll=-8397317.50, converged=True
+theta=5.06e-01: pi=0.8983, mu=53.6728, ll=-8417967.11, converged=True
+theta=5.18e-01: pi=0.8987, mu=53.9226, ll=-8439192.52, converged=True
+theta=5.30e-01: pi=0.8992, mu=54.1650, ll=-8461008.77, converged=True
+theta=5.42e-01: pi=0.8996, mu=54.4002, ll=-8483431.20, converged=True
+theta=5.55e-01: pi=0.9000, mu=54.6281, ll=-8506475.44, converged=True
+theta=5.68e-01: pi=0.9004, mu=54.8489, ll=-8530157.45, converged=True
+theta=5.81e-01: pi=0.9008, mu=55.0625, ll=-8554493.49, converged=True
+theta=5.95e-01: pi=0.9012, mu=55.2690, ll=-8579500.12, converged=True
+theta=6.09e-01: pi=0.9016, mu=55.4684, ll=-8605194.22, converged=True
+theta=6.23e-01: pi=0.9019, mu=55.6609, ll=-8631592.96, converged=True
+theta=6.38e-01: pi=0.9022, mu=55.8465, ll=-8658713.86, converged=True
+theta=6.52e-01: pi=0.9025, mu=56.0253, ll=-8686574.71, converged=True
+theta=6.68e-01: pi=0.9028, mu=56.1973, ll=-8715193.64, converged=True
+theta=6.83e-01: pi=0.9031, mu=56.3628, ll=-8744589.06, converged=True
+theta=6.99e-01: pi=0.9034, mu=56.5217, ll=-8774779.72, converged=True
+theta=7.16e-01: pi=0.9036, mu=56.6742, ll=-8805784.67, converged=True
+theta=7.32e-01: pi=0.9039, mu=56.8204, ll=-8837623.24, converged=True
+theta=7.50e-01: pi=0.9041, mu=56.9605, ll=-8870315.12, converged=True
+theta=7.67e-01: pi=0.9044, mu=57.0945, ll=-8903880.26, converged=True
+theta=7.85e-01: pi=0.9046, mu=57.2226, ll=-8938338.95, converged=True
+theta=8.04e-01: pi=0.9048, mu=57.3449, ll=-8973711.75, converged=True
+theta=8.22e-01: pi=0.9050, mu=57.4616, ll=-9010019.55, converged=True
+theta=8.42e-01: pi=0.9051, mu=57.5728, ll=-9047283.52, converged=True
+theta=8.61e-01: pi=0.9053, mu=57.6787, ll=-9085525.16, converged=True
+theta=8.81e-01: pi=0.9055, mu=57.7793, ll=-9124766.24, converged=True
+theta=9.02e-01: pi=0.9056, mu=57.8750, ll=-9165028.82, converged=True
+theta=9.23e-01: pi=0.9058, mu=57.9657, ll=-9206335.29, converged=True
+theta=9.45e-01: pi=0.9059, mu=58.0517, ll=-9248708.30, converged=True
+theta=9.67e-01: pi=0.9061, mu=58.1331, ll=-9292170.81, converged=True
+theta=9.90e-01: pi=0.9062, mu=58.2102, ll=-9336746.04, converged=True
+theta=1.01e+00: pi=0.9063, mu=58.2829, ll=-9382457.54, converged=True
+theta=1.04e+00: pi=0.9064, mu=58.3515, ll=-9429329.11, converged=True
+theta=1.06e+00: pi=0.9065, mu=58.4162, ll=-9477384.84, converged=True
+theta=1.09e+00: pi=0.9066, mu=58.4771, ll=-9526649.12, converged=True
+theta=1.11e+00: pi=0.9067, mu=58.5343, ll=-9577146.59, converged=True
+theta=1.14e+00: pi=0.9068, mu=58.5881, ll=-9628902.20, converged=True
+theta=1.16e+00: pi=0.9069, mu=58.6385, ll=-9681941.15, converged=True
+theta=1.19e+00: pi=0.9069, mu=58.6857, ll=-9736288.93, converged=True
+theta=1.22e+00: pi=0.9070, mu=58.7299, ll=-9791971.29, converged=True
+theta=1.25e+00: pi=0.9071, mu=58.7711, ll=-9849014.29, converged=True
+theta=1.28e+00: pi=0.9071, mu=58.8096, ll=-9907444.21, converged=True
+theta=1.31e+00: pi=0.9072, mu=58.8455, ll=-9967287.64, converged=True
+theta=1.34e+00: pi=0.9073, mu=58.8789, ll=-10028571.42, converged=True
+theta=1.37e+00: pi=0.9073, mu=58.9099, ll=-10091322.68, converged=True
+theta=1.40e+00: pi=0.9073, mu=58.9387, ll=-10155568.79, converged=True
+theta=1.43e+00: pi=0.9074, mu=58.9654, ll=-10221337.42, converged=True
+theta=1.47e+00: pi=0.9074, mu=58.9901, ll=-10288656.50, converged=True
+theta=1.50e+00: pi=0.9075, mu=59.0130, ll=-10357554.22, converged=True
+theta=1.54e+00: pi=0.9075, mu=59.0340, ll=-10428059.04, converged=True
+theta=1.57e+00: pi=0.9075, mu=59.0534, ll=-10500199.70, converged=True
+theta=1.61e+00: pi=0.9076, mu=59.0713, ll=-10574005.22, converged=True
+theta=1.65e+00: pi=0.9076, mu=59.0877, ll=-10649504.87, converged=True
+theta=1.69e+00: pi=0.9076, mu=59.1028, ll=-10726728.20, converged=True
+theta=1.72e+00: pi=0.9076, mu=59.1165, ll=-10805705.05, converged=True
+theta=1.76e+00: pi=0.9076, mu=59.1292, ll=-10886465.51, converged=True
+theta=1.81e+00: pi=0.9077, mu=59.1407, ll=-10969039.96, converged=True
+theta=1.85e+00: pi=0.9077, mu=59.1512, ll=-11053459.05, converged=True
+theta=1.89e+00: pi=0.9077, mu=59.1607, ll=-11139753.72, converged=True
+theta=1.94e+00: pi=0.9077, mu=59.1694, ll=-11227955.18, converged=True
+theta=1.98e+00: pi=0.9077, mu=59.1773, ll=-11318094.92, converged=True
+theta=2.03e+00: pi=0.9077, mu=59.1844, ll=-11410204.72, converged=True
+theta=2.08e+00: pi=0.9077, mu=59.1909, ll=-11504316.63, converged=True
+theta=2.12e+00: pi=0.9078, mu=59.1967, ll=-11600463.00, converged=True
+theta=2.17e+00: pi=0.9078, mu=59.2020, ll=-11698676.47, converged=True
+theta=2.22e+00: pi=0.9078, mu=59.2067, ll=-11798989.94, converged=True
+theta=2.28e+00: pi=0.9078, mu=59.2109, ll=-11901436.62, converged=True
+theta=2.33e+00: pi=0.9078, mu=59.2147, ll=-12006050.00, converged=True
+theta=2.38e+00: pi=0.9078, mu=59.2181, ll=-12112863.87, converged=True
+theta=2.44e+00: pi=0.9078, mu=59.2212, ll=-12221912.29, converged=True
+theta=2.50e+00: pi=0.9078, mu=59.2239, ll=-12333229.64, converged=True
+theta=2.56e+00: pi=0.9078, mu=59.2263, ll=-12446850.55, converged=True
+theta=2.62e+00: pi=0.9078, mu=59.2285, ll=-12562809.96, converged=True
+theta=2.68e+00: pi=0.9078, mu=59.2304, ll=-12681143.12, converged=True
+theta=2.74e+00: pi=0.9078, mu=59.2321, ll=-12801885.52, converged=True
+theta=2.80e+00: pi=0.9078, mu=59.2335, ll=-12925072.99, converged=True
+theta=2.87e+00: pi=0.9078, mu=59.2349, ll=-13050741.61, converged=True
+theta=2.94e+00: pi=0.9078, mu=59.2360, ll=-13178927.74, converged=True
+theta=3.01e+00: pi=0.9078, mu=59.2370, ll=-13309668.05, converged=True
+theta=3.08e+00: pi=0.9078, mu=59.2379, ll=-13442999.47, converged=True
+theta=3.15e+00: pi=0.9078, mu=59.2387, ll=-13578959.20, converged=True
+theta=3.22e+00: pi=0.9078, mu=59.2394, ll=-13717584.74, converged=True
+theta=3.30e+00: pi=0.9078, mu=59.2400, ll=-13858913.83, converged=True
+theta=3.37e+00: pi=0.9078, mu=59.2405, ll=-14002984.48, converged=True
+theta=3.45e+00: pi=0.9078, mu=59.2409, ll=-14149834.99, converged=True
+theta=3.53e+00: pi=0.9078, mu=59.2413, ll=-14299503.87, converged=True
+theta=3.62e+00: pi=0.9078, mu=59.2416, ll=-14452029.91, converged=True
+theta=3.70e+00: pi=0.9078, mu=59.2419, ll=-14607452.14, converged=True
+theta=3.79e+00: pi=0.9078, mu=59.2422, ll=-14765809.83, converged=True
+theta=3.88e+00: pi=0.9078, mu=59.2424, ll=-14927142.47, converged=True
+theta=3.97e+00: pi=0.9078, mu=59.2426, ll=-15091489.79, converged=True
+theta=4.06e+00: pi=0.9078, mu=59.2427, ll=-15258891.72, converged=True
+theta=4.15e+00: pi=0.9078, mu=59.2429, ll=-15429388.42, converged=True
+theta=4.25e+00: pi=0.9078, mu=59.2430, ll=-15603020.23, converged=True
+theta=4.35e+00: pi=0.9078, mu=59.2431, ll=-15779827.69, converged=True
+theta=4.45e+00: pi=0.9078, mu=59.2432, ll=-15959851.54, converged=True
+theta=4.56e+00: pi=0.9078, mu=59.2432, ll=-16143132.66, converged=True
+theta=4.66e+00: pi=0.9078, mu=59.2433, ll=-16329712.11, converged=True
+theta=4.77e+00: pi=0.9078, mu=59.2433, ll=-16519631.11, converged=True
+theta=4.89e+00: pi=0.9078, mu=59.2434, ll=-16712931.00, converged=True
+theta=5.00e+00: pi=0.9078, mu=59.2434, ll=-16909653.27, converged=True
+
+Best theta: 5.00e-02 with ll=-7706843.48
+Final parameters: pi=0.6274, mu=14.6559, theta=0.0500
+  SUCCESS: pi=0.6274, mu=14.6559, theta=0.0500
+
+============================================================
+Estimation complete!
+============================================================
+ZINB estimation completed!

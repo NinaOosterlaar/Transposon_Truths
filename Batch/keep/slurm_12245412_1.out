@@ -1,0 +1,244 @@
+Running with noise_level=0.25
+Device: cuda
+
+Preprocessing with chromosome split:
+  Train chromosomes: ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+  Val chromosomes: None
+  Test chromosomes: ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
+
+Clipping outliers using 95th percentile * 1.5...
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 61992
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 24128
+
+Dataset sizes after preprocessing:
+  Train: 61992
+  Val: 0
+  Test: 24128
+  Eval strategy: TEST
+
+Randomly sampled 58272/61992 samples (94.0%)
+Applied denoising with 25.0% masking
+
+Creating test dataloader:
+  Test set size: 24128
+  Batch size: 128
+Applied denoising with 25.0% masking
+  Dataloader created: 24128 samples, 189 batches
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Epoch [1/141], Total Loss: 2.1609, NLL: 2.1020, Masked: 6.7610
+Epoch [2/141], Total Loss: 1.8564, NLL: 1.8234, Masked: 3.7876
+Epoch [3/141], Total Loss: 1.5814, NLL: 1.5582, Masked: 2.6652
+Epoch [4/141], Total Loss: 1.5419, NLL: 1.5196, Masked: 2.5604
+Epoch [5/141], Total Loss: 1.5125, NLL: 1.4910, Masked: 2.4702
+Epoch [6/141], Total Loss: 1.4941, NLL: 1.4731, Masked: 2.4087
+Epoch [7/141], Total Loss: 1.4796, NLL: 1.4592, Masked: 2.3453
+Epoch [8/141], Total Loss: 1.4647, NLL: 1.4449, Masked: 2.2805
+Epoch [9/141], Total Loss: 1.4502, NLL: 1.4310, Masked: 2.2085
+Epoch [10/141], Total Loss: 1.4365, NLL: 1.4179, Masked: 2.1403
+Epoch [11/141], Total Loss: 1.4210, NLL: 1.4031, Masked: 2.0578
+Epoch [12/141], Total Loss: 1.4017, NLL: 1.3845, Masked: 1.9738
+Epoch [13/141], Total Loss: 1.3834, NLL: 1.3667, Masked: 1.9158
+Epoch [14/141], Total Loss: 1.3679, NLL: 1.3517, Masked: 1.8693
+Epoch [15/141], Total Loss: 1.3553, NLL: 1.3393, Masked: 1.8344
+Epoch [16/141], Total Loss: 1.3438, NLL: 1.3281, Masked: 1.7979
+Epoch [17/141], Total Loss: 1.3345, NLL: 1.3192, Masked: 1.7643
+Epoch [18/141], Total Loss: 1.3275, NLL: 1.3124, Masked: 1.7345
+Epoch [19/141], Total Loss: 1.3207, NLL: 1.3059, Masked: 1.7088
+Epoch [20/141], Total Loss: 1.3147, NLL: 1.3000, Masked: 1.6860
+Epoch [21/141], Total Loss: 1.3098, NLL: 1.2953, Masked: 1.6708
+Epoch [22/141], Total Loss: 1.3055, NLL: 1.2911, Masked: 1.6561
+Epoch [23/141], Total Loss: 1.3015, NLL: 1.2872, Masked: 1.6403
+Epoch [24/141], Total Loss: 1.2967, NLL: 1.2826, Masked: 1.6236
+Epoch [25/141], Total Loss: 1.2919, NLL: 1.2779, Masked: 1.6052
+Epoch [26/141], Total Loss: 1.2871, NLL: 1.2733, Masked: 1.5864
+Epoch [27/141], Total Loss: 1.2819, NLL: 1.2683, Masked: 1.5675
+Epoch [28/141], Total Loss: 1.2762, NLL: 1.2627, Masked: 1.5499
+Epoch [29/141], Total Loss: 1.2705, NLL: 1.2572, Masked: 1.5321
+Epoch [30/141], Total Loss: 1.2649, NLL: 1.2517, Masked: 1.5146
+Epoch [31/141], Total Loss: 1.2595, NLL: 1.2465, Masked: 1.4999
+Epoch [32/141], Total Loss: 1.2540, NLL: 1.2411, Masked: 1.4829
+Epoch [33/141], Total Loss: 1.2483, NLL: 1.2355, Masked: 1.4665
+Epoch [34/141], Total Loss: 1.2427, NLL: 1.2301, Masked: 1.4508
+Epoch [35/141], Total Loss: 1.2369, NLL: 1.2244, Masked: 1.4346
+Epoch [36/141], Total Loss: 1.2317, NLL: 1.2194, Masked: 1.4191
+Epoch [37/141], Total Loss: 1.2277, NLL: 1.2154, Masked: 1.4068
+Epoch [38/141], Total Loss: 1.2225, NLL: 1.2104, Masked: 1.3905
+Epoch [39/141], Total Loss: 1.2182, NLL: 1.2062, Masked: 1.3781
+Epoch [40/141], Total Loss: 1.2135, NLL: 1.2017, Masked: 1.3636
+Epoch [41/141], Total Loss: 1.2094, NLL: 1.1977, Masked: 1.3514
+Epoch [42/141], Total Loss: 1.2056, NLL: 1.1939, Masked: 1.3402
+Epoch [43/141], Total Loss: 1.2016, NLL: 1.1900, Masked: 1.3284
+Epoch [44/141], Total Loss: 1.1983, NLL: 1.1868, Masked: 1.3171
+Epoch [45/141], Total Loss: 1.1949, NLL: 1.1835, Masked: 1.3071
+Epoch [46/141], Total Loss: 1.1908, NLL: 1.1796, Masked: 1.2946
+Epoch [47/141], Total Loss: 1.1880, NLL: 1.1768, Masked: 1.2853
+Epoch [48/141], Total Loss: 1.1847, NLL: 1.1736, Masked: 1.2757
+Epoch [49/141], Total Loss: 1.1817, NLL: 1.1707, Masked: 1.2668
+Epoch [50/141], Total Loss: 1.1787, NLL: 1.1678, Masked: 1.2578
+Epoch [51/141], Total Loss: 1.1760, NLL: 1.1651, Masked: 1.2498
+Epoch [52/141], Total Loss: 1.1732, NLL: 1.1624, Masked: 1.2400
+Epoch [53/141], Total Loss: 1.1707, NLL: 1.1600, Masked: 1.2327
+Epoch [54/141], Total Loss: 1.1681, NLL: 1.1575, Masked: 1.2242
+Epoch [55/141], Total Loss: 1.1659, NLL: 1.1553, Masked: 1.2161
+Epoch [56/141], Total Loss: 1.1635, NLL: 1.1530, Masked: 1.2088
+Epoch [57/141], Total Loss: 1.1607, NLL: 1.1503, Masked: 1.2001
+Epoch [58/141], Total Loss: 1.1587, NLL: 1.1483, Masked: 1.1939
+Epoch [59/141], Total Loss: 1.1568, NLL: 1.1465, Masked: 1.1885
+Epoch [60/141], Total Loss: 1.1547, NLL: 1.1445, Masked: 1.1814
+Epoch [61/141], Total Loss: 1.1525, NLL: 1.1423, Masked: 1.1742
+Epoch [62/141], Total Loss: 1.1510, NLL: 1.1409, Masked: 1.1698
+Epoch [63/141], Total Loss: 1.1487, NLL: 1.1385, Masked: 1.1616
+Epoch [64/141], Total Loss: 1.1470, NLL: 1.1369, Masked: 1.1571
+Epoch [65/141], Total Loss: 1.1447, NLL: 1.1347, Masked: 1.1484
+Epoch [66/141], Total Loss: 1.1432, NLL: 1.1332, Masked: 1.1440
+Epoch [67/141], Total Loss: 1.1413, NLL: 1.1314, Masked: 1.1379
+Epoch [68/141], Total Loss: 1.1398, NLL: 1.1300, Masked: 1.1328
+Epoch [69/141], Total Loss: 1.1381, NLL: 1.1283, Masked: 1.1279
+Epoch [70/141], Total Loss: 1.1364, NLL: 1.1267, Masked: 1.1212
+Epoch [71/141], Total Loss: 1.1350, NLL: 1.1253, Masked: 1.1171
+Epoch [72/141], Total Loss: 1.1334, NLL: 1.1238, Masked: 1.1119
+Epoch [73/141], Total Loss: 1.1325, NLL: 1.1228, Masked: 1.1104
+Epoch [74/141], Total Loss: 1.1305, NLL: 1.1209, Masked: 1.1030
+Epoch [75/141], Total Loss: 1.1289, NLL: 1.1194, Masked: 1.0976
+Epoch [76/141], Total Loss: 1.1277, NLL: 1.1182, Masked: 1.0936
+Epoch [77/141], Total Loss: 1.1265, NLL: 1.1170, Masked: 1.0897
+Epoch [78/141], Total Loss: 1.1255, NLL: 1.1161, Masked: 1.0861
+Epoch [79/141], Total Loss: 1.1239, NLL: 1.1145, Masked: 1.0808
+Epoch [80/141], Total Loss: 1.1228, NLL: 1.1134, Masked: 1.0781
+Epoch [81/141], Total Loss: 1.1212, NLL: 1.1119, Masked: 1.0714
+Epoch [82/141], Total Loss: 1.1202, NLL: 1.1109, Masked: 1.0681
+Epoch [83/141], Total Loss: 1.1189, NLL: 1.1096, Masked: 1.0642
+Epoch [84/141], Total Loss: 1.1177, NLL: 1.1085, Masked: 1.0607
+Epoch [85/141], Total Loss: 1.1168, NLL: 1.1076, Masked: 1.0581
+Epoch [86/141], Total Loss: 1.1156, NLL: 1.1064, Masked: 1.0538
+Epoch [87/141], Total Loss: 1.1144, NLL: 1.1053, Masked: 1.0490
+Epoch [88/141], Total Loss: 1.1139, NLL: 1.1048, Masked: 1.0483
+Epoch [89/141], Total Loss: 1.1125, NLL: 1.1034, Masked: 1.0423
+Epoch [90/141], Total Loss: 1.1115, NLL: 1.1024, Masked: 1.0397
+Epoch [91/141], Total Loss: 1.1106, NLL: 1.1015, Masked: 1.0362
+Epoch [92/141], Total Loss: 1.1094, NLL: 1.1004, Masked: 1.0320
+Epoch [93/141], Total Loss: 1.1087, NLL: 1.0997, Masked: 1.0297
+Epoch [94/141], Total Loss: 1.1080, NLL: 1.0990, Masked: 1.0277
+Epoch [95/141], Total Loss: 1.1070, NLL: 1.0981, Masked: 1.0249
+Epoch [96/141], Total Loss: 1.1061, NLL: 1.0972, Masked: 1.0207
+Epoch [97/141], Total Loss: 1.1053, NLL: 1.0964, Masked: 1.0181
+Epoch [98/141], Total Loss: 1.1043, NLL: 1.0955, Masked: 1.0143
+Epoch [99/141], Total Loss: 1.1034, NLL: 1.0946, Masked: 1.0112
+Epoch [100/141], Total Loss: 1.1027, NLL: 1.0940, Masked: 1.0091
+Epoch [101/141], Total Loss: 1.1019, NLL: 1.0932, Masked: 1.0058
+Epoch [102/141], Total Loss: 1.1013, NLL: 1.0925, Masked: 1.0041
+Epoch [103/141], Total Loss: 1.1010, NLL: 1.0923, Masked: 1.0028
+Epoch [104/141], Total Loss: 1.0996, NLL: 1.0909, Masked: 0.9971
+Epoch [105/141], Total Loss: 1.0990, NLL: 1.0903, Masked: 0.9953
+Epoch [106/141], Total Loss: 1.0984, NLL: 1.0898, Masked: 0.9934
+Epoch [107/141], Total Loss: 1.0976, NLL: 1.0890, Masked: 0.9905
+Epoch [108/141], Total Loss: 1.0973, NLL: 1.0887, Masked: 0.9896
+Epoch [109/141], Total Loss: 1.0966, NLL: 1.0880, Masked: 0.9872
+Epoch [110/141], Total Loss: 1.0959, NLL: 1.0874, Masked: 0.9846
+Epoch [111/141], Total Loss: 1.0949, NLL: 1.0864, Masked: 0.9807
+Epoch [112/141], Total Loss: 1.0946, NLL: 1.0861, Masked: 0.9802
+Epoch [113/141], Total Loss: 1.0941, NLL: 1.0856, Masked: 0.9785
+Epoch [114/141], Total Loss: 1.0932, NLL: 1.0848, Masked: 0.9749
+Epoch [115/141], Total Loss: 1.0928, NLL: 1.0843, Masked: 0.9724
+Epoch [116/141], Total Loss: 1.0920, NLL: 1.0835, Masked: 0.9701
+Epoch [117/141], Total Loss: 1.0914, NLL: 1.0830, Masked: 0.9689
+Epoch [118/141], Total Loss: 1.0910, NLL: 1.0826, Masked: 0.9671
+Epoch [119/141], Total Loss: 1.0904, NLL: 1.0820, Masked: 0.9652
+Epoch [120/141], Total Loss: 1.0899, NLL: 1.0816, Masked: 0.9637
+Epoch [121/141], Total Loss: 1.0893, NLL: 1.0810, Masked: 0.9617
+Epoch [122/141], Total Loss: 1.0887, NLL: 1.0804, Masked: 0.9588
+Epoch [123/141], Total Loss: 1.0885, NLL: 1.0801, Masked: 0.9589
+Epoch [124/141], Total Loss: 1.0876, NLL: 1.0793, Masked: 0.9553
+Epoch [125/141], Total Loss: 1.0868, NLL: 1.0785, Masked: 0.9534
+Epoch [126/141], Total Loss: 1.0865, NLL: 1.0782, Masked: 0.9521
+Epoch [127/141], Total Loss: 1.0860, NLL: 1.0777, Masked: 0.9499
+Epoch [128/141], Total Loss: 1.0855, NLL: 1.0772, Masked: 0.9487
+Epoch [129/141], Total Loss: 1.0849, NLL: 1.0767, Masked: 0.9468
+Epoch [130/141], Total Loss: 1.0848, NLL: 1.0765, Masked: 0.9469
+Epoch [131/141], Total Loss: 1.0841, NLL: 1.0759, Masked: 0.9443
+Epoch [132/141], Total Loss: 1.0837, NLL: 1.0755, Masked: 0.9422
+Epoch [133/141], Total Loss: 1.0836, NLL: 1.0754, Masked: 0.9420
+Epoch [134/141], Total Loss: 1.0832, NLL: 1.0750, Masked: 0.9402
+Epoch [135/141], Total Loss: 1.0823, NLL: 1.0741, Masked: 0.9372
+Epoch [136/141], Total Loss: 1.0821, NLL: 1.0740, Masked: 0.9369
+Epoch [137/141], Total Loss: 1.0815, NLL: 1.0734, Masked: 0.9344
+Epoch [138/141], Total Loss: 1.0812, NLL: 1.0731, Masked: 0.9337
+Epoch [139/141], Total Loss: 1.0808, NLL: 1.0727, Masked: 0.9324
+Epoch [140/141], Total Loss: 1.0804, NLL: 1.0723, Masked: 0.9304
+Epoch [141/141], Total Loss: 1.0803, NLL: 1.0722, Masked: 0.9302
+Training loss plot saved to /workspace/AE/results/training/ZINBAE_20260303_134041_no_conv_training_losses.png
+Training losses saved to /workspace/AE/results/training/ZINBAE_20260303_134041_no_conv_training_losses.json
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.074160
+  - ZINB NLL: 1.066434
+Total number of masked values: 19841295
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 19841295
+  - Masked Reconstruction: 0.888066
+Mean Absolute Error (MAE): 0.638483
+R² Score: 0.896492
+==================================================
+
+Using raw counts for evaluation metrics.
+116544000 37094031 79449969
+Zero imputation: 37,094,031 actual zeros, 37,093,885 imputed (100.0%), 0 false structural zeros
+Number of masked values: 19841295
+Masked values analysis: 19841295 masked positions, MAE=0.8885, R²=0.9035
+ZINB metrics saved to /workspace/AE/results/training/ZINBAE_20260303_134051_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/training/
+
+==================================================
+EVALUATING ON TEST DATA
+Dataset size: 24128
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.146142
+  - ZINB NLL: 1.135806
+Total number of masked values: 8220793
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 8220793
+  - Masked Reconstruction: 1.188099
+Mean Absolute Error (MAE): 0.889669
+R² Score: 0.762708
+==================================================
+
+Using raw counts for evaluation metrics.
+48256000 15338387 32917613
+Zero imputation: 15,338,387 actual zeros, 15,338,387 imputed (100.0%), 0 false structural zeros
+Number of masked values: 8220793
+Masked values analysis: 8220793 masked positions, MAE=1.2632, R²=0.7552
+ZINB metrics saved to /workspace/AE/results/testing/ZINBAE_20260303_134716_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/testing/
+
+==================================================
+MODEL SAVED: ZINBAE_20260303_134955_noconv_layers752_ep141.pt
+Location: AE/results/models/ZINBAE_20260303_134955_noconv_layers752_ep141.pt
+==================================================
+
