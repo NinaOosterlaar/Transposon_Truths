@@ -184,7 +184,59 @@ def load_model():
     model.load_state_dict(checkpoint['model_state_dict'])
     model.eval()
     print(f"Model loaded from: {MODEL_PATH}")
+    print(f"Model expects seq_length={model.seq_length}, feature_dim={model.feature_dim}")
     return model
+
+
+def _effective_window_params(model):
+    """Choose preprocessing window/step values compatible with the loaded model."""
+    expected_seq_length = int(getattr(model, 'seq_length', DATA_POINT_LENGTH))
+    if expected_seq_length <= 0:
+        expected_seq_length = DATA_POINT_LENGTH
+
+    if expected_seq_length != DATA_POINT_LENGTH:
+        print(
+            f"Adjusting data_point_length from {DATA_POINT_LENGTH} to {expected_seq_length} "
+            "to match checkpoint model_config."
+        )
+
+    # Keep the same relative overlap when window length changes.
+    step_ratio = STEP_SIZE / DATA_POINT_LENGTH if DATA_POINT_LENGTH > 0 else 1.0
+    effective_step_size = max(1, int(round(step_ratio * expected_seq_length)))
+    return expected_seq_length, effective_step_size
+
+
+def _infer_model_input_feature_dim(data_split, use_chrom, chrom_embedding):
+    """Infer feature_dim seen by model(batch_input, size_factors) from preprocessed data."""
+    if use_chrom:
+        # [Value, features..., Chromosome, Value_Raw, Size_Factor]
+        extra_feature_count = data_split.shape[2] - 4
+        chrom_dim = chrom_embedding.embedding.embedding_dim if chrom_embedding is not None else 0
+        return 1 + extra_feature_count + chrom_dim
+
+    # [Value, features..., Value_Raw, Size_Factor]
+    extra_feature_count = data_split.shape[2] - 3
+    return 1 + extra_feature_count
+
+
+def _validate_model_data_compatibility(model, data_split, use_chrom, chrom_embedding, split_label):
+    """Fail early with a clear message if the split shape does not match model config."""
+    if data_split.ndim != 3:
+        raise ValueError(f"Expected 3D split array for {split_label}, got shape {data_split.shape}.")
+
+    actual_seq_length = int(data_split.shape[1])
+    actual_feature_dim = int(_infer_model_input_feature_dim(data_split, use_chrom, chrom_embedding))
+
+    expected_seq_length = int(getattr(model, 'seq_length', actual_seq_length))
+    expected_feature_dim = int(getattr(model, 'feature_dim', actual_feature_dim))
+
+    if actual_seq_length != expected_seq_length or actual_feature_dim != expected_feature_dim:
+        raise ValueError(
+            "Model/data shape mismatch before evaluation. "
+            f"Split={split_label}, model expects (seq_length={expected_seq_length}, feature_dim={expected_feature_dim}) "
+            f"but data provides (seq_length={actual_seq_length}, feature_dim={actual_feature_dim}). "
+            "Ensure FEATURES, BIN_SIZE, MOVING_AVERAGE, and DATA_POINT_LENGTH are compatible with the checkpoint."
+        )
 
 
 def _eval_split(model, data_split, use_chrom, chrom_embedding, split_label):
@@ -193,6 +245,8 @@ def _eval_split(model, data_split, use_chrom, chrom_embedding, split_label):
     if len(data_split) == 0:
         print(f"  Warning: empty {split_label} split, skipping.")
         return None
+
+    _validate_model_data_compatibility(model, data_split, use_chrom, chrom_embedding, split_label)
 
     dataloader = dataloader_from_array(
         data_split,
@@ -233,6 +287,8 @@ def evaluate_combination(model):
     use_chrom = 'Chr' in FEATURES
     chrom_embedding = ChromosomeEmbedding() if use_chrom else None
 
+    data_point_length, step_size = _effective_window_params(model)
+
     train_set, val_set, test_set, _, _, _, _, _, _ = preprocess_with_split(
         input_folder=TEMP_DIR,
         train_chroms=train_chroms,
@@ -241,8 +297,8 @@ def evaluate_combination(model):
         features=FEATURES,
         bin_size=BIN_SIZE,
         moving_average=MOVING_AVERAGE,
-        data_point_length=DATA_POINT_LENGTH,
-        step_size=STEP_SIZE,
+        data_point_length=data_point_length,
+        step_size=step_size,
     )
 
     combined_metrics = {}
