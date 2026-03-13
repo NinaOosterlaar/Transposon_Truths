@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from collections import defaultdict
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Set
 
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -60,6 +60,67 @@ def concatenate_nonempty(arrays: List[np.ndarray]) -> np.ndarray:
     if not nonempty_arrays:
         return np.array([], dtype=float)
     return np.concatenate(nonempty_arrays)
+
+
+def load_zero_positions_from_original_data(original_csv_file: str) -> Set[int]:
+    """
+    Load 1-based genomic positions where the original value equals zero.
+
+    Args:
+        original_csv_file: Path to combined strain CSV with columns [Position, Value]
+
+    Returns:
+        Set of 1-based genomic positions where Value == 0
+    """
+    if not os.path.exists(original_csv_file):
+        print(f"Warning: Original data file not found: {original_csv_file}. No positions will pass the zero filter.")
+        return set()
+
+    raw_df = pd.read_csv(
+        original_csv_file,
+        usecols=["Position", "Value"],
+        low_memory=False,
+        dtype={"Position": "string", "Value": "string"}
+    )
+
+    positions = pd.to_numeric(raw_df["Position"], errors="coerce")
+    values = pd.to_numeric(raw_df["Value"], errors="coerce")
+
+    invalid_mask = positions.isna() | values.isna()
+    invalid_count = int(invalid_mask.sum())
+    if invalid_count:
+        print(
+            f"Warning: Found {invalid_count} invalid rows in {original_csv_file} "
+            f"(non-numeric Position or Value). These rows will be skipped."
+        )
+
+    zero_positions = positions.loc[~invalid_mask & (values == 0)].astype(np.int64)
+    return set(zero_positions.tolist())
+
+
+def is_pi_position_associated_with_original_zero(
+    pos_index: int,
+    original_zero_positions: Set[int],
+    moving_average_window_size: int = WINDOW_SIZE,
+    moving_average_step_size: int = STEP_SIZE,
+) -> bool:
+    """
+    Determine whether a reconstruction position maps to an all-zero original window.
+
+    Reconstruction positions are indexed on moving-average outputs, while original
+    data uses 1-based genomic coordinates. Reconstruction index i maps to original
+    window [i * step + 1, i * step + window_size]. The position is accepted only
+    if every genomic position in that window is zero in the original data.
+    """
+    if moving_average_window_size <= 0:
+        raise ValueError("moving_average_window_size must be > 0")
+    if moving_average_step_size <= 0:
+        raise ValueError("moving_average_step_size must be > 0")
+
+    window_start = pos_index * moving_average_step_size + 1
+    window_end = window_start + moving_average_window_size - 1
+
+    return all(pos in original_zero_positions for pos in range(window_start, window_end + 1))
 
 
 def load_gene_data(mu_offset_root_dir: str) -> Dict:
@@ -168,7 +229,11 @@ def get_genes_overlapping_position(
 def assign_pi_to_genes(
     csv_file: str,
     genes_by_chr: Dict,
-    chr_name: str
+    chr_name: str,
+    filter_pi_by_original_zeros: bool = True,
+    original_zero_positions: Optional[Set[int]] = None,
+    moving_average_window_size: int = WINDOW_SIZE,
+    moving_average_step_size: int = STEP_SIZE,
 ) -> Dict[str, List[float]]:
     """
     Parse CSV and assign pi values to genes based on position-gene overlap.
@@ -177,6 +242,14 @@ def assign_pi_to_genes(
         csv_file: Path to CSV file with columns [position, reconstruction, mu, pi, theta]
         genes_by_chr: Gene data organized by chromosome
         chr_name: Chromosome name
+        filter_pi_by_original_zeros:
+            If True, only keep pi values whose mapped original moving-average
+            window is entirely zero in Data/combined_strains
+        original_zero_positions: Set of 1-based positions where original Value == 0
+        moving_average_window_size:
+            Moving average window size used in preprocessing (default 19)
+        moving_average_step_size:
+            Moving average step size used in preprocessing (default 1)
         
     Returns:
         Dictionary mapping gene_name -> [list of pi values]
@@ -202,13 +275,32 @@ def assign_pi_to_genes(
     
     genes_pi = defaultdict(list)
     
+    if filter_pi_by_original_zeros and original_zero_positions is None:
+        print(
+            f"Warning: zero filtering enabled but no original position set provided for {csv_file}. "
+            f"Falling back to unfiltered pi values."
+        )
+
     for pos_index, pi_value in df.itertuples(index=False, name=None):
         pos_index = int(pos_index)
         pi_value = float(pi_value)
+
+        if filter_pi_by_original_zeros and original_zero_positions is not None:
+            if not is_pi_position_associated_with_original_zero(
+                pos_index=pos_index,
+                original_zero_positions=original_zero_positions,
+                moving_average_window_size=moving_average_window_size,
+                moving_average_step_size=moving_average_step_size,
+            ):
+                continue
         
         # Find overlapping genes
         overlapping_genes = get_genes_overlapping_position(
-            genes_by_chr, chr_name, pos_index
+            genes_by_chr,
+            chr_name,
+            pos_index,
+            window_size=moving_average_window_size,
+            step_size=moving_average_step_size,
         )
         
         # Assign pi value to each overlapping gene
@@ -260,7 +352,12 @@ def process_single_chromosomal_split(
     mu_offset_dir: str,
     split: str,
     genes_by_chr: Dict,
-    strains: Optional[List[str]] = None
+    strains: Optional[List[str]] = None,
+    filter_pi_by_original_zeros: bool = True,
+    original_data_root_dir: str = "Data/combined_strains",
+    moving_average_window_size: int = WINDOW_SIZE,
+    moving_average_step_size: int = STEP_SIZE,
+    original_zero_positions_cache: Optional[Dict[Tuple[str, str], Set[int]]] = None
 ) -> Dict[str, Dict]:
     """
     Process all chromosomes for a single mu_offset and split (e.g., train).
@@ -271,6 +368,13 @@ def process_single_chromosomal_split(
         split: "train", "val", or "test"
         genes_by_chr: Gene data
         strains: List of strains to process, or None for all found
+        filter_pi_by_original_zeros: If True, only include pi where original data Value == 0
+        original_data_root_dir: Root directory containing original strain files
+        moving_average_window_size: Moving average window size used in preprocessing
+        moving_average_step_size: Moving average step size used in preprocessing
+        original_zero_positions_cache:
+            Optional cache {(strain, chromosome): set_of_zero_positions} to avoid
+            re-reading large original files
         
     Returns:
         Dictionary with structure:
@@ -303,9 +407,33 @@ def process_single_chromosomal_split(
             
             if not os.path.exists(csv_file):
                 continue
+
+            zero_positions = None
+            if filter_pi_by_original_zeros:
+                if original_zero_positions_cache is None:
+                    original_zero_positions_cache = {}
+
+                cache_key = (strain, chr_name)
+                if cache_key not in original_zero_positions_cache:
+                    original_csv_file = os.path.join(
+                        original_data_root_dir,
+                        strain,
+                        f"{chr_name}_distances.csv"
+                    )
+                    original_zero_positions_cache[cache_key] = load_zero_positions_from_original_data(original_csv_file)
+
+                zero_positions = original_zero_positions_cache[cache_key]
             
             # Assign pi to genes
-            genes_pi = assign_pi_to_genes(csv_file, genes_by_chr, chr_name)
+            genes_pi = assign_pi_to_genes(
+                csv_file,
+                genes_by_chr,
+                chr_name,
+                filter_pi_by_original_zeros=filter_pi_by_original_zeros,
+                original_zero_positions=zero_positions,
+                moving_average_window_size=moving_average_window_size,
+                moving_average_step_size=moving_average_step_size,
+            )
             
             # Aggregate by essentiality
             essential, nonessential = aggregate_pi_by_essentiality(
@@ -507,7 +635,11 @@ def create_split_figure_per_strain(
 
 def run_full_analysis(
     mu_offset_root_dir: str = "Data/reconstruction/mu_offset",
-    output_dir: str = "AE/results/pi_analysis"
+    output_dir: str = "AE/results/pi_analysis",
+    filter_pi_by_original_zeros: bool = True,
+    original_data_root_dir: str = "Data/combined_strains",
+    moving_average_window_size: int = WINDOW_SIZE,
+    moving_average_step_size: int = STEP_SIZE,
 ) -> None:
     """
     Run complete analysis: load genes, process all splits and mu_offsets,
@@ -516,11 +648,31 @@ def run_full_analysis(
     Args:
         mu_offset_root_dir: Root directory containing mu_offset folders
         output_dir: Output directory for figures
+        filter_pi_by_original_zeros:
+            If True (default), only use pi values at positions where original
+            moving-average window in Data/combined_strains is entirely zero
+        original_data_root_dir: Root directory containing original strain CSV files
+        moving_average_window_size: Moving average window size used in preprocessing
+        moving_average_step_size: Moving average step size used in preprocessing
     """
+
+    if filter_pi_by_original_zeros and not output_dir.endswith("_original_zero_filter"):
+        output_dir = f"{output_dir}_original_zero_filter"
+
     os.makedirs(output_dir, exist_ok=True)
     
     print("Loading gene data...")
     genes_by_chr = load_gene_data(mu_offset_root_dir)
+
+    if filter_pi_by_original_zeros:
+        print(
+            f"Filtering pi values to original zeros from {original_data_root_dir} "
+            f"(keep only all-zero windows; window_size={moving_average_window_size}, "
+            f"step_size={moving_average_step_size})."
+        )
+        print(f"Using filtered output directory: {output_dir}")
+    else:
+        print("Using all pi values (original zero filter disabled).")
     
     # Find all strains from first mu_offset/train
     sample_dir = os.path.join(mu_offset_root_dir, "muoff0", "train")
@@ -534,6 +686,7 @@ def run_full_analysis(
     overall_by_strain_muoffset = defaultdict(
         lambda: defaultdict(lambda: {'essential': [], 'nonessential': []})
     )
+    original_zero_positions_cache: Dict[Tuple[str, str], Set[int]] = {}
     
     # Process each split
     for split in SPLITS:
@@ -553,7 +706,15 @@ def run_full_analysis(
             
             print(f"  Processing {muoff_name}...")
             results = process_single_chromosomal_split(
-                mu_offset_dir, split, genes_by_chr, all_strains
+                mu_offset_dir,
+                split,
+                genes_by_chr,
+                all_strains,
+                filter_pi_by_original_zeros=filter_pi_by_original_zeros,
+                original_data_root_dir=original_data_root_dir,
+                moving_average_window_size=moving_average_window_size,
+                moving_average_step_size=moving_average_step_size,
+                original_zero_positions_cache=original_zero_positions_cache
             )
             results_by_muoffset[muoff_name] = results
 
