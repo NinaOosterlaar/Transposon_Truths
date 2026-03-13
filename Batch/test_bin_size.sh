@@ -15,7 +15,7 @@
 
 set -euo pipefail
 
-BIN_SIZES=(1 5 10 15 20)
+BIN_SIZES=(1 5 10 15 17 20)
 BIN_SIZE="${BIN_SIZES[$SLURM_ARRAY_TASK_ID]}"
 
 echo "Task ${SLURM_ARRAY_TASK_ID}: Running with bin_size=${BIN_SIZE}"

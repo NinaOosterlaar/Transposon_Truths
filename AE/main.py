@@ -22,7 +22,9 @@ VAL_CHROM = ['ChrVIII', 'ChrXIV', 'ChrXV']  # No validation set
 #                'ChrIX', 'ChrX', 'ChrXI', 'ChrXII', 'ChrXIII', 'ChrXIV', 'ChrXV', 'ChrXVI']
 # TEST_CHROM = []
 
-# Preprocessing
+
+# Preprocessings
+
 INPUT_FOLDER = "Data/combined_strains"
 FEATURES = ['Nucl']
 BIN_SIZE = 17
@@ -30,6 +32,8 @@ MOVING_AVERAGE = False
 DATA_POINT_LENGTH = 2000
 STEP_SIZE = int(DATA_POINT_LENGTH*0.391)
 SAMPLE_FRACTION = 1.0
+
+print("MOVING AVERAGE:", MOVING_AVERAGE)
 
 USE_CONV = True
 CONV_CHANNEL = 48
@@ -634,7 +638,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--mu_offset",
         type=float,
-        default=1.0,
+        default=0.0,
         help="Offset added to global mean when initializing theta_global (default: %(default)s).",
     )
     parser.add_argument(

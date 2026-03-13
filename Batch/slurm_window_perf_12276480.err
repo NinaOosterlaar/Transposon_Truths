@@ -1,0 +1,3 @@
+slurmstepd: error: *** JOB 12276480 ON insy16 CANCELLED AT 2026-03-12T20:51:30 ***
+slurmstepd: error: *** STEP 12276480.0 ON insy16 CANCELLED AT 2026-03-12T20:51:30 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
