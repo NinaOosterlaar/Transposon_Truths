@@ -194,28 +194,7 @@ def assign_pi_to_genes(
     invalid_mask = df["position"].isna() | df["pi"].isna()
     invalid_count = int(invalid_mask.sum())
     if invalid_count:
-        example_messages = []
-        for row_index in df.index[invalid_mask][:3]:
-            line_number = int(row_index) + 2
-            reasons = []
-
-            raw_position = raw_df.at[row_index, "position"]
-            raw_pi = raw_df.at[row_index, "pi"]
-
-            if pd.isna(raw_position):
-                reasons.append("missing position")
-            elif pd.isna(df.at[row_index, "position"]):
-                reasons.append(f"non-numeric position '{raw_position}'")
-
-            if pd.isna(raw_pi):
-                reasons.append("missing pi")
-            elif pd.isna(df.at[row_index, "pi"]):
-                reasons.append(f"non-numeric pi '{raw_pi}'")
-
-            example_messages.append(f"line {line_number} ({', '.join(reasons)})")
-
-        examples = "; ".join(example_messages)
-        print(f"    Skipping {invalid_count} malformed rows in {csv_file}: {examples}")
+        print(f"Warning: Found {invalid_count} invalid rows in {csv_file} (non-numeric position or pi). These rows will be skipped.")
 
     df = df.loc[~invalid_mask, ["position", "pi"]]
     if df.empty:
@@ -383,12 +362,12 @@ def create_comparison_boxplot(
     ax.set_title(title, fontsize=11, fontweight='bold')
     ax.grid(axis='y', alpha=0.3, linestyle='--')
     
-    # Add sample size info
-    n_ess = len(essential_pi)
-    n_noness = len(nonessential_pi)
-    ax.text(0.98, 0.97, f'n={n_ess}/{n_noness}', 
-            transform=ax.transAxes, ha='right', va='top',
-            fontsize=8, bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    # # Add sample size info
+    # n_ess = len(essential_pi)
+    # n_noness = len(nonessential_pi)
+    # ax.text(0.98, 0.97, f'n={n_ess}/{n_noness}', 
+    #         transform=ax.transAxes, ha='right', va='top',
+    #         fontsize=8, bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 
 def create_split_figure_combined(
@@ -548,6 +527,13 @@ def run_full_analysis(
     all_strains = sorted([d for d in os.listdir(sample_dir) 
                          if os.path.isdir(os.path.join(sample_dir, d)) and d.startswith('strain_')])
     print(f"Found strains: {all_strains}")
+
+    # Aggregate pi values across all splits and all strains for one final figure
+    overall_by_muoffset = defaultdict(lambda: {'essential': [], 'nonessential': []})
+    # Aggregate pi values across all splits for each strain and mu_offset
+    overall_by_strain_muoffset = defaultdict(
+        lambda: defaultdict(lambda: {'essential': [], 'nonessential': []})
+    )
     
     # Process each split
     for split in SPLITS:
@@ -570,6 +556,17 @@ def run_full_analysis(
                 mu_offset_dir, split, genes_by_chr, all_strains
             )
             results_by_muoffset[muoff_name] = results
+
+            # Accumulate combined chromosome results for all-splits summary
+            for chr_values in results.get('combined', {}).values():
+                overall_by_muoffset[muoff_name]['essential'].append(chr_values['essential'])
+                overall_by_muoffset[muoff_name]['nonessential'].append(chr_values['nonessential'])
+
+            # Accumulate per-strain chromosome results for all-splits per-strain summary
+            for strain_name, strain_results in results.get('per_strain', {}).items():
+                for chr_values in strain_results.values():
+                    overall_by_strain_muoffset[strain_name][muoff_name]['essential'].append(chr_values['essential'])
+                    overall_by_strain_muoffset[strain_name][muoff_name]['nonessential'].append(chr_values['nonessential'])
         
         # Generate figures for combined analysis
         print(f"  Creating combined analysis figure...")
@@ -587,6 +584,76 @@ def run_full_analysis(
             fig_strain.savefig(fig_path_strain, dpi=150, bbox_inches='tight')
             print(f"    Saved: {fig_path_strain}")
             plt.close(fig_strain)
+
+    print(f"\n{'='*60}")
+    print("Creating overall analysis figure (all strains + train/val/test)...")
+    print(f"{'='*60}")
+
+    all_sets_results = {}
+    for muoff_name in MU_OFFSETS:
+        if muoff_name not in overall_by_muoffset:
+            continue
+
+        all_essential = concatenate_nonempty(overall_by_muoffset[muoff_name]['essential'])
+        all_nonessential = concatenate_nonempty(overall_by_muoffset[muoff_name]['nonessential'])
+
+        all_sets_results[muoff_name] = {
+            'combined': {
+                'all_splits': {
+                    'essential': all_essential,
+                    'nonessential': all_nonessential
+                }
+            }
+        }
+
+    if all_sets_results:
+        fig_all_sets = create_split_figure_combined(all_sets_results, split="all_sets")
+        fig_path_all_sets = os.path.join(output_dir, "all_sets_all_strains_combined.png")
+        fig_all_sets.savefig(fig_path_all_sets, dpi=150, bbox_inches='tight')
+        print(f"    Saved: {fig_path_all_sets}")
+        plt.close(fig_all_sets)
+    else:
+        print("    Skipping overall figure: no data found across splits.")
+
+    print(f"\n{'='*60}")
+    print("Creating per-strain overall analysis figures (all splits)...")
+    print(f"{'='*60}")
+
+    for strain in all_strains:
+        strain_all_sets_results = {}
+
+        for muoff_name in MU_OFFSETS:
+            if muoff_name not in overall_by_strain_muoffset.get(strain, {}):
+                continue
+
+            all_essential = concatenate_nonempty(
+                overall_by_strain_muoffset[strain][muoff_name]['essential']
+            )
+            all_nonessential = concatenate_nonempty(
+                overall_by_strain_muoffset[strain][muoff_name]['nonessential']
+            )
+
+            strain_all_sets_results[muoff_name] = {
+                'per_strain': {
+                    strain: {
+                        'all_splits': {
+                            'essential': all_essential,
+                            'nonessential': all_nonessential
+                        }
+                    }
+                }
+            }
+
+        if strain_all_sets_results:
+            fig_strain_all_sets = create_split_figure_per_strain(
+                strain_all_sets_results, strain, split="all_sets"
+            )
+            fig_path_strain_all_sets = os.path.join(output_dir, f"all_sets_{strain}.png")
+            fig_strain_all_sets.savefig(fig_path_strain_all_sets, dpi=150, bbox_inches='tight')
+            print(f"    Saved: {fig_path_strain_all_sets}")
+            plt.close(fig_strain_all_sets)
+        else:
+            print(f"    Skipping {strain}: no data found across splits.")
     
     print(f"\n{'='*60}")
     print(f"Analysis complete! Figures saved to: {output_dir}")
