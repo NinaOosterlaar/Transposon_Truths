@@ -1,5 +1,4 @@
 import argparse
-from concurrent.futures import ProcessPoolExecutor, as_completed
 import os
 import sys
 
@@ -321,26 +320,7 @@ def parse_args():
 	parser.add_argument("--threshold_step", type=float, default=1.0)
 	parser.add_argument("--dataset_start", type=int, default=1)
 	parser.add_argument("--dataset_end", type=int, default=10)
-	parser.add_argument(
-		"--n_workers",
-		type=int,
-		default=None,
-		help="Number of method evaluations to run in parallel. Defaults to available CPUs, capped by the number of methods.",
-	)
 	return parser.parse_args()
-
-
-def resolve_worker_count(requested_workers, task_count):
-	"""Resolve the number of worker processes to use."""
-	if task_count < 1:
-		return 1
-
-	available_cpus = os.cpu_count() or 1
-	if requested_workers is None:
-		return max(1, min(available_cpus, task_count))
-	if requested_workers < 1:
-		raise ValueError("--n_workers must be at least 1")
-	return min(requested_workers, task_count)
 
 
 def main():
@@ -365,105 +345,56 @@ def main():
 	print(f"  Overlap: {args.overlap}")
 	print(f"  Theta: {args.theta}")
 	print(f"  Threshold count: {len(thresholds)}")
-	available_cpus = os.cpu_count() or 1
-	method_workers = resolve_worker_count(args.n_workers, len(methods))
-	print(f"  CPUs available: {available_cpus}")
-	print(f"  Method workers: {method_workers}")
 
 	all_rows = []
-	executor = None
-	if method_workers > 1:
-		executor = ProcessPoolExecutor(max_workers=method_workers)
 
-	try:
-		for dataset_id in dataset_ids:
-			dataset_folder = os.path.join(args.base_folder, str(dataset_id))
-			data_file = os.path.join(dataset_folder, "SATAY_with_pi.csv")
-			param_file = os.path.join(dataset_folder, "SATAY_without_pi_params.csv")
-			pi_file = os.path.join(dataset_folder, "pi_values.csv")
-			nucleosome_file = os.path.join(dataset_folder, "density_vs_distance_nucleosome_density.csv")
-			centromere_file = os.path.join(dataset_folder, "density_vs_distance_centromere_density.csv")
+	for dataset_id in dataset_ids:
+		dataset_folder = os.path.join(args.base_folder, str(dataset_id))
+		data_file = os.path.join(dataset_folder, "SATAY_with_pi.csv")
+		param_file = os.path.join(dataset_folder, "SATAY_without_pi_params.csv")
+		pi_file = os.path.join(dataset_folder, "pi_values.csv")
+		nucleosome_file = os.path.join(dataset_folder, "density_vs_distance_nucleosome_density.csv")
+		centromere_file = os.path.join(dataset_folder, "density_vs_distance_centromere_density.csv")
 
-			required_files = [
-				data_file,
-				param_file,
+		required_files = [
+			data_file,
+			param_file,
+			pi_file,
+			nucleosome_file,
+			centromere_file,
+		]
+		missing_files = [p for p in required_files if not os.path.exists(p)]
+		if missing_files:
+			raise FileNotFoundError(
+				f"Dataset {dataset_id} is missing required files: {missing_files}"
+			)
+
+		print(f"\nProcessing dataset {dataset_id}")
+		data, centromere_distances, nucleosome_distances = read_data_and_distances(data_file)
+		true_cps = read_true_change_points(param_file)
+		print(f"  Points: {len(data)} | True CPs: {len(true_cps)}")
+
+		for method in methods:
+			print(f"  Method {method} ...")
+			rows = evaluate_method_on_dataset(
+				method,
+				dataset_id,
+				data,
+				true_cps,
+				args.window_size,
+				args.overlap,
+				thresholds,
+				args.theta,
 				pi_file,
+				nucleosome_distances,
+				centromere_distances,
 				nucleosome_file,
 				centromere_file,
-			]
-			missing_files = [p for p in required_files if not os.path.exists(p)]
-			if missing_files:
-				raise FileNotFoundError(
-					f"Dataset {dataset_id} is missing required files: {missing_files}"
-				)
+			)
+			all_rows.extend(rows)
+		# break # Remove this break to process all datasets
 
-			print(f"\nProcessing dataset {dataset_id}")
-			data, centromere_distances, nucleosome_distances = read_data_and_distances(data_file)
-			true_cps = read_true_change_points(param_file)
-			print(f"  Points: {len(data)} | True CPs: {len(true_cps)}")
-
-			if executor is None:
-				for method in methods:
-					print(f"  Method {method} ...")
-					rows = evaluate_method_on_dataset(
-						method,
-						dataset_id,
-						data,
-						true_cps,
-						args.window_size,
-						args.overlap,
-						thresholds,
-						args.theta,
-						pi_file,
-						nucleosome_distances,
-						centromere_distances,
-						nucleosome_file,
-						centromere_file,
-					)
-					all_rows.extend(rows)
-				continue
-
-			future_to_method = {}
-			for method in methods:
-				print(f"  Method {method} ...")
-				future = executor.submit(
-					evaluate_method_on_dataset,
-					method,
-					dataset_id,
-					data,
-					true_cps,
-					args.window_size,
-					args.overlap,
-					thresholds,
-					args.theta,
-					pi_file,
-					nucleosome_distances,
-					centromere_distances,
-					nucleosome_file,
-					centromere_file,
-				)
-				future_to_method[future] = method
-
-			dataset_rows = {}
-			for future in as_completed(future_to_method):
-				method = future_to_method[future]
-				try:
-					dataset_rows[method] = future.result()
-				except Exception as exc:
-					raise RuntimeError(
-						f"Method {method} failed while processing dataset {dataset_id}"
-					) from exc
-				print(f"  Method {method} done")
-
-			for method in methods:
-				all_rows.extend(dataset_rows[method])
-	finally:
-		if executor is not None:
-			executor.shutdown()
-
-	results_df = pd.DataFrame(all_rows).sort_values(
-		["dataset_id", "method", "threshold"]
-	).reset_index(drop=True)
+	results_df = pd.DataFrame(all_rows)
 	results_csv = os.path.join(args.output_folder, "all_results.csv")
 	results_df.to_csv(results_csv, index=False)
 	print(f"\nSaved detailed results to {results_csv}")

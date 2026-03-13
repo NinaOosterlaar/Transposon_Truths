@@ -1,0 +1,515 @@
+Compare versions
+Job ID: 12272031
+Configuration:
+  Base folder: Signal_processing/final/SATAY_synthetic
+  Output folder: Signal_processing/final/results/compare_versions_theta0_ws100
+  Datasets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  Methods: ['ref', 'v0', 'v1', 'v2']
+  Window size: 100
+  Overlap: 0.5
+  Theta: 0.0
+  Threshold count: 41
+
+Processing dataset 1
+  Points: 500718 | True CPs: 968
+  Method ref ...
+  Method v0 ...
+  Method v1 ...
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+  Method v2 ...
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Best theta: 2.58e-01 with ll=-385684.30
+Final parameters: pi=0.7792, mu=5.9049, theta=0.2583
+Estimated global theta: 0.2583
+(Estimated global pi: 0.7792, mu: 5.9049)
+0.2582618760682676
+
+Saved detailed results to Signal_processing/final/results/compare_versions_theta0_ws100/all_results.csv
+Saved per-dataset AUC to Signal_processing/final/results/compare_versions_theta0_ws100/auc_per_dataset.csv
+Saved aggregated PR stats to Signal_processing/final/results/compare_versions_theta0_ws100/precision_recall_aggregated.csv
+Saved aggregated AUC stats to Signal_processing/final/results/compare_versions_theta0_ws100/auc_aggregated.csv
