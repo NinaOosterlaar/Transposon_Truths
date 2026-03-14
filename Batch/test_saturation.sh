@@ -1,8 +1,9 @@
 #!/bin/sh
-#SBATCH --job-name=AE
+#SBATCH --job-name=saturation
 #SBATCH --partition=general,insy
 #SBATCH --account=ewi-insy-prb
-#SBATCH --time=04:00:00
+#SBATCH --time=24:00:00
+#SBATCH --qos=medium
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=64G
@@ -11,18 +12,9 @@
 #SBATCH --mail-user=n.i.m.oosterlaar@student.tudelft.nl
 #SBATCH --output=slurm_%A_%a.out
 #SBATCH --error=slurm_%A_%a.err
-#SBATCH --array=0
 
 set -euo pipefail
 
-NOISE_LEVELS=(0.15)
-MU_OFFSET=0.0
-NOISE_LEVEL=${NOISE_LEVELS[$SLURM_ARRAY_TASK_ID]}
-
-
-
-echo "Running with noise_level=${NOISE_LEVEL}"
-echo "Running with mu_offset=${MU_OFFSET}"
 
 export APPTAINER_IMAGE="/tudelft.net/staff-umbrella/SATAYanalysis/Nina/Thesis/my-container.sif"
 export PROJECT_DIR="/tudelft.net/staff-umbrella/SATAYanalysis/Nina/Thesis"
@@ -34,4 +26,4 @@ srun apptainer exec \
   --bind "$PROJECT_DIR":/workspace \
   --pwd /workspace \
   "$APPTAINER_IMAGE" \
-  python AE/main.py --noise_level "$NOISE_LEVEL" --mu_offset "$MU_OFFSET"
+  python AE/test_saturation.py

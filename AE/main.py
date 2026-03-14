@@ -214,7 +214,7 @@ def main_with_datasets(
     train_metadata=None,
     val_metadata=None,
     test_metadata=None,
-    save_reconstruction=False,
+    save_reconstruction=True,
     reconstruction_output_dir=None,
     ):
     """
@@ -344,6 +344,8 @@ def main_with_datasets(
             chrom_embedding=chrom_embedding,
             plot=plot,
         )
+    
+
     
     # Free training dataloader memory before evaluation
     del train_dataloader
