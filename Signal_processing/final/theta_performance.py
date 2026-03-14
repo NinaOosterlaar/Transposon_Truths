@@ -613,14 +613,14 @@ def main():
     """Main execution function."""
     # Configuration
     base_folder = "Signal_processing/final/SATAY_synthetic"
-    base_output_folder = "Signal_processing/final/results/theta"
+    base_output_folder = "Signal_processing/final/results/theta2"
     
     window_size = 100  # Fixed window size
-    theta_values = [0.01, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5]  # Theta values to test
+    theta_values = [0.25]  # Theta values to test
     overlap = 0.5
-    thresholds = np.linspace(0, 40, 41)
+    thresholds = np.linspace(0, 20, 21)
     dataset_ids = range(1, 11)  # Datasets 1 through 10
-    algorithms = ['zinb_cpd_v3']
+    algorithms = ['zinb_cpd']
     
     # Determine number of workers (leave some CPUs free for system)
     n_workers = max(1, multiprocessing.cpu_count() - 2)
@@ -691,7 +691,6 @@ def main():
         print(f"\n{'='*60}")
         print(f"Creating Plots [{algorithm}]")
         print(f"{'='*60}")
-        
         plot_precision_recall_with_errorbars(agg_results_df, output_folder)
         plot_auc_comparison(agg_results_df, output_folder)
         plot_auc_with_errorbars(agg_auc_df, output_folder)

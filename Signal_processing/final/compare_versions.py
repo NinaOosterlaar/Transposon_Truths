@@ -1,7 +1,7 @@
-import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import os
 import sys
+from types import SimpleNamespace
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,10 +14,27 @@ from Signal_processing.sliding_mean.sliding_ZINB_CPD import sliding_ZINB_CPD
 from Signal_processing.sliding_mean.sliding_ZINB_CPD_ref import sliding_ZINB_CPD_ref
 from Signal_processing.sliding_mean.sliding_ZINB_CPD_v2 import sliding_ZINB_CPD_v2
 from Signal_processing.sliding_mean.sliding_ZINB_CPD_v3 import sliding_ZINB_CPD_v3
+from Signal_processing.ZINB_MLE.estimate_ZINB import estimate_zinb
 from Utils.plot_config import COLORS, setup_plot_style
 
 
 setup_plot_style()
+
+
+# Edit this block to run directly without command-line argparse flags.
+RUN_CONFIG = {
+	"base_folder": "Signal_processing/final/SATAY_synthetic",
+	"output_folder": "Signal_processing/final/results/compare_versions_ws100",
+	"window_size": 100,
+	"overlap": 0.5,
+	"theta": 0,
+	"threshold_min": 0.0,
+	"threshold_max": 40.0,
+	"threshold_step": 1.0,
+	"dataset_start": 1,
+	"dataset_end": 10,
+	"n_workers": 8,
+}
 
 
 def precision_recall_one_to_one(detected_cps, true_cps, tol):
@@ -185,6 +202,7 @@ def evaluate_method_on_dataset(
 			{
 				"dataset_id": dataset_id,
 				"method": method,
+				"theta": float(theta),
 				"threshold": float(threshold),
 				"precision": float(precision),
 				"recall": float(recall),
@@ -299,35 +317,26 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 	plt.close()
 
 
-def parse_args():
-	parser = argparse.ArgumentParser(description="Compare ZINB CPD versions on synthetic SATAY datasets.")
-	parser.add_argument(
-		"--base_folder",
-		type=str,
-		default="Signal_processing/final/SATAY_synthetic",
-		help="Folder with dataset subfolders 1..10",
-	)
-	parser.add_argument(
-		"--output_folder",
-		type=str,
-		default="Signal_processing/final/results/compare_versions_theta0_ws100",
-		help="Where to save metrics and plots",
-	)
-	parser.add_argument("--window_size", type=int, default=100)
-	parser.add_argument("--overlap", type=float, default=0.5)
-	parser.add_argument("--theta", type=float, default=0.0)
-	parser.add_argument("--threshold_min", type=float, default=0.0)
-	parser.add_argument("--threshold_max", type=float, default=40.0)
-	parser.add_argument("--threshold_step", type=float, default=1.0)
-	parser.add_argument("--dataset_start", type=int, default=1)
-	parser.add_argument("--dataset_end", type=int, default=10)
-	parser.add_argument(
-		"--n_workers",
-		type=int,
-		default=None,
-		help="Number of method evaluations to run in parallel. Defaults to available CPUs, capped by the number of methods.",
-	)
-	return parser.parse_args()
+def load_run_args():
+	"""Return run settings from the in-file RUN_CONFIG block."""
+	return SimpleNamespace(**RUN_CONFIG)
+
+
+def resolve_theta_for_dataset(data, requested_theta, eps=1e-10, theta_max=1000):
+	"""Return theta and metadata for one dataset.
+
+	If requested_theta is None or non-positive, estimate theta from data.
+	"""
+	if requested_theta is not None and requested_theta > 0:
+		return float(requested_theta), "fixed", None
+
+	results = estimate_zinb(data, eps=eps)
+	theta = float(results["theta"])
+	if theta >= theta_max:
+		raise ValueError(
+			f"Estimated theta is very large ({theta:.4f}), indicating estimation failure."
+		)
+	return theta, "estimated", results
 
 
 def resolve_worker_count(requested_workers, task_count):
@@ -344,7 +353,7 @@ def resolve_worker_count(requested_workers, task_count):
 
 
 def main():
-	args = parse_args()
+	args = load_run_args()
 
 	os.makedirs(args.output_folder, exist_ok=True)
 
@@ -354,7 +363,7 @@ def main():
 		args.threshold_step,
 	)
 	dataset_ids = list(range(args.dataset_start, args.dataset_end + 1))
-	methods = ["ref", "v0", "v1", "v2"]
+	methods = ["v0", "v1", "v2", "ref"]
 
 	print("Configuration:")
 	print(f"  Base folder: {args.base_folder}")
@@ -363,7 +372,10 @@ def main():
 	print(f"  Methods: {methods}")
 	print(f"  Window size: {args.window_size}")
 	print(f"  Overlap: {args.overlap}")
-	print(f"  Theta: {args.theta}")
+	if args.theta is not None and args.theta > 0:
+		print(f"  Theta mode: fixed ({args.theta})")
+	else:
+		print("  Theta mode: estimated per dataset")
 	print(f"  Threshold count: {len(thresholds)}")
 	available_cpus = os.cpu_count() or 1
 	method_workers = resolve_worker_count(args.n_workers, len(methods))
@@ -400,7 +412,15 @@ def main():
 			print(f"\nProcessing dataset {dataset_id}")
 			data, centromere_distances, nucleosome_distances = read_data_and_distances(data_file)
 			true_cps = read_true_change_points(param_file)
+			theta_value, theta_mode, theta_info = resolve_theta_for_dataset(data, args.theta)
 			print(f"  Points: {len(data)} | True CPs: {len(true_cps)}")
+			if theta_mode == "fixed":
+				print(f"  Theta used: {theta_value:.4f} (fixed)")
+			else:
+				print(
+					f"  Theta used: {theta_value:.4f} (estimated; "
+					f"pi={theta_info['pi']:.4f}, mu={theta_info['mu']:.4f})"
+				)
 
 			if executor is None:
 				for method in methods:
@@ -413,7 +433,7 @@ def main():
 						args.window_size,
 						args.overlap,
 						thresholds,
-						args.theta,
+						theta_value,
 						pi_file,
 						nucleosome_distances,
 						centromere_distances,
@@ -435,7 +455,7 @@ def main():
 					args.window_size,
 					args.overlap,
 					thresholds,
-					args.theta,
+					theta_value,
 					pi_file,
 					nucleosome_distances,
 					centromere_distances,

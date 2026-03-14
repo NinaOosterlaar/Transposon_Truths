@@ -612,7 +612,7 @@ def process_data(transposon_data, features, bin_size, moving_average, step_size,
                 if moving_average:
                     binned_values = sliding_window(df.values, bin_size, step_size=1, moving_average=True)
                 else:
-                    binned_values, _ = bin_data_single_array(df.values, len(df), bin_size, 'average')
+                    binned_values, _ = bin_data_single_array(df.values, len(df), bin_size, 'average_non_zero')
                 
                 # Use the original dataframe's columns to handle both normal and ZINB modes
                 binned_df = pd.DataFrame(binned_values, columns=df.columns.tolist())
