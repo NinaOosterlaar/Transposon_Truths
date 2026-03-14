@@ -48,7 +48,7 @@ def bin_data_single_array(data_array, length, bin_size, method):
         length (int): Actual length of non-padded values (<= L).
         bin_size (int): Size of bins for data aggregation.
         method (str): Method for binning first column
-                      ('average', 'sum', 'max', 'min', 'median').
+                      ('average', 'sum', 'max', 'min', 'median', 'average_non_zero').
         
     Returns:
         binned_region (np.ndarray): Binned data array.
@@ -80,6 +80,8 @@ def bin_data_single_array(data_array, length, bin_size, method):
         agg = np.min
     elif method == 'median':
         agg = np.median
+    elif method == 'average_non_zero':
+        agg = lambda x: np.mean(x[x != 0]) if np.any(x != 0) else 0
     else:
         raise ValueError(f"Unknown method: {method}")
 
