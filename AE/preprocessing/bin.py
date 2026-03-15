@@ -118,12 +118,33 @@ def sliding_window(data, window_size, step_size, moving_average=False):
     current_window = 0
     length = len(data)
     windows = []
+
+    def _moving_average_window(window_data):
+        """Compute moving-average output while preserving input dimensionality.
+
+        - 1D input: scalar average of non-zero values (legacy behavior).
+        - 2D input: per-feature vector where column 0 uses non-zero average
+          and remaining columns use standard mean.
+        """
+        if window_data.ndim == 1:
+            return np.mean(window_data[window_data != 0]) if np.any(window_data != 0) else 0
+
+        num_features = window_data.shape[1]
+        averaged = np.zeros(num_features, dtype=np.float32)
+
+        main_signal = window_data[:, 0]
+        averaged[0] = np.mean(main_signal[main_signal != 0]) if np.any(main_signal != 0) else 0
+
+        if num_features > 1:
+            averaged[1:] = np.mean(window_data[:, 1:], axis=0)
+
+        return averaged
+
     while current_window + window_size <= length:
         window_data = data[current_window:current_window + window_size]
         if moving_average:
             # window_data = np.mean(window_data, axis=0)
-            # Take mean of non-zero values in the window
-            window_data = np.mean(window_data[window_data != 0]) if np.any(window_data != 0) else 0
+            window_data = _moving_average_window(window_data)
         windows.append(window_data)
         current_window += step_size
     # Last data point should be the last window_size points, but skip if already included
@@ -131,7 +152,7 @@ def sliding_window(data, window_size, step_size, moving_average=False):
         window_data = data[-window_size:]
         if moving_average:
             # window_data = np.mean(window_data, axis=0)
-            window_data = np.mean(window_data[window_data != 0]) if np.any(window_data != 0) else 0
+            window_data = _moving_average_window(window_data)
         windows.append(window_data)
     return windows
 
