@@ -668,8 +668,13 @@ def process_data(transposon_data, features, bin_size, moving_average, step_size,
                 if 'Position' in df.columns:
                     positions = df['Position'].values
                 else:
-                    # If Position not available, use indices as proxy
-                    positions = np.arange(len(df))
+                    if moving_average:
+                        # MA with step=1: each index IS a genomic position offset
+                        positions = np.arange(len(df))
+                    else:
+                        # Bin mode: index i is the i-th bin, covering [i*bin_size, (i+1)*bin_size-1]
+                        # Store the 0-based genomic start of each bin so metadata reflects real ranges
+                        positions = np.arange(len(df)) * bin_size
                 
                 data_array = df.values.astype(np.float32)
                 windows = sliding_window(data_array, data_point_length, step_size, moving_average=False)

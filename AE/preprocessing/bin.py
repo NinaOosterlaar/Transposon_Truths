@@ -121,14 +121,17 @@ def sliding_window(data, window_size, step_size, moving_average=False):
     while current_window + window_size <= length:
         window_data = data[current_window:current_window + window_size]
         if moving_average:
-            window_data = np.mean(window_data, axis=0)
+            # window_data = np.mean(window_data, axis=0)
+            # Take mean of non-zero values in the window
+            window_data = np.mean(window_data[window_data != 0]) if np.any(window_data != 0) else 0
         windows.append(window_data)
         current_window += step_size
     # Last data point should be the last window_size points, but skip if already included
     if current_window < length:
         window_data = data[-window_size:]
         if moving_average:
-            window_data = np.mean(window_data, axis=0)
+            # window_data = np.mean(window_data, axis=0)
+            window_data = np.mean(window_data[window_data != 0]) if np.any(window_data != 0) else 0
         windows.append(window_data)
     return windows
 

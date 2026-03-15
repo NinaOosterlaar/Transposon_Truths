@@ -1,5 +1,5 @@
 """
-Reconstruction utility for mapping autoencoder outputs back to genomic coordinates.
+Reconstruction utility for mapping autoencoder outputs back to position coordinates.
 
 This script takes model predictions and metadata to create genomic coordinate files
 in CSV.
@@ -17,7 +17,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class OutputReconstructor:
-    """Reconstruct and map autoencoder outputs to genomic coordinates."""
+    """Reconstruct and map autoencoder outputs to metadata-defined position coordinates."""
     
     def __init__(self, metadata_path: str):
         """
@@ -28,8 +28,18 @@ class OutputReconstructor:
         """
         with open(metadata_path, 'r') as f:
             self.metadata = json.load(f)
+
+        self.position_modes = sorted(
+            {
+                str(meta.get('position_mode'))
+                for meta in self.metadata
+                if meta.get('position_mode') is not None
+            }
+        )
         
         print(f"Loaded metadata for {len(self.metadata)} windows")
+        if self.position_modes:
+            print(f"Metadata position_mode values: {self.position_modes}")
     
     def reconstruct_to_dataframe(
         self,
@@ -42,7 +52,7 @@ class OutputReconstructor:
         use_raw_mu: bool = False
     ) -> pd.DataFrame:
         """
-        Reconstruct predictions into a DataFrame with genomic coordinates.
+        Reconstruct predictions into a DataFrame with metadata-defined coordinates.
         
 
           The "predictions" array is expected to contain threshold-applied reconstructions:

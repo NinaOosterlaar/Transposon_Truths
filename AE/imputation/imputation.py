@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from collections import defaultdict
-from typing import Dict, List, Tuple, Optional, Set
+from typing import Any, Dict, List, Tuple, Optional, Set
 
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -32,6 +32,10 @@ SPLITS = ["train", "val", "test"]
 # Window parameters for position mapping
 WINDOW_SIZE = 19
 STEP_SIZE = 1
+POSITION_MODE_AUTO = "auto"
+POSITION_MODE_INDEX = "index"
+POSITION_MODE_CENTER = "center"
+VALID_POSITION_MODES = {POSITION_MODE_AUTO, POSITION_MODE_INDEX, POSITION_MODE_CENTER}
 
 
 def normalize_chromosome_name(chr_name: Optional[str]) -> Optional[str]:
@@ -98,27 +102,192 @@ def load_zero_positions_from_original_data(original_csv_file: str) -> Set[int]:
     return set(zero_positions.tolist())
 
 
-def is_pi_position_associated_with_original_zero(
-    pos_index: int,
-    original_zero_positions: Set[int],
+def load_split_metadata(split_dir: str) -> List[Dict[str, Any]]:
+    """Load split metadata JSON (if present) from a reconstruction split folder."""
+    metadata_path = os.path.join(split_dir, "metadata.json")
+    if not os.path.exists(metadata_path):
+        return []
+
+    try:
+        with open(metadata_path, 'r') as f:
+            metadata = json.load(f)
+    except Exception as exc:
+        print(f"Warning: Could not load split metadata from {metadata_path}: {exc}")
+        return []
+
+    if not isinstance(metadata, list):
+        print(f"Warning: Unexpected metadata format in {metadata_path}; expected a list.")
+        return []
+
+    return metadata
+
+
+def infer_window_size_from_metadata(metadata: List[Dict[str, Any]], fallback_window_size: int) -> int:
+    """Infer preprocessing window size from metadata.bin_size with fallback."""
+    if fallback_window_size <= 0:
+        raise ValueError("fallback_window_size must be > 0")
+
+    bin_sizes_set = set()
+    for meta in metadata:
+        bin_size_value = meta.get("bin_size")
+        if bin_size_value is None:
+            continue
+        try:
+            parsed_bin_size = int(bin_size_value)
+        except (TypeError, ValueError):
+            continue
+        if parsed_bin_size > 0:
+            bin_sizes_set.add(parsed_bin_size)
+
+    bin_sizes = sorted(bin_sizes_set)
+
+    if not bin_sizes:
+        return fallback_window_size
+
+    if len(bin_sizes) > 1:
+        print(
+            f"Warning: Multiple bin_size values found in metadata ({bin_sizes}). "
+            f"Using {bin_sizes[0]}."
+        )
+
+    return int(bin_sizes[0])
+
+
+def infer_position_mode_from_metadata(
+    metadata: List[Dict[str, Any]],
+    fallback_mode: str = POSITION_MODE_INDEX,
+) -> str:
+    """
+    Infer reconstruction position convention from metadata.
+
+    Priority:
+    1) Explicit `position_mode` in metadata (newer preprocessing output)
+    2) Heuristic on `start_pos`: 0-based starts imply index mode, otherwise center mode
+    3) Fallback to provided mode
+    """
+    explicit_modes = {
+        str(meta.get("position_mode"))
+        for meta in metadata
+        if str(meta.get("position_mode")) in {POSITION_MODE_INDEX, POSITION_MODE_CENTER}
+    }
+
+    if len(explicit_modes) == 1:
+        return explicit_modes.pop()
+
+    if len(explicit_modes) > 1:
+        print(
+            f"Warning: Conflicting position_mode values in metadata ({sorted(explicit_modes)}). "
+            f"Falling back to heuristic."
+        )
+
+    starts: List[int] = []
+    for meta in metadata:
+        start_pos = meta.get("start_pos")
+        if start_pos is None:
+            continue
+        try:
+            starts.append(int(start_pos))
+        except (TypeError, ValueError):
+            continue
+
+    if not starts:
+        return fallback_mode
+
+    return POSITION_MODE_INDEX if min(starts) <= 0 else POSITION_MODE_CENTER
+
+
+def resolve_position_mapping_for_split(
+    split_dir: str,
+    requested_position_mode: str,
+    fallback_window_size: int,
+) -> Tuple[str, int]:
+    """Resolve effective position mode and window size for one split."""
+    if requested_position_mode not in VALID_POSITION_MODES:
+        raise ValueError(
+            f"Unknown position_mode={requested_position_mode}. "
+            f"Expected one of {sorted(VALID_POSITION_MODES)}"
+        )
+
+    metadata = load_split_metadata(split_dir)
+    effective_window_size = infer_window_size_from_metadata(metadata, fallback_window_size)
+
+    if requested_position_mode == POSITION_MODE_AUTO:
+        effective_position_mode = infer_position_mode_from_metadata(
+            metadata,
+            fallback_mode=POSITION_MODE_INDEX,
+        )
+        source = "metadata" if metadata else "fallback"
+        print(
+            f"Split {os.path.basename(split_dir)}: position_mode={effective_position_mode} "
+            f"(source={source}), window_size={effective_window_size}"
+        )
+    else:
+        effective_position_mode = requested_position_mode
+        print(
+            f"Split {os.path.basename(split_dir)}: position_mode={effective_position_mode} "
+            f"(manual), window_size={effective_window_size}"
+        )
+
+    return effective_position_mode, effective_window_size
+
+
+def map_reconstruction_position_to_original_window(
+    position: int,
     moving_average_window_size: int = WINDOW_SIZE,
     moving_average_step_size: int = STEP_SIZE,
-) -> bool:
+    position_mode: str = POSITION_MODE_INDEX,
+) -> Tuple[int, int]:
     """
-    Determine whether a reconstruction position maps to an all-zero original window.
+    Map one reconstructed position to its original 1-based genomic window.
 
-    Reconstruction positions are indexed on moving-average outputs, while original
-    data uses 1-based genomic coordinates. Reconstruction index i maps to original
-    window [i * step + 1, i * step + window_size]. The position is accepted only
-    if every genomic position in that window is zero in the original data.
+    Modes:
+    - index: position is a 0-based moving-average index i
+      window = [i * step + 1, i * step + window_size]
+    - center: position is a genomic center coordinate of the moving-average window
+      window_start = position - floor((window_size - 1)/2)
     """
     if moving_average_window_size <= 0:
         raise ValueError("moving_average_window_size must be > 0")
     if moving_average_step_size <= 0:
         raise ValueError("moving_average_step_size must be > 0")
+    if position_mode not in {POSITION_MODE_INDEX, POSITION_MODE_CENTER}:
+        raise ValueError(
+            f"position_mode must be '{POSITION_MODE_INDEX}' or '{POSITION_MODE_CENTER}', got: {position_mode}"
+        )
 
-    window_start = pos_index * moving_average_step_size + 1
-    window_end = window_start + moving_average_window_size - 1
+    position = int(position)
+
+    if position_mode == POSITION_MODE_INDEX:
+        window_start = position * moving_average_step_size + 1
+    else:
+        left_half = (moving_average_window_size - 1) // 2
+        window_start = position - left_half
+
+    window_start = max(1, int(window_start))
+    window_end = int(window_start + moving_average_window_size - 1)
+    return window_start, window_end
+
+
+def is_pi_position_associated_with_original_zero(
+    position: int,
+    original_zero_positions: Set[int],
+    moving_average_window_size: int = WINDOW_SIZE,
+    moving_average_step_size: int = STEP_SIZE,
+    position_mode: str = POSITION_MODE_INDEX,
+) -> bool:
+    """
+    Determine whether a reconstruction position maps to an all-zero original window.
+
+    The `position` value can be interpreted either as a moving-average index
+    (`position_mode='index'`) or as a genomic center coordinate
+    (`position_mode='center'`).
+    """
+    window_start, window_end = map_reconstruction_position_to_original_window(
+        position=position,
+        moving_average_window_size=moving_average_window_size,
+        moving_average_step_size=moving_average_step_size,
+        position_mode=position_mode,
+    )
 
     return all(pos in original_zero_positions for pos in range(window_start, window_end + 1))
 
@@ -185,31 +354,34 @@ def load_gene_data(mu_offset_root_dir: str) -> Dict:
 def get_genes_overlapping_position(
     genes_by_chr: Dict,
     chr_name: str,
-    pos_index: int,
+    position: int,
     window_size: int = WINDOW_SIZE,
-    step_size: int = STEP_SIZE
+    step_size: int = STEP_SIZE,
+    position_mode: str = POSITION_MODE_INDEX,
 ) -> List[Dict]:
     """
-    Find all genes overlapping with a position's window.
-    
-    Position index i maps to genomic range [i*step_size, i*step_size + window_size - 1]
+    Find all genes overlapping with a reconstructed position's window.
     
     Args:
         genes_by_chr: Gene data organized by chromosome
         chr_name: Chromosome name (e.g., "ChrIII")
-        pos_index: Position index in CSV
+        position: Position value in reconstruction CSV
         window_size: Window size (19)
         step_size: Step size (1)
+        position_mode: Position convention ('index' or 'center')
         
     Returns:
         List of genes overlapping this position
     """
     if chr_name not in genes_by_chr:
         return []
-    
-    # SGD coordinates are 1-based; reconstruction positions are zero-based indices.
-    window_start = pos_index * step_size + 1
-    window_end = window_start + window_size - 1
+
+    window_start, window_end = map_reconstruction_position_to_original_window(
+        position=position,
+        moving_average_window_size=window_size,
+        moving_average_step_size=step_size,
+        position_mode=position_mode,
+    )
     
     # Binary search to find genes in range (chromosomes sorted by start)
     genes = genes_by_chr[chr_name]
@@ -234,6 +406,7 @@ def assign_pi_to_genes(
     original_zero_positions: Optional[Set[int]] = None,
     moving_average_window_size: int = WINDOW_SIZE,
     moving_average_step_size: int = STEP_SIZE,
+    position_mode: str = POSITION_MODE_INDEX,
 ) -> Dict[str, List[float]]:
     """
     Parse CSV and assign pi values to genes based on position-gene overlap.
@@ -250,6 +423,8 @@ def assign_pi_to_genes(
             Moving average window size used in preprocessing (default 19)
         moving_average_step_size:
             Moving average step size used in preprocessing (default 1)
+        position_mode:
+            Position convention used in reconstruction CSV ('index' or 'center')
         
     Returns:
         Dictionary mapping gene_name -> [list of pi values]
@@ -281,16 +456,17 @@ def assign_pi_to_genes(
             f"Falling back to unfiltered pi values."
         )
 
-    for pos_index, pi_value in df.itertuples(index=False, name=None):
-        pos_index = int(pos_index)
+    for position, pi_value in df.itertuples(index=False, name=None):
+        position = int(position)
         pi_value = float(pi_value)
 
         if filter_pi_by_original_zeros and original_zero_positions is not None:
             if not is_pi_position_associated_with_original_zero(
-                pos_index=pos_index,
+                position=position,
                 original_zero_positions=original_zero_positions,
                 moving_average_window_size=moving_average_window_size,
                 moving_average_step_size=moving_average_step_size,
+                position_mode=position_mode,
             ):
                 continue
         
@@ -298,9 +474,10 @@ def assign_pi_to_genes(
         overlapping_genes = get_genes_overlapping_position(
             genes_by_chr,
             chr_name,
-            pos_index,
+            position,
             window_size=moving_average_window_size,
             step_size=moving_average_step_size,
+            position_mode=position_mode,
         )
         
         # Assign pi value to each overlapping gene
@@ -357,7 +534,8 @@ def process_single_chromosomal_split(
     original_data_root_dir: str = "Data/combined_strains",
     moving_average_window_size: int = WINDOW_SIZE,
     moving_average_step_size: int = STEP_SIZE,
-    original_zero_positions_cache: Optional[Dict[Tuple[str, str], Set[int]]] = None
+    original_zero_positions_cache: Optional[Dict[Tuple[str, str], Set[int]]] = None,
+    position_mode: str = POSITION_MODE_AUTO,
 ) -> Dict[str, Dict]:
     """
     Process all chromosomes for a single mu_offset and split (e.g., train).
@@ -375,6 +553,9 @@ def process_single_chromosomal_split(
         original_zero_positions_cache:
             Optional cache {(strain, chromosome): set_of_zero_positions} to avoid
             re-reading large original files
+        position_mode:
+            Position convention to use ('auto', 'index', 'center').
+            In 'auto' mode, this is inferred from split metadata.
         
     Returns:
         Dictionary with structure:
@@ -392,6 +573,12 @@ def process_single_chromosomal_split(
     if strains is None:
         strains = sorted([d for d in os.listdir(split_dir) 
                          if os.path.isdir(os.path.join(split_dir, d)) and d.startswith('strain_')])
+
+    effective_position_mode, effective_window_size = resolve_position_mapping_for_split(
+        split_dir=split_dir,
+        requested_position_mode=position_mode,
+        fallback_window_size=moving_average_window_size,
+    )
     
     results = {
         'per_strain': defaultdict(lambda: defaultdict(lambda: {'essential': [], 'nonessential': []})),
@@ -431,8 +618,9 @@ def process_single_chromosomal_split(
                 chr_name,
                 filter_pi_by_original_zeros=filter_pi_by_original_zeros,
                 original_zero_positions=zero_positions,
-                moving_average_window_size=moving_average_window_size,
+                moving_average_window_size=effective_window_size,
                 moving_average_step_size=moving_average_step_size,
+                position_mode=effective_position_mode,
             )
             
             # Aggregate by essentiality
@@ -640,6 +828,7 @@ def run_full_analysis(
     original_data_root_dir: str = "Data/combined_strains",
     moving_average_window_size: int = WINDOW_SIZE,
     moving_average_step_size: int = STEP_SIZE,
+    position_mode: str = POSITION_MODE_AUTO,
 ) -> None:
     """
     Run complete analysis: load genes, process all splits and mu_offsets,
@@ -654,7 +843,15 @@ def run_full_analysis(
         original_data_root_dir: Root directory containing original strain CSV files
         moving_average_window_size: Moving average window size used in preprocessing
         moving_average_step_size: Moving average step size used in preprocessing
+        position_mode:
+            Position convention to use ('auto', 'index', 'center').
+            In 'auto' mode, inferred from each split metadata.json.
     """
+
+    if position_mode not in VALID_POSITION_MODES:
+        raise ValueError(
+            f"Unknown position_mode={position_mode}. Expected one of {sorted(VALID_POSITION_MODES)}"
+        )
 
     if filter_pi_by_original_zeros and not output_dir.endswith("_original_zero_filter"):
         output_dir = f"{output_dir}_original_zero_filter"
@@ -714,7 +911,8 @@ def run_full_analysis(
                 original_data_root_dir=original_data_root_dir,
                 moving_average_window_size=moving_average_window_size,
                 moving_average_step_size=moving_average_step_size,
-                original_zero_positions_cache=original_zero_positions_cache
+                original_zero_positions_cache=original_zero_positions_cache,
+                position_mode=position_mode,
             )
             results_by_muoffset[muoff_name] = results
 

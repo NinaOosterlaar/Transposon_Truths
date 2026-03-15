@@ -38,41 +38,41 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 # REGULARIZER = 'l2'
 # REGULARIZATION_WEIGHT = 1e-5  # alpha
 
-MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
-# # # MODEL_PATH = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep141.pt"
-# # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff1.000.pt"
-
-# Preprocessing parameters 
-FEATURES = ['Centr']
-BIN_SIZE = 19
-MOVING_AVERAGE = True
-DATA_POINT_LENGTH = 2000
-STEP_SIZE = 894
-
-# Training parameters 
-BATCH_SIZE = 128
-NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.7
-MASKED_RECON_WEIGHT = 0.00872  # gamma
-REGULARIZER = 'none'
-REGULARIZATION_WEIGHT = 1e-5  # alpha
-
-# MODEL_PATH = "AE/results/models/ZINBAE_layers304_152_ep92_noise0.150_muoff1.000.pt"
-
+# MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
+# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
+# # # # MODEL_PATH = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep141.pt"
+# # # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff1.000.pt"
 
 # # Preprocessing parameters 
-# FEATURES = ['Nucl']
-# BIN_SIZE = 17
-# MOVING_AVERAGE = False
+# FEATURES = ['Centr']
+# BIN_SIZE = 19
+# MOVING_AVERAGE = True
 # DATA_POINT_LENGTH = 2000
-# STEP_SIZE = int(0.391 * 2000)  
+# STEP_SIZE = 894
+
 # # Training parameters 
 # BATCH_SIZE = 128
 # NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.378  
-# MASKED_RECON_WEIGHT = 0.127  # gamma - exact value
+# PI_THRESHOLD = 0.7
+# MASKED_RECON_WEIGHT = 0.00872  # gamma
 # REGULARIZER = 'none'
-# REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
+# REGULARIZATION_WEIGHT = 1e-5  # alpha
+
+MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep92_noise0.150_muoff0.000.pt"
+
+# Preprocessing parameters 
+FEATURES = ['Nucl']
+BIN_SIZE = 17
+MOVING_AVERAGE = False
+DATA_POINT_LENGTH = 2000
+STEP_SIZE = int(0.391 * 2000)  
+# Training parameters 
+BATCH_SIZE = 128
+NOISE_LEVEL = 0.15
+PI_THRESHOLD = 0.378  
+MASKED_RECON_WEIGHT = 0.127  # gamma - exact value
+REGULARIZER = 'none'
+REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 
 # MODEL_PATH = "AE/results/models/ZINBAE_layers432_ep54_noise0.150_muoff1.000.pt"
 
@@ -252,9 +252,19 @@ def load_model_and_test():
     print(f"  use_cached_data: {USE_CACHED_DATA}")
     print(f"  output_dir: {OUTPUT_DIR}")
     
-    # In bayesian optimization, preprocessing_length = data_point_length (NOT multiplied by bin_size)
-    # The preprocess function internally handles bin_size
+    # Mirror AE/main.py preprocessing behavior:
+    # when not using moving average, DATA_POINT_LENGTH is converted to bin-count windows.
+
     preprocessing_length = DATA_POINT_LENGTH
+
+    # Always prioritize the checkpoint's seq_length to avoid shape mismatches
+    # when test-time constants drift from training settings.
+    if preprocessing_length != seq_len:
+        print(
+            f"\nWARNING: preprocessing_length={preprocessing_length} does not match "
+            f"checkpoint seq_length={seq_len}. Using checkpoint seq_length."
+        )
+        preprocessing_length = seq_len
     
     # Check if chromosome feature is used
     chrom = 'Chr' in FEATURES
