@@ -217,6 +217,7 @@ def save_rows_to_csv(rows, output_path):
         'zinb_nll',
         'mse',
         'mae',
+        'mae_sd',
         'r2',
         'masked_loss',
         'kl_loss',
@@ -270,6 +271,11 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
         )
 
     mse = float(np.mean((raw_counts - predictions) ** 2))
+    # Per-sample MAE to capture mean and spread across windows.
+    abs_diff = np.abs(raw_counts - predictions)
+    per_sample_mae = abs_diff.reshape(abs_diff.shape[0], -1).mean(axis=1)
+    mae_mean = float(per_sample_mae.mean())
+    mae_sd = float(per_sample_mae.std())
 
     row = {
         'model_path': MODEL_PATH,
@@ -280,6 +286,8 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
         'mse': mse,
     }
     row.update(to_serializable_metrics(split_metrics))
+    row['mae'] = mae_mean
+    row['mae_sd'] = mae_sd
     return row
 
 

@@ -382,6 +382,7 @@ def create_nucleosome_plot(strain_name, dataset_name, dataset_output_folder, chr
     # Add grid for better readability
     ax.grid(True, alpha=0.3, axis='y')
     ax.set_axisbelow(True)
+    ax.set_ylim(bottom=0)
     
     # Format x-axis
     max_distance = distances.max()
@@ -496,6 +497,7 @@ def _combine_curves(df: pd.DataFrame, group_by: list, out_dir: str, tag: str, pl
             ax.legend(loc="best")
             ax.grid(True, which='both', axis='both', alpha=0.4, linestyle='--')
             ax.minorticks_on()  # enable minor ticks on both axes
+            ax.set_ylim(bottom=0)
 
             fig.tight_layout()
 
@@ -669,6 +671,7 @@ def _combine_cen_curves(df: pd.DataFrame, group_by: list, out_dir: str, tag: str
             ax.legend(loc="best")
             ax.grid(True, which='both', axis='both', alpha=0.4, linestyle='--')
             ax.minorticks_on()
+            ax.set_ylim(bottom=0)
             fig.tight_layout()
             out_png = os.path.join(out_dir, f"{label}_combined_{tag}.png")
             fig.savefig(out_png, dpi=150)
@@ -1156,6 +1159,7 @@ def _combine_mean_curves(df: pd.DataFrame, group_by: list, out_dir: str, tag: st
                 ax.legend(loc="best")
                 ax.grid(True, which='both', axis='both', alpha=0.4, linestyle='--')
                 ax.minorticks_on()
+                ax.set_ylim(bottom=0)
 
                 fig.tight_layout()
 
@@ -1315,6 +1319,7 @@ def _combine_median_curves(df: pd.DataFrame, group_by: list, out_dir: str, tag: 
                 ax.legend(loc="best")
                 ax.grid(True, which='both', axis='both', alpha=0.4, linestyle='--')
                 ax.minorticks_on()
+                ax.set_ylim(bottom=0)
 
                 fig.tight_layout()
 
@@ -1471,6 +1476,7 @@ def _combine_cen_mean_curves(df: pd.DataFrame, group_by: list, out_dir: str, tag
             ax.legend(loc="best")
             ax.grid(True, which='both', axis='both', alpha=0.4, linestyle='--')
             ax.minorticks_on()
+            ax.set_ylim(bottom=0)
             fig.tight_layout()
             out_png = os.path.join(out_dir, f"{label}_combined_{tag}.png")
             fig.savefig(out_png, dpi=150)
@@ -1534,14 +1540,14 @@ if __name__ == "__main__":
     
     # Combine nucleosome data: 
     # combine_nucleosome_data(data="Datasets", boolean=True, plot=True, base_folder="Data_exploration/results/densities/nucleosome_strains", min_distance=0, max_distance=458)
-    # combine_nucleosome_data(data="All", boolean=True, plot=True, base_folder="Data_exploration/results/densities/nucleosome_new", min_distance=0, max_distance=458)
+    combine_nucleosome_data(data="All", boolean=True, plot=True, base_folder="Data_exploration/results/densities/nucleosome_new", min_distance=0, max_distance=458)
     # combine_nucleosome_data(data="Chromosomes", boolean=True, plot=True)
     
     # Combine centromere data with specific filters:
 
     # density_from_centromere("Data_exploration/results/distances", "Data_exploration/results/densities/centromere", bin=bin_size, boolean=True)
     # combine_centromere_data(mode="Datasets", boolean=True, bin_size=bin_size, plot=True, absolute_distance=False, base_folder="Data_exploration/results/densities/centromere_strains")
-    # combine_centromere_data(mode="Datasets", boolean=True, bin_size=bin_size, plot=True, absolute_distance=True, base_folder="Data_exploration/results/densities/centromere_strains")
+    combine_centromere_data(mode="All", boolean=True, bin_size=bin_size, plot=True, absolute_distance=True, base_folder="Data_exploration/results/densities/centromere")
     # combine_centromere_data(mode="Chromosomes", boolean=True, bin_size=bin_size, plot=True)
     
     # ========== MEAN VALUES ==========
@@ -1550,7 +1556,7 @@ if __name__ == "__main__":
     # mean_from_nucleosome("Data/distances_with_zeros_new", "Data_exploration/results/means/nucleosome")
     
     # Combine and plot mean values:
-    # combine_nucleosome_mean_data(data="All", plot=True, base_folder="Data_exploration/results/means/nucleosome", min_distance=0, max_distance=458)
+    combine_nucleosome_mean_data(data="All", plot=True, base_folder="Data_exploration/results/means/nucleosome", min_distance=0, max_distance=458)
     # combine_nucleosome_mean_data(data="Datasets", plot=True, base_folder="Data_exploration/results/means/nucleosome", min_distance=0, max_distance=458)
     combine_centromere_mean_data(mode="All", bin_size=bin_size, plot=True, base_folder="Data_exploration/results/means/centromere", absolute_distance=True)
     # combine_centromere_mean_data(mode="Datasets", bin_size=bin_size, plot=True, absolute_distance=True, base_folder="Data_exploration/results/means/centromere")
@@ -1559,7 +1565,7 @@ if __name__ == "__main__":
     # Generate median values from raw data:
     # median_from_nucleosome("Data/distances_with_zeros_new", "Data_exploration/results/medians/nucleosome")
     # Combine and plot median values:
-    combine_nucleosome_median_data(data="All", plot=True, base_folder="Data_exploration/results/medians/nucleosome", min_distance=0, max_distance=458, absolute_distance=True)
+    # combine_nucleosome_median_data(data="All", plot=True, base_folder="Data_exploration/results/medians/nucleosome", min_distance=0, max_distance=458, absolute_distance=True)
     # combine_nucleosome_median_data(data="Datasets", plot=True, base_folder="Data_exploration/results/medians/nucleosome", min_distance=0, max_distance=458)
 
     
