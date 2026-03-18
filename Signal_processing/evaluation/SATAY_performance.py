@@ -135,6 +135,8 @@ def evaluate_chromosome(chrom, input_folder, data_folder, cpd_dict):
     for window_folder in window_folders:
         window_size = int(window_folder.replace("window", ""))
         window_path = os.path.join(chrom_folder, window_folder)
+        if window_size != 100:
+            continue
         
         # Define tolerances based on window size
         tolerances = {
@@ -398,7 +400,7 @@ if __name__ == "__main__":
     print("="*60)
     print("SATAY Change Point Detection Performance Evaluation")
     print("="*60)
-    input_folder = "Signal_processing/temp"
+    input_folder = "Signal_processing/results/sliding_mean_SATAY/sliding_ZINB_CPD"
     data_folder = "Signal_processing/sample_data/Centromere_region"
     output_folder = "Signal_processing/temp/sliding_cpd_performance"
     # make folder if not exists 

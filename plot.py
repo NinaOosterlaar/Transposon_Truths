@@ -396,72 +396,84 @@
 #     "test_mae_sd":    [15.0405, 8.0631, 5.4239, 3.8609, 2.9470],
 #     "train_r2":       [-0.5662, 0.2034, 0.6695, 0.8245, 0.8978],
 #     "test_r2":        [-0.8862, 0.1669, 0.2777, 0.5848, 0.7329],
+#     "train_masked":   [8.81, 2.78, 1.80, 1.38, 1.12],
+#     "test_masked":  [13.7, 3.55, 2.67, 1.76, 1.34]
 # })
 
-# moving_avg_false = pd.DataFrame({
-#     "bin_size": [1, 5, 10, 15, 20],
-#     "train_zinb_nll": [0.914544, 1.36, 1.371983, 1.410180, 1.382333],
-#     "test_zinb_nll":  [0.983101, 1.46, 1.505194, 1.466934, 1.555772],
-#     "train_mae":      [11.0060, 2.69, 1.6677, 1.5817, 1.3896],
-#     "test_mae":       [11.0128, 2.88, 1.9949, 1.8933, 1.8739],
-#     "train_mae_sd":   [11.6757, 4.64, 3.3328, 2.8953, 2.5610],
-#     "test_mae_sd":    [12.3275, 6.78, 4.8085, 4.4102, 4.5869],
-#     "train_r2":       [-1.2213, 0.30, 0.5379, 0.5803, 0.6427],
-#     "test_r2":        [-0.9654, -0.0079, 0.2925, 0.3306, 0.2877],
-# })
+# # moving_avg_false = pd.DataFrame({
+# #     "bin_size": [1, 5, 10, 15, 20],
+# #     "train_zinb_nll": [0.914544, 1.36, 1.371983, 1.410180, 1.382333],
+# #     "test_zinb_nll":  [0.983101, 1.46, 1.505194, 1.466934, 1.555772],
+# #     "train_mae":      [11.0060, 2.69, 1.6677, 1.5817, 1.3896],
+# #     "test_mae":       [11.0128, 2.88, 1.9949, 1.8933, 1.8739],
+# #     "train_mae_sd":   [11.6757, 4.64, 3.3328, 2.8953, 2.5610],
+# #     "test_mae_sd":    [12.3275, 6.78, 4.8085, 4.4102, 4.5869],
+# #     "train_r2":       [-1.2213, 0.30, 0.5379, 0.5803, 0.6427],
+# #     "test_r2":        [-0.9654, -0.0079, 0.2925, 0.3306, 0.2877],
+# # })
 
-# def plot_row(ax_row, df, row_title):
+# def plot_row(ax_row, df):
 #     x = df["bin_size"]
 
 #     # ZINB NLL
-#     ax_row[0].plot(x, df["train_zinb_nll"], marker="o", label="Train")
-#     ax_row[0].plot(x, df["test_zinb_nll"], marker="o", label="Test")
-#     ax_row[0].set_title("ZINB NLL")
-#     ax_row[0].set_xlabel("Bin size")
-#     ax_row[0].set_ylabel("ZINB NLL")
-#     ax_row[0].set_xticks(x)
-#     ax_row[0].legend()
+#     ax_row[0, 0].plot(x, df["train_zinb_nll"], marker="o", color="black", linestyle="--", label="Train")
+#     ax_row[0, 0].plot(x, df["test_zinb_nll"], marker="o", color="black", linestyle="-", label="Test")
+#     ax_row[0, 0].set_title("ZINB NLL")
+#     ax_row[0, 0].set_xlabel("Bin size")
+#     ax_row[0, 0].set_ylabel("ZINB NLL")
+#     ax_row[0, 0].set_xticks(x)
+#     ax_row[0, 0].legend()
 
 #     # MAE + SD
-#     ax_row[1].errorbar(
+#     ax_row[0, 1].errorbar(
 #         x, df["train_mae"], yerr=df["train_mae_sd"],
-#         marker="o", capsize=4, label="Train"
+#         marker="o", capsize=4, color="black", linestyle="--", label="Train"
 #     )
-#     ax_row[1].errorbar(
+#     ax_row[0, 1].errorbar(
 #         x, df["test_mae"], yerr=df["test_mae_sd"],
-#         marker="o", capsize=4, label="Test"
+#         marker="o", capsize=4, color="black", linestyle="-", label="Test"
 #     )
-#     ax_row[1].set_title("MAE")
-#     ax_row[1].set_xlabel("Bin size")
-#     ax_row[1].set_ylabel("MAE")
-#     ax_row[1].set_xticks(x)
-#     ax_row[1].legend()
+#     ax_row[0, 1].set_title("MAE")
+#     ax_row[0, 1].set_xlabel("Bin size")
+#     ax_row[0, 1].set_ylabel("MAE")
+#     ax_row[0, 1].set_xticks(x)
+#     ax_row[0, 1].legend()
 
 #     # R²
-#     ax_row[2].plot(x, df["train_r2"], marker="o", label="Train")
-#     ax_row[2].plot(x, df["test_r2"], marker="o", label="Test")
-#     ax_row[2].set_title(r"$R^2$")
-#     ax_row[2].set_xlabel("Bin size")
-#     ax_row[2].set_ylabel(r"$R^2$")
-#     ax_row[2].set_xticks(x)
-#     ax_row[2].legend()
+#     ax_row[1, 0].plot(x, df["train_r2"], marker="o", color="black", linestyle="--", label="Train")
+#     ax_row[1, 0].plot(x, df["test_r2"], marker="o", color="black", linestyle="-", label="Test")
+#     ax_row[1, 0].set_title(r"$R^2$")
+#     ax_row[1, 0].set_xlabel("Bin size")
+#     ax_row[1, 0].set_ylabel(r"$R^2$")
+#     ax_row[1, 0].set_xticks(x)
+#     ax_row[1, 0].legend()
 
-#     # row label = subfigure label
-#     ax_row[0].text(
-#         -0.28, 1.18, row_title,
-#         transform=ax_row[0].transAxes,
-#         fontsize=14, fontweight="bold",
-#         va="top", ha="left"
-#     )
+#     # Masked recon. loss
+#     ax_row[1, 1].plot(x, df["train_masked"], marker="o", color="black", linestyle="--", label="Train")
+#     ax_row[1, 1].plot(x, df["test_masked"], marker="o", color="black", linestyle="-", label="Test")
+#     ax_row[1, 1].set_title("Masked recon. loss")
+#     ax_row[1, 1].set_xlabel("Bin size")
+#     ax_row[1, 1].set_ylabel("Masked recon. loss")
+#     ax_row[1, 1].set_xticks(x)
+#     ax_row[1, 1].legend()
 
-# fig, axes = plt.subplots(2, 3, figsize=(12, 8))
+#     # panel labels
+#     for ax, label in zip(ax_row.flatten(), ["a", "b", "c", "d"]):
+#         ax.text(
+#             -0.12, 1.05, label,
+#             transform=ax.transAxes,
+#             fontsize=14, fontweight="bold",
+#             va="top", ha="left"
+#         )
 
-# plot_row(axes[0], moving_avg_true, "a) Moving average = True")
-# plot_row(axes[1], moving_avg_false, "b) Moving average = False")
+# fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+
+# plot_row(axes, moving_avg_true)
+# # plot_row(axes[1], moving_avg_false)
 
 # # fig.suptitle("Performance across bin sizes", fontsize=16)
 # plt.tight_layout(rect=[0, 0, 1, 0.96])
-# # plt.show()
+# plt.show()
 
 
 import pandas as pd
@@ -505,19 +517,20 @@ metrics = [
     ("zinb_nll", "ZINB NLL"),
     ("mae", "MAE"),
     ("r2", r"$R^2$"),
+    ("masked_loss", "Masked recon. loss"),
 ]
 
 models = [
     ("Moving average", df_true),
 ]
 
-fig, axes = plt.subplots(2, 2, sharex=True)
+fig, axes = plt.subplots(2, 3, sharex=True)
 axes = axes.flatten()
 
 # -----------------------------
-# First 3 panels: metrics
+# First 4 panels: metrics
 # -----------------------------
-for ax, (metric_key, metric_label) in zip(axes[:3], metrics):
+for ax, (metric_key, metric_label) in zip(axes[:4], metrics):
     for model_name, df in models:
         color = model_colors[model_name]
 
@@ -540,9 +553,9 @@ for ax, (metric_key, metric_label) in zip(axes[:3], metrics):
     ax.grid(True, alpha=0.3)
 
 # -----------------------------
-# 4th panel: one black saturation line
+# 5th panel: one black saturation line
 # -----------------------------
-ax = axes[3]
+ax = axes[4]
 ax.errorbar(
     df_true["n_datasets"],
     df_true["saturation_mean"] * 100,
@@ -560,11 +573,23 @@ ax.set_title("Saturation level")
 ax.set_ylabel("Saturation level (%)")
 ax.grid(True, alpha=0.3)
 
+axes[5].set_visible(False)
+
+
+# panel labels
+for ax, label in zip(axes[:5], ["a", "b", "c", "d", "e"]):
+    ax.text(
+        -0.12, 1.05, label,
+        transform=ax.transAxes,
+        fontsize=14, fontweight="bold",
+        va="top", ha="left"
+    )
+
 # -----------------------------
 # X labels
 # -----------------------------
-axes[2].set_xlabel("Number of combined datasets")
 axes[3].set_xlabel("Number of combined datasets")
+axes[4].set_xlabel("Number of combined datasets")
 
 # -----------------------------
 # Legend

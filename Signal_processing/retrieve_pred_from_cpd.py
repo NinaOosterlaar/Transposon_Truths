@@ -112,7 +112,7 @@ def format_pred_dict(pred_dict):
 
 if __name__ == "__main__":
     # Example usage
-    window_size = 80
+    window_size = 100
     threshold = 10.0
     base_dir = Path("Signal_processing/results/sliding_mean_SATAY/sliding_ZINB_CPD")
     

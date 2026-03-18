@@ -70,10 +70,27 @@ cpd = {
 #     "XVI": [960, 1080],
 # }
 
-    
+pred = {
+    "I": [650, 850, 950, 1050],
+    "II": [400, 550, 650, 950, 1050, 1200, 1300, 1400],
+    "III": [800, 950, 1050],
+    "IV": [100, 600, 750, 950, 1050, 1200, 1700, 1800],
+    "V": [500, 700, 850, 950, 1050, 1200],
+    "VI": [1500],
+    "VII": [500, 950, 1050, 1250],
+    "VIII": [500, 800, 950, 1050, 1200, 1300],
+    "IX": [800, 950, 1050, 1200, 1300],
+    "X": [500, 950, 1050, 1150, 1350],
+    "XI": [150, 350, 900, 1050, 1150, 1250, 1500],
+    "XII": [700, 800, 950, 1050, 1450, 1900],
+    "XIII": [600, 700, 850, 950, 1050, 1150, 1250, 1550, 1750],
+    "XIV": [850, 950, 1050],
+    "XV": [950, 1050, 1150],
+    "XVI": [600, 700, 950, 1050],
+}
     
 
-window = 80
+window = 100
 
 def plot_around_centromere_x_is_centdist(
     chrom,
@@ -322,8 +339,8 @@ def save_data(chrom, data, out_dir, flank_bp=1000,
 
 if __name__ == "__main__":
     threshold = 7
-    window_size = 80
-    base_dir = Path("Signal_processing/results/sliding_mean_SATAY/sliding_ZINB_CPD_v2")
+    window_size = 100
+    base_dir = Path("Signal_processing/results/sliding_mean_SATAY/sliding_ZINB_CPD")
     pred = retrieve_pred_from_cpd(window_size, threshold, base_dir)
     in_dir = "Data/combined_strains/strain_yEK23"
     # out_dir = "Data_exploration/plot_SATAY"

@@ -3,10 +3,10 @@ import os, sys
 import matplotlib.pyplot as plt
 import pandas as pd
 import argparse
+import re
 from concurrent.futures import ProcessPoolExecutor
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from Signal_processing.ZINB_MLE.estimate_ZINB import estimate_zinb
-from Signal_processing.ZINB_MLE.EM import em_zinb_step
 from Signal_processing.log_likelihoods import zinb_log_likelihood
 
 
@@ -123,14 +123,11 @@ def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window
 
     return change_points, scores
     
-def initialize_theta_global(data, eps=1e-10, theta_max=1000):
-    results = estimate_zinb(data, eps=eps)
+def initialize_theta_global(data, eps=1e-10, theta_max=10):
+    results = estimate_zinb(data, eps=eps, theta_max = theta_max)
     theta_global = results['theta']
     print(f"Estimated global theta: {theta_global:.4f}")
     print(f"(Estimated global pi: {results['pi']:.4f}, mu: {results['mu']:.4f})")
-    if theta_global >= theta_max:
-        # Throw an error that the estimation of theta failed
-        raise ValueError("Estimated global theta is very large, indicating a failure in estimation. ")
     return theta_global
 
 def save_results(output_folder, dataset_name, change_points, scores, theta_global, window_size, overlap, threshold):  
@@ -154,6 +151,295 @@ def process_window_size(ws, data, nucleosome_distances, centromere_distances, ov
         save_results(window_output_folder, dataset_name, change_points, scores, theta_global, ws, overlap, threshold)
     return ws
 
+
+def precision_recall_one_to_one(detected_cps, true_cps, tol):
+    """Calculate precision and recall with one-to-one greedy matching."""
+    detected_cps = np.asarray(detected_cps, dtype=int)
+    true_cps = np.asarray(true_cps, dtype=int)
+
+    if len(detected_cps) == 0 or len(true_cps) == 0:
+        return 0.0, 0.0
+
+    matched_true = set()
+    matched_detected = set()
+
+    pairs = []
+    for i, det_cp in enumerate(detected_cps):
+        for j, true_cp in enumerate(true_cps):
+            dist = abs(det_cp - true_cp)
+            if dist <= tol:
+                pairs.append((i, j, dist))
+
+    pairs.sort(key=lambda x: x[2])
+
+    true_positives = 0
+    for det_idx, true_idx, _ in pairs:
+        if det_idx not in matched_detected and true_idx not in matched_true:
+            matched_detected.add(det_idx)
+            matched_true.add(true_idx)
+            true_positives += 1
+
+    precision = true_positives / len(detected_cps) if len(detected_cps) > 0 else 0.0
+    recall = true_positives / len(true_cps) if len(true_cps) > 0 else 0.0
+    return precision, recall
+
+
+def read_true_change_points(param_file):
+    """Read true CPs from SATAY_without_pi_params.csv."""
+    params_df = pd.read_csv(param_file)
+    if "region_start" not in params_df.columns:
+        raise ValueError(f"Missing 'region_start' column in {param_file}")
+    return params_df["region_start"].values[1:].astype(int).tolist()
+
+
+def parse_change_points_file(result_file):
+    """Parse detected change points from one result file."""
+    change_points = []
+    with open(result_file, "r") as f:
+        for line in f:
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if stripped.startswith("scores:") or stripped.startswith("theta_global:") or stripped.startswith("window_size:"):
+                break
+
+            token = stripped.split()[0]
+            try:
+                cp = int(float(token))
+            except ValueError:
+                continue
+            change_points.append(cp)
+
+    return change_points
+
+
+def extract_threshold_from_filename(filename):
+    """Extract threshold from file name ending with _thX.XX.txt."""
+    match = re.search(r"_th([0-9]+(?:\.[0-9]+)?)\.txt$", filename)
+    if not match:
+        return None
+    return float(match.group(1))
+
+
+def collect_change_points_by_threshold(results_root, dataset_num, window_size, overlap):
+    """Collect {threshold: change_points} for one dataset output folder."""
+    window_folder = os.path.join(results_root, str(dataset_num), f"window{window_size}")
+    if not os.path.isdir(window_folder):
+        return {}
+
+    expected_prefix = f"dataset_{dataset_num}_ws{window_size}_ov{int(overlap * 100)}_th"
+    threshold_map = {}
+
+    for filename in os.listdir(window_folder):
+        if not filename.startswith(expected_prefix) or not filename.endswith(".txt"):
+            continue
+
+        threshold = extract_threshold_from_filename(filename)
+        if threshold is None:
+            continue
+
+        result_file = os.path.join(window_folder, filename)
+        threshold_map[threshold] = parse_change_points_file(result_file)
+
+    return threshold_map
+
+
+def build_precision_recall_results(base_data_folder, original_results_folder, log_results_folder, dataset_numbers, window_size, overlap):
+    """Build detailed precision/recall rows for original and log1p outputs."""
+    rows = []
+
+    for dataset_num in dataset_numbers:
+        dataset_folder = os.path.join(base_data_folder, str(dataset_num))
+        param_file = os.path.join(dataset_folder, "SATAY_without_pi_params.csv")
+        if not os.path.exists(param_file):
+            print(f"Warning: Missing parameter file for dataset {dataset_num}: {param_file}")
+            continue
+
+        true_cps = read_true_change_points(param_file)
+
+        original_threshold_map = collect_change_points_by_threshold(
+            original_results_folder,
+            dataset_num,
+            window_size,
+            overlap,
+        )
+        log_threshold_map = collect_change_points_by_threshold(
+            log_results_folder,
+            dataset_num,
+            window_size,
+            overlap,
+        )
+
+        common_thresholds = sorted(set(original_threshold_map).intersection(log_threshold_map))
+        if not common_thresholds:
+            print(
+                f"Warning: No overlapping thresholds for dataset {dataset_num} "
+                f"between {original_results_folder} and {log_results_folder}."
+            )
+            continue
+
+        for threshold in common_thresholds:
+            precision_original, recall_original = precision_recall_one_to_one(
+                original_threshold_map[threshold],
+                true_cps,
+                window_size,
+            )
+            precision_log, recall_log = precision_recall_one_to_one(
+                log_threshold_map[threshold],
+                true_cps,
+                window_size,
+            )
+
+            rows.append(
+                {
+                    "dataset_id": int(dataset_num),
+                    "method": "original",
+                    "threshold": float(threshold),
+                    "precision": float(precision_original),
+                    "recall": float(recall_original),
+                    "num_detected": int(len(original_threshold_map[threshold])),
+                    "num_true": int(len(true_cps)),
+                }
+            )
+            rows.append(
+                {
+                    "dataset_id": int(dataset_num),
+                    "method": "log1p",
+                    "threshold": float(threshold),
+                    "precision": float(precision_log),
+                    "recall": float(recall_log),
+                    "num_detected": int(len(log_threshold_map[threshold])),
+                    "num_true": int(len(true_cps)),
+                }
+            )
+
+    columns = [
+        "dataset_id",
+        "method",
+        "threshold",
+        "precision",
+        "recall",
+        "num_detected",
+        "num_true",
+    ]
+    if not rows:
+        return pd.DataFrame(columns=columns)
+
+    return pd.DataFrame(rows, columns=columns).sort_values(
+        ["dataset_id", "method", "threshold"]
+    ).reset_index(drop=True)
+
+
+def aggregate_precision_recall_curves(results_df):
+    """Aggregate mean/std precision and recall per method and threshold."""
+    grouped = results_df.groupby(["method", "threshold"])
+    agg = grouped.agg(
+        precision_mean=("precision", "mean"),
+        precision_std=("precision", "std"),
+        recall_mean=("recall", "mean"),
+        recall_std=("recall", "std"),
+        n_datasets=("dataset_id", "nunique"),
+    ).reset_index()
+
+    agg["precision_std"] = agg["precision_std"].fillna(0.0)
+    agg["recall_std"] = agg["recall_std"].fillna(0.0)
+    return agg
+
+
+def _curve_auc(curve_df):
+    """Compute PR AUC from a curve dataframe with recall/precision mean columns."""
+    if curve_df.empty:
+        return np.nan
+
+    recall = curve_df["recall_mean"].values
+    precision = curve_df["precision_mean"].values
+    sort_idx = np.argsort(recall)
+    return float(np.trapz(precision[sort_idx], recall[sort_idx]))
+
+
+def plot_precision_recall_original_vs_log(agg_curve_df, output_path):
+    """Plot original vs log1p precision-recall curves."""
+    method_style = {
+        "original": {"label": "Original", "color": "#1f77b4"},
+        "log1p": {"label": "Log1p", "color": "#d62728"},
+    }
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    for method in ["original", "log1p"]:
+        method_curve = agg_curve_df[agg_curve_df["method"] == method]
+        if method_curve.empty:
+            continue
+
+        recall = method_curve["recall_mean"].values
+        precision = method_curve["precision_mean"].values
+        sort_idx = np.argsort(recall)
+
+        auc_value = np.trapz(precision[sort_idx], recall[sort_idx])
+        label = f"{method_style[method]['label']} (AUC={auc_value:.3f})"
+
+        ax.plot(
+            recall[sort_idx],
+            precision[sort_idx],
+            "o-",
+            linewidth=2,
+            markersize=4,
+            alpha=0.9,
+            color=method_style[method]["color"],
+            label=label,
+        )
+
+    ax.set_xlabel("Recall")
+    ax.set_ylabel("Precision")
+    ax.set_title("Precision-Recall: Original vs Log1p (mean over datasets)")
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(-0.05, 1.05)
+    ax.legend(loc="best")
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close()
+
+
+def create_precision_recall_comparison(base_data_folder, original_results_folder, log_results_folder, dataset_numbers, window_size, overlap):
+    """Create and save original-vs-log precision-recall comparison artifacts."""
+    results_df = build_precision_recall_results(
+        base_data_folder,
+        original_results_folder,
+        log_results_folder,
+        dataset_numbers,
+        window_size,
+        overlap,
+    )
+
+    if results_df.empty:
+        print("No precision-recall rows were generated; skipping PR plot creation.")
+        return
+
+    output_folder = os.path.join(log_results_folder, "precision_recall")
+    os.makedirs(output_folder, exist_ok=True)
+
+    detailed_csv = os.path.join(output_folder, "original_vs_log_pr_detailed.csv")
+    results_df.to_csv(detailed_csv, index=False)
+    print(f"Saved detailed PR rows to: {detailed_csv}")
+
+    agg_curve_df = aggregate_precision_recall_curves(results_df)
+    agg_csv = os.path.join(output_folder, "original_vs_log_pr_aggregated.csv")
+    agg_curve_df.to_csv(agg_csv, index=False)
+    print(f"Saved aggregated PR stats to: {agg_csv}")
+
+    plot_path = os.path.join(output_folder, "original_vs_log_precision_recall.png")
+    plot_precision_recall_original_vs_log(agg_curve_df, plot_path)
+    print(f"Saved PR comparison plot to: {plot_path}")
+
+    for method in ["original", "log1p"]:
+        method_curve = agg_curve_df[agg_curve_df["method"] == method]
+        if method_curve.empty:
+            continue
+        auc_value = _curve_auc(method_curve)
+        print(f"{method} mean PR AUC: {auc_value:.4f}")
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Apply a sliding window mean change point detection algorithm on discrete count data.")
     parser.add_argument("input_file", type=str, help="Path to the input CSV file containing the count data.")
@@ -167,7 +453,8 @@ def parse_arguments():
 if __name__ == "__main__":
     # Configuration
     base_data_folder = "Signal_processing/final/SATAY_synthetic"
-    base_output_folder = "Signal_processing/results/version3"
+    base_original_results_folder = "Signal_processing/results/version3"
+    base_output_folder = os.path.join(base_original_results_folder, "log")
     
     window_size = [100]
     overlap = 0.5
@@ -210,15 +497,18 @@ if __name__ == "__main__":
         # Read data from CSV
         with open(input_file, "r") as f:
             lines = f.readlines()[1:]  # Skip header
-            data = [int(float(line.strip().split(",")[1])) for line in lines]
+            raw_data = np.array([float(line.strip().split(",")[1]) for line in lines], dtype=np.float64)
             # Column indices: Position(0), Value(1), Centromere_distance(2), Nucleosome_distance(3)
             nucleosome_distance = [int(float(line.strip().split(",")[3])) for line in lines]
             centromere_distance = [int(float(line.strip().split(",")[2])) for line in lines]
+
+        data = np.log1p(raw_data)
         
         print(f"Loaded {len(data)} data points")
+        print("Applied log1p transform to the Value column")
         
         # Estimate theta globally for this dataset
-        theta_global = initialize_theta_global(data)
+        theta_global = initialize_theta_global(data, )
         print(f"Using global theta: {theta_global:.4f} for all window sizes and thresholds.")
         
         # Process different window sizes (currently just one: 100)
@@ -237,7 +527,21 @@ if __name__ == "__main__":
         print(f"Finished processing dataset {dataset_num}")
     
     print(f"\n{'='*60}")
-    print("All datasets processed!")
-    print(f"Results saved to: {base_output_folder}")
+    print("All log1p datasets processed!")
+    print(f"Log1p results saved to: {base_output_folder}")
+    print(f"{'='*60}")
+
+    print("Building precision-recall comparison between original and log1p outputs...")
+    create_precision_recall_comparison(
+        base_data_folder=base_data_folder,
+        original_results_folder=base_original_results_folder,
+        log_results_folder=base_output_folder,
+        dataset_numbers=range(1, 11),
+        window_size=window_size[0],
+        overlap=overlap,
+    )
+
+    print(f"\n{'='*60}")
+    print("Precision-recall comparison complete")
     print(f"{'='*60}")
         

@@ -122,13 +122,9 @@ def sliding_window(data, window_size, step_size, moving_average=False):
     def _moving_average_window(window_data):
         """Compute moving-average output while preserving input dimensionality.
 
-        - 1D input: scalar average of non-zero values (legacy behavior).
         - 2D input: per-feature vector where column 0 uses non-zero average
           and remaining columns use standard mean.
         """
-        if window_data.ndim == 1:
-            return np.mean(window_data[window_data != 0]) if np.any(window_data != 0) else 0
-
         num_features = window_data.shape[1]
         averaged = np.zeros(num_features, dtype=np.float32)
 

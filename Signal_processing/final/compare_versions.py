@@ -24,7 +24,7 @@ setup_plot_style()
 # Edit this block to run directly without command-line argparse flags.
 RUN_CONFIG = {
 	"base_folder": "Signal_processing/final/SATAY_synthetic",
-	"output_folder": "Signal_processing/final/results/compare_versions_ws100",
+	"output_folder": "Signal_processing/final/results/compare_versions_ws100_2",
 	"window_size": 100,
 	"overlap": 0.5,
 	"theta": 0,
@@ -273,14 +273,14 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 	"""Plot all methods on one PR curve"""
 	method_meta = {
 		"ref": {"label": "ref", "color": COLORS["blue"]},
-		"v0": {"label": "v0", "color": COLORS["orange"]},
-		"v1": {"label": "v1", "color": COLORS["green"]},
-		"v2": {"label": "v2", "color": COLORS["red"]},
+		"v0": {"label": "version 1", "color": COLORS["orange"]},
+		"v1": {"label": "version 2", "color": COLORS["green"]},
+		"v2": {"label": "version 3", "color": COLORS["red"]},
 	}
 
 	fig, ax = plt.subplots(figsize=(12, 8))
 
-	for method in ["ref", "v0", "v1", "v2"]:
+	for method in ["v2"]:
 		method_curve = agg_curve_df[agg_curve_df["method"] == method].sort_values("threshold")
 		if method_curve.empty:
 			continue
@@ -289,7 +289,7 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 		if not auc_row.empty:
 			auc_mean = auc_row["auc_mean"].iloc[0]
 			auc_std = auc_row["auc_std"].iloc[0]
-			legend_label = f"{method_meta[method]['label']})"
+			legend_label = f"{method_meta[method]['label']}"
 		else:
 			legend_label = method_meta[method]["label"]
 
@@ -310,7 +310,7 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 	ax.grid(True, alpha=0.3)
 	ax.set_xlim(-0.05, 1.05)
 	ax.set_ylim(-0.05, 1.05)
-	ax.legend(loc="best")
+	# ax.legend(loc="best")
 
 	plt.tight_layout()
 	plt.savefig(output_path, dpi=300, bbox_inches="tight")
@@ -363,7 +363,7 @@ def main():
 		args.threshold_step,
 	)
 	dataset_ids = list(range(args.dataset_start, args.dataset_end + 1))
-	methods = ["v0", "v1", "v2", "ref"]
+	methods = ["v2"]
 
 	print("Configuration:")
 	print(f"  Base folder: {args.base_folder}")
