@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 import sys
@@ -12,7 +13,7 @@ from typing import Any, Dict, List, Tuple, Optional, Set
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from Utils.SGD_API.yeast_genes import SGD_Genes
-from Utils.plot_config import setup_plot_style
+from Utils.plot_config import setup_plot_style, COLORS
 
 setup_plot_style()
 
@@ -64,6 +65,232 @@ def concatenate_nonempty(arrays: List[np.ndarray]) -> np.ndarray:
     if not nonempty_arrays:
         return np.array([], dtype=float)
     return np.concatenate(nonempty_arrays)
+
+
+def parse_mu_offset_value(mu_offset_name: str) -> Optional[float]:
+    """Parse numeric mu_offset value from a muoff* folder name."""
+    if not mu_offset_name:
+        return None
+
+    value_str = str(mu_offset_name).replace("muoff", "")
+    try:
+        return float(value_str)
+    except ValueError:
+        return None
+
+
+def collect_essential_nonessential_arrays(
+    results: Dict[str, Dict],
+    strain: Optional[str] = None,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Aggregate essential/non-essential arrays across chromosomes."""
+    if strain is None:
+        combined = results.get('combined', {})
+        essential = concatenate_nonempty([v['essential'] for v in combined.values()])
+        nonessential = concatenate_nonempty([v['nonessential'] for v in combined.values()])
+        return essential, nonessential
+
+    per_strain = results.get('per_strain', {})
+    strain_results = per_strain.get(strain, {})
+    essential = concatenate_nonempty([v['essential'] for v in strain_results.values()])
+    nonessential = concatenate_nonempty([v['nonessential'] for v in strain_results.values()])
+    return essential, nonessential
+
+
+def write_pi_rows(
+    writer: Any,
+    split_label: str,
+    mu_offset_name: str,
+    mu_offset_value: Optional[float],
+    strain: str,
+    essentiality: str,
+    values: np.ndarray,
+) -> int:
+    """Write pi values to CSV."""
+    row_count = 0
+    mu_offset_cell = "" if mu_offset_value is None else mu_offset_value
+
+    for value in values:
+        writer.writerow([
+            split_label,
+            mu_offset_name,
+            mu_offset_cell,
+            strain,
+            essentiality,
+            float(value),
+        ])
+        row_count += 1
+
+    return row_count
+
+
+def save_plot_data(
+    output_dir: str,
+    file_tag: str,
+    split_label: str,
+    results_by_muoffset: Dict[str, Dict],
+    strains: Optional[List[str]] = None,
+) -> None:
+    """Save the raw pi values used for plotting to CSV."""
+    data_dir = os.path.join(output_dir, "plot_data")
+    os.makedirs(data_dir, exist_ok=True)
+    file_path = os.path.join(data_dir, f"{file_tag}_pi_values.csv")
+
+    total_rows = 0
+    with open(file_path, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([
+            "split",
+            "mu_offset",
+            "mu_offset_value",
+            "strain",
+            "essentiality",
+            "pi",
+        ])
+
+        for muoff_name in MU_OFFSETS:
+            if muoff_name not in results_by_muoffset:
+                continue
+
+            results = results_by_muoffset[muoff_name]
+            mu_offset_value = parse_mu_offset_value(muoff_name)
+
+            essential, nonessential = collect_essential_nonessential_arrays(results)
+            total_rows += write_pi_rows(
+                writer,
+                split_label,
+                muoff_name,
+                mu_offset_value,
+                "combined",
+                "essential",
+                essential,
+            )
+            total_rows += write_pi_rows(
+                writer,
+                split_label,
+                muoff_name,
+                mu_offset_value,
+                "combined",
+                "nonessential",
+                nonessential,
+            )
+
+            if strains:
+                for strain in strains:
+                    strain_essential, strain_nonessential = collect_essential_nonessential_arrays(
+                        results,
+                        strain=strain,
+                    )
+                    if len(strain_essential) == 0 and len(strain_nonessential) == 0:
+                        continue
+
+                    total_rows += write_pi_rows(
+                        writer,
+                        split_label,
+                        muoff_name,
+                        mu_offset_value,
+                        strain,
+                        "essential",
+                        strain_essential,
+                    )
+                    total_rows += write_pi_rows(
+                        writer,
+                        split_label,
+                        muoff_name,
+                        mu_offset_value,
+                        strain,
+                        "nonessential",
+                        strain_nonessential,
+                    )
+
+    print(f"    Saved plot data: {file_path} ({total_rows} rows)")
+
+
+def compute_mu_offset_difference_summary(
+    results_by_muoffset: Dict[str, Dict],
+    split_label: str,
+) -> pd.DataFrame:
+    """Summarize mean essential vs non-essential pi differences per mu_offset."""
+    rows = []
+
+    for muoff_name in MU_OFFSETS:
+        if muoff_name not in results_by_muoffset:
+            continue
+
+        results = results_by_muoffset[muoff_name]
+        mu_offset_value = parse_mu_offset_value(muoff_name)
+        essential, nonessential = collect_essential_nonessential_arrays(results)
+        n_essential = int(len(essential))
+        n_nonessential = int(len(nonessential))
+
+        if n_essential > 0 and n_nonessential > 0:
+            mean_essential = float(np.mean(essential))
+            mean_nonessential = float(np.mean(nonessential))
+            difference = mean_essential - mean_nonessential
+        else:
+            mean_essential = np.nan
+            mean_nonessential = np.nan
+            difference = np.nan
+
+        rows.append({
+            "split": split_label,
+            "mu_offset": muoff_name,
+            "mu_offset_value": mu_offset_value,
+            "n_essential": n_essential,
+            "n_nonessential": n_nonessential,
+            "mean_essential": mean_essential,
+            "mean_nonessential": mean_nonessential,
+            "difference": difference,
+        })
+
+    return pd.DataFrame(rows)
+
+
+def create_mu_offset_difference_plot(
+    diff_df: pd.DataFrame,
+    title: str,
+) -> plt.Figure:
+    """Plot mean essential vs non-essential difference across mu_offset values."""
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    if diff_df.empty:
+        ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        return fig
+
+    plot_df = diff_df.dropna(subset=["difference", "mu_offset_value"]).sort_values("mu_offset_value")
+    if plot_df.empty:
+        ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        return fig
+
+    x_values = plot_df["mu_offset_value"].to_numpy(dtype=float)
+    y_values = plot_df["difference"].to_numpy(dtype=float)
+
+    line_color = COLORS.get("blue", "#0072B2")
+    marker_color = COLORS.get("orange", "#E69600")
+    baseline_color = COLORS.get("black", "#000000")
+
+    ax.plot(x_values, y_values, color=line_color, linewidth=2)
+    ax.scatter(x_values, y_values, color=marker_color, s=60, zorder=3)
+    ax.axhline(0, color=baseline_color, linewidth=1, alpha=0.6)
+
+    ax.set_xlabel("mu_offset")
+    ax.set_ylabel("Mean pi difference (essential - non-essential)")
+    ax.set_title(title, fontweight='bold')
+    ax.set_xticks(x_values)
+    ax.grid(axis='y', alpha=0.3, linestyle='--')
+
+    if len(y_values) > 0:
+        y_min = float(np.nanmin(y_values))
+        ax.set_ylim(bottom=min(0.0, y_min))
+    else:
+        ax.set_ylim(bottom=0.0)
+
+    plt.tight_layout()
+    return fig
 
 
 def load_zero_positions_from_original_data(original_csv_file: str) -> Set[int]:
@@ -926,6 +1153,34 @@ def run_full_analysis(
                 for chr_values in strain_results.values():
                     overall_by_strain_muoffset[strain_name][muoff_name]['essential'].append(chr_values['essential'])
                     overall_by_strain_muoffset[strain_name][muoff_name]['nonessential'].append(chr_values['nonessential'])
+
+        print("  Saving plot data...")
+        save_plot_data(
+            output_dir=output_dir,
+            file_tag=split,
+            split_label=split,
+            results_by_muoffset=results_by_muoffset,
+            strains=all_strains,
+        )
+
+        diff_df = compute_mu_offset_difference_summary(results_by_muoffset, split_label=split)
+        if not diff_df.empty:
+            diff_data_dir = os.path.join(output_dir, "plot_data")
+            os.makedirs(diff_data_dir, exist_ok=True)
+            diff_data_path = os.path.join(diff_data_dir, f"{split}_mu_offset_diff.csv")
+            diff_df.to_csv(diff_data_path, index=False)
+            print(f"    Saved mu_offset difference data: {diff_data_path}")
+
+            fig_diff = create_mu_offset_difference_plot(
+                diff_df,
+                title=f"mu_offset difference (essential - non-essential) - {split.upper()}",
+            )
+            fig_diff_path = os.path.join(output_dir, f"{split}_mu_offset_difference.png")
+            fig_diff.savefig(fig_diff_path, dpi=150, bbox_inches='tight')
+            print(f"    Saved: {fig_diff_path}")
+            plt.close(fig_diff)
+        else:
+            print("    Skipping mu_offset difference plot: no data found.")
         
         # Generate figures for combined analysis
         print(f"  Creating combined analysis figure...")
@@ -966,6 +1221,33 @@ def run_full_analysis(
         }
 
     if all_sets_results:
+        print("  Saving overall plot data...")
+        save_plot_data(
+            output_dir=output_dir,
+            file_tag="all_sets_combined",
+            split_label="all_sets",
+            results_by_muoffset=all_sets_results,
+        )
+
+        diff_df = compute_mu_offset_difference_summary(all_sets_results, split_label="all_sets")
+        if not diff_df.empty:
+            diff_data_dir = os.path.join(output_dir, "plot_data")
+            os.makedirs(diff_data_dir, exist_ok=True)
+            diff_data_path = os.path.join(diff_data_dir, "all_sets_mu_offset_diff.csv")
+            diff_df.to_csv(diff_data_path, index=False)
+            print(f"    Saved mu_offset difference data: {diff_data_path}")
+
+            fig_diff = create_mu_offset_difference_plot(
+                diff_df,
+                title="mu_offset difference (essential - non-essential) - ALL SETS",
+            )
+            fig_diff_path = os.path.join(output_dir, "all_sets_mu_offset_difference.png")
+            fig_diff.savefig(fig_diff_path, dpi=150, bbox_inches='tight')
+            print(f"    Saved: {fig_diff_path}")
+            plt.close(fig_diff)
+        else:
+            print("    Skipping overall mu_offset difference plot: no data found.")
+
         fig_all_sets = create_split_figure_combined(all_sets_results, split="all_sets")
         fig_path_all_sets = os.path.join(output_dir, "all_sets_all_strains_combined.png")
         fig_all_sets.savefig(fig_path_all_sets, dpi=150, bbox_inches='tight')
@@ -1004,6 +1286,13 @@ def run_full_analysis(
             }
 
         if strain_all_sets_results:
+            save_plot_data(
+                output_dir=output_dir,
+                file_tag=f"all_sets_{strain}",
+                split_label="all_sets",
+                results_by_muoffset=strain_all_sets_results,
+                strains=[strain],
+            )
             fig_strain_all_sets = create_split_figure_per_strain(
                 strain_all_sets_results, strain, split="all_sets"
             )
