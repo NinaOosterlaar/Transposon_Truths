@@ -56,7 +56,7 @@ def process_single_dataset_centromere(strain_name, dataset_path, dataset_name, o
     
     # Load only one dataset's data
     dataset_data = {}
-    csv_files = [f for f in os.listdir(dataset_path) if f.endswith(".csv")]
+    csv_files = [f for f in os.listdir(dataset_path) if f.endswith("_distances.csv")]
     
     for csv_file in csv_files:
         chrom = csv_file.split("_")[0]
@@ -294,7 +294,7 @@ def process_single_dataset_nucleosome(strain_name, dataset_path, dataset_name, o
     
     # Load only one dataset's data
     counts = {}
-    csv_files = [f for f in os.listdir(dataset_path) if f.endswith(".csv")]
+    csv_files = [f for f in os.listdir(dataset_path) if f.endswith("_distances.csv")]
     
     for csv_file in csv_files:
         chrom = csv_file.split("_")[0]
@@ -755,7 +755,7 @@ def process_single_dataset_centromere_mean(strain_name, dataset_path, dataset_na
     
     # Load only one dataset's data
     dataset_data = {}
-    csv_files = [f for f in os.listdir(dataset_path) if f.endswith(".csv")]
+    csv_files = [f for f in os.listdir(dataset_path) if f.endswith("_distances.csv")]
     
     for csv_file in csv_files:
         chrom = csv_file.split("_")[0]
@@ -860,7 +860,7 @@ def process_single_dataset_nucleosome_mean(strain_name, dataset_path, dataset_na
     
     # Load only one dataset's data
     counts = {}
-    csv_files = [f for f in os.listdir(dataset_path) if f.endswith(".csv")]
+    csv_files = [f for f in os.listdir(dataset_path) if f.endswith("_distances.csv")]
     
     for csv_file in csv_files:
         chrom = csv_file.split("_")[0]
@@ -959,7 +959,7 @@ def process_single_dataset_nucleosome_median(strain_name, dataset_path, dataset_
     
     # Load only one dataset's data
     counts = {}
-    csv_files = [f for f in os.listdir(dataset_path) if f.endswith(".csv")]
+    csv_files = [f for f in os.listdir(dataset_path) if f.endswith("_distances.csv")]
     
     for csv_file in csv_files:
         chrom = csv_file.split("_")[0]

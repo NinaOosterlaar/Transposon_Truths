@@ -396,40 +396,329 @@ def evaluate_all_chromosomes(input_folder, data_folder, output_folder, cpd_dict)
     return combined_df
 
 
+def evaluate_saturation_level(saturation_level, base_results_folder, window_folder, cpd_dict, 
+                             window_size=100):
+    """Evaluate performance for a single saturation level across all datasets and chromosomes.
+    
+    Args:
+        saturation_level: Saturation level (1-6)
+        base_results_folder: Base folder containing saturation-level subfolders
+        window_folder: Folder containing centromere window files
+        cpd_dict: Dictionary with true change points
+        window_size: Window size to evaluate
+    
+    Returns:
+        DataFrame with averaged results per threshold
+    """
+    saturation_folder = os.path.join(base_results_folder, str(saturation_level))
+    
+    if not os.path.exists(saturation_folder):
+        print(f"Saturation level {saturation_level} folder not found!")
+        return None
+    
+    # Get all datasets for this saturation level
+    datasets = [d for d in os.listdir(saturation_folder) 
+                if os.path.isdir(os.path.join(saturation_folder, d))]
+    
+    print(f"\nSaturation Level {saturation_level}: Found {len(datasets)} datasets")
+    
+    all_results = []
+    
+    # Process each dataset
+    for dataset in datasets:
+        dataset_folder = os.path.join(saturation_folder, dataset)
+        data_folder = os.path.join(window_folder, str(saturation_level), dataset)
+        
+        if not os.path.exists(data_folder):
+            print(f"  Warning: Data folder not found for {dataset}")
+            continue
+        
+        print(f"  Processing {dataset}...")
+        
+        # Process each chromosome
+        for chrom in CHROMS:
+            if chrom not in cpd_dict or len(cpd_dict[chrom]) == 0:
+                continue
+            
+            # Check if results exist for this chromosome
+            chrom_results_path = os.path.join(
+                dataset_folder, f"Chr{chrom}", f"Chr{chrom}_centromere_window", 
+                f"window{window_size}"
+            )
+            
+            if not os.path.exists(chrom_results_path):
+                continue
+            
+            # Read chromosome data
+            data_file = os.path.join(data_folder, f"Chr{chrom}_centromere_window.csv")
+            if not os.path.exists(data_file):
+                continue
+            
+            chrom_data = read_chromosome_data(data_file)
+            n_points = len(chrom_data)
+            true_cps = cpd_dict[chrom]
+            
+            # Define tolerances
+            tolerances = {
+                "full_window": window_size,
+                "half_window": window_size // 2,
+                "quarter_window": window_size // 4
+            }
+            
+            # Get result files
+            result_files = [f for f in os.listdir(chrom_results_path) 
+                           if f.endswith('.txt')]
+            
+            for result_file in result_files:
+                # Extract threshold from filename
+                match = re.search(r'th(\d+\.\d+)', result_file)
+                if not match:
+                    continue
+                threshold = float(match.group(1))
+                
+                # Read detected change points
+                file_path = os.path.join(chrom_results_path, result_file)
+                detected_positions = read_change_points(file_path)
+                
+                # Convert to centromere coordinates (assuming position 0 is at index 1000)
+                detected_cps = [pos - 1000 for pos in detected_positions]
+                
+                # Calculate metrics for each tolerance
+                for tol_name, tol_value in tolerances.items():
+                    prec = precision(detected_cps, true_cps, tol_value)
+                    rec = recall(detected_cps, true_cps, tol_value)
+                    f1 = F1_score(prec, rec)
+                    
+                    all_results.append({
+                        'saturation_level': saturation_level,
+                        'dataset': dataset,
+                        'chromosome': chrom,
+                        'threshold': threshold,
+                        'tolerance_type': tol_name,
+                        'tolerance_value': tol_value,
+                        'precision': prec,
+                        'recall': rec,
+                        'F1': f1,
+                        'num_detected': len(detected_cps),
+                        'num_true': len(true_cps),
+                    })
+    
+    if not all_results:
+        print(f"  No results found for saturation level {saturation_level}")
+        return None
+    
+    results_df = pd.DataFrame(all_results)
+    
+    # Average across datasets and chromosomes for each threshold and tolerance
+    averaged_df = results_df.groupby(['threshold', 'tolerance_type', 'tolerance_value']).agg({
+        'precision': 'mean',
+        'recall': 'mean',
+        'F1': 'mean',
+        'num_detected': 'mean',
+        'num_true': 'mean',
+    }).reset_index()
+    
+    averaged_df['saturation_level'] = saturation_level
+    
+    print(f"  Processed {len(results_df)} individual results")
+    print(f"  Averaged to {len(averaged_df)} threshold/tolerance combinations")
+    
+    return averaged_df
+
+
+def calculate_saturation_statistics(window_folder, saturation_level):
+    """Calculate saturation statistics (non-zero positions) for a saturation level.
+    
+    Args:
+        window_folder: Folder containing centromere window files
+        saturation_level: Saturation level (1-6)
+    
+    Returns:
+        Tuple of (num_nonzero, total_positions, percentage)
+    """
+    saturation_folder = os.path.join(window_folder, str(saturation_level))
+    
+    if not os.path.exists(saturation_folder):
+        return None, None, None
+    
+    total_nonzero = 0
+    total_positions = 0
+    
+    # Get all datasets for this saturation level
+    datasets = [d for d in os.listdir(saturation_folder) 
+                if os.path.isdir(os.path.join(saturation_folder, d))]
+    
+    for dataset in datasets:
+        dataset_folder = os.path.join(saturation_folder, dataset)
+        
+        # Read all chromosome window files
+        for chrom in CHROMS:
+            window_file = os.path.join(dataset_folder, f"Chr{chrom}_centromere_window.csv")
+            
+            if os.path.exists(window_file):
+                df = pd.read_csv(window_file)
+                # Count non-zero positions
+                total_nonzero += (df['value'] > 0).sum()
+                total_positions += len(df)
+    
+    if total_positions == 0:
+        return None, None, None
+    
+    percentage = (total_nonzero / total_positions) * 100
+    
+    return total_nonzero, total_positions, percentage
+
+
+def compare_saturation_levels(base_results_folder, window_folder, cpd_dict, 
+                              output_folder, saturation_levels=[1,2,3,4,5,6]):
+    """Compare performance across different saturation levels.
+    
+    Args:
+        base_results_folder: Base folder containing saturation-level subfolders
+        window_folder: Folder containing centromere window files
+        cpd_dict: Dictionary with true change points
+        output_folder: Output folder for results and plots
+        saturation_levels: List of saturation levels to compare
+    """
+    print("="*60)
+    print("Comparing Performance Across Saturation Levels")
+    print("="*60)
+    
+    os.makedirs(output_folder, exist_ok=True)
+    
+    # Calculate saturation statistics
+    print("\nCalculating saturation levels (non-zero positions)...")
+    saturation_stats = {}
+    for sat_level in saturation_levels:
+        num_nonzero, total_pos, percentage = calculate_saturation_statistics(window_folder, sat_level)
+        if num_nonzero is not None:
+            saturation_stats[sat_level] = (num_nonzero, total_pos, percentage)
+            print(f"  Level {sat_level}: {num_nonzero}/{total_pos} non-zero positions ({percentage:.1f}%)")
+        else:
+            saturation_stats[sat_level] = (None, None, None)
+            print(f"  Level {sat_level}: No data found")
+    
+    all_saturation_results = []
+    
+    # Evaluate each saturation level
+    for sat_level in saturation_levels:
+        sat_results = evaluate_saturation_level(
+            sat_level, base_results_folder, window_folder, cpd_dict
+        )
+        if sat_results is not None:
+            all_saturation_results.append(sat_results)
+    
+    if not all_saturation_results:
+        print("No results found!")
+        return None
+    
+    # Combine all results
+    combined_df = pd.concat(all_saturation_results, ignore_index=True)
+    
+    # Save combined results
+    output_csv = os.path.join(output_folder, "saturation_comparison_results.csv")
+    combined_df.to_csv(output_csv, index=False)
+    print(f"\nSaved combined results to {output_csv}")
+    
+    # Save saturation statistics
+    saturation_stats_df = pd.DataFrame([
+        {'saturation_level': level, 'num_nonzero': num_nz, 'total_positions': total, 'percentage_nonzero': pct}
+        for level, (num_nz, total, pct) in saturation_stats.items()
+    ])
+    stats_csv = os.path.join(output_folder, "saturation_statistics.csv")
+    saturation_stats_df.to_csv(stats_csv, index=False)
+    print(f"Saved saturation statistics to {stats_csv}")
+    
+    # Create precision-recall curves for each tolerance
+    print("\n" + "="*60)
+    print("Creating Precision-Recall Curves")
+    print("="*60)
+    
+    for tol_name in ["full_window", "half_window", "quarter_window"]:
+        print(f"\nTolerance: {tol_name}")
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Define colors for saturation levels
+        color_list = [COLORS['blue'], COLORS['orange'], COLORS['green'], 
+                     COLORS['red'], COLORS['pink'], COLORS['light_blue']]
+        
+        for sat_level in saturation_levels:
+            sat_data = combined_df[
+                (combined_df['saturation_level'] == sat_level) & 
+                (combined_df['tolerance_type'] == tol_name)
+            ].sort_values('threshold')
+            
+            if len(sat_data) == 0:
+                continue
+            
+            # Create label with saturation percentage
+            num_nonzero, total_pos, percentage = saturation_stats.get(sat_level, (None, None, None))
+            if percentage is not None:
+                label = f'Saturation: {percentage:.1f}%'
+            else:
+                label = f'Level {sat_level}'
+            
+            # Plot PR curve for this saturation level
+            ax.plot(sat_data['recall'], sat_data['precision'], 
+                   marker='o', linewidth=2, markersize=4,
+                   label=label, color=color_list[sat_level-1])
+        
+        ax.set_xlabel('Recall', fontsize=14)
+        ax.set_ylabel('Precision', fontsize=14)
+        ax.set_title(f'Precision-Recall Curves by Saturation Level\n(Tolerance: {tol_name})', 
+                    fontsize=16, fontweight='bold')
+        ax.legend(fontsize=12)
+        ax.grid(True, alpha=0.3)
+        ax.set_xlim([0, 1.05])
+        ax.set_ylim([0, 1.05])
+        
+        plot_path = os.path.join(output_folder, f'pr_curve_saturation_comparison_{tol_name}.png')
+        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  Saved: {plot_path}")
+    
+    # Create summary statistics
+    print("\n" + "="*60)
+    print("Summary Statistics")
+    print("="*60)
+    
+    print("\nSaturation levels (% non-zero positions):")
+    for level, (num_nz, total, pct) in saturation_stats.items():
+        if pct is not None:
+            print(f"  Level {level}: {num_nz}/{total} ({pct:.1f}%)")
+    
+    print("\nMean metrics by saturation level and tolerance:")
+    summary = combined_df.groupby(['saturation_level', 'tolerance_type'])[
+        ['precision', 'recall', 'F1']
+    ].mean()
+    print(summary)
+    
+    # Save summary
+    summary_csv = os.path.join(output_folder, "saturation_summary.csv")
+    summary.to_csv(summary_csv)
+    print(f"\nSaved summary to {summary_csv}")
+    
+    return combined_df
+
+
 if __name__ == "__main__":
     print("="*60)
     print("SATAY Change Point Detection Performance Evaluation")
     print("="*60)
-    input_folder = "Signal_processing/results/sliding_mean_SATAY/sliding_ZINB_CPD"
-    data_folder = "Signal_processing/sample_data/Centromere_region"
-    output_folder = "Signal_processing/temp/sliding_cpd_performance"
-    # make folder if not exists 
-    os.makedirs(output_folder, exist_ok=True)
     
-    results_df = evaluate_all_chromosomes(input_folder, data_folder, output_folder, CPD)
+    # Compare saturation levels (test_CPD data)
+    base_results_folder = "Signal_processing/results/centromere_cpd_results"
+    window_folder = "Data/test_CPD/centromere_windows"
+    output_folder = "Signal_processing/results/saturation_comparison"
+    
+    results_df = compare_saturation_levels(
+        base_results_folder, window_folder, CPD, output_folder,
+        saturation_levels=[1, 2, 3, 4, 5, 6]
+    )
     
     if results_df is not None:
         print("\n" + "="*60)
-        print("Summary Statistics")
+        print("Evaluation Complete!")
         print("="*60)
-        
-        # Summary by chromosome and window
-        print("\nMean metrics by chromosome and window size:")
-        summary = results_df.groupby(['chromosome', 'window_size', 'tolerance_type'])[
-            ['precision', 'recall', 'F1']
-        ].mean()
-        print(summary)
-        
-        print("\nTolerance-independent metrics by chromosome and window:")
-        unique_results = results_df.drop_duplicates(subset=['chromosome', 'window_size', 'threshold'])
-        summary2 = unique_results.groupby(['chromosome', 'window_size'])[
-            ['annotation_error', 'hausdorff_distance', 'mae_localization', 'rand_index', 'adjusted_rand_index']
-        ].mean()
-        print(summary2)
-        
-        print("\nOverall summary across all chromosomes:")
-        overall = results_df.groupby(['window_size', 'tolerance_type'])[
-            ['precision', 'recall', 'F1']
-        ].mean()
-        print(overall)
 

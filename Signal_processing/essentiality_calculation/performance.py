@@ -20,10 +20,8 @@ if PROJECT_ROOT not in sys.path:
 DEFAULT_ESTIMATOR_SUBDIRS = ["segment_mu", "segment_mu_informed"]
 
 ESTIMATOR_METRICS_TO_PLOT = [
-	("rmse", "RMSE"),
-	("mean_abs_relative_error", "Mean Absolute Relative Error"),
-	("pairwise_order_accuracy", "Pairwise Order Accuracy"),
-	("spearman_rho", "Spearman Correlation"),
+	("mean_abs_relative_error", "Relative Mean Absolute Error"),
+	("pairwise_order_accuracy", "Order Performance"),
 ]
 
 THRESHOLD_METRICS_TO_PLOT = [
@@ -461,8 +459,15 @@ def threshold_is_selected(threshold_value, threshold_min, threshold_max):
 
 
 def plot_metrics_by_estimator_bar(summary_df, output_path, errorbar_type):
-	fig, axes = plt.subplots(2, 2, figsize=(14, 9), constrained_layout=True)
-	axes = axes.flatten()
+	fig, axes = plt.subplots(1, 2, figsize=(12, 5), constrained_layout=True)
+
+	subplot_labels = ['a', 'b']
+	
+	# Mapping for display names
+	estimator_display_names = {
+		"segment_mu": "EM algorithm",
+		"segment_mu_informed": "pi informed"
+	}
 
 	for idx, (metric_column, metric_label) in enumerate(ESTIMATOR_METRICS_TO_PLOT):
 		ax = axes[idx]
@@ -475,8 +480,12 @@ def plot_metrics_by_estimator_bar(summary_df, output_path, errorbar_type):
 
 		errors = _extract_error_bars(stats_df, errorbar_type)
 		colors = plt.cm.Set2(np.linspace(0.0, 1.0, len(stats_df)))
+		
+		# Apply display name mapping
+		display_labels = [estimator_display_names.get(str(x), str(x)) for x in stats_df["estimator_type"]]
+		
 		ax.bar(
-			stats_df["estimator_type"].astype(str).to_list(),
+			display_labels,
 			stats_df["mean"].to_numpy(dtype=float),
 			yerr=errors,
 			capsize=6,
@@ -493,7 +502,11 @@ def plot_metrics_by_estimator_bar(summary_df, output_path, errorbar_type):
 		if metric_column in {"pairwise_order_accuracy", "spearman_rho"}:
 			ax.set_ylim(0.0, 1.0)
 
-	fig.suptitle("Estimator Comparison (bar plot with error bars)", fontsize=14, y=1.02)
+		# Add subplot label
+		ax.text(-0.1, 1.05, subplot_labels[idx], transform=ax.transAxes,
+		        fontsize=14, fontweight='bold', va='top', ha='right')
+
+	# fig.suptitle("Estimator Comparison (bar plot with error bars)", fontsize=14, y=1.02)
 	fig.savefig(output_path, dpi=220, bbox_inches="tight")
 	plt.close(fig)
 	return output_path
@@ -522,6 +535,12 @@ def plot_metric_by_threshold_bar(
 
 	threshold_values = sorted(stats_df["threshold"].unique())
 	estimator_values = sorted(stats_df["estimator_type"].astype(str).unique())
+	
+	# Mapping for display names
+	estimator_display_names = {
+		"segment_mu": "EM algorithm",
+		"segment_mu_informed": "pi informed"
+	}
 
 	x = np.arange(len(threshold_values), dtype=float)
 	n_estimators = max(1, len(estimator_values))
@@ -547,6 +566,9 @@ def plot_metric_by_threshold_bar(
 		means = np.array([mean_map.get(float(t), np.nan) for t in threshold_values], dtype=float)
 		errors = np.array([error_map.get(float(t), 0.0) for t in threshold_values], dtype=float)
 		offset = (idx - (n_estimators - 1) / 2.0) * width
+		
+		# Use display name for legend
+		display_label = estimator_display_names.get(estimator, estimator)
 
 		ax.bar(
 			x + offset,
@@ -554,7 +576,7 @@ def plot_metric_by_threshold_bar(
 			width=width * 0.95,
 			yerr=errors,
 			capsize=4,
-			label=estimator,
+			label=display_label,
 			alpha=0.9,
 			color=colors[idx],
 			edgecolor="black",
@@ -781,13 +803,13 @@ def parse_arguments():
 	parser.add_argument(
 		"--relative_eps",
 		type=float,
-		default=1e-8,
+		default=1e-4,
 		help="Minimum |true_mu| used for relative error calculations.",
 	)
 	parser.add_argument(
 		"--pairwise_true_diff_tol",
 		type=float,
-		default=1e-8,
+		default=1e-2,
 		help="Tolerance under which true-mu differences are treated as ties for order accuracy.",
 	)
 	parser.add_argument(
