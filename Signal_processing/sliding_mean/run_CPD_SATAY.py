@@ -16,7 +16,7 @@ def main():
     # Paths
     windows_base = PROJECT_ROOT / "Data" / "test_CPD" / "centromere_windows"
     test_cpd_base = PROJECT_ROOT / "Data" / "test_CPD"
-    output_base = PROJECT_ROOT / "Data" / "test_CPD" / "centromere_cpd_results"
+    output_base = PROJECT_ROOT / "Signal_processing" / "Results" / "test_CPD_SATAY_CPD"
     cpd_script = PROJECT_ROOT / "Signal_processing" / "sliding_mean" / "sliding_ZINB_CPD_v3_SATAY.py"
     
     if not cpd_script.exists():

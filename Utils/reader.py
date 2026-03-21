@@ -237,10 +237,13 @@ def read_csv_file_with_distances(input_folder = "Data/distances_with_zeros"):
         genome = {}
         for file in os.listdir(dataset_path):
             if file.endswith(".csv"):
+                # Extract chromosome from filename (before first underscore)
+                chrom = file.split("_")[0]
+                # Only process valid chromosome files (Chr followed by roman numeral or number)
+                if not chrom.startswith("Chr") or chrom == "ChrM":
+                    continue
                 file_path = os.path.join(dataset_path, file)
                 df = pd.read_csv(file_path)
-                chrom = file_path.split("/")[-1].split("_")[0]  # Extract chromosome from filename
-                if chrom == "ChrM": continue
                 genome[chrom] = df
                 datasets_key = f"{label_from_filename(dataset_name)}"
                 datasets[datasets_key] = genome
