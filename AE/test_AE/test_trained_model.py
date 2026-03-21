@@ -18,7 +18,7 @@ INPUT_FOLDER = "Data/combined_strains"
 test_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
 # test_chromosomes = ['ChrVIII', 'ChrXIV', 'ChrXV']
 train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
-  # No validation set needed for testing
+# No validation set needed for testing
 
 # # Path to the trained model
 # MODEL_PATH = "AE/results/models/ZINBAE_20260225_121351_noconv_layers1600_ep30.pt"
