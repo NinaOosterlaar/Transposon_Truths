@@ -504,7 +504,6 @@ plt.rcParams.update({
 })
 
 model_colors = {
-    # Make black
     "Moving average": "black",
 }
 
@@ -524,7 +523,9 @@ models = [
     ("Moving average", df_true),
 ]
 
-fig, axes = plt.subplots(2, 3, sharex=True)
+x_ticks = sorted(df_true["n_datasets"].unique())
+
+fig, axes = plt.subplots(2, 3, figsize=(12, 9), sharex=True)
 axes = axes.flatten()
 
 # -----------------------------
@@ -550,6 +551,9 @@ for ax, (metric_key, metric_label) in zip(axes[:4], metrics):
 
     ax.set_title(metric_label)
     ax.set_ylabel(metric_label)
+    ax.set_xlabel("Number of combined datasets")
+    ax.set_xticks(x_ticks)
+    ax.tick_params(axis="x", labelbottom=True)
     ax.grid(True, alpha=0.3)
 
 # -----------------------------
@@ -571,25 +575,23 @@ ax.errorbar(
 
 ax.set_title("Saturation level")
 ax.set_ylabel("Saturation level (%)")
+ax.set_xlabel("Number of combined datasets")
+ax.set_xticks(x_ticks)
+ax.tick_params(axis="x", labelbottom=True)
 ax.grid(True, alpha=0.3)
 
 axes[5].set_visible(False)
-
 
 # panel labels
 for ax, label in zip(axes[:5], ["a", "b", "c", "d", "e"]):
     ax.text(
         -0.12, 1.05, label,
         transform=ax.transAxes,
-        fontsize=14, fontweight="bold",
-        va="top", ha="left"
+        fontsize=14,
+        fontweight="bold",
+        va="top",
+        ha="left"
     )
-
-# -----------------------------
-# X labels
-# -----------------------------
-axes[3].set_xlabel("Number of combined datasets")
-axes[4].set_xlabel("Number of combined datasets")
 
 # -----------------------------
 # Legend

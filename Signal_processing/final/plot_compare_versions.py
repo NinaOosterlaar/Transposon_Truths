@@ -17,12 +17,12 @@ setup_plot_style()
 def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
     method_meta = {
         "ref": {"label": "ref", "color": COLORS["blue"]},
-        "v0":  {"label": "v0",  "color": COLORS["orange"]},
-        "v1":  {"label": "v1",  "color": COLORS["green"]},
-        "v2":  {"label": "v2",  "color": COLORS["red"]},
+        "v0":  {"label": "version 1",  "color": COLORS["orange"]},
+        "v1":  {"label": "version 2",  "color": COLORS["green"]},
+        "v2":  {"label": "version 3",  "color": COLORS["red"]},
     }
 
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(10, 8))
 
     required_curve_cols = {
         "method",
@@ -54,7 +54,7 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
         if not auc_row.empty:
             auc_mean = auc_row["auc_mean"].iloc[0]
             auc_std = auc_row["auc_std"].iloc[0]
-            legend_label = f"{method_meta[method]['label']} (AUC={auc_mean:.3f} ± {auc_std:.3f})"
+            legend_label = f"{method_meta[method]['label']} "
         else:
             legend_label = method_meta[method]["label"]
 
@@ -86,29 +86,13 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
             label=legend_label,
         )
 
-        # Add sparse 2D error bars so both recall and precision std are visible without clutter.
-        if len(recalls) > 0:
-            n_error_points = min(12, len(recalls))
-            idx = np.unique(np.linspace(0, len(recalls) - 1, n_error_points, dtype=int))
-            ax.errorbar(
-                recalls[idx],
-                precisions[idx],
-                xerr=recall_std[idx],
-                yerr=precision_std[idx],
-                fmt="none",
-                ecolor=method_meta[method]["color"],
-                alpha=0.35,
-                elinewidth=0.8,
-                capsize=2,
-                capthick=0.8,
-            )
-
     ax.set_xlabel("Recall")
     ax.set_ylabel("Precision")
     ax.set_title("Precision-Recall Comparison Across Versions\n(mean ± std over datasets)")
     ax.grid(True, alpha=0.3)
     ax.set_xlim(-0.05, 1.05)
     ax.set_ylim(-0.05, 1.05)
+    ax.tick_params(axis='both', which='major', labelsize=10)
     ax.legend(loc="best")
 
     plt.tight_layout()
