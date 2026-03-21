@@ -1,0 +1,839 @@
+Device: cuda
+==================================================
+LOADING TRAINED MODEL
+==================================================
+
+Model architecture from checkpoint:
+  seq_length: 2000
+  feature_dim: 2
+  layers: [752]
+  use_conv: False
+  conv_channels: 85
+  pool_size: 8
+  kernel_size: 7
+  padding: same
+  stride: 1
+  dropout: 0.008
+  mu_offset: 0.0
+
+Evaluation configuration:
+  features: ['Centr']
+  bin_size: 19
+  moving_average: True
+  data_point_length: 2000
+  step_size: 894
+  batch_size: 128
+  trained_noise_level: 0.15
+  eval_noise_levels: [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]
+  output_csv: AE/results/noise_sweep_metrics.csv
+
+==================================================
+LOADING CACHED SPLIT DATA
+==================================================
+Loading arrays from: Data/processed_data/Centr_bin19_maTrue_len2000_step894_c4707184.npz
+Train shape: (61992, 2000, 4)
+Val shape:   (21808, 2000, 4)
+Test shape:  (24128, 2000, 4)
+
+Loaded split sizes:
+  train: 61992 windows
+  val: 21808 windows
+  test: 24128 windows
+
+==================================================
+INITIALIZING MODEL
+==================================================
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Model weights loaded successfully!
+
+==================================================
+EVALUATING NOISE LEVEL: 0
+==================================================
+
+Evaluating split='train' at noise=0
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.104308
+  - ZINB NLL: 1.104308
+Mean Absolute Error (MAE): 0.904239
+R² Score: 0.605308
+==================================================
+
+  Metrics summary:
+    total_loss: 1.104307849278895
+    zinb_nll:   1.104307849278895
+    mse:        9.559980392456055
+    mae:        0.9042390584945679
+    r2:         0.6053082942962646
+
+Evaluating split='val' at noise=0
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.120303
+  - ZINB NLL: 1.120303
+Mean Absolute Error (MAE): 0.950318
+R² Score: -0.869908
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1203031612509589
+    zinb_nll:   1.1203031612509589
+    mse:        56.75933837890625
+    mae:        0.9503180384635925
+    r2:         -0.8699080944061279
+
+Evaluating split='test' at noise=0
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.136142
+  - ZINB NLL: 1.136142
+Mean Absolute Error (MAE): 1.010819
+R² Score: 0.616941
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1361421530458593
+    zinb_nll:   1.1361421530458593
+    mse:        15.01223087310791
+    mae:        1.0108184814453125
+    r2:         0.6169407367706299
+
+==================================================
+EVALUATING NOISE LEVEL: 0.05
+==================================================
+
+Evaluating split='train' at noise=0.05
+Applied denoising with 5.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.107726
+  - ZINB NLL: 1.098682
+Total number of masked values: 4199581
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4199581
+  - Masked Reconstruction: 1.037176
+Mean Absolute Error (MAE): 0.836696
+R² Score: 0.677986
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1077261155059928
+    zinb_nll:   1.0986819465570503
+    mse:        7.799621105194092
+    mae:        0.8366960287094116
+    r2:         0.677986204624176
+
+Evaluating split='val' at noise=0.05
+Applied denoising with 5.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.124404
+  - ZINB NLL: 1.114733
+Total number of masked values: 1477542
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1477542
+  - Masked Reconstruction: 1.109051
+Mean Absolute Error (MAE): 0.882165
+R² Score: -0.484293
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1244036090435217
+    zinb_nll:   1.1147326842354923
+    mse:        45.05435562133789
+    mae:        0.8821654915809631
+    r2:         -0.4842933416366577
+
+Evaluating split='test' at noise=0.05
+Applied denoising with 5.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.141371
+  - ZINB NLL: 1.131075
+Total number of masked values: 1634817
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1634817
+  - Masked Reconstruction: 1.180709
+Mean Absolute Error (MAE): 0.941038
+R² Score: 0.672906
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1413706756871322
+    zinb_nll:   1.1310748896643084
+    mse:        12.818923950195312
+    mae:        0.9410379528999329
+    r2:         0.672906219959259
+
+==================================================
+EVALUATING NOISE LEVEL: 0.1
+==================================================
+
+Evaluating split='train' at noise=0.1
+Applied denoising with 10.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.105024
+  - ZINB NLL: 1.096251
+Total number of masked values: 8429755
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 8429755
+  - Masked Reconstruction: 1.006090
+Mean Absolute Error (MAE): 0.787113
+R² Score: 0.733159
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1050237198463024
+    zinb_nll:   1.0962506150227083
+    mse:        6.463265419006348
+    mae:        0.7871129512786865
+    r2:         0.7331587076187134
+
+Evaluating split='val' at noise=0.1
+Applied denoising with 10.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.122145
+  - ZINB NLL: 1.112746
+Total number of masked values: 2965752
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 2965752
+  - Masked Reconstruction: 1.077852
+Mean Absolute Error (MAE): 0.830876
+R² Score: -0.618059
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1221450721176773
+    zinb_nll:   1.1127462038115727
+    mse:        49.11467742919922
+    mae:        0.83087557554245
+    r2:         -0.6180585622787476
+
+Evaluating split='test' at noise=0.1
+Applied denoising with 10.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.138833
+  - ZINB NLL: 1.128813
+Total number of masked values: 3281322
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 3281322
+  - Masked Reconstruction: 1.149099
+Mean Absolute Error (MAE): 0.890007
+R² Score: 0.700425
+==================================================
+
+  Metrics summary:
+    total_loss: 1.138832981256022
+    zinb_nll:   1.1288128315374768
+    mse:        11.740450859069824
+    mae:        0.8900071382522583
+    r2:         0.7004250288009644
+
+==================================================
+EVALUATING NOISE LEVEL: 0.15
+==================================================
+
+Evaluating split='train' at noise=0.15
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.106383
+  - ZINB NLL: 1.097648
+Total number of masked values: 12656785
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 12656785
+  - Masked Reconstruction: 1.001747
+Mean Absolute Error (MAE): 0.757722
+R² Score: 0.769375
+==================================================
+
+  Metrics summary:
+    total_loss: 1.106383328761481
+    zinb_nll:   1.0976480946015936
+    mse:        5.586050510406494
+    mae:        0.7577216625213623
+    r2:         0.7693753242492676
+
+Evaluating split='val' at noise=0.15
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.124348
+  - ZINB NLL: 1.115012
+Total number of masked values: 4452830
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4452830
+  - Masked Reconstruction: 1.070588
+Mean Absolute Error (MAE): 0.799131
+R² Score: 0.612596
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1243476263320542
+    zinb_nll:   1.11501209812836
+    mse:        11.759284973144531
+    mae:        0.7991313934326172
+    r2:         0.6125961542129517
+
+Evaluating split='test' at noise=0.15
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.141119
+  - ZINB NLL: 1.131144
+Total number of masked values: 4926722
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4926722
+  - Masked Reconstruction: 1.143943
+Mean Absolute Error (MAE): 0.860513
+R² Score: 0.750879
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1411190095409474
+    zinb_nll:   1.1311438263885538
+    mse:        9.763150215148926
+    mae:        0.8605132699012756
+    r2:         0.7508788108825684
+
+==================================================
+EVALUATING NOISE LEVEL: 0.2
+==================================================
+
+Evaluating split='train' at noise=0.2
+Applied denoising with 20.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.112291
+  - ZINB NLL: 1.103408
+Total number of masked values: 16889592
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 16889592
+  - Masked Reconstruction: 1.018704
+Mean Absolute Error (MAE): 0.748154
+R² Score: 0.788768
+==================================================
+
+  Metrics summary:
+    total_loss: 1.112291282800755
+    zinb_nll:   1.103408180293552
+    mse:        5.116344451904297
+    mae:        0.7481538653373718
+    r2:         0.7887675166130066
+
+Evaluating split='val' at noise=0.2
+Applied denoising with 20.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.130946
+  - ZINB NLL: 1.121428
+Total number of masked values: 5941999
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 5941999
+  - Masked Reconstruction: 1.091508
+Mean Absolute Error (MAE): 0.791181
+R² Score: 0.624882
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1309460940294553
+    zinb_nll:   1.1214281486747726
+    mse:        11.386368751525879
+    mae:        0.7911813259124756
+    r2:         0.6248817443847656
+
+Evaluating split='test' at noise=0.2
+Applied denoising with 20.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.148541
+  - ZINB NLL: 1.138377
+Total number of masked values: 6574275
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 6574275
+  - Masked Reconstruction: 1.165580
+Mean Absolute Error (MAE): 0.851447
+R² Score: 0.761973
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1485410062719719
+    zinb_nll:   1.1383771508220653
+    mse:        9.328349113464355
+    mae:        0.8514467477798462
+    r2:         0.7619733810424805
+
+==================================================
+EVALUATING NOISE LEVEL: 0.25
+==================================================
+
+Evaluating split='train' at noise=0.25
+Applied denoising with 25.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.123827
+  - ZINB NLL: 1.114588
+Total number of masked values: 21119634
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 21119634
+  - Masked Reconstruction: 1.059600
+Mean Absolute Error (MAE): 0.760250
+R² Score: 0.803244
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1238272652070374
+    zinb_nll:   1.114587547502482
+    mse:        4.7656965255737305
+    mae:        0.7602494955062866
+    r2:         0.8032442927360535
+
+Evaluating split='val' at noise=0.25
+Applied denoising with 25.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.142592
+  - ZINB NLL: 1.132755
+Total number of masked values: 7430185
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 7430185
+  - Masked Reconstruction: 1.128044
+Mean Absolute Error (MAE): 0.805216
+R² Score: -1.051998
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1425919123458583
+    zinb_nll:   1.132755370238032
+    mse:        62.2865104675293
+    mae:        0.8052155375480652
+    r2:         -1.0519981384277344
+
+Evaluating split='test' at noise=0.25
+Applied denoising with 25.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.161142
+  - ZINB NLL: 1.150586
+Total number of masked values: 8220793
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 8220793
+  - Masked Reconstruction: 1.210553
+Mean Absolute Error (MAE): 0.865730
+R² Score: 0.756518
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1611421302316676
+    zinb_nll:   1.1505861090254088
+    mse:        9.54214096069336
+    mae:        0.8657295107841492
+    r2:         0.7565181851387024
+
+==================================================
+EVALUATING NOISE LEVEL: 0.3
+==================================================
+
+Evaluating split='train' at noise=0.3
+Applied denoising with 30.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.141556
+  - ZINB NLL: 1.131781
+Total number of masked values: 25343638
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 25343638
+  - Masked Reconstruction: 1.120968
+Mean Absolute Error (MAE): 0.791519
+R² Score: 0.798515
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1415561684671103
+    zinb_nll:   1.1317813226616387
+    mse:        4.880240440368652
+    mae:        0.7915184497833252
+    r2:         0.798515260219574
+
+Evaluating split='val' at noise=0.3
+Applied denoising with 30.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.160822
+  - ZINB NLL: 1.150425
+Total number of masked values: 8916201
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 8916201
+  - Masked Reconstruction: 1.192372
+Mean Absolute Error (MAE): 0.834942
+R² Score: 0.630766
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1608221534412746
+    zinb_nll:   1.1504246697912126
+    mse:        11.207765579223633
+    mae:        0.8349418640136719
+    r2:         0.6307657361030579
+
+Evaluating split='test' at noise=0.3
+Applied denoising with 30.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.180027
+  - ZINB NLL: 1.168908
+Total number of masked values: 9864990
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 9864990
+  - Masked Reconstruction: 1.275112
+Mean Absolute Error (MAE): 0.899079
+R² Score: 0.749334
+==================================================
+
+  Metrics summary:
+    total_loss: 1.180026924420415
+    zinb_nll:   1.1689079441426604
+    mse:        9.823695182800293
+    mae:        0.8990787863731384
+    r2:         0.749333918094635
+
+==================================================
+EVALUATING NOISE LEVEL: 0.35
+==================================================
+
+Evaluating split='train' at noise=0.35
+Applied denoising with 35.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.166799
+  - ZINB NLL: 1.156322
+Total number of masked values: 29570148
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 29570148
+  - Masked Reconstruction: 1.201486
+Mean Absolute Error (MAE): 0.841162
+R² Score: 0.781751
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1667991758300529
+    zinb_nll:   1.1563222177075732
+    mse:        5.286288738250732
+    mae:        0.8411624431610107
+    r2:         0.7817512154579163
+
+Evaluating split='val' at noise=0.35
+Applied denoising with 35.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.187009
+  - ZINB NLL: 1.175884
+Total number of masked values: 10403079
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 10403079
+  - Masked Reconstruction: 1.275863
+Mean Absolute Error (MAE): 0.887095
+R² Score: 0.701229
+==================================================
+
+  Metrics summary:
+    total_loss: 1.1870092158796852
+    zinb_nll:   1.175883693285751
+    mse:        9.068920135498047
+    mae:        0.8870953321456909
+    r2:         0.7012289762496948
+
+Evaluating split='test' at noise=0.35
+Applied denoising with 35.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.207761
+  - ZINB NLL: 1.195881
+Total number of masked values: 11509996
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 11509996
+  - Masked Reconstruction: 1.362354
+Mean Absolute Error (MAE): 0.954250
+R² Score: 0.730422
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2077606536981598
+    zinb_nll:   1.1958809227383738
+    mse:        10.564875602722168
+    mae:        0.9542497992515564
+    r2:         0.7304216027259827
+
+==================================================
+EVALUATING NOISE LEVEL: 0.4
+==================================================
+
+Evaluating split='train' at noise=0.4
+Applied denoising with 40.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.201176
+  - ZINB NLL: 1.189856
+Total number of masked values: 33803578
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 33803578
+  - Masked Reconstruction: 1.298164
+Mean Absolute Error (MAE): 0.907541
+R² Score: 0.753887
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2011761153216576
+    zinb_nll:   1.1898561255487876
+    mse:        5.961189270019531
+    mae:        0.9075407385826111
+    r2:         0.753887414932251
+
+Evaluating split='val' at noise=0.4
+Applied denoising with 40.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.223337
+  - ZINB NLL: 1.211344
+Total number of masked values: 11892460
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 11892460
+  - Masked Reconstruction: 1.375351
+Mean Absolute Error (MAE): 0.954305
+R² Score: 0.698791
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2233365851994917
+    zinb_nll:   1.2113435243038422
+    mse:        9.142910957336426
+    mae:        0.9543046951293945
+    r2:         0.6987913250923157
+
+Evaluating split='test' at noise=0.4
+Applied denoising with 40.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.244875
+  - ZINB NLL: 1.232072
+Total number of masked values: 13157853
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 13157853
+  - Masked Reconstruction: 1.468175
+Mean Absolute Error (MAE): 1.027260
+R² Score: 0.702684
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2448749419706886
+    zinb_nll:   1.2320724495288864
+    mse:        11.651941299438477
+    mae:        1.0272599458694458
+    r2:         0.7026835083961487
+
+==================================================
+EVALUATING NOISE LEVEL: 0.45
+==================================================
+
+Evaluating split='train' at noise=0.45
+Applied denoising with 45.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.246840
+  - ZINB NLL: 1.234550
+Total number of masked values: 38027652
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 38027652
+  - Masked Reconstruction: 1.409479
+Mean Absolute Error (MAE): 0.987925
+R² Score: 0.720046
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2468403483347856
+    zinb_nll:   1.2345496944680276
+    mse:        6.780867099761963
+    mae:        0.9879243969917297
+    r2:         0.7200462818145752
+
+Evaluating split='val' at noise=0.45
+Applied denoising with 45.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.269731
+  - ZINB NLL: 1.256740
+Total number of masked values: 13378551
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 13378551
+  - Masked Reconstruction: 1.489758
+Mean Absolute Error (MAE): 1.037788
+R² Score: 0.497426
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2697311421133364
+    zinb_nll:   1.2567404517336795
+    mse:        15.255181312561035
+    mae:        1.0377882719039917
+    r2:         0.4974256157875061
+
+Evaluating split='test' at noise=0.45
+Applied denoising with 45.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.293291
+  - ZINB NLL: 1.279459
+Total number of masked values: 14802011
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 14802011
+  - Masked Reconstruction: 1.586199
+Mean Absolute Error (MAE): 1.112950
+R² Score: 0.665111
+==================================================
+
+  Metrics summary:
+    total_loss: 1.2932905113665432
+    zinb_nll:   1.2794588566300724
+    mse:        13.124435424804688
+    mae:        1.1129502058029175
+    r2:         0.6651106476783752
+
+==================================================
+EVALUATING NOISE LEVEL: 0.5
+==================================================
+
+Evaluating split='train' at noise=0.5
+Applied denoising with 50.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.305976
+  - ZINB NLL: 1.292619
+Total number of masked values: 42269399
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 42269399
+  - Masked Reconstruction: 1.531857
+Mean Absolute Error (MAE): 1.080254
+R² Score: 0.670251
+==================================================
+
+  Metrics summary:
+    total_loss: 1.3059764486972032
+    zinb_nll:   1.2926186592382898
+    mse:        7.986980438232422
+    mae:        1.0802541971206665
+    r2:         0.6702508926391602
+
+Evaluating split='val' at noise=0.5
+Applied denoising with 50.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.331030
+  - ZINB NLL: 1.316945
+Total number of masked values: 14870791
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 14870791
+  - Masked Reconstruction: 1.615288
+Mean Absolute Error (MAE): 1.132819
+R² Score: 0.600087
+==================================================
+
+  Metrics summary:
+    total_loss: 1.3310299012386353
+    zinb_nll:   1.316944590930281
+    mse:        12.138995170593262
+    mae:        1.1328188180923462
+    r2:         0.6000868082046509
+
+Evaluating split='test' at noise=0.5
+Applied denoising with 50.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.356276
+  - ZINB NLL: 1.341287
+Total number of masked values: 16453117
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 16453117
+  - Masked Reconstruction: 1.719027
+Mean Absolute Error (MAE): 1.213055
+R² Score: 0.619820
+==================================================
+
+  Metrics summary:
+    total_loss: 1.356276439655997
+    zinb_nll:   1.3412865170275186
+    mse:        14.899381637573242
+    mae:        1.2130547761917114
+    r2:         0.619820237159729
+
+Noise sweep metrics saved to: AE/results/noise_sweep_metrics.csv

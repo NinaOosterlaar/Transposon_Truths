@@ -11,7 +11,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Tuple, Optional, Set
 
 # Add parent directory to path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from Utils.SGD_API.yeast_genes import SGD_Genes
 from Utils.plot_config import setup_plot_style, COLORS
 

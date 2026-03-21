@@ -1,0 +1,126 @@
+Job ID: 12329293
+Loading gene data...
+Loading genes from Utils/SGD_API/architecture_info/yeast_genes_with_info.json
+Filtering pi values to original zeros from Data/combined_strains (keep only all-zero windows; window_size=19, step_size=1).
+Using filtered output directory: AE/results/pi_analysis_original_zero_filter
+Found strains: ['strain_FD', 'strain_dnrp', 'strain_yEK19', 'strain_yEK23', 'strain_yTW001', 'strain_yWT03a', 'strain_yWT04a', 'strain_ylic137']
+
+============================================================
+Processing TRAIN split
+============================================================
+  Processing muoff0...
+Split train: position_mode=index (source=metadata), window_size=19
+  Processing muoff1...
+Split train: position_mode=index (source=metadata), window_size=19
+  Processing muoff2...
+Split train: position_mode=index (source=metadata), window_size=19
+  Processing muoff4...
+Split train: position_mode=index (source=metadata), window_size=19
+  Processing muoff5...
+Split train: position_mode=index (source=metadata), window_size=19
+  Saving plot data...
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/train_pi_values.csv (147358150 rows)
+    Saved mu_offset difference data: AE/results/pi_analysis_original_zero_filter/plot_data/train_mu_offset_diff.csv
+    Saved: AE/results/pi_analysis_original_zero_filter/train_mu_offset_difference.png
+  Creating combined analysis figure...
+    Saved: AE/results/pi_analysis_original_zero_filter/train_combined.png
+  Creating per-strain analysis figures...
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_FD.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_dnrp.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_yEK19.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_yEK23.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_yTW001.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_yWT03a.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_yWT04a.png
+    Saved: AE/results/pi_analysis_original_zero_filter/train_strain_ylic137.png
+
+============================================================
+Processing VAL split
+============================================================
+  Processing muoff0...
+Split val: position_mode=index (source=metadata), window_size=19
+  Processing muoff1...
+Split val: position_mode=index (source=metadata), window_size=19
+  Processing muoff2...
+Split val: position_mode=index (source=metadata), window_size=19
+  Processing muoff4...
+Split val: position_mode=index (source=metadata), window_size=19
+  Processing muoff5...
+Split val: position_mode=index (source=metadata), window_size=19
+  Saving plot data...
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/val_pi_values.csv (51814170 rows)
+    Saved mu_offset difference data: AE/results/pi_analysis_original_zero_filter/plot_data/val_mu_offset_diff.csv
+    Saved: AE/results/pi_analysis_original_zero_filter/val_mu_offset_difference.png
+  Creating combined analysis figure...
+    Saved: AE/results/pi_analysis_original_zero_filter/val_combined.png
+  Creating per-strain analysis figures...
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_FD.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_dnrp.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_yEK19.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_yEK23.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_yTW001.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_yWT03a.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_yWT04a.png
+    Saved: AE/results/pi_analysis_original_zero_filter/val_strain_ylic137.png
+
+============================================================
+Processing TEST split
+============================================================
+  Processing muoff0...
+Split test: position_mode=index (source=metadata), window_size=19
+  Processing muoff1...
+Split test: position_mode=index (source=metadata), window_size=19
+  Processing muoff2...
+Split test: position_mode=index (source=metadata), window_size=19
+  Processing muoff4...
+Split test: position_mode=index (source=metadata), window_size=19
+  Processing muoff5...
+Split test: position_mode=index (source=metadata), window_size=19
+  Saving plot data...
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/test_pi_values.csv (56864320 rows)
+    Saved mu_offset difference data: AE/results/pi_analysis_original_zero_filter/plot_data/test_mu_offset_diff.csv
+    Saved: AE/results/pi_analysis_original_zero_filter/test_mu_offset_difference.png
+  Creating combined analysis figure...
+    Saved: AE/results/pi_analysis_original_zero_filter/test_combined.png
+  Creating per-strain analysis figures...
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_FD.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_dnrp.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_yEK19.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_yEK23.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_yTW001.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_yWT03a.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_yWT04a.png
+    Saved: AE/results/pi_analysis_original_zero_filter/test_strain_ylic137.png
+
+============================================================
+Creating overall analysis figure (all strains + train/val/test)...
+============================================================
+  Saving overall plot data...
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_combined_pi_values.csv (128018320 rows)
+    Saved mu_offset difference data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_mu_offset_diff.csv
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_mu_offset_difference.png
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_all_strains_combined.png
+
+============================================================
+Creating per-strain overall analysis figures (all splits)...
+============================================================
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_FD_pi_values.csv (3768380 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_FD.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_dnrp_pi_values.csv (23813600 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_dnrp.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_yEK19_pi_values.csv (4394740 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_yEK19.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_yEK23_pi_values.csv (6442180 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_yEK23.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_yTW001_pi_values.csv (17926940 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_yTW001.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_yWT03a_pi_values.csv (30107660 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_yWT03a.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_yWT04a_pi_values.csv (23923585 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_yWT04a.png
+    Saved plot data: AE/results/pi_analysis_original_zero_filter/plot_data/all_sets_strain_ylic137_pi_values.csv (17641235 rows)
+    Saved: AE/results/pi_analysis_original_zero_filter/all_sets_strain_ylic137.png
+
+============================================================
+Analysis complete! Figures saved to: AE/results/pi_analysis_original_zero_filter
+============================================================

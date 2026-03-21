@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/AE/imputation/imputation.py", line 15, in <module>
+    from Utils.SGD_API.yeast_genes import SGD_Genes
+ModuleNotFoundError: No module named 'Utils'
+srun: error: insy16: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=12329286.0

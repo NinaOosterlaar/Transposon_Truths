@@ -63,7 +63,7 @@ def concatenate_nonempty(arrays: List[np.ndarray]) -> np.ndarray:
     return np.concatenate(nonempty_arrays)
 
 
-def trim_top_percent(values: np.ndarray, top_percent: float = 5.0) -> np.ndarray:
+def trim_top_percent(values: np.ndarray, top_percent: float = 1.0) -> np.ndarray:
     """Remove the highest `top_percent` values from a numeric array."""
     arr = np.asarray(values, dtype=float)
     arr = arr[np.isfinite(arr)]

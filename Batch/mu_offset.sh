@@ -25,6 +25,6 @@ srun apptainer exec \
     --bind "$PROJECT_DIR":/workspace \
     --pwd /workspace \
     "$APPTAINER_IMAGE" \
-    python AE/imputation.py
+    python AE/imputation/imputation.py
 
 

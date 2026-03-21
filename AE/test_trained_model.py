@@ -58,38 +58,38 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 # REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 1e-5  # alpha
 
-MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep92_noise0.150_muoff0.000.pt"
-
-# Preprocessing parameters 
-FEATURES = ['Nucl']
-BIN_SIZE = 17
-MOVING_AVERAGE = False
-DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(0.391 * 2000)  
-# Training parameters 
-BATCH_SIZE = 128
-NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.378  
-MASKED_RECON_WEIGHT = 0.127  # gamma - exact value
-REGULARIZER = 'none'
-REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
-
-# MODEL_PATH = "AE/results/models/ZINBAE_layers432_ep54_noise0.150_muoff1.000.pt"
-
+# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep92_noise0.150_muoff0.000.pt"
 
 # # Preprocessing parameters 
-# FEATURES = ['Centr']
-# BIN_SIZE = 19
-# MOVING_AVERAGE = True
+# FEATURES = ['Nucl']
+# BIN_SIZE = 17
+# MOVING_AVERAGE = False
 # DATA_POINT_LENGTH = 2000
-# STEP_SIZE = int(0.572 * 2000)  
+# STEP_SIZE = int(0.391 * 2000)  
 # # Training parameters 
-# BATCH_SIZE = 64
+# BATCH_SIZE = 128
 # NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.516 
-# MASKED_RECON_WEIGHT = 0.0327  # gamma - exact value
+# PI_THRESHOLD = 0.378  
+# MASKED_RECON_WEIGHT = 0.127  # gamma - exact value
 # REGULARIZER = 'none'
-# REGULARIZATION_WEIGHT = 4.22e-05 
+# REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
+
+MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
+
+
+# Preprocessing parameters 
+FEATURES = ['Centr']
+BIN_SIZE = 19
+MOVING_AVERAGE = True
+DATA_POINT_LENGTH = 2000
+STEP_SIZE = int(0.572 * 2000)  
+# Training parameters 
+BATCH_SIZE = 64
+NOISE_LEVEL = 0.15
+PI_THRESHOLD = 0.516 
+MASKED_RECON_WEIGHT = 0.0327  # gamma - exact value
+REGULARIZER = 'none'
+REGULARIZATION_WEIGHT = 4.22e-05 
 
 # Data caching options
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters

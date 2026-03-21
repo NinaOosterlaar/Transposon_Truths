@@ -1,0 +1,232 @@
+Running with noise_level=0.15
+Running with mu_offset=0.0
+Device: cuda
+==================================================
+LOADING TRAINED MODEL
+==================================================
+
+Model Architecture from checkpoint:
+  seq_length: 2000
+  feature_dim: 2
+  layers: [752]
+  use_conv: False
+  conv_channels: 85
+  pool_size: 8
+  kernel_size: 7
+  padding: same
+  stride: 1
+  dropout: 0.008
+  mu_offset: 0.0
+
+  Expected input (no conv): (64, 4000)
+  Model expects feature_dim=2, use_conv=False
+
+Test Configuration:
+  features: ['Centr']
+  bin_size: 19
+  moving_average: True
+  data_point_length: 2000
+  step_size: 1144
+  batch_size: 64
+  noise_level: 0.15
+  pi_threshold: 0.516
+  masked_recon_weight: 0.0327
+  regularizer: none
+  regularization_weight: 4.22e-05
+  use_cached_data: True
+  output_dir: AE/results/final
+
+==================================================
+PREPROCESSING DATA
+==================================================
+Cached data not found or caching disabled. Preprocessing from scratch...
+Test chromosomes: ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+Train chromosomes: ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 48480
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 48480
+
+Saving preprocessed data to cache: Data/processed_data/Centr_bin19_maTrue_len2000_step1144_be1b8b82.npy
+Cached data and metadata saved successfully!
+
+Test set size: 48480
+Test set shape: (48480, 2000, 4)
+  - Sequence length: 2000
+  - Feature dimension from data: 4
+Applied denoising with 15.0% masking
+Test dataloader: 48480 samples, 758 batches
+
+==================================================
+INITIALIZING MODEL
+==================================================
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Model weights loaded successfully!
+
+==================================================
+EVALUATING ON TEST DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.125966
+  - ZINB NLL: 1.093646
+Total number of masked values: 9900655
+  - Number of values with pi >= 0.516: 0
+  - Number of values with pi < 0.516: 9900655
+  - Masked Reconstruction: 0.988356
+Mean Absolute Error (MAE): 0.754826
+R² Score: 0.767481
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 0.7548, SD MEAN: 2.2555 
+  R²: 0.7675,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0000, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.0853, Mean μ (non-zeros): 3.3345,  
+ SD μ (zeros): 0.2691, SD μ (non-zeros): 6.4648 
+
+Theta mean: 769.3730, Theta SD: 2776.4990
+Number of masked values: 9900655
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 1.0473, SD MAE: 2.4115
+R²: 0.7867
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.0891
+SD μ (zeros): 0.0000, SD μ (non-zeros): 5.8639
+Theta mean: 748.9643, Theta SD: 2666.1892
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 9900655 masked positions, MAE=1.0473, R²=0.7867
+ZINB metrics saved to /workspace/AE/results/final/ZINBAE_20260315_170406_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/final/
+
+==================================================
+TEST METRICS
+==================================================
+  total_loss: 1.125965664852964
+  zinb_nll: 1.0936464145533715
+  mae: 0.7548264861106873
+  r2: 0.7674812078475952
+  masked_loss: 0.9883563839464691
+
+Metrics saved to: AE/results/final/test_metrics.json
+
+==================================================
+RECONSTRUCTING GENOMIC COORDINATES
+==================================================
+
+Metadata saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/metadata.json
+  Contains 48480 window locations
+Loaded metadata for 48480 windows
+Reconstructed 55475628 unique genomic positions from 48480 windows
+Average overlap per position: 1.75
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_FD/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrIII.csv
+Saved 1531917 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_dnrp/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK19/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrXIII.csv
+Saved 948050 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yEK23/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yTW001/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT03a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_yWT04a/ChrXVI.csv
+Saved 316603 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrIV.csv
+Saved 439871 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrIX.csv
+Saved 270144 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrVII.csv
+Saved 745734 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrX.csv
+Saved 666799 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrXI.csv
+Saved 924414 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrXIII.csv
+Saved 948049 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/strain_ylic137/ChrXVI.csv
+
+Reconstructed genomic data saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000
+  One CSV per dataset/chromosome with columns:
+  position, reconstruction, mu, pi, theta
+
+==================================================
+TESTING COMPLETE
+==================================================
+Results saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/

@@ -19,7 +19,7 @@ test_chromosomes = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
 val_chromosomes = ['ChrVIII', 'ChrXIV', 'ChrXV']
 train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
   # No validation set needed for testing
-noise_levels = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.33, 0.5]  # Noise levels to test (as percentages of data points to corrupt)
+noise_levels = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]  # Noise levels to test (as percentages of data points to corrupt)
 
 
 # MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
