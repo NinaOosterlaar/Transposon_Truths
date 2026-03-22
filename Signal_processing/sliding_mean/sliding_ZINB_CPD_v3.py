@@ -47,23 +47,36 @@ def interpolate_density(distance, lookup_df, distance_col, density_col='NonZero_
     # Use numpy's interp for linear interpolation
     return np.interp(distance, distances, densities)
 
-def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window_size, overlap, threshold, eps=1e-10, theta_global=None, tol=1e-6, max_iter=10, nucleosome_file="Data_exploration/results/densities/nucleosome_new/combined_All_Boolean_True/ALL_combined_Boolean_True_nucleosome_density.csv", centromere_file="Data_exploration/results/densities/centromere_new/combined_All_Boolean_True/ALL_combined_Boolean_True_centromere_density.csv"):
+def sliding_ZINB_CPD_v3(
+    data,
+    nucleosome_distances,
+    centromere_distances,
+    window_size,
+    overlap,
+    threshold,
+    eps=1e-10,
+    theta_global=None,
+    tol=1e-6,
+    max_iter=10,
+    nucleosome_file="Data_exploration/results/densities/nucleosome_new/combined_All_Boolean_True/ALL_combined_Boolean_True_nucleosome_density.csv",
+    centromere_file="Data_exploration/results/densities/centromere_new/combined_All_Boolean_True/ALL_combined_Boolean_True_centromere_density.csv"
+):
     data = np.asarray(data, dtype=np.float64)
     step_size = max(1, int(window_size * (1 - overlap)))
     n = len(data)
     max_nucl_distance = np.max(np.array([nucleosome_distances]))
     nucleosome_df, centromere_df = load_density_lookup_tables(nucleosome_file, centromere_file)
+
     # Create a lookup table for distance to mean density for nucleosomes
     distance_to_density = nucleosome_df.set_index('Nucleosome_Distance_Bin')['NonZero_Density']
-    # fill up all the missing values up until max_nucl_distance with a mean density of 0
     distance_to_density = distance_to_density.reindex(range(max_nucl_distance + 1), fill_value=0)
+
     # Create a lookup table for distance to mean density for centromeres
     centromere_distance_to_density = centromere_df.set_index('Centromere_Distance_Bin')['NonZero_Density']
-    # fill up all the missing values up until max_centromere_distance with a mean density of 0
 
     if theta_global is None or theta_global <= 0:
         theta_global = initialize_theta_global(data, eps=eps)
-        
+
     print(theta_global)
 
     change_points, scores = [], []
@@ -72,44 +85,51 @@ def sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, window
     for start in range(0, n - 2 * window_size + 1, step_size):
         w1 = data[start : start + window_size]
         w2 = data[start + window_size : start + 2 * window_size]
-        w0 = data[start : start + 2 * window_size]  # exactly w1+w2
-        
-        middle0 = start + window_size  # middle point between w1 and w2
+
+        middle0 = start + window_size
         centr_dist_middle = centromere_distances[middle0]
         if centr_dist_middle > centromere_distance_to_density.index.max():
             centr_dist_middle = centromere_distance_to_density.index.max()
 
-        # For the middle point of centromere, find the corresponding centromere distance, and interpolate from the centromere density lookup table to get the mean density for that distance, which we will use as pi0 for the ZINB model
-        pi0 = interpolate_density(centr_dist_middle, centromere_distance_to_density.reset_index(), 'Centromere_Distance_Bin', 'NonZero_Density')
-        
-        # Compute the mean densities for each window, adjusting for the zero-inflation using pi0. We divide the mean by (1-pi0) to get the mean of the non-zero part of the distribution, which is what we use for the log-likelihood calculation. We also clip the values to avoid issues with zero or negative means.
-        mu1 = np.clip(np.mean(w1) / (1 - pi0), eps, None)
-        mu2 = np.clip(np.mean(w2) / (1 - pi0), eps, None)
-        mu0 = np.clip(np.mean(w0) / (1 - pi0), eps, None)
-        
+        # Version 3: pi0 from centromere-dependent saturation/density
+        pi0 = interpolate_density(
+            centr_dist_middle,
+            centromere_distance_to_density.reset_index(),
+            'Centromere_Distance_Bin',
+            'NonZero_Density'
+        )
 
-        # For each position in the window find the corresponding nucleosome distance and density, and compute the average density for the window
+        # Nucleosome-based scaling for pi1 and pi2
         nucl_dist0 = nucleosome_distances[start : start + 2 * window_size]
         nucl_dist1 = nucleosome_distances[start : start + window_size]
         nucl_dist2 = nucleosome_distances[start + window_size : start + 2 * window_size]
-
 
         temp0_nucl = distance_to_density.loc[nucl_dist0].mean()
         temp1_nucl = distance_to_density.loc[nucl_dist1].mean()
         temp2_nucl = distance_to_density.loc[nucl_dist2].mean()
 
-        pi1 = np.clip(pi0 * (temp1_nucl / temp0_nucl), eps, 1 - eps)
-        pi2 = np.clip(pi0 * (temp2_nucl / temp0_nucl), eps, 1 - eps)
+        pi1 = np.clip(pi0 * (temp1_nucl / max(temp0_nucl, eps)), eps, 1 - eps)
+        pi2 = np.clip(pi0 * (temp2_nucl / max(temp0_nucl, eps)), eps, 1 - eps)
+
+        # Alternative model: separate mu per window
         mu1 = np.clip(np.mean(w1) / max(1 - pi1, eps), eps, None)
         mu2 = np.clip(np.mean(w2) / max(1 - pi2, eps), eps, None)
-        
-        # print(f"Window {start}-{start+2*window_size}: pi0={pi0:.4f}, mu0={mu0:.4f}, pi1={pi1:.4f}, mu1={mu1:.4f}, pi2={pi2:.4f}, mu2={mu2:.4f}")
+
+        # Null model: shared mu0 across both windows, but keep pi1 and pi2 fixed
+        sum_y = np.sum(w1) + np.sum(w2)
+        denom = window_size * (1 - pi1) + window_size * (1 - pi2)
+        mu0 = np.clip(sum_y / max(denom, eps), eps, None)
+
+        # Likelihoods
+        ll0_w1 = zinb_log_likelihood(w1, mu0, theta_global, pi1, eps=eps)
+        ll0_w2 = zinb_log_likelihood(w2, mu0, theta_global, pi2, eps=eps)
+        ll0 = ll0_w1 + ll0_w2
 
         ll1 = zinb_log_likelihood(w1, mu1, theta_global, pi1, eps=eps)
         ll2 = zinb_log_likelihood(w2, mu2, theta_global, pi2, eps=eps)
-        ll0 = zinb_log_likelihood(w0, mu0, theta_global, pi0, eps=eps)
+        ll_alt = ll1 + ll2
 
-        score = 2.0 * ((ll1 + ll2) - ll0)
+        score = 2.0 * (ll_alt - ll0)
         scores.append(score)
 
         if score > threshold:
@@ -167,7 +187,7 @@ def parse_arguments():
 if __name__ == "__main__":
     # Configuration
     base_data_folder = "Signal_processing/final/SATAY_synthetic"
-    base_output_folder = "Signal_processing/results/version3"
+    base_output_folder = "Signal_processing/results/version4"
     
     window_size = [100]
     overlap = 0.5
@@ -177,7 +197,7 @@ if __name__ == "__main__":
     print(f"Processing datasets 1-10 from {base_data_folder}")
     
     # Process each dataset (1-10)
-    for dataset_num in range(1, 11):
+    for dataset_num in range(1,2):
         print(f"\n{'='*60}")
         print(f"Processing dataset {dataset_num}")
         print(f"{'='*60}")

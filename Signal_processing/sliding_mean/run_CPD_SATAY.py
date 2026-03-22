@@ -8,7 +8,7 @@ import sys
 import subprocess
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).parent.parent
+PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 
@@ -115,6 +115,11 @@ def main():
                     "--centromere_file", str(centromere_density),
                 ]
                 
+                # Print command for first chromosome (debug)
+                if total_processed == 0 and total_skipped == 0:
+                    print(f"\n  Debug - First command:")
+                    print(f"    {' '.join(cmd)}\n")
+                
                 # Run the command
                 try:
                     result = subprocess.run(
@@ -130,8 +135,14 @@ def main():
                         total_processed += 1
                     else:
                         print(f"    ✗ {chrom_name} - Error (exit code {result.returncode})")
+                        if result.stdout:
+                            print(f"      Stdout:")
+                            for line in result.stdout.strip().split('\n')[-20:]:  # Last 20 lines
+                                print(f"        {line}")
                         if result.stderr:
-                            print(f"      {result.stderr[:200]}")
+                            print(f"      Stderr:")
+                            for line in result.stderr.strip().split('\n')[-20:]:  # Last 20 lines
+                                print(f"        {line}")
                         total_skipped += 1
                         
                 except subprocess.TimeoutExpired:

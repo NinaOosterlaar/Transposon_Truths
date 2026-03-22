@@ -24,7 +24,7 @@ setup_plot_style()
 # Edit this block to run directly without command-line argparse flags.
 RUN_CONFIG = {
 	"base_folder": "Signal_processing/final/SATAY_synthetic",
-	"output_folder": "Signal_processing/final/results/compare_versions_ws100_2",
+	"output_folder": "Signal_processing/alternative/compare_versions_ws100_2",
 	"window_size": 100,
 	"overlap": 0.5,
 	"theta": 0,
