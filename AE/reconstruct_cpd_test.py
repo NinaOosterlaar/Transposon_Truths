@@ -17,6 +17,11 @@ from AE.training.training_utils import dataloader_from_array, ChromosomeEmbeddin
 from AE.training.training import test
 from AE.reconstruct_output import OutputReconstructor
 
+# Chromosome splits (must match training configuration)
+# These are used to fit the standardization scaler correctly
+TRAIN_CHROMS = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+VALIDATION_CHROMS = ['ChrVIII', 'ChrXIV', 'ChrXV']
+TEST_CHROMS = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
 
 def find_latest_model(model_dir, pattern="ZINBAE_layers752_ep141_*.pt"):
     """Find the most recently created model file matching pattern."""
@@ -97,21 +102,18 @@ def reconstruct_test_cpd(
         print(f"  {subdir}/{replicate}")
     
     # Process each replicate
-    all_chromosomes = ['ChrI', 'ChrII', 'ChrIII', 'ChrIV', 'ChrV', 'ChrVI', 'ChrVII', 'ChrVIII',
-                       'ChrIX', 'ChrX', 'ChrXI', 'ChrXII', 'ChrXIII', 'ChrXIV', 'ChrXV', 'ChrXVI']
-    
     for subdir, replicate, replicate_path in replicate_folders:
         print(f"\n{'='*60}")
         print(f"Processing: {subdir}/{replicate}")
         print(f"{'='*60}")
         
-        # Preprocess this replicate's data
-        # We'll use all chromosomes as "test" data for reconstruction
-        _, _, test_set, _, _, test_metadata, _, _, _ = preprocess_with_split(
+        # Preprocess this replicate's data using proper chromosome splits
+        # This ensures standardization scaler is fitted on training chromosomes
+        train_set, val_set, test_set, train_metadata, val_metadata, test_metadata, _, _, _ = preprocess_with_split(
             input_folder=replicate_path,
-            train_chroms=[],  # No training data needed
-            val_chroms=[],
-            test_chroms=all_chromosomes,  # All chromosomes for reconstruction
+            train_chroms=TRAIN_CHROMS,  # Required to fit standardization scaler
+            val_chroms=VALIDATION_CHROMS,
+            test_chroms=TEST_CHROMS,
             features=features,
             bin_size=bin_size,
             moving_average=moving_average,
@@ -119,22 +121,45 @@ def reconstruct_test_cpd(
             step_size=step_size,
         )
         
-        if test_set is None or len(test_set) == 0:
+        # Combine all splits for reconstruction (reconstruct all chromosomes)
+        all_data_sets = []
+        all_metadata = []
+        
+        if train_set is not None and len(train_set) > 0:
+            all_data_sets.append(train_set)
+            all_metadata.extend(train_metadata)
+            print(f"Train set: {train_set.shape}")
+            
+        if val_set is not None and len(val_set) > 0:
+            all_data_sets.append(val_set)
+            all_metadata.extend(val_metadata)
+            print(f"Val set: {val_set.shape}")
+            
+        if test_set is not None and len(test_set) > 0:
+            all_data_sets.append(test_set)
+            all_metadata.extend(test_metadata)
+            print(f"Test set: {test_set.shape}")
+        
+        if not all_data_sets:
             print(f"Warning: No data found for {subdir}/{replicate}, skipping...")
             continue
         
-        print(f"Dataset size: {test_set.shape}")
+        # Concatenate all splits
+        combined_data = np.concatenate(all_data_sets, axis=0)
+        combined_metadata = all_metadata
+        
+        print(f"Combined dataset size: {combined_data.shape}")
         
         # Create dataloader
-        test_dataloader = dataloader_from_array(
-            test_set, batch_size=batch_size, shuffle=False, zinb=True, chrom=chrom
+        combined_dataloader = dataloader_from_array(
+            combined_data, batch_size=batch_size, shuffle=False, zinb=True, chrom=chrom
         )
         
         # Run inference
         print("Running model inference...")
         predictions, _, metrics, mu_raw, theta, pi = test(
             model=zinbae_model,
-            dataloader=test_dataloader,
+            dataloader=combined_dataloader,
             pi_threshold=pi_threshold,
             chrom=chrom,
             chrom_embedding=chrom_embedding,
@@ -155,7 +180,7 @@ def reconstruct_test_cpd(
         # Save metadata
         metadata_path = os.path.join(output_dir, "metadata.json")
         with open(metadata_path, "w") as f:
-            json.dump(test_metadata, f, indent=2)
+            json.dump(combined_metadata, f, indent=2)
         
         print(f"\nReconstructing genomic coordinates...")
         reconstructor = OutputReconstructor(metadata_path)
