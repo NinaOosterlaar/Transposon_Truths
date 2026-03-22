@@ -107,7 +107,7 @@ def reconstruct_test_cpd(
         
         # Preprocess this replicate's data
         # We'll use all chromosomes as "test" data for reconstruction
-        test_set, _, _, test_metadata, _, _, _, _, _ = preprocess_with_split(
+        _, _, test_set, _, _, test_metadata, _, _, _ = preprocess_with_split(
             input_folder=replicate_path,
             train_chroms=[],  # No training data needed
             val_chroms=[],
