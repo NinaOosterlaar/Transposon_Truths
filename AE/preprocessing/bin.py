@@ -172,8 +172,22 @@ def saturation_against_bin_size(data, bin_sizes, plot = True):
             for chrom in data[dataset]:
                 print(chrom)
                 data_array = np.array(data[dataset][chrom]['Value'])
+                
+                # Calculate mean non-zero value before moving average
+                non_zero_values_before = data_array[data_array != 0]
+                mean_non_zero_before = np.mean(non_zero_values_before) if len(non_zero_values_before) > 0 else 0
+                
                 moving_average = sliding_window(data_array, window_size=bin_size, step_size=1, moving_average=True)
                 bins = bin_data_single_array(data_array, length=len(data_array), bin_size=bin_size, method='average')[0]
+                
+                # Calculate mean non-zero value after moving average
+                moving_average_array = np.array(moving_average)
+                non_zero_values_after = moving_average_array[moving_average_array != 0]
+                mean_non_zero_after = np.mean(non_zero_values_after) if len(non_zero_values_after) > 0 else 0
+                
+                print(f"  Mean non-zero value before moving average: {mean_non_zero_before:.4f}")
+                print(f"  Mean non-zero value after moving average: {mean_non_zero_after:.4f}")
+                
                 chrom_windows["moving_average"].extend(moving_average)
                 chrom_windows["binned"].extend(bins)
             densities[dataset]['bins'].append(compute_saturation(np.array(chrom_windows["binned"])))
