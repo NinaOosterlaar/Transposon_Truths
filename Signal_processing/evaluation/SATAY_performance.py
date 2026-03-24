@@ -707,10 +707,10 @@ if __name__ == "__main__":
     print("SATAY Change Point Detection Performance Evaluation")
     print("="*60)
     
-    # Compare saturation levels (test_CPD data)
-    base_results_folder = "Signal_processing/Results/test_CPD_SATAY_CPD"
+    # Compare saturation levels 
+    base_results_folder = "Signal_processing/Results/test_CPD_SATAY_CPD_v3"
     window_folder = "Data/test_CPD/centromere_windows"
-    output_folder = "Signal_processing/alternative/saturation_comparison"
+    output_folder = "Signal_processing/evaluation/saturation_comparison_v3"
     
     results_df = compare_saturation_levels(
         base_results_folder, window_folder, CPD, output_folder,

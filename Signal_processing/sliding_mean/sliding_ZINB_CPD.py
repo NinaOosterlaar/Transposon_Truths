@@ -99,13 +99,48 @@ def save_results(output_folder, dataset_name, change_points, scores, theta_globa
         f.write(f"window_size: {window_size}, overlap: {overlap}, threshold: {threshold}\n")
 
 
+def apply_threshold_to_scores(scores, threshold, window_size, overlap):
+    """Apply threshold filtering to pre-computed LRT scores to extract change points.
+    
+    This replicates the threshold logic from sliding_ZINB_CPD without recomputing scores.
+    """
+    step_size = max(1, int(window_size * (1 - overlap)))
+    change_points = []
+    last_cp, last_score = -np.inf, 0.0
+    
+    for idx, score in enumerate(scores):
+        if score > threshold:
+            # Position calculation: idx corresponds to window index
+            # Change point is at start + window_size
+            cp = idx * step_size + window_size
+            
+            if (cp - last_cp) >= window_size:
+                change_points.append(cp)
+                last_cp, last_score = cp, score
+            elif score > last_score:
+                change_points[-1] = cp
+                last_cp, last_score = cp, score
+    
+    return change_points
+
+
 def process_window_size(ws, data, overlap, thresholds, theta_global, output_folder, dataset_name):
-    """Process all thresholds for a given window size."""
+    """Process all thresholds for a given window size.
+    
+    Optimized to compute LRT scores only once, then apply all thresholds.
+    """
     window_output_folder = os.path.join(output_folder, f"window{ws}")
+    
+    # Run detector once with threshold=0 to get all LRT scores
+    print(f"Computing LRT scores for window size: {ws}")
+    _, scores = sliding_ZINB_CPD(data, ws, overlap, threshold=0.0, theta_global=theta_global)
+    
+    # Now apply each threshold to the saved scores
     for threshold in thresholds:
-        print(f"Processing window size: {ws}, threshold: {threshold:.2f}")
-        change_points, scores = sliding_ZINB_CPD(data, ws, overlap, threshold, theta_global=theta_global)
+        print(f"  Applying threshold: {threshold:.2f}")
+        change_points = apply_threshold_to_scores(scores, threshold, ws, overlap)
         save_results(window_output_folder, dataset_name, change_points, scores, theta_global, ws, overlap, threshold)
+    
     return ws
 
 
@@ -122,7 +157,7 @@ def parse_arguments():
 if __name__ == "__main__":
     args = parse_arguments()
     input_file = args.input_file
-    window_size = [80, 10, 30, 50]
+    window_size = [100]
     overlap = 0.5
     thresholds = np.linspace(0, 40, 41)  # 41 thresholds from 0 to 40
     print(thresholds)
