@@ -90,12 +90,30 @@ def bin_data_single_array(data_array, length, bin_size, method):
         end = min((i + 1) * bin_size, length)
         bin_data = data_array[start:end, :]  # always 2D now
 
-        # Aggregate first column with chosen method
-        binned_region[i, 0] = agg(bin_data[:, 0])
-
-        # Aggregate remaining features by mean, if present
-        if num_features > 1:
-            binned_region[i, 1:] = np.mean(bin_data[:, 1:], axis=0)
+        # For DataFrames with structure [Position, Value, features..., Value_Raw, Size_Factor]:
+        if num_features > 1 and method == 'average_non_zero':
+            # Column 0 (Position): regular mean
+            binned_region[i, 0] = np.mean(bin_data[:, 0])
+            # Column 1 (Value): non-zero average
+            value_col = bin_data[:, 1]
+            binned_region[i, 1] = np.mean(value_col[value_col != 0]) if np.any(value_col != 0) else 0
+            # Remaining features: process individually
+            if num_features > 2:
+                for col_idx in range(2, num_features):
+                    # Check if this is the second-to-last column (likely Value_Raw in ZINB mode)
+                    if col_idx == num_features - 2 and num_features >= 5:
+                        # Apply non-zero average to Value_Raw
+                        value_raw = bin_data[:, col_idx]
+                        binned_region[i, col_idx] = np.mean(value_raw[value_raw != 0]) if np.any(value_raw != 0) else 0
+                    else:
+                        # Regular mean for other features (positions, distances, size_factor)
+                        binned_region[i, col_idx] = np.mean(bin_data[:, col_idx])
+        else:
+            # Original behavior for 1D arrays or other methods
+            binned_region[i, 0] = agg(bin_data[:, 0])
+            # Aggregate remaining features by mean, if present
+            if num_features > 1:
+                binned_region[i, 1:] = np.mean(bin_data[:, 1:], axis=0)
 
     # If original array was 1D, return 1D result
     if was_1d:
@@ -134,10 +152,12 @@ def sliding_window(data, window_size, step_size, moving_average=False):
     def _moving_average_window(window_data):
         """Compute moving-average output while preserving input dimensionality.
 
-        For 2D input from DataFrames with structure [Position, Value, features...]:
+        For 2D input from DataFrames with structure [Position, Value, features..., Value_Raw, Size_Factor]:
         - Column 0 (Position): standard mean
-        - Column 1 (Value): non-zero average
-        - Remaining columns: standard mean
+        - Column 1 (Value): non-zero average (log-transformed input)
+        - Column -2 (Value_Raw): non-zero average (raw count target for ZINB)
+        - Column -1 (Size_Factor): standard mean
+        - Other columns: standard mean
         """
         num_features = window_data.shape[1]
         averaged = np.zeros(num_features, dtype=np.float32)
@@ -150,9 +170,18 @@ def sliding_window(data, window_size, step_size, moving_average=False):
             value_signal = window_data[:, 1]
             averaged[1] = np.mean(value_signal[value_signal != 0]) if np.any(value_signal != 0) else 0
             
-            # Standard mean for remaining features (columns 2+)
+            # Process remaining features (columns 2+)
             if num_features > 2:
-                averaged[2:] = np.mean(window_data[:, 2:], axis=0)
+                # Apply standard mean to middle columns
+                for col_idx in range(2, num_features):
+                    # Check if this is the second-to-last column (likely Value_Raw in ZINB mode)
+                    if col_idx == num_features - 2 and num_features >= 5:
+                        # Apply non-zero average to Value_Raw
+                        value_raw = window_data[:, col_idx]
+                        averaged[col_idx] = np.mean(value_raw[value_raw != 0]) if np.any(value_raw != 0) else 0
+                    else:
+                        # Standard mean for other features (positions, distances, size_factor)
+                        averaged[col_idx] = np.mean(window_data[:, col_idx])
 
         return averaged
 
