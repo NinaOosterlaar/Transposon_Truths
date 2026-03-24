@@ -26,4 +26,4 @@ srun apptainer exec \
   --bind "$PROJECT_DIR":/workspace \
   --pwd /workspace \
   "$APPTAINER_IMAGE" \
-  python AE/test_saturation.py
+  python AE/test_AE/test_saturation.py
