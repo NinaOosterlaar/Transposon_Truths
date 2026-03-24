@@ -1,3 +1,0 @@
-/opt/conda/bin/python: can't open file '/workspace/AE/imputation_mu.py': [Errno 2] No such file or directory
-srun: error: insy16: task 0: Exited with exit code 2
-srun: launch/slurm: _step_signal: Terminating StepId=12294945.0

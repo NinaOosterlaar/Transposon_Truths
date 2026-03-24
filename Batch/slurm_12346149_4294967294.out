@@ -1,0 +1,570 @@
+Device: cuda
+Found 6 datasets for strain yEK23:
+  yEK23a_23_FDDP220013504-2a_HTWL7DSX2_L4_trimmed_forward_notrimmed.sorted.bam
+  yEK23a_27_FDDP220013505-1a_HY_trimmed_forward_notrimmed.sorted.bam
+  yEK23a_32_FDDP220013506-2a_HW_trimmed_forward_notrimmed.sorted.bam
+  yEK23b_1_FDDP220013508-1a_HY_trimmed_forward_notrimmed.sorted.bam
+  yEK23b_2_FDDP220013509-1a_HY_trimmed_forward_notrimmed.sorted.bam
+  yEK23c_10_FDDP220013511-2a_HWTTJDSX2_L3_trimmed_forward_notrimmed.sorted.bam
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Model loaded from: AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+Model expects seq_length=2000, feature_dim=2
+
+============================================================
+k=1: testing 6 combination(s) out of 6 possible
+============================================================
+
+  [1/6] ['yEK23c_10_FDDP220013511-2a_HWTTJDSX2_L3_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.0803
+
+Clipping outliers using 95th percentile * 1.5...
+k1_combo0: Clipping values above 105.00 (P95=70.00). Clipped 25112/969910 values (2.59%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.794851
+  - ZINB NLL: 0.788532
+Total number of masked values: 1395870
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1395870
+  - Masked Reconstruction: 0.724677
+Mean Absolute Error (MAE): 0.455155
+R² Score: 0.767780
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.827665
+  - ZINB NLL: 0.820724
+Total number of masked values: 495420
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 495420
+  - Masked Reconstruction: 0.795932
+Mean Absolute Error (MAE): 0.508052
+R² Score: 0.212339
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.834413
+  - ZINB NLL: 0.826794
+Total number of masked values: 540024
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 540024
+  - Masked Reconstruction: 0.873725
+Mean Absolute Error (MAE): 0.550882
+R² Score: 0.754362
+==================================================
+
+  Metrics: {'train_total_loss': 0.794851, 'train_zinb_nll': 0.788532, 'train_mae': 0.455155, 'train_r2': 0.76778, 'train_masked_loss': 0.724677, 'val_total_loss': 0.827665, 'val_zinb_nll': 0.820724, 'val_mae': 0.508052, 'val_r2': 0.212339, 'val_masked_loss': 0.795932, 'test_total_loss': 0.834413, 'test_zinb_nll': 0.826794, 'test_mae': 0.550882, 'test_r2': 0.754362, 'test_masked_loss': 0.873725}
+
+  [2/6] ['yEK23a_23_FDDP220013504-2a_HTWL7DSX2_L4_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.0546
+
+Clipping outliers using 95th percentile * 1.5...
+k1_combo1: Clipping values above 126.00 (P95=84.00). Clipped 17727/659388 values (2.69%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.631443
+  - ZINB NLL: 0.624460
+Total number of masked values: 1085568
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1085568
+  - Masked Reconstruction: 0.800702
+Mean Absolute Error (MAE): 0.390179
+R² Score: 0.708004
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.668769
+  - ZINB NLL: 0.660555
+Total number of masked values: 388047
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 388047
+  - Masked Reconstruction: 0.942018
+Mean Absolute Error (MAE): 0.462442
+R² Score: -0.917063
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.689953
+  - ZINB NLL: 0.681182
+Total number of masked values: 425959
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 425959
+  - Masked Reconstruction: 1.005815
+Mean Absolute Error (MAE): 0.508370
+R² Score: 0.684006
+==================================================
+
+  Metrics: {'train_total_loss': 0.631443, 'train_zinb_nll': 0.62446, 'train_mae': 0.390179, 'train_r2': 0.708004, 'train_masked_loss': 0.800702, 'val_total_loss': 0.668769, 'val_zinb_nll': 0.660555, 'val_mae': 0.462442, 'val_r2': -0.917063, 'val_masked_loss': 0.942018, 'test_total_loss': 0.689953, 'test_zinb_nll': 0.681182, 'test_mae': 0.50837, 'test_r2': 0.684006, 'test_masked_loss': 1.005815}
+
+  [3/6] ['yEK23b_2_FDDP220013509-1a_HY_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.0875
+
+Clipping outliers using 95th percentile * 1.5...
+k1_combo2: Clipping values above 99.00 (P95=66.00). Clipped 27121/1056636 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.803320
+  - ZINB NLL: 0.797341
+Total number of masked values: 1464362
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1464362
+  - Masked Reconstruction: 0.685588
+Mean Absolute Error (MAE): 0.449512
+R² Score: 0.638785
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.829428
+  - ZINB NLL: 0.822691
+Total number of masked values: 517286
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 517286
+  - Masked Reconstruction: 0.772563
+Mean Absolute Error (MAE): 0.501641
+R² Score: 0.502263
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.857124
+  - ZINB NLL: 0.849777
+Total number of masked values: 571344
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 571344
+  - Masked Reconstruction: 0.842519
+Mean Absolute Error (MAE): 0.559939
+R² Score: 0.741190
+==================================================
+
+  Metrics: {'train_total_loss': 0.80332, 'train_zinb_nll': 0.797341, 'train_mae': 0.449512, 'train_r2': 0.638785, 'train_masked_loss': 0.685588, 'val_total_loss': 0.829428, 'val_zinb_nll': 0.822691, 'val_mae': 0.501641, 'val_r2': 0.502263, 'val_masked_loss': 0.772563, 'test_total_loss': 0.857124, 'test_zinb_nll': 0.849777, 'test_mae': 0.559939, 'test_r2': 0.74119, 'test_masked_loss': 0.842519}
+
+  [4/6] ['yEK23a_32_FDDP220013506-2a_HW_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.0743
+
+Clipping outliers using 95th percentile * 1.5...
+k1_combo3: Clipping values above 87.00 (P95=58.00). Clipped 23472/897295 values (2.62%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.692139
+  - ZINB NLL: 0.686948
+Total number of masked values: 1325591
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1325591
+  - Masked Reconstruction: 0.595386
+Mean Absolute Error (MAE): 0.356162
+R² Score: 0.731813
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.724286
+  - ZINB NLL: 0.718456
+Total number of masked values: 470852
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 470852
+  - Masked Reconstruction: 0.668617
+Mean Absolute Error (MAE): 0.406701
+R² Score: 0.256814
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.733353
+  - ZINB NLL: 0.726909
+Total number of masked values: 513322
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 513322
+  - Masked Reconstruction: 0.739006
+Mean Absolute Error (MAE): 0.441659
+R² Score: 0.752081
+==================================================
+
+  Metrics: {'train_total_loss': 0.692139, 'train_zinb_nll': 0.686948, 'train_mae': 0.356162, 'train_r2': 0.731813, 'train_masked_loss': 0.595386, 'val_total_loss': 0.724286, 'val_zinb_nll': 0.718456, 'val_mae': 0.406701, 'val_r2': 0.256814, 'val_masked_loss': 0.668617, 'test_total_loss': 0.733353, 'test_zinb_nll': 0.726909, 'test_mae': 0.441659, 'test_r2': 0.752081, 'test_masked_loss': 0.739006}
+
+  [5/6] ['yEK23a_27_FDDP220013505-1a_HY_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.0921
+
+Clipping outliers using 95th percentile * 1.5...
+k1_combo4: Clipping values above 84.00 (P95=56.00). Clipped 28634/1112255 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.797301
+  - ZINB NLL: 0.792099
+Total number of masked values: 1509502
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1509502
+  - Masked Reconstruction: 0.596640
+Mean Absolute Error (MAE): 0.405936
+R² Score: 0.684664
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.824803
+  - ZINB NLL: 0.819079
+Total number of masked values: 534433
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 534433
+  - Masked Reconstruction: 0.656344
+Mean Absolute Error (MAE): 0.456243
+R² Score: 0.050697
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.837748
+  - ZINB NLL: 0.831350
+Total number of masked values: 584799
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 584799
+  - Masked Reconstruction: 0.733625
+Mean Absolute Error (MAE): 0.499687
+R² Score: 0.763518
+==================================================
+
+  Metrics: {'train_total_loss': 0.797301, 'train_zinb_nll': 0.792099, 'train_mae': 0.405936, 'train_r2': 0.684664, 'train_masked_loss': 0.59664, 'val_total_loss': 0.824803, 'val_zinb_nll': 0.819079, 'val_mae': 0.456243, 'val_r2': 0.050697, 'val_masked_loss': 0.656344, 'test_total_loss': 0.837748, 'test_zinb_nll': 0.83135, 'test_mae': 0.499687, 'test_r2': 0.763518, 'test_masked_loss': 0.733625}
+
+  [6/6] ['yEK23b_1_FDDP220013508-1a_HY_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.0825
+
+Clipping outliers using 95th percentile * 1.5...
+k1_combo5: Clipping values above 84.00 (P95=56.00). Clipped 26174/995703 values (2.63%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.720097
+  - ZINB NLL: 0.715005
+Total number of masked values: 1393232
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1393232
+  - Masked Reconstruction: 0.583984
+Mean Absolute Error (MAE): 0.364547
+R² Score: 0.753221
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.749770
+  - ZINB NLL: 0.744003
+Total number of masked values: 493350
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 493350
+  - Masked Reconstruction: 0.661354
+Mean Absolute Error (MAE): 0.416106
+R² Score: 0.355727
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.760117
+  - ZINB NLL: 0.753970
+Total number of masked values: 540607
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 540607
+  - Masked Reconstruction: 0.704933
+Mean Absolute Error (MAE): 0.444727
+R² Score: 0.727903
+==================================================
+
+  Metrics: {'train_total_loss': 0.720097, 'train_zinb_nll': 0.715005, 'train_mae': 0.364547, 'train_r2': 0.753221, 'train_masked_loss': 0.583984, 'val_total_loss': 0.74977, 'val_zinb_nll': 0.744003, 'val_mae': 0.416106, 'val_r2': 0.355727, 'val_masked_loss': 0.661354, 'test_total_loss': 0.760117, 'test_zinb_nll': 0.75397, 'test_mae': 0.444727, 'test_r2': 0.727903, 'test_masked_loss': 0.704933}
+
+============================================================
+k=2: testing 8 combination(s) out of 15 possible
+============================================================
+
+  [1/8] ['yEK23a_23_FDDP220013504-2a_HTWL7DSX2_L4_trimmed_forward_notrimmed.sorted.bam', 'yEK23b_2_FDDP220013509-1a_HY_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.1266
+
+Clipping outliers using 95th percentile * 1.5...
+k2_combo0: Clipping values above 99.00 (P95=66.00). Clipped 39235/1528024 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.007137
+  - ZINB NLL: 0.999907
+Total number of masked values: 1644941
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1644941
+  - Masked Reconstruction: 0.829109
+Mean Absolute Error (MAE): 0.615951
+R² Score: 0.792739
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.034160
+  - ZINB NLL: 1.026337
+Total number of masked values: 580080
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 580080
+  - Masked Reconstruction: 0.897097
+Mean Absolute Error (MAE): 0.664339
+R² Score: 0.714840
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.049617
+  - ZINB NLL: 1.041107
+Total number of masked values: 638040
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 638040
+  - Masked Reconstruction: 0.975835
+Mean Absolute Error (MAE): 0.716671
+R² Score: 0.797507
+==================================================
+
+  Metrics: {'train_total_loss': 1.007137, 'train_zinb_nll': 0.999907, 'train_mae': 0.615951, 'train_r2': 0.792739, 'train_masked_loss': 0.829109, 'val_total_loss': 1.03416, 'val_zinb_nll': 1.026337, 'val_mae': 0.664339, 'val_r2': 0.71484, 'val_masked_loss': 0.897097, 'test_total_loss': 1.049617, 'test_zinb_nll': 1.041107, 'test_mae': 0.716671, 'test_r2': 0.797507, 'test_masked_loss': 0.975835}
+
+  [2/8] ['yEK23a_23_FDDP220013504-2a_HTWL7DSX2_L4_trimmed_forward_notrimmed.sorted.bam', 'yEK23b_1_FDDP220013508-1a_HY_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.1220
+
+Clipping outliers using 95th percentile * 1.5...
+k2_combo1: Clipping values above 91.50 (P95=61.00). Clipped 38715/1473192 values (2.63%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.946878
+  - ZINB NLL: 0.940251
+Total number of masked values: 1601060
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1601060
+  - Masked Reconstruction: 0.759955
+Mean Absolute Error (MAE): 0.547668
+R² Score: 0.789329
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.975194
+  - ZINB NLL: 0.967878
+Total number of masked values: 565058
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 565058
+  - Masked Reconstruction: 0.838964
+Mean Absolute Error (MAE): 0.605548
+R² Score: 0.474724
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.980924
+  - ZINB NLL: 0.973192
+Total number of masked values: 619186
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 619186
+  - Masked Reconstruction: 0.886618
+Mean Absolute Error (MAE): 0.635339
+R² Score: 0.774849
+==================================================
+
+  Metrics: {'train_total_loss': 0.946878, 'train_zinb_nll': 0.940251, 'train_mae': 0.547668, 'train_r2': 0.789329, 'train_masked_loss': 0.759955, 'val_total_loss': 0.975194, 'val_zinb_nll': 0.967878, 'val_mae': 0.605548, 'val_r2': 0.474724, 'val_masked_loss': 0.838964, 'test_total_loss': 0.980924, 'test_zinb_nll': 0.973192, 'test_mae': 0.635339, 'test_r2': 0.774849, 'test_masked_loss': 0.886618}
+
+  [3/8] ['yEK23a_32_FDDP220013506-2a_HW_trimmed_forward_notrimmed.sorted.bam', 'yEK23c_10_FDDP220013511-2a_HWTTJDSX2_L3_trimmed_forward_notrimmed.sorted.bam']
+  Saturation: 0.1352
+
+Clipping outliers using 95th percentile * 1.5...
+k2_combo2: Clipping values above 87.00 (P95=58.00). Clipped 41221/1632225 values (2.53%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7749
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2726
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3016
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.021530
+  - ZINB NLL: 1.014805
+Total number of masked values: 1684434
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 1684434
+  - Masked Reconstruction: 0.771216
+Mean Absolute Error (MAE): 0.587778
+R² Score: 0.798502
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.049330
+  - ZINB NLL: 1.042106
+Total number of masked values: 595119
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 595119
+  - Masked Reconstruction: 0.828455
+Mean Absolute Error (MAE): 0.626414
+R² Score: 0.735999
+==================================================
+
+Applied denoising with 15.0% masking
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.048949
+  - ZINB NLL: 1.041226
+Total number of masked values: 648657
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 648657
+  - Masked Reconstruction: 0.885711
+Mean Absolute Error (MAE): 0.666288
+R² Score: 0.814919
+==================================================
+
+  Metrics: {'train_total_loss': 1.02153, 'train_zinb_nll': 1.014805, 'train_mae': 0.587778, 'train_r2': 0.798502, 'train_masked_loss': 0.771216, 'val_total_loss': 1.04933, 'val_zinb_nll': 1.042106, 'val_mae': 0.626414, 'val_r2': 0.735999, 'val_masked_loss': 0.828455, 'test_total_loss': 1.048949, 'test_zinb_nll': 1.041226, 'test_mae': 0.666288, 'test_r2': 0.814919, 'test_masked_loss': 0.885711}

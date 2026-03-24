@@ -1,0 +1,436 @@
+Running with noise_level=0.15
+Running with mu_offset=0.0
+Device: cuda
+
+Preprocessing with chromosome split:
+  Train chromosomes: ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+  Val chromosomes: ['ChrVIII', 'ChrXIV', 'ChrXV']
+  Test chromosomes: ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 61576
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 21656
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 23960
+
+Dataset sizes after preprocessing:
+  Train: 61576
+  Val: 21656
+  Test: 23960
+  Eval strategy: VALIDATION + TEST
+
+
+Dataset shapes:
+  Train set: (61576, 2000, 4)
+  Val set: (21656, 2000, 4)
+  Test set: (23960, 2000, 4)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 21656
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 21656 samples, 170 batches
+
+Creating test dataloader:
+  Test set size: 23960
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 23960 samples, 188 batches
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Epoch [1/141], Total Loss: 2.1462, NLL: 2.0930, Masked: 6.6419
+Epoch [2/141], Total Loss: 1.8107, NLL: 1.7824, Masked: 3.5435
+Epoch [3/141], Total Loss: 1.5686, NLL: 1.5475, Masked: 2.6345
+Epoch [4/141], Total Loss: 1.5202, NLL: 1.5003, Masked: 2.4979
+Epoch [5/141], Total Loss: 1.4969, NLL: 1.4775, Masked: 2.4214
+Epoch [6/141], Total Loss: 1.4811, NLL: 1.4622, Masked: 2.3596
+Epoch [7/141], Total Loss: 1.4652, NLL: 1.4468, Masked: 2.2927
+Epoch [8/141], Total Loss: 1.4498, NLL: 1.4321, Masked: 2.2123
+Epoch [9/141], Total Loss: 1.4338, NLL: 1.4168, Masked: 2.1291
+Epoch [10/141], Total Loss: 1.4127, NLL: 1.3965, Masked: 2.0246
+Epoch [11/141], Total Loss: 1.3895, NLL: 1.3740, Masked: 1.9347
+Epoch [12/141], Total Loss: 1.3731, NLL: 1.3580, Masked: 1.8886
+Epoch [13/141], Total Loss: 1.3566, NLL: 1.3418, Masked: 1.8491
+Epoch [14/141], Total Loss: 1.3450, NLL: 1.3305, Masked: 1.8138
+Epoch [15/141], Total Loss: 1.3346, NLL: 1.3204, Masked: 1.7737
+Epoch [16/141], Total Loss: 1.3264, NLL: 1.3125, Masked: 1.7413
+Epoch [17/141], Total Loss: 1.3189, NLL: 1.3052, Masked: 1.7097
+Epoch [18/141], Total Loss: 1.3130, NLL: 1.2995, Masked: 1.6866
+Epoch [19/141], Total Loss: 1.3070, NLL: 1.2937, Masked: 1.6659
+Epoch [20/141], Total Loss: 1.3018, NLL: 1.2886, Masked: 1.6475
+Epoch [21/141], Total Loss: 1.2959, NLL: 1.2829, Masked: 1.6232
+Epoch [22/141], Total Loss: 1.2900, NLL: 1.2772, Masked: 1.5998
+Epoch [23/141], Total Loss: 1.2838, NLL: 1.2712, Masked: 1.5785
+Epoch [24/141], Total Loss: 1.2776, NLL: 1.2651, Masked: 1.5562
+Epoch [25/141], Total Loss: 1.2709, NLL: 1.2587, Masked: 1.5351
+Epoch [26/141], Total Loss: 1.2654, NLL: 1.2533, Masked: 1.5210
+Epoch [27/141], Total Loss: 1.2588, NLL: 1.2468, Masked: 1.5020
+Epoch [28/141], Total Loss: 1.2529, NLL: 1.2410, Masked: 1.4854
+Epoch [29/141], Total Loss: 1.2468, NLL: 1.2351, Masked: 1.4674
+Epoch [30/141], Total Loss: 1.2410, NLL: 1.2294, Masked: 1.4503
+Epoch [31/141], Total Loss: 1.2354, NLL: 1.2240, Masked: 1.4335
+Epoch [32/141], Total Loss: 1.2312, NLL: 1.2198, Masked: 1.4222
+Epoch [33/141], Total Loss: 1.2245, NLL: 1.2133, Masked: 1.3995
+Epoch [34/141], Total Loss: 1.2190, NLL: 1.2079, Masked: 1.3832
+Epoch [35/141], Total Loss: 1.2143, NLL: 1.2033, Masked: 1.3697
+Epoch [36/141], Total Loss: 1.2089, NLL: 1.1981, Masked: 1.3522
+Epoch [37/141], Total Loss: 1.2043, NLL: 1.1936, Masked: 1.3373
+Epoch [38/141], Total Loss: 1.2001, NLL: 1.1895, Masked: 1.3244
+Epoch [39/141], Total Loss: 1.1964, NLL: 1.1859, Masked: 1.3133
+Epoch [40/141], Total Loss: 1.1925, NLL: 1.1821, Masked: 1.3019
+Epoch [41/141], Total Loss: 1.1880, NLL: 1.1777, Masked: 1.2860
+Epoch [42/141], Total Loss: 1.1846, NLL: 1.1744, Masked: 1.2767
+Epoch [43/141], Total Loss: 1.1811, NLL: 1.1710, Masked: 1.2656
+Epoch [44/141], Total Loss: 1.1775, NLL: 1.1674, Masked: 1.2544
+Epoch [45/141], Total Loss: 1.1742, NLL: 1.1642, Masked: 1.2443
+Epoch [46/141], Total Loss: 1.1705, NLL: 1.1606, Masked: 1.2330
+Epoch [47/141], Total Loss: 1.1671, NLL: 1.1573, Masked: 1.2217
+Epoch [48/141], Total Loss: 1.1646, NLL: 1.1549, Masked: 1.2133
+Epoch [49/141], Total Loss: 1.1618, NLL: 1.1522, Masked: 1.2048
+Epoch [50/141], Total Loss: 1.1595, NLL: 1.1499, Masked: 1.1981
+Epoch [51/141], Total Loss: 1.1561, NLL: 1.1466, Masked: 1.1862
+Epoch [52/141], Total Loss: 1.1540, NLL: 1.1446, Masked: 1.1796
+Epoch [53/141], Total Loss: 1.1514, NLL: 1.1420, Masked: 1.1723
+Epoch [54/141], Total Loss: 1.1485, NLL: 1.1392, Masked: 1.1634
+Epoch [55/141], Total Loss: 1.1466, NLL: 1.1373, Masked: 1.1572
+Epoch [56/141], Total Loss: 1.1439, NLL: 1.1347, Masked: 1.1484
+Epoch [57/141], Total Loss: 1.1418, NLL: 1.1327, Masked: 1.1421
+Epoch [58/141], Total Loss: 1.1392, NLL: 1.1301, Masked: 1.1338
+Epoch [59/141], Total Loss: 1.1373, NLL: 1.1283, Masked: 1.1280
+Epoch [60/141], Total Loss: 1.1352, NLL: 1.1262, Masked: 1.1209
+Epoch [61/141], Total Loss: 1.1336, NLL: 1.1247, Masked: 1.1165
+Epoch [62/141], Total Loss: 1.1322, NLL: 1.1233, Masked: 1.1120
+Epoch [63/141], Total Loss: 1.1297, NLL: 1.1208, Masked: 1.1030
+Epoch [64/141], Total Loss: 1.1279, NLL: 1.1191, Masked: 1.0960
+Epoch [65/141], Total Loss: 1.1259, NLL: 1.1172, Masked: 1.0891
+Epoch [66/141], Total Loss: 1.1246, NLL: 1.1159, Masked: 1.0864
+Epoch [67/141], Total Loss: 1.1226, NLL: 1.1140, Masked: 1.0799
+Epoch [68/141], Total Loss: 1.1210, NLL: 1.1125, Masked: 1.0746
+Epoch [69/141], Total Loss: 1.1189, NLL: 1.1104, Masked: 1.0677
+Epoch [70/141], Total Loss: 1.1179, NLL: 1.1094, Masked: 1.0651
+Epoch [71/141], Total Loss: 1.1163, NLL: 1.1078, Masked: 1.0593
+Epoch [72/141], Total Loss: 1.1150, NLL: 1.1066, Masked: 1.0542
+Epoch [73/141], Total Loss: 1.1134, NLL: 1.1051, Masked: 1.0488
+Epoch [74/141], Total Loss: 1.1128, NLL: 1.1044, Masked: 1.0479
+Epoch [75/141], Total Loss: 1.1112, NLL: 1.1029, Masked: 1.0415
+Epoch [76/141], Total Loss: 1.1098, NLL: 1.1015, Masked: 1.0367
+Epoch [77/141], Total Loss: 1.1083, NLL: 1.1001, Masked: 1.0317
+Epoch [78/141], Total Loss: 1.1074, NLL: 1.0992, Masked: 1.0287
+Epoch [79/141], Total Loss: 1.1062, NLL: 1.0980, Masked: 1.0238
+Epoch [80/141], Total Loss: 1.1047, NLL: 1.0965, Masked: 1.0185
+Epoch [81/141], Total Loss: 1.1041, NLL: 1.0960, Masked: 1.0176
+Epoch [82/141], Total Loss: 1.1030, NLL: 1.0949, Masked: 1.0129
+Epoch [83/141], Total Loss: 1.1022, NLL: 1.0942, Masked: 1.0108
+Epoch [84/141], Total Loss: 1.1005, NLL: 1.0925, Masked: 1.0051
+Epoch [85/141], Total Loss: 1.0993, NLL: 1.0913, Masked: 1.0012
+Epoch [86/141], Total Loss: 1.0986, NLL: 1.0906, Masked: 0.9987
+Epoch [87/141], Total Loss: 1.0976, NLL: 1.0897, Masked: 0.9957
+Epoch [88/141], Total Loss: 1.0968, NLL: 1.0889, Masked: 0.9929
+Epoch [89/141], Total Loss: 1.0957, NLL: 1.0878, Masked: 0.9882
+Epoch [90/141], Total Loss: 1.0949, NLL: 1.0870, Masked: 0.9855
+Epoch [91/141], Total Loss: 1.0944, NLL: 1.0865, Masked: 0.9846
+Epoch [92/141], Total Loss: 1.0933, NLL: 1.0855, Masked: 0.9798
+Epoch [93/141], Total Loss: 1.0931, NLL: 1.0852, Masked: 0.9797
+Epoch [94/141], Total Loss: 1.0914, NLL: 1.0836, Masked: 0.9734
+Epoch [95/141], Total Loss: 1.0908, NLL: 1.0831, Masked: 0.9713
+Epoch [96/141], Total Loss: 1.0903, NLL: 1.0825, Masked: 0.9697
+Epoch [97/141], Total Loss: 1.0894, NLL: 1.0816, Masked: 0.9662
+Epoch [98/141], Total Loss: 1.0888, NLL: 1.0811, Masked: 0.9636
+Epoch [99/141], Total Loss: 1.0882, NLL: 1.0805, Masked: 0.9614
+Epoch [100/141], Total Loss: 1.0871, NLL: 1.0794, Masked: 0.9577
+Epoch [101/141], Total Loss: 1.0866, NLL: 1.0789, Masked: 0.9565
+Epoch [102/141], Total Loss: 1.0859, NLL: 1.0782, Masked: 0.9540
+Epoch [103/141], Total Loss: 1.0853, NLL: 1.0776, Masked: 0.9513
+Epoch [104/141], Total Loss: 1.0843, NLL: 1.0768, Masked: 0.9483
+Epoch [105/141], Total Loss: 1.0842, NLL: 1.0766, Masked: 0.9483
+Epoch [106/141], Total Loss: 1.0832, NLL: 1.0756, Masked: 0.9441
+Epoch [107/141], Total Loss: 1.0826, NLL: 1.0751, Masked: 0.9421
+Epoch [108/141], Total Loss: 1.0826, NLL: 1.0751, Masked: 0.9422
+Epoch [109/141], Total Loss: 1.0815, NLL: 1.0740, Masked: 0.9374
+Epoch [110/141], Total Loss: 1.0810, NLL: 1.0735, Masked: 0.9361
+Epoch [111/141], Total Loss: 1.0809, NLL: 1.0734, Masked: 0.9357
+Epoch [112/141], Total Loss: 1.0799, NLL: 1.0724, Masked: 0.9311
+Epoch [113/141], Total Loss: 1.0796, NLL: 1.0721, Masked: 0.9308
+Epoch [114/141], Total Loss: 1.0790, NLL: 1.0716, Masked: 0.9280
+Epoch [115/141], Total Loss: 1.0788, NLL: 1.0713, Masked: 0.9284
+Epoch [116/141], Total Loss: 1.0780, NLL: 1.0707, Masked: 0.9242
+Epoch [117/141], Total Loss: 1.0774, NLL: 1.0701, Masked: 0.9228
+Epoch [118/141], Total Loss: 1.0769, NLL: 1.0695, Masked: 0.9201
+Epoch [119/141], Total Loss: 1.0765, NLL: 1.0691, Masked: 0.9185
+Epoch [120/141], Total Loss: 1.0758, NLL: 1.0685, Masked: 0.9160
+Epoch [121/141], Total Loss: 1.0756, NLL: 1.0683, Masked: 0.9162
+Epoch [122/141], Total Loss: 1.0754, NLL: 1.0681, Masked: 0.9150
+Epoch [123/141], Total Loss: 1.0748, NLL: 1.0675, Masked: 0.9124
+Epoch [124/141], Total Loss: 1.0737, NLL: 1.0665, Masked: 0.9094
+Epoch [125/141], Total Loss: 1.0735, NLL: 1.0662, Masked: 0.9086
+Epoch [126/141], Total Loss: 1.0729, NLL: 1.0656, Masked: 0.9071
+Epoch [127/141], Total Loss: 1.0727, NLL: 1.0654, Masked: 0.9071
+Epoch [128/141], Total Loss: 1.0722, NLL: 1.0650, Masked: 0.9051
+Epoch [129/141], Total Loss: 1.0713, NLL: 1.0641, Masked: 0.9011
+Epoch [130/141], Total Loss: 1.0715, NLL: 1.0643, Masked: 0.9020
+Epoch [131/141], Total Loss: 1.0712, NLL: 1.0640, Masked: 0.9014
+Epoch [132/141], Total Loss: 1.0706, NLL: 1.0634, Masked: 0.8985
+Epoch [133/141], Total Loss: 1.0704, NLL: 1.0632, Masked: 0.8975
+Epoch [134/141], Total Loss: 1.0702, NLL: 1.0630, Masked: 0.8967
+Epoch [135/141], Total Loss: 1.0695, NLL: 1.0624, Masked: 0.8945
+Epoch [136/141], Total Loss: 1.0690, NLL: 1.0619, Masked: 0.8928
+Epoch [137/141], Total Loss: 1.0687, NLL: 1.0616, Masked: 0.8910
+Epoch [138/141], Total Loss: 1.0684, NLL: 1.0613, Masked: 0.8898
+Epoch [139/141], Total Loss: 1.0679, NLL: 1.0608, Masked: 0.8874
+Epoch [140/141], Total Loss: 1.0677, NLL: 1.0606, Masked: 0.8871
+Epoch [141/141], Total Loss: 1.0676, NLL: 1.0605, Masked: 0.8874
+Training loss plot saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260323_180805_no_conv_training_losses.png
+Training losses saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260323_180805_no_conv_training_losses.json
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.063152
+  - ZINB NLL: 1.056351
+Total number of masked values: 12573702
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 12573702
+  - Masked Reconstruction: 0.850165
+Mean Absolute Error (MAE): 0.636360
+R² Score: 0.887312
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 0.6364, SD MEAN: 1.5249 
+  R²: 0.8873,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0015, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.0885, Mean μ (non-zeros): 3.3887,  
+ SD μ (zeros): 0.2812, SD μ (non-zeros): 6.2123 
+
+Theta mean: 996.8286, Theta SD: 3221.2524
+Number of masked values: 12573702
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 0.8506, SD MAE: 1.4639
+R²: 0.9110
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.1927
+SD μ (zeros): 0.0000, SD μ (non-zeros): 5.7602
+Theta mean: 985.3568, Theta SD: 3071.8838
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 12573702 masked positions, MAE=0.8506, R²=0.9110
+ZINB metrics saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260323_180811_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 21656
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.105307
+  - ZINB NLL: 1.096836
+Total number of masked values: 4422537
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4422537
+  - Masked Reconstruction: 1.058822
+Mean Absolute Error (MAE): 0.805079
+R² Score: 0.670954
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 0.8051, SD MEAN: 3.0807 
+  R²: 0.6710,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0000, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.0902, Mean μ (non-zeros): 3.5028,  
+ SD μ (zeros): 0.2853, SD μ (non-zeros): 7.5220 
+
+Theta mean: 972.2438, Theta SD: 3163.5198
+Number of masked values: 4422537
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 1.1126, SD MAE: 3.4766
+R²: 0.6781
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.2483
+SD μ (zeros): 0.0000, SD μ (non-zeros): 6.8866
+Theta mean: 944.8674, Theta SD: 2996.9399
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 4422537 masked positions, MAE=1.1126, R²=0.6781
+ZINB metrics saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260323_181114_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/
+
+==================================================
+EVALUATING ON TEST DATA
+Dataset size: 23960
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.121372
+  - ZINB NLL: 1.112385
+Total number of masked values: 4893774
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4893774
+  - Masked Reconstruction: 1.123363
+Mean Absolute Error (MAE): 0.858977
+R² Score: 0.758451
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 0.8590, SD MEAN: 2.9735 
+  R²: 0.7585,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0000, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.0892, Mean μ (non-zeros): 3.6958,  
+ SD μ (zeros): 0.2809, SD μ (non-zeros): 7.6786 
+
+Theta mean: 926.8040, Theta SD: 3035.8669
+Number of masked values: 4893774
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 1.1946, SD MAE: 3.2748
+R²: 0.7761
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.4449
+SD μ (zeros): 0.0000, SD μ (non-zeros): 7.0453
+Theta mean: 912.5034, Theta SD: 2915.5686
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 4893774 masked positions, MAE=1.1946, R²=0.7761
+ZINB metrics saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260323_181313_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/
+
+==================================================
+MODEL SAVED: ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+Location: AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+==================================================
+
+
+Saved reconstruction metadata to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation
+  metadata: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/metadata.json
+
+Reconstructing genomic coordinates...
+Loaded metadata for 21656 windows
+Reconstructed 19505732 unique genomic positions from 21656 windows
+Average overlap per position: 2.22
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_ylic137/ChrXV.csv
+Reconstructed genomic data saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation
+  One CSV per dataset/chromosome with columns:
+  position, reconstruction, mu, pi, theta
+
+Saved reconstruction metadata to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test
+  metadata: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/metadata.json
+
+Reconstructing genomic coordinates...
+Loaded metadata for 23960 windows
+Reconstructed 21587037 unique genomic positions from 23960 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrXII.csv
+Reconstructed genomic data saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test
+  One CSV per dataset/chromosome with columns:
+  position, reconstruction, mu, pi, theta

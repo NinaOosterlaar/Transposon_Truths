@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/AE/test_AE/test_saturation.py", line 423, in <module>
+    run_saturation_test()
+  File "/workspace/AE/test_AE/test_saturation.py", line 348, in run_saturation_test
+    combo_out = prepare_combo_dir(folders_in_combo, strain_dir, combo_name)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/AE/test_AE/test_saturation.py", line 127, in prepare_combo_dir
+    os.link(os.path.join(src_dir, fname), os.path.join(combo_out, fname))
+FileExistsError: [Errno 17] File exists: '/workspace/Data/distances_with_zeros_new/strain_yEK23/yEK23a_23_FDDP220013504-2a_HTWL7DSX2_L4_trimmed_forward_notrimmed.sorted.bam/ChrIII_distances.csv' -> 'Data/temp_saturation/strain_yEK23/k1_combo1/ChrIII_distances.csv'
+srun: error: gpu20: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=12343979.0

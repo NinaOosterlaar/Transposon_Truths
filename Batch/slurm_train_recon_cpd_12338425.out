@@ -1,0 +1,1870 @@
+==========================================
+STEP 2: Reconstructing test_CPD data
+==========================================
+Device: cuda
+Using most recent model: AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+============================================================
+RECONSTRUCTING TEST_CPD DATA
+============================================================
+Model: AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+Test CPD folder: Data/test_CPD
+Output directory: Data/reconstruction_cpd_test
+============================================================
+
+Loading model from AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt...
+Model configuration:
+  seq_length: 2000
+  feature_dim: 2
+  layers: [752]
+  use_conv: False
+  conv_channels: 85
+  pool_size: 8
+  kernel_size: 7
+  padding: same
+  stride: 1
+  dropout: 0.008
+  mu_offset: 0.0
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Model loaded successfully!
+
+Found 31 replicate folders to process:
+  1/yEK23_1
+  1/yEK23_2
+  1/yEK23_3
+  1/yEK23_4
+  1/yEK23_5
+  1/yEK23_6
+  2/yEK23_1
+  2/yEK23_2
+  2/yEK23_3
+  2/yEK23_4
+  2/yEK23_5
+  2/yEK23_6
+  3/yEK23_1
+  3/yEK23_2
+  3/yEK23_3
+  3/yEK23_4
+  3/yEK23_5
+  3/yEK23_6
+  4/yEK23_1
+  4/yEK23_2
+  4/yEK23_3
+  4/yEK23_4
+  4/yEK23_5
+  4/yEK23_6
+  5/yEK23_1
+  5/yEK23_2
+  5/yEK23_3
+  5/yEK23_4
+  5/yEK23_5
+  5/yEK23_6
+  6/yEK23_1
+
+============================================================
+Processing: 1/yEK23_1
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_1: Clipping values above 126.00 (P95=84.00). Clipped 17727/659388 values (2.69%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.586314
+  - ZINB NLL: 0.586314
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.377139
+R² Score: 0.634088
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.5863139088122344, 'zinb_nll': 0.5863139088122344, 'mae': 0.3771391808986664, 'r2': 0.634087860584259, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/1/yEK23_1/yEK23_1/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/1/yEK23_1
+
+============================================================
+Processing: 1/yEK23_2
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_2: Clipping values above 84.00 (P95=56.00). Clipped 28634/1112255 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.742836
+  - ZINB NLL: 0.742836
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.398934
+R² Score: 0.795035
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.7428360998706147, 'zinb_nll': 0.7428360998706147, 'mae': 0.39893361926078796, 'r2': 0.7950345873832703, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/1/yEK23_2/yEK23_2/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/1/yEK23_2
+
+============================================================
+Processing: 1/yEK23_3
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_3: Clipping values above 87.00 (P95=58.00). Clipped 23472/897295 values (2.62%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.645186
+  - ZINB NLL: 0.645186
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.344371
+R² Score: 0.757262
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.6451859563551284, 'zinb_nll': 0.6451859563551284, 'mae': 0.34437108039855957, 'r2': 0.7572617530822754, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/1/yEK23_3/yEK23_3/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/1/yEK23_3
+
+============================================================
+Processing: 1/yEK23_4
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_4: Clipping values above 84.00 (P95=56.00). Clipped 26174/995703 values (2.63%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.671609
+  - ZINB NLL: 0.671609
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.354289
+R² Score: 0.783442
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.6716091025141657, 'zinb_nll': 0.6716091025141657, 'mae': 0.35428935289382935, 'r2': 0.783441960811615, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/1/yEK23_4/yEK23_4/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/1/yEK23_4
+
+============================================================
+Processing: 1/yEK23_5
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_5: Clipping values above 99.00 (P95=66.00). Clipped 27121/1056636 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.747907
+  - ZINB NLL: 0.747907
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.432296
+R² Score: 0.816107
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.7479072599697846, 'zinb_nll': 0.7479072599697846, 'mae': 0.4322959780693054, 'r2': 0.8161070942878723, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/1/yEK23_5/yEK23_5/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/1/yEK23_5
+
+============================================================
+Processing: 1/yEK23_6
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_6: Clipping values above 105.00 (P95=70.00). Clipped 25112/969910 values (2.59%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.738169
+  - ZINB NLL: 0.738169
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.436525
+R² Score: 0.794087
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.7381690340359199, 'zinb_nll': 0.7381690340359199, 'mae': 0.43652480840682983, 'r2': 0.7940865755081177, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/1/yEK23_6/yEK23_6/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/1/yEK23_6
+
+============================================================
+Processing: 2/yEK23_1
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_1: Clipping values above 84.00 (P95=56.00). Clipped 42950/1708581 values (2.51%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.961236
+  - ZINB NLL: 0.961236
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.578149
+R² Score: 0.851575
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.9612357487731198, 'zinb_nll': 0.9612357487731198, 'mae': 0.5781493186950684, 'r2': 0.8515751361846924, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/2/yEK23_1/yEK23_1/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/2/yEK23_1
+
+============================================================
+Processing: 2/yEK23_2
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_2: Clipping values above 94.50 (P95=63.00). Clipped 35754/1384487 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.867050
+  - ZINB NLL: 0.867050
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.542050
+R² Score: 0.824270
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.8670504133517515, 'zinb_nll': 0.8670504133517515, 'mae': 0.5420495271682739, 'r2': 0.8242696523666382, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/2/yEK23_2/yEK23_2/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/2/yEK23_2
+
+============================================================
+Processing: 2/yEK23_3
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_3: Clipping values above 90.00 (P95=60.00). Clipped 40590/1579211 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.939167
+  - ZINB NLL: 0.939167
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.579188
+R² Score: 0.828072
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.9391665977011404, 'zinb_nll': 0.9391665977011404, 'mae': 0.5791880488395691, 'r2': 0.8280723690986633, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/2/yEK23_3/yEK23_3/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/2/yEK23_3
+
+============================================================
+Processing: 2/yEK23_4
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_4: Clipping values above 87.00 (P95=58.00). Clipped 41221/1632225 values (2.53%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.954979
+  - ZINB NLL: 0.954979
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.585504
+R² Score: 0.845235
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.9549791198923069, 'zinb_nll': 0.9549791198923069, 'mae': 0.5855036973953247, 'r2': 0.8452351689338684, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/2/yEK23_4/yEK23_4/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/2/yEK23_4
+
+============================================================
+Processing: 2/yEK23_5
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_5: Clipping values above 103.50 (P95=69.00). Clipped 37025/1448442 values (2.56%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.933028
+  - ZINB NLL: 0.933028
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.618518
+R² Score: 0.830068
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.9330284736594012, 'zinb_nll': 0.9330284736594012, 'mae': 0.6185182929039001, 'r2': 0.8300682306289673, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/2/yEK23_5/yEK23_5/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/2/yEK23_5
+
+============================================================
+Processing: 2/yEK23_6
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_6: Clipping values above 99.00 (P95=66.00). Clipped 39235/1528024 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 0.941057
+  - ZINB NLL: 0.941057
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.608795
+R² Score: 0.836599
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 0.9410565745181954, 'zinb_nll': 0.9410565745181954, 'mae': 0.6087949275970459, 'r2': 0.8365989327430725, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/2/yEK23_6/yEK23_6/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/2/yEK23_6
+
+============================================================
+Processing: 3/yEK23_1
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_1: Clipping values above 84.75 (P95=56.50). Clipped 55535/2165556 values (2.56%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.104713
+  - ZINB NLL: 1.104713
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.724221
+R² Score: 0.848213
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.1047132970130358, 'zinb_nll': 1.1047132970130358, 'mae': 0.7242213487625122, 'r2': 0.8482125997543335, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/3/yEK23_1/yEK23_1/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/3/yEK23_1
+
+============================================================
+Processing: 3/yEK23_2
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_2: Clipping values above 81.75 (P95=54.50). Clipped 52490/2044186 values (2.57%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.053403
+  - ZINB NLL: 1.053403
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.672817
+R² Score: 0.845174
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.0534033895037105, 'zinb_nll': 1.0534033895037105, 'mae': 0.6728172302246094, 'r2': 0.8451743721961975, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/3/yEK23_2/yEK23_2/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/3/yEK23_2
+
+============================================================
+Processing: 3/yEK23_3
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_3: Clipping values above 86.25 (P95=57.50). Clipped 54882/2191249 values (2.50%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.137229
+  - ZINB NLL: 1.137229
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.757053
+R² Score: 0.843755
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.1372293681740377, 'zinb_nll': 1.1372293681740377, 'mae': 0.7570526003837585, 'r2': 0.8437545299530029, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/3/yEK23_3/yEK23_3/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/3/yEK23_3
+
+============================================================
+Processing: 3/yEK23_4
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_4: Clipping values above 84.00 (P95=56.00). Clipped 56370/2255304 values (2.50%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.140079
+  - ZINB NLL: 1.140079
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.748721
+R² Score: 0.846688
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.1400793251666357, 'zinb_nll': 1.1400793251666357, 'mae': 0.7487209439277649, 'r2': 0.8466883897781372, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/3/yEK23_4/yEK23_4/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/3/yEK23_4
+
+============================================================
+Processing: 3/yEK23_5
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_5: Clipping values above 74.25 (P95=49.50). Clipped 61697/2465368 values (2.50%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.157484
+  - ZINB NLL: 1.157484
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.725307
+R² Score: 0.851699
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.1574838278907316, 'zinb_nll': 1.1574838278907316, 'mae': 0.7253074049949646, 'r2': 0.8516988754272461, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/3/yEK23_5/yEK23_5/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/3/yEK23_5
+
+============================================================
+Processing: 3/yEK23_6
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_6: Clipping values above 81.00 (P95=54.00). Clipped 53716/2137449 values (2.51%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.092677
+  - ZINB NLL: 1.092677
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.698008
+R² Score: 0.844126
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.0926773062845925, 'zinb_nll': 1.0926773062845925, 'mae': 0.6980077624320984, 'r2': 0.8441258668899536, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/3/yEK23_6/yEK23_6/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/3/yEK23_6
+
+============================================================
+Processing: 4/yEK23_1
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_1: Clipping values above 74.62 (P95=49.75). Clipped 67034/2673826 values (2.51%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.214561
+  - ZINB NLL: 1.214561
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.802596
+R² Score: 0.845402
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.2145611246056196, 'zinb_nll': 1.2145611246056196, 'mae': 0.8025955557823181, 'r2': 0.8454023599624634, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/4/yEK23_1/yEK23_1/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/4/yEK23_1
+
+============================================================
+Processing: 4/yEK23_2
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_2: Clipping values above 78.00 (P95=52.00). Clipped 66682/2716126 values (2.46%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.244597
+  - ZINB NLL: 1.244597
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.846037
+R² Score: 0.846519
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.2445971373346583, 'zinb_nll': 1.2445971373346583, 'mae': 0.8460366725921631, 'r2': 0.846518874168396, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/4/yEK23_2/yEK23_2/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/4/yEK23_2
+
+============================================================
+Processing: 4/yEK23_3
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_3: Clipping values above 76.50 (P95=51.00). Clipped 69776/2776913 values (2.51%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.251153
+  - ZINB NLL: 1.251153
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.844884
+R² Score: 0.847185
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.2511530687794934, 'zinb_nll': 1.2511530687794934, 'mae': 0.844883918762207, 'r2': 0.8471848964691162, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/4/yEK23_3/yEK23_3/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/4/yEK23_3
+
+============================================================
+Processing: 4/yEK23_4
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_4: Clipping values above 75.00 (P95=50.00). Clipped 70613/2885835 values (2.45%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.283385
+  - ZINB NLL: 1.283385
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.874926
+R² Score: 0.848240
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.2833853497310523, 'zinb_nll': 1.2833853497310523, 'mae': 0.8749256134033203, 'r2': 0.8482401967048645, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/4/yEK23_4/yEK23_4/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/4/yEK23_4
+
+============================================================
+Processing: 4/yEK23_5
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_5: Clipping values above 83.25 (P95=55.50). Clipped 64813/2617840 values (2.48%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.244522
+  - ZINB NLL: 1.244522
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.877684
+R² Score: 0.846592
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.2445223212411167, 'zinb_nll': 1.2445223212411167, 'mae': 0.8776843547821045, 'r2': 0.8465916514396667, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/4/yEK23_5/yEK23_5/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/4/yEK23_5
+
+============================================================
+Processing: 4/yEK23_6
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_6: Clipping values above 82.50 (P95=55.00). Clipped 66362/2681856 values (2.47%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.251902
+  - ZINB NLL: 1.251902
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.876204
+R² Score: 0.847948
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.2519021914675927, 'zinb_nll': 1.2519021914675927, 'mae': 0.8762035369873047, 'r2': 0.8479484915733337, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/4/yEK23_6/yEK23_6/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/4/yEK23_6
+
+============================================================
+Processing: 5/yEK23_1
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_1: Clipping values above 72.50 (P95=48.33). Clipped 78611/3171531 values (2.48%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.333283
+  - ZINB NLL: 1.333283
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.932309
+R² Score: 0.843059
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.333283116011595, 'zinb_nll': 1.333283116011595, 'mae': 0.9323086738586426, 'r2': 0.8430587649345398, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/5/yEK23_1/yEK23_1/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/5/yEK23_1
+
+============================================================
+Processing: 5/yEK23_2
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_2: Clipping values above 76.50 (P95=51.00). Clipped 76916/3084413 values (2.49%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.333620
+  - ZINB NLL: 1.333620
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.959670
+R² Score: 0.843493
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.3336199264097894, 'zinb_nll': 1.3336199264097894, 'mae': 0.9596701264381409, 'r2': 0.8434927463531494, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/5/yEK23_2/yEK23_2/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/5/yEK23_2
+
+============================================================
+Processing: 5/yEK23_3
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_3: Clipping values above 73.50 (P95=49.00). Clipped 77875/3119536 values (2.50%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.331790
+  - ZINB NLL: 1.331790
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.938846
+R² Score: 0.841377
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.3317904398595943, 'zinb_nll': 1.3317904398595943, 'mae': 0.9388458728790283, 'r2': 0.841376543045044, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/5/yEK23_3/yEK23_3/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/5/yEK23_3
+
+============================================================
+Processing: 5/yEK23_4
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_4: Clipping values above 76.50 (P95=51.00). Clipped 77320/3158001 values (2.45%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.356851
+  - ZINB NLL: 1.356851
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.979068
+R² Score: 0.842191
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.356851248164988, 'zinb_nll': 1.356851248164988, 'mae': 0.9790676832199097, 'r2': 0.8421908617019653, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/5/yEK23_4/yEK23_4/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/5/yEK23_4
+
+============================================================
+Processing: 5/yEK23_5
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_5: Clipping values above 75.00 (P95=50.00). Clipped 79699/3213111 values (2.48%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.361654
+  - ZINB NLL: 1.361654
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.976092
+R² Score: 0.842685
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.3616539706702695, 'zinb_nll': 1.3616539706702695, 'mae': 0.9760916233062744, 'r2': 0.8426849842071533, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071049 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrXV.csv
+Saved 948049 positions to Data/reconstruction_cpd_test/5/yEK23_5/yEK23_5/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/5/yEK23_5
+
+============================================================
+Processing: 5/yEK23_6
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_6: Clipping values above 70.50 (P95=47.00). Clipped 81690/3320754 values (2.46%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.364934
+  - ZINB NLL: 1.364934
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 0.959342
+R² Score: 0.842772
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.3649337502306669, 'zinb_nll': 1.3649337502306669, 'mae': 0.9593415260314941, 'r2': 0.8427719473838806, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/5/yEK23_6/yEK23_6/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/5/yEK23_6
+
+============================================================
+Processing: 6/yEK23_1
+============================================================
+
+Clipping outliers using 95th percentile * 1.5...
+yEK23_1: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 7697
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2707
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2995
+Train set: (7697, 2000, 4)
+Val set: (2707, 2000, 4)
+Test set: (2995, 2000, 4)
+Combined dataset size: (13399, 2000, 4)
+Running model inference...
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.426243
+  - ZINB NLL: 1.426243
+Total number of masked values: 0
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 0
+  - Masked Reconstruction: 0.000000
+Mean Absolute Error (MAE): 1.052769
+R² Score: 0.837630
+==================================================
+
+Reconstruction complete. Metrics: {'total_loss': 1.4262426905564758, 'zinb_nll': 1.4262426905564758, 'mae': 1.052768588066101, 'r2': 0.8376302123069763, 'masked_loss': 0.0}
+
+Reconstructing genomic coordinates...
+Loaded metadata for 13399 windows
+Reconstructed 12071051 unique genomic positions from 13399 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrI.csv
+Saved 813168 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrII.csv
+Saved 316603 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrIII.csv
+Saved 1531916 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrIV.csv
+Saved 439871 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrIX.csv
+Saved 576857 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrV.csv
+Saved 270144 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrVI.csv
+Saved 1090923 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrVII.csv
+Saved 562626 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrVIII.csv
+Saved 745734 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrX.csv
+Saved 666799 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrXI.csv
+Saved 1078154 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrXII.csv
+Saved 924414 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrXIII.csv
+Saved 784316 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrXV.csv
+Saved 948050 positions to Data/reconstruction_cpd_test/6/yEK23_1/yEK23_1/ChrXVI.csv
+Saved reconstruction to: Data/reconstruction_cpd_test/6/yEK23_1
+
+============================================================
+ALL RECONSTRUCTIONS COMPLETE
+============================================================
+Output saved to: Data/reconstruction_cpd_test
+Output locations:
+  - Model: AE/results/models/
+  - Reconstructions: Data/reconstruction_cpd_test/
+
