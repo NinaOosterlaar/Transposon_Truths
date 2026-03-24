@@ -1,0 +1,692 @@
+Running with noise_level=0.15
+Running with mu_offset=0.0
+Device: cuda
+
+Preprocessing with chromosome split:
+  Train chromosomes: ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+  Val chromosomes: ['ChrVIII', 'ChrXIV', 'ChrXV']
+  Test chromosomes: ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Mean non-zero value before moving average: 0.2041
+Mean non-zero value after moving average: 0.1597
+Mean non-zero value before moving average: 0.1666
+Mean non-zero value after moving average: 0.1294
+Mean non-zero value before moving average: 0.1981
+Mean non-zero value after moving average: 0.1554
+Mean non-zero value before moving average: 0.1756
+Mean non-zero value after moving average: 0.1360
+Mean non-zero value before moving average: 0.2040
+Mean non-zero value after moving average: 0.1608
+Mean non-zero value before moving average: 0.1800
+Mean non-zero value after moving average: 0.1399
+Mean non-zero value before moving average: 0.1910
+Mean non-zero value after moving average: 0.1453
+Mean non-zero value before moving average: 0.1764
+Mean non-zero value after moving average: 0.1376
+Mean non-zero value before moving average: 0.1845
+Mean non-zero value after moving average: 0.1428
+Mean non-zero value before moving average: 0.5204
+Mean non-zero value after moving average: 0.4935
+Mean non-zero value before moving average: 0.4426
+Mean non-zero value after moving average: 0.4470
+Mean non-zero value before moving average: 0.5236
+Mean non-zero value after moving average: 0.4860
+Mean non-zero value before moving average: 0.4657
+Mean non-zero value after moving average: 0.4614
+Mean non-zero value before moving average: 0.5174
+Mean non-zero value after moving average: 0.4866
+Mean non-zero value before moving average: 0.4767
+Mean non-zero value after moving average: 0.4720
+Mean non-zero value before moving average: 0.5237
+Mean non-zero value after moving average: 0.4840
+Mean non-zero value before moving average: 0.4551
+Mean non-zero value after moving average: 0.4565
+Mean non-zero value before moving average: 0.4904
+Mean non-zero value after moving average: 0.4694
+Mean non-zero value before moving average: 0.2156
+Mean non-zero value after moving average: 0.1712
+Mean non-zero value before moving average: 0.1817
+Mean non-zero value after moving average: 0.1428
+Mean non-zero value before moving average: 0.2132
+Mean non-zero value after moving average: 0.1689
+Mean non-zero value before moving average: 0.1909
+Mean non-zero value after moving average: 0.1493
+Mean non-zero value before moving average: 0.2174
+Mean non-zero value after moving average: 0.1736
+Mean non-zero value before moving average: 0.1953
+Mean non-zero value after moving average: 0.1551
+Mean non-zero value before moving average: 0.2079
+Mean non-zero value after moving average: 0.1602
+Mean non-zero value before moving average: 0.1905
+Mean non-zero value after moving average: 0.1509
+Mean non-zero value before moving average: 0.1985
+Mean non-zero value after moving average: 0.1557
+Mean non-zero value before moving average: 0.2396
+Mean non-zero value after moving average: 0.1890
+Mean non-zero value before moving average: 0.1916
+Mean non-zero value after moving average: 0.1508
+Mean non-zero value before moving average: 0.2281
+Mean non-zero value after moving average: 0.1786
+Mean non-zero value before moving average: 0.2026
+Mean non-zero value after moving average: 0.1583
+Mean non-zero value before moving average: 0.2341
+Mean non-zero value after moving average: 0.1855
+Mean non-zero value before moving average: 0.2077
+Mean non-zero value after moving average: 0.1632
+Mean non-zero value before moving average: 0.2217
+Mean non-zero value after moving average: 0.1705
+Mean non-zero value before moving average: 0.2024
+Mean non-zero value after moving average: 0.1606
+Mean non-zero value before moving average: 0.2113
+Mean non-zero value after moving average: 0.1646
+Mean non-zero value before moving average: 0.4715
+Mean non-zero value after moving average: 0.4062
+Mean non-zero value before moving average: 0.4183
+Mean non-zero value after moving average: 0.3679
+Mean non-zero value before moving average: 0.4701
+Mean non-zero value after moving average: 0.3999
+Mean non-zero value before moving average: 0.4332
+Mean non-zero value after moving average: 0.3754
+Mean non-zero value before moving average: 0.4790
+Mean non-zero value after moving average: 0.4042
+Mean non-zero value before moving average: 0.4324
+Mean non-zero value after moving average: 0.3768
+Mean non-zero value before moving average: 0.4569
+Mean non-zero value after moving average: 0.3868
+Mean non-zero value before moving average: 0.4289
+Mean non-zero value after moving average: 0.3763
+Mean non-zero value before moving average: 0.4521
+Mean non-zero value after moving average: 0.3882
+Mean non-zero value before moving average: 1.1718
+Mean non-zero value after moving average: 1.1546
+Mean non-zero value before moving average: 1.0998
+Mean non-zero value after moving average: 1.0878
+Mean non-zero value before moving average: 1.1563
+Mean non-zero value after moving average: 1.1373
+Mean non-zero value before moving average: 1.1131
+Mean non-zero value after moving average: 1.0986
+Mean non-zero value before moving average: 1.1723
+Mean non-zero value after moving average: 1.1501
+Mean non-zero value before moving average: 1.1107
+Mean non-zero value after moving average: 1.0933
+Mean non-zero value before moving average: 1.1399
+Mean non-zero value after moving average: 1.1230
+Mean non-zero value before moving average: 1.1138
+Mean non-zero value after moving average: 1.1041
+Mean non-zero value before moving average: 1.1243
+Mean non-zero value after moving average: 1.1003
+Mean non-zero value before moving average: 0.6877
+Mean non-zero value after moving average: 0.5998
+Mean non-zero value before moving average: 0.5426
+Mean non-zero value after moving average: 0.4953
+Mean non-zero value before moving average: 0.6467
+Mean non-zero value after moving average: 0.5674
+Mean non-zero value before moving average: 0.5689
+Mean non-zero value after moving average: 0.5089
+Mean non-zero value before moving average: 0.7055
+Mean non-zero value after moving average: 0.6071
+Mean non-zero value before moving average: 0.5751
+Mean non-zero value after moving average: 0.5155
+Mean non-zero value before moving average: 0.6280
+Mean non-zero value after moving average: 0.5491
+Mean non-zero value before moving average: 0.5768
+Mean non-zero value after moving average: 0.5227
+Mean non-zero value before moving average: 0.6024
+Mean non-zero value after moving average: 0.5317
+Mean non-zero value before moving average: 0.4679
+Mean non-zero value after moving average: 0.4056
+Mean non-zero value before moving average: 0.4036
+Mean non-zero value after moving average: 0.3553
+Mean non-zero value before moving average: 0.4579
+Mean non-zero value after moving average: 0.3930
+Mean non-zero value before moving average: 0.4221
+Mean non-zero value after moving average: 0.3686
+Mean non-zero value before moving average: 0.4647
+Mean non-zero value after moving average: 0.3948
+Mean non-zero value before moving average: 0.4273
+Mean non-zero value after moving average: 0.3728
+Mean non-zero value before moving average: 0.4548
+Mean non-zero value after moving average: 0.3862
+Mean non-zero value before moving average: 0.4189
+Mean non-zero value after moving average: 0.3682
+Mean non-zero value before moving average: 0.4391
+Mean non-zero value after moving average: 0.3781
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 61576
+Mean non-zero value before moving average: 0.1903
+Mean non-zero value after moving average: 0.1464
+Mean non-zero value before moving average: 0.1833
+Mean non-zero value after moving average: 0.1387
+Mean non-zero value before moving average: 0.1818
+Mean non-zero value after moving average: 0.1402
+Mean non-zero value before moving average: 0.4938
+Mean non-zero value after moving average: 0.4684
+Mean non-zero value before moving average: 0.4842
+Mean non-zero value after moving average: 0.4665
+Mean non-zero value before moving average: 0.4976
+Mean non-zero value after moving average: 0.4738
+Mean non-zero value before moving average: 0.2054
+Mean non-zero value after moving average: 0.1599
+Mean non-zero value before moving average: 0.1980
+Mean non-zero value after moving average: 0.1522
+Mean non-zero value before moving average: 0.1978
+Mean non-zero value after moving average: 0.1550
+Mean non-zero value before moving average: 0.2195
+Mean non-zero value after moving average: 0.1710
+Mean non-zero value before moving average: 0.2127
+Mean non-zero value after moving average: 0.1632
+Mean non-zero value before moving average: 0.2106
+Mean non-zero value after moving average: 0.1646
+Mean non-zero value before moving average: 0.4564
+Mean non-zero value after moving average: 0.3899
+Mean non-zero value before moving average: 0.4432
+Mean non-zero value after moving average: 0.3796
+Mean non-zero value before moving average: 0.4637
+Mean non-zero value after moving average: 0.3883
+Mean non-zero value before moving average: 1.1402
+Mean non-zero value after moving average: 1.1234
+Mean non-zero value before moving average: 1.1240
+Mean non-zero value after moving average: 1.1092
+Mean non-zero value before moving average: 1.1989
+Mean non-zero value after moving average: 1.1123
+Mean non-zero value before moving average: 0.6265
+Mean non-zero value after moving average: 0.5504
+Mean non-zero value before moving average: 0.6013
+Mean non-zero value after moving average: 0.5317
+Mean non-zero value before moving average: 0.6244
+Mean non-zero value after moving average: 0.5269
+Mean non-zero value before moving average: 0.4464
+Mean non-zero value after moving average: 0.3826
+Mean non-zero value before moving average: 0.4322
+Mean non-zero value after moving average: 0.3719
+Mean non-zero value before moving average: 0.4483
+Mean non-zero value after moving average: 0.3763
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 21656
+Mean non-zero value before moving average: 0.1852
+Mean non-zero value after moving average: 0.1431
+Mean non-zero value before moving average: 0.2098
+Mean non-zero value after moving average: 0.1642
+Mean non-zero value before moving average: 0.1935
+Mean non-zero value after moving average: 0.1511
+Mean non-zero value before moving average: 0.1840
+Mean non-zero value after moving average: 0.1353
+Mean non-zero value before moving average: 0.4970
+Mean non-zero value after moving average: 0.4732
+Mean non-zero value before moving average: 0.5029
+Mean non-zero value after moving average: 0.4738
+Mean non-zero value before moving average: 0.4928
+Mean non-zero value after moving average: 0.4756
+Mean non-zero value before moving average: 0.5094
+Mean non-zero value after moving average: 0.4538
+Mean non-zero value before moving average: 0.2017
+Mean non-zero value after moving average: 0.1581
+Mean non-zero value before moving average: 0.2195
+Mean non-zero value after moving average: 0.1751
+Mean non-zero value before moving average: 0.2066
+Mean non-zero value after moving average: 0.1635
+Mean non-zero value before moving average: 0.1914
+Mean non-zero value after moving average: 0.1455
+Mean non-zero value before moving average: 0.2149
+Mean non-zero value after moving average: 0.1672
+Mean non-zero value before moving average: 0.2404
+Mean non-zero value after moving average: 0.1889
+Mean non-zero value before moving average: 0.2211
+Mean non-zero value after moving average: 0.1735
+Mean non-zero value before moving average: 0.2147
+Mean non-zero value after moving average: 0.1599
+Mean non-zero value before moving average: 0.4565
+Mean non-zero value after moving average: 0.3878
+Mean non-zero value before moving average: 0.4674
+Mean non-zero value after moving average: 0.4001
+Mean non-zero value before moving average: 0.4581
+Mean non-zero value after moving average: 0.3917
+Mean non-zero value before moving average: 0.4809
+Mean non-zero value after moving average: 0.3756
+Mean non-zero value before moving average: 1.1439
+Mean non-zero value after moving average: 1.1112
+Mean non-zero value before moving average: 1.1980
+Mean non-zero value after moving average: 1.1577
+Mean non-zero value before moving average: 1.1623
+Mean non-zero value after moving average: 1.1262
+Mean non-zero value before moving average: 1.2007
+Mean non-zero value after moving average: 1.0964
+Mean non-zero value before moving average: 0.6057
+Mean non-zero value after moving average: 0.5298
+Mean non-zero value before moving average: 0.6801
+Mean non-zero value after moving average: 0.5850
+Mean non-zero value before moving average: 0.6508
+Mean non-zero value after moving average: 0.5633
+Mean non-zero value before moving average: 0.6400
+Mean non-zero value after moving average: 0.5075
+Mean non-zero value before moving average: 0.4454
+Mean non-zero value after moving average: 0.3800
+Mean non-zero value before moving average: 0.4641
+Mean non-zero value after moving average: 0.4017
+Mean non-zero value before moving average: 0.4505
+Mean non-zero value after moving average: 0.3835
+Mean non-zero value before moving average: 0.4727
+Mean non-zero value after moving average: 0.3669
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 23960
+
+Dataset sizes after preprocessing:
+  Train: 61576
+  Val: 21656
+  Test: 23960
+  Eval strategy: VALIDATION + TEST
+
+
+Dataset shapes:
+  Train set: (61576, 2000, 4)
+  Val set: (21656, 2000, 4)
+  Test set: (23960, 2000, 4)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 21656
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 21656 samples, 170 batches
+
+Creating test dataloader:
+  Test set size: 23960
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 23960 samples, 188 batches
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Epoch [1/141], Total Loss: 2.0894, NLL: 2.0397, Masked: 6.2102
+Epoch [2/141], Total Loss: 1.8436, NLL: 1.8126, Masked: 3.8788
+Epoch [3/141], Total Loss: 1.5968, NLL: 1.5758, Masked: 2.6247
+Epoch [4/141], Total Loss: 1.5401, NLL: 1.5201, Masked: 2.4959
+Epoch [5/141], Total Loss: 1.5111, NLL: 1.4917, Masked: 2.4266
+Epoch [6/141], Total Loss: 1.4887, NLL: 1.4698, Masked: 2.3580
+Epoch [7/141], Total Loss: 1.4567, NLL: 1.4387, Masked: 2.2486
+Epoch [8/141], Total Loss: 1.4256, NLL: 1.4085, Masked: 2.1418
+Epoch [9/141], Total Loss: 1.4007, NLL: 1.3843, Masked: 2.0584
+Epoch [10/141], Total Loss: 1.3839, NLL: 1.3678, Masked: 2.0057
+Epoch [11/141], Total Loss: 1.3739, NLL: 1.3582, Masked: 1.9700
+Epoch [12/141], Total Loss: 1.3648, NLL: 1.3493, Masked: 1.9332
+Epoch [13/141], Total Loss: 1.3571, NLL: 1.3419, Masked: 1.9027
+Epoch [14/141], Total Loss: 1.3440, NLL: 1.3291, Masked: 1.8546
+Epoch [15/141], Total Loss: 1.3347, NLL: 1.3201, Masked: 1.8242
+Epoch [16/141], Total Loss: 1.3273, NLL: 1.3129, Masked: 1.8014
+Epoch [17/141], Total Loss: 1.3167, NLL: 1.3026, Masked: 1.7668
+Epoch [18/141], Total Loss: 1.3091, NLL: 1.2952, Masked: 1.7437
+Epoch [19/141], Total Loss: 1.3026, NLL: 1.2888, Masked: 1.7241
+Epoch [20/141], Total Loss: 1.2951, NLL: 1.2815, Masked: 1.7000
+Epoch [21/141], Total Loss: 1.2894, NLL: 1.2759, Masked: 1.6830
+Epoch [22/141], Total Loss: 1.2837, NLL: 1.2704, Masked: 1.6645
+Epoch [23/141], Total Loss: 1.2798, NLL: 1.2665, Masked: 1.6541
+Epoch [24/141], Total Loss: 1.2741, NLL: 1.2610, Masked: 1.6368
+Epoch [25/141], Total Loss: 1.2698, NLL: 1.2568, Masked: 1.6222
+Epoch [26/141], Total Loss: 1.2655, NLL: 1.2526, Masked: 1.6088
+Epoch [27/141], Total Loss: 1.2616, NLL: 1.2488, Masked: 1.5951
+Epoch [28/141], Total Loss: 1.2581, NLL: 1.2454, Masked: 1.5841
+Epoch [29/141], Total Loss: 1.2544, NLL: 1.2418, Masked: 1.5727
+Epoch [30/141], Total Loss: 1.2510, NLL: 1.2385, Masked: 1.5620
+Epoch [31/141], Total Loss: 1.2479, NLL: 1.2355, Masked: 1.5515
+Epoch [32/141], Total Loss: 1.2466, NLL: 1.2342, Masked: 1.5478
+Epoch [33/141], Total Loss: 1.2432, NLL: 1.2309, Masked: 1.5360
+Epoch [34/141], Total Loss: 1.2392, NLL: 1.2270, Masked: 1.5204
+Epoch [35/141], Total Loss: 1.2368, NLL: 1.2247, Masked: 1.5120
+Epoch [36/141], Total Loss: 1.2350, NLL: 1.2230, Masked: 1.5065
+Epoch [37/141], Total Loss: 1.2322, NLL: 1.2203, Masked: 1.4964
+Epoch [38/141], Total Loss: 1.2295, NLL: 1.2176, Masked: 1.4857
+Epoch [39/141], Total Loss: 1.2277, NLL: 1.2159, Masked: 1.4812
+Epoch [40/141], Total Loss: 1.2258, NLL: 1.2140, Masked: 1.4728
+Epoch [41/141], Total Loss: 1.2236, NLL: 1.2119, Masked: 1.4647
+Epoch [42/141], Total Loss: 1.2216, NLL: 1.2100, Masked: 1.4569
+Epoch [43/141], Total Loss: 1.2200, NLL: 1.2084, Masked: 1.4499
+Epoch [44/141], Total Loss: 1.2183, NLL: 1.2067, Masked: 1.4445
+Epoch [45/141], Total Loss: 1.2165, NLL: 1.2050, Masked: 1.4379
+Epoch [46/141], Total Loss: 1.2150, NLL: 1.2035, Masked: 1.4320
+Epoch [47/141], Total Loss: 1.2135, NLL: 1.2021, Masked: 1.4256
+Epoch [48/141], Total Loss: 1.2120, NLL: 1.2006, Masked: 1.4203
+Epoch [49/141], Total Loss: 1.2104, NLL: 1.1991, Masked: 1.4134
+Epoch [50/141], Total Loss: 1.2088, NLL: 1.1976, Masked: 1.4071
+Epoch [51/141], Total Loss: 1.2071, NLL: 1.1959, Masked: 1.4003
+Epoch [52/141], Total Loss: 1.2070, NLL: 1.1957, Masked: 1.4011
+Epoch [53/141], Total Loss: 1.2049, NLL: 1.1938, Masked: 1.3932
+Epoch [54/141], Total Loss: 1.2034, NLL: 1.1923, Masked: 1.3858
+Epoch [55/141], Total Loss: 1.2022, NLL: 1.1911, Masked: 1.3795
+Epoch [56/141], Total Loss: 1.2012, NLL: 1.1902, Masked: 1.3764
+Epoch [57/141], Total Loss: 1.2004, NLL: 1.1894, Masked: 1.3734
+Epoch [58/141], Total Loss: 1.1990, NLL: 1.1881, Masked: 1.3665
+Epoch [59/141], Total Loss: 1.1982, NLL: 1.1873, Masked: 1.3636
+Epoch [60/141], Total Loss: 1.1977, NLL: 1.1868, Masked: 1.3630
+Epoch [61/141], Total Loss: 1.1953, NLL: 1.1845, Masked: 1.3522
+Epoch [62/141], Total Loss: 1.1945, NLL: 1.1837, Masked: 1.3480
+Epoch [63/141], Total Loss: 1.1937, NLL: 1.1830, Masked: 1.3462
+Epoch [64/141], Total Loss: 1.1934, NLL: 1.1826, Masked: 1.3462
+Epoch [65/141], Total Loss: 1.1914, NLL: 1.1807, Masked: 1.3357
+Epoch [66/141], Total Loss: 1.1910, NLL: 1.1803, Masked: 1.3338
+Epoch [67/141], Total Loss: 1.1897, NLL: 1.1791, Masked: 1.3272
+Epoch [68/141], Total Loss: 1.1892, NLL: 1.1786, Masked: 1.3276
+Epoch [69/141], Total Loss: 1.1885, NLL: 1.1779, Masked: 1.3244
+Epoch [70/141], Total Loss: 1.1874, NLL: 1.1769, Masked: 1.3201
+Epoch [71/141], Total Loss: 1.1871, NLL: 1.1766, Masked: 1.3194
+Epoch [72/141], Total Loss: 1.1854, NLL: 1.1749, Masked: 1.3104
+Epoch [73/141], Total Loss: 1.1849, NLL: 1.1744, Masked: 1.3082
+Epoch [74/141], Total Loss: 1.1837, NLL: 1.1733, Masked: 1.3028
+Epoch [75/141], Total Loss: 1.1834, NLL: 1.1729, Masked: 1.3010
+Epoch [76/141], Total Loss: 1.1829, NLL: 1.1725, Masked: 1.2989
+Epoch [77/141], Total Loss: 1.1821, NLL: 1.1718, Masked: 1.2956
+Epoch [78/141], Total Loss: 1.1813, NLL: 1.1710, Masked: 1.2913
+Epoch [79/141], Total Loss: 1.1804, NLL: 1.1701, Masked: 1.2871
+Epoch [80/141], Total Loss: 1.1798, NLL: 1.1695, Masked: 1.2855
+Epoch [81/141], Total Loss: 1.1792, NLL: 1.1690, Masked: 1.2828
+Epoch [82/141], Total Loss: 1.1787, NLL: 1.1685, Masked: 1.2817
+Epoch [83/141], Total Loss: 1.1774, NLL: 1.1672, Masked: 1.2757
+Epoch [84/141], Total Loss: 1.1770, NLL: 1.1668, Masked: 1.2728
+Epoch [85/141], Total Loss: 1.1771, NLL: 1.1669, Masked: 1.2749
+Epoch [86/141], Total Loss: 1.1761, NLL: 1.1659, Masked: 1.2692
+Epoch [87/141], Total Loss: 1.1747, NLL: 1.1646, Masked: 1.2627
+Epoch [88/141], Total Loss: 1.1742, NLL: 1.1641, Masked: 1.2595
+Epoch [89/141], Total Loss: 1.1743, NLL: 1.1642, Masked: 1.2607
+Epoch [90/141], Total Loss: 1.1735, NLL: 1.1634, Masked: 1.2576
+Epoch [91/141], Total Loss: 1.1735, NLL: 1.1635, Masked: 1.2583
+Epoch [92/141], Total Loss: 1.1723, NLL: 1.1623, Masked: 1.2506
+Epoch [93/141], Total Loss: 1.1726, NLL: 1.1626, Masked: 1.2532
+Epoch [94/141], Total Loss: 1.1713, NLL: 1.1614, Masked: 1.2460
+Epoch [95/141], Total Loss: 1.1712, NLL: 1.1613, Masked: 1.2469
+Epoch [96/141], Total Loss: 1.1698, NLL: 1.1599, Masked: 1.2388
+Epoch [97/141], Total Loss: 1.1706, NLL: 1.1606, Masked: 1.2450
+Epoch [98/141], Total Loss: 1.1686, NLL: 1.1587, Masked: 1.2357
+Epoch [99/141], Total Loss: 1.1678, NLL: 1.1579, Masked: 1.2315
+Epoch [100/141], Total Loss: 1.1678, NLL: 1.1580, Masked: 1.2335
+Epoch [101/141], Total Loss: 1.1668, NLL: 1.1570, Masked: 1.2274
+Epoch [102/141], Total Loss: 1.1666, NLL: 1.1568, Masked: 1.2260
+Epoch [103/141], Total Loss: 1.1666, NLL: 1.1567, Masked: 1.2263
+Epoch [104/141], Total Loss: 1.1662, NLL: 1.1564, Masked: 1.2248
+Epoch [105/141], Total Loss: 1.1652, NLL: 1.1554, Masked: 1.2193
+Epoch [106/141], Total Loss: 1.1649, NLL: 1.1552, Masked: 1.2187
+Epoch [107/141], Total Loss: 1.1642, NLL: 1.1545, Masked: 1.2152
+Epoch [108/141], Total Loss: 1.1645, NLL: 1.1548, Masked: 1.2168
+Epoch [109/141], Total Loss: 1.1634, NLL: 1.1537, Masked: 1.2118
+Epoch [110/141], Total Loss: 1.1631, NLL: 1.1534, Masked: 1.2093
+Epoch [111/141], Total Loss: 1.1625, NLL: 1.1529, Masked: 1.2068
+Epoch [112/141], Total Loss: 1.1624, NLL: 1.1527, Masked: 1.2070
+Epoch [113/141], Total Loss: 1.1618, NLL: 1.1522, Masked: 1.2036
+Epoch [114/141], Total Loss: 1.1614, NLL: 1.1518, Masked: 1.2006
+Epoch [115/141], Total Loss: 1.1612, NLL: 1.1516, Masked: 1.1998
+Epoch [116/141], Total Loss: 1.1609, NLL: 1.1513, Masked: 1.1991
+Epoch [117/141], Total Loss: 1.1601, NLL: 1.1505, Masked: 1.1958
+Epoch [118/141], Total Loss: 1.1603, NLL: 1.1507, Masked: 1.1968
+Epoch [119/141], Total Loss: 1.1596, NLL: 1.1500, Masked: 1.1935
+Epoch [120/141], Total Loss: 1.1599, NLL: 1.1503, Masked: 1.1942
+Epoch [121/141], Total Loss: 1.1587, NLL: 1.1492, Masked: 1.1890
+Epoch [122/141], Total Loss: 1.1583, NLL: 1.1488, Masked: 1.1873
+Epoch [123/141], Total Loss: 1.1574, NLL: 1.1479, Masked: 1.1823
+Epoch [124/141], Total Loss: 1.1585, NLL: 1.1490, Masked: 1.1889
+Epoch [125/141], Total Loss: 1.1568, NLL: 1.1473, Masked: 1.1794
+Epoch [126/141], Total Loss: 1.1569, NLL: 1.1475, Masked: 1.1803
+Epoch [127/141], Total Loss: 1.1565, NLL: 1.1470, Masked: 1.1782
+Epoch [128/141], Total Loss: 1.1561, NLL: 1.1467, Masked: 1.1771
+Epoch [129/141], Total Loss: 1.1558, NLL: 1.1464, Masked: 1.1759
+Epoch [130/141], Total Loss: 1.1552, NLL: 1.1458, Masked: 1.1714
+Epoch [131/141], Total Loss: 1.1555, NLL: 1.1461, Masked: 1.1736
+Epoch [132/141], Total Loss: 1.1546, NLL: 1.1453, Masked: 1.1696
+Epoch [133/141], Total Loss: 1.1547, NLL: 1.1454, Masked: 1.1693
+Epoch [134/141], Total Loss: 1.1543, NLL: 1.1449, Masked: 1.1681
+Epoch [135/141], Total Loss: 1.1539, NLL: 1.1445, Masked: 1.1662
+Epoch [136/141], Total Loss: 1.1533, NLL: 1.1440, Masked: 1.1635
+Epoch [137/141], Total Loss: 1.1531, NLL: 1.1438, Masked: 1.1622
+Epoch [138/141], Total Loss: 1.1527, NLL: 1.1434, Masked: 1.1602
+Epoch [139/141], Total Loss: 1.1528, NLL: 1.1436, Masked: 1.1613
+Epoch [140/141], Total Loss: 1.1526, NLL: 1.1434, Masked: 1.1597
+Epoch [141/141], Total Loss: 1.1523, NLL: 1.1430, Masked: 1.1581
+Training loss plot saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260324_114146_no_conv_training_losses.png
+Training losses saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260324_114146_no_conv_training_losses.json
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.148390
+  - ZINB NLL: 1.139396
+Total number of masked values: 12573702
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 12573702
+  - Masked Reconstruction: 1.124210
+Mean Absolute Error (MAE): 0.834239
+R² Score: 0.835726
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 0.8342, SD MEAN: 1.8122 
+  R²: 0.8357,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0008, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.1024, Mean μ (non-zeros): 3.2959,  
+ SD μ (zeros): 0.4538, SD μ (non-zeros): 5.5236 
+
+Theta mean: 75.7251, Theta SD: 694.1395
+Number of masked values: 12573702
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 1.1250, SD MAE: 1.9153
+R²: 0.8473
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.1030
+SD μ (zeros): 0.0000, SD μ (non-zeros): 5.2531
+Theta mean: 36.6133, Theta SD: 237.7122
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 12573702 masked positions, MAE=1.1250, R²=0.8473
+ZINB metrics saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260324_114152_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/training/mu_offset0.0_noise0.150/
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 21656
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.235617
+  - ZINB NLL: 1.222851
+Total number of masked values: 4422537
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4422537
+  - Masked Reconstruction: 1.595680
+Mean Absolute Error (MAE): 1.194988
+R² Score: 0.613221
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 1.1950, SD MEAN: 3.2388 
+  R²: 0.6132,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0000, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.1259, Mean μ (non-zeros): 3.2608,  
+ SD μ (zeros): 0.6508, SD μ (non-zeros): 5.4656 
+
+Theta mean: 71.2410, Theta SD: 642.7907
+Number of masked values: 4422537
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 1.6719, SD MAE: 3.7704
+R²: 0.5910
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.0099
+SD μ (zeros): 0.0000, SD μ (non-zeros): 5.0380
+Theta mean: 35.0000, Theta SD: 227.6557
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 4422537 masked positions, MAE=1.6719, R²=0.5910
+ZINB metrics saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260324_114525_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/
+
+==================================================
+EVALUATING ON TEST DATA
+Dataset size: 23960
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.247275
+  - ZINB NLL: 1.233713
+Total number of masked values: 4893774
+  - Number of values with pi >= 0.7: 0
+  - Number of values with pi < 0.7: 4893774
+  - Masked Reconstruction: 1.695249
+Mean Absolute Error (MAE): 1.275002
+R² Score: 0.635968
+==================================================
+
+Using raw counts for evaluation metrics.
+MAE: 1.2750, SD MEAN: 3.5793 
+  R²: 0.6360,
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000,  
+ SD π (zeros): 0.0001, SD π (non-zeros): 0.0000 
+
+Mean μ (zeros): 0.1306, Mean μ (non-zeros): 3.4610,  
+ SD μ (zeros): 0.6765, SD μ (non-zeros): 5.8689 
+
+Theta mean: 64.5500, Theta SD: 584.7467
+Number of masked values: 4893774
+
+============================================================
+MASKED VALUES PERFORMANCE METRICS
+============================================================
+MAE: 1.7909, SD MAE: 4.2360
+R²: 0.6092
+Mean π (zeros): 0.0000, Mean π (non-zeros): 0.0000
+SD π (zeros): 0.0000, SD π (non-zeros): 0.0000
+Mean μ (zeros): 0.0000, Mean μ (non-zeros): 3.1993
+SD μ (zeros): 0.0000, SD μ (non-zeros): 5.4432
+Theta mean: 33.5505, Theta SD: 212.9757
+============================================================
+
+Computing baseline predictions using neighborhood mean/median of reconstructed values...
+Baseline comparison completed and saved.
+Note: Baseline uses mean/median of model's reconstructed values from neighbors
+      Comparing baseline predictions to actual raw values at masked positions
+      Model reference line shows model performance vs actual values
+Masked values analysis: 4893774 masked positions, MAE=1.7909, R²=0.6092
+ZINB metrics saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/mu_offset0.0_noise0.150_ZINBAE_20260324_114642_no_conv_test_metrics.json
+ZINB-specific plots saved to /workspace/AE/results/testing/mu_offset0.0_noise0.150/
+
+==================================================
+MODEL SAVED: ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+Location: AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt
+==================================================
+
+
+Saved reconstruction metadata to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation
+  metadata: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/metadata.json
+
+Reconstructing genomic coordinates...
+Loaded metadata for 21656 windows
+Reconstructed 19505732 unique genomic positions from 21656 windows
+Average overlap per position: 2.22
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_FD/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_FD/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_FD/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_dnrp/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_dnrp/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_dnrp/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK19/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK19/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK19/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK23/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK23/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yEK23/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yTW001/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yTW001/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yTW001/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT03a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT03a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT03a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT04a/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT04a/ChrXIV.csv
+Saved 1091274 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_yWT04a/ChrXV.csv
+Saved 562626 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_ylic137/ChrVIII.csv
+Saved 784316 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_ylic137/ChrXIV.csv
+Saved 1091275 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation/strain_ylic137/ChrXV.csv
+Reconstructed genomic data saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/validation
+  One CSV per dataset/chromosome with columns:
+  position, reconstruction, mu, pi, theta
+
+Saved reconstruction metadata to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test
+  metadata: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/metadata.json
+
+Reconstructing genomic coordinates...
+Loaded metadata for 23960 windows
+Reconstructed 21587037 unique genomic positions from 23960 windows
+Average overlap per position: 2.22
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrV.csv
+Saved 1078155 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_FD/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_dnrp/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK19/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yEK23/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrI.csv
+Saved 813168 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yTW001/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT03a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_yWT04a/ChrXII.csv
+Saved 230201 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrI.csv
+Saved 813167 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrII.csv
+Saved 576857 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrV.csv
+Saved 1078154 positions to Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test/strain_ylic137/ChrXII.csv
+Reconstructed genomic data saved to: Data/reconstruction/ZINBAE_layers752_ep141_noise0.150_muoff0.000/test
+  One CSV per dataset/chromosome with columns:
+  position, reconstruction, mu, pi, theta

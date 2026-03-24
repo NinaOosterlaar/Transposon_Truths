@@ -60,7 +60,7 @@ os.environ['NUMPY_MMAP_MODE'] = 'c'  # Copy mode instead of mmap
 # Preprocessing hyperparameters - CATEGORICAL
 # Note: Encode features as strings to avoid skopt Categorical distance calculation issues
 FEATURES_OPTIONS = ["Centr_Nucl", "Centr", "Nucl"]  # Will be decoded to lists later
-MOVING_AVERAGE_OPTIONS = [False]
+MOVING_AVERAGE_OPTIONS = [False, True]
 
 # Convolutional Layer hyperparameters
 USE_CONV_OPTIONS = [True, False]
