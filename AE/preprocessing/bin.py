@@ -118,21 +118,41 @@ def sliding_window(data, window_size, step_size, moving_average=False):
     current_window = 0
     length = len(data)
     windows = []
+    
+    # Print mean non-zero value before moving average if moving_average is enabled
+    if moving_average:
+        # Handle 1D or 2D arrays
+        if data.ndim == 1:
+            non_zero_values = data[data != 0]
+        else:
+            # Column 1 is the Value column (column 0 is Position in dataframes)
+            value_col_idx = 1 if data.shape[1] > 1 else 0
+            non_zero_values = data[:, value_col_idx][data[:, value_col_idx] != 0]
+        mean_non_zero_before = np.mean(non_zero_values) if len(non_zero_values) > 0 else 0
+        print(f"Mean non-zero value before moving average: {mean_non_zero_before:.4f}")
 
     def _moving_average_window(window_data):
         """Compute moving-average output while preserving input dimensionality.
 
-        - 2D input: per-feature vector where column 0 uses non-zero average
-          and remaining columns use standard mean.
+        For 2D input from DataFrames with structure [Position, Value, features...]:
+        - Column 0 (Position): standard mean
+        - Column 1 (Value): non-zero average
+        - Remaining columns: standard mean
         """
         num_features = window_data.shape[1]
         averaged = np.zeros(num_features, dtype=np.float32)
 
-        main_signal = window_data[:, 0]
-        averaged[0] = np.mean(main_signal[main_signal != 0]) if np.any(main_signal != 0) else 0
-
+        # Standard mean for position (column 0)
+        averaged[0] = np.mean(window_data[:, 0])
+        
         if num_features > 1:
-            averaged[1:] = np.mean(window_data[:, 1:], axis=0)
+            # Non-zero average for Value column (column 1)
+            value_signal = window_data[:, 1]
+            averaged[1] = np.mean(value_signal[value_signal != 0]) if np.any(value_signal != 0) else 0
+            
+            # Standard mean for remaining features (columns 2+)
+            if num_features > 2:
+                averaged[2:] = np.mean(window_data[:, 2:], axis=0)
 
         return averaged
 
@@ -150,6 +170,20 @@ def sliding_window(data, window_size, step_size, moving_average=False):
             # window_data = np.mean(window_data, axis=0)
             window_data = _moving_average_window(window_data)
         windows.append(window_data)
+    
+    # Print mean non-zero value after moving average if moving_average is enabled
+    if moving_average:
+        windows_array = np.array(windows)
+        # Handle 1D or 2D result arrays
+        if windows_array.ndim == 1:
+            non_zero_values_after = windows_array[windows_array != 0]
+        else:
+            # Column 1 is the Value column (column 0 is Position in dataframes)
+            value_col_idx = 1 if windows_array.shape[1] > 1 else 0
+            non_zero_values_after = windows_array[:, value_col_idx][windows_array[:, value_col_idx] != 0]
+        mean_non_zero_after = np.mean(non_zero_values_after) if len(non_zero_values_after) > 0 else 0
+        print(f"Mean non-zero value after moving average: {mean_non_zero_after:.4f}")
+    
     return windows
 
 def saturation_against_bin_size(data, bin_sizes, plot = True):

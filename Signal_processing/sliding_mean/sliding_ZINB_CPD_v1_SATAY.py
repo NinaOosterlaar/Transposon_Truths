@@ -163,41 +163,6 @@ def sliding_ZINB_CPD_v3(
     return change_points, scores
 
 
-def apply_threshold_to_scores(scores, threshold, window_size, overlap, step_size):
-    """
-    Apply a threshold to pre-computed LRT scores to identify change points.
-    
-    This function allows applying multiple thresholds to the same set of scores
-    without re-computing the statistical test.
-    
-    Args:
-        scores: List of LRT scores from sliding_ZINB_CPD_v3
-        threshold: LRT score threshold for detecting change points
-        window_size: Size of sliding window (used for minimum distance between CPs)
-        overlap: Overlap fraction between windows (0 to 1)
-        step_size: Step size between windows
-        
-    Returns:
-        change_points: List of detected change point positions
-    """
-    change_points = []
-    last_cp, last_score = -np.inf, 0.0
-    
-    for idx, score in enumerate(scores):
-        if score > threshold:
-            start = idx * step_size
-            cp = start + window_size
-            
-            if (cp - last_cp) >= window_size:
-                change_points.append(cp)
-                last_cp, last_score = cp, score
-            elif score > last_score:
-                change_points[-1] = cp
-                last_cp, last_score = cp, score
-    
-    return change_points
-
-
 def initialize_theta_global(data, eps=1e-10, theta_max=1000):
     results = estimate_zinb(data, eps=eps)
     theta_global = results["theta"]
@@ -235,33 +200,21 @@ def process_window_size(
     nucleosome_file,
     centromere_file,
 ):
-    """
-    Process all thresholds for a given window size.
-    
-    OPTIMIZED: Computes LRT scores once, then applies all thresholds.
-    This is ~40x faster than running the detector separately for each threshold.
-    """
+    """Process all thresholds for a given window size."""
     window_output_folder = os.path.join(output_folder, f"window{ws}")
-    step_size = max(1, int(ws * (1 - overlap)))
-    
-    # Compute scores ONCE with threshold=0 (no filtering)
-    print(f"Processing window size: {ws} (computing scores once for {len(thresholds)} thresholds)")
-    change_points_dummy, scores = sliding_ZINB_CPD_v3(
-        data,
-        nucleosome_distances,
-        centromere_distances,
-        ws,
-        overlap,
-        threshold=0,  # No filtering, get all scores
-        theta_global=theta_global,
-        nucleosome_file=nucleosome_file,
-        centromere_file=centromere_file,
-    )
-    
-    # Now apply each threshold to the pre-computed scores
     for threshold in thresholds:
-        print(f"  Applying threshold: {threshold:.2f}")
-        change_points = apply_threshold_to_scores(scores, threshold, ws, overlap, step_size)
+        print(f"Processing window size: {ws}, threshold: {threshold:.2f}")
+        change_points, scores = sliding_ZINB_CPD_v3(
+            data,
+            nucleosome_distances,
+            centromere_distances,
+            ws,
+            overlap,
+            threshold,
+            theta_global=theta_global,
+            nucleosome_file=nucleosome_file,
+            centromere_file=centromere_file,
+        )
         save_results(
             window_output_folder,
             dataset_name,
@@ -272,7 +225,6 @@ def process_window_size(
             overlap,
             threshold,
         )
-    
     return ws
 
 

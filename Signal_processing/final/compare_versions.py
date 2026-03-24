@@ -164,6 +164,30 @@ def run_detector(
 	raise ValueError(f"Unknown method: {method}")
 
 
+def apply_threshold_to_scores(scores, threshold, window_size, overlap, step_size):
+	"""Apply threshold filtering to LRT scores to extract change points.
+	
+	This replicates the threshold logic from the detector functions.
+	"""
+	change_points = []
+	last_cp, last_score = -np.inf, 0.0
+	
+	for idx, score in enumerate(scores):
+		if score > threshold:
+			# Position calculation: idx corresponds to window index
+			# Change point is at start + window_size
+			cp = idx * step_size + window_size
+			
+			if (cp - last_cp) >= window_size:
+				change_points.append(cp)
+				last_cp, last_score = cp, score
+			elif score > last_score:
+				change_points[-1] = cp
+				last_cp, last_score = cp, score
+	
+	return change_points
+
+
 def evaluate_method_on_dataset(
 	method,
 	dataset_id,
@@ -179,23 +203,29 @@ def evaluate_method_on_dataset(
 	nucleosome_file,
 	centromere_file,
 ):
-	"""Run one method for all thresholds on one dataset."""
+	"""Run one method once to get LRT scores, then apply all thresholds."""
+	# Run detector once with threshold=0 to get all LRT scores
+	_, scores = run_detector(
+		method,
+		data,
+		window_size,
+		overlap,
+		threshold=0.0,  # Use 0 to capture all scores
+		theta=theta,
+		pi_file=pi_file,
+		nucleosome_distances=nucleosome_distances,
+		centromere_distances=centromere_distances,
+		nucleosome_file=nucleosome_file,
+		centromere_file=centromere_file,
+	)
+	
+	# Calculate step size for position mapping
+	step_size = max(1, int(window_size * (1 - overlap)))
+	
+	# Now apply each threshold to the saved scores
 	rows = []
-
 	for threshold in thresholds:
-		change_points, _ = run_detector(
-			method,
-			data,
-			window_size,
-			overlap,
-			threshold,
-			theta,
-			pi_file,
-			nucleosome_distances,
-			centromere_distances,
-			nucleosome_file,
-			centromere_file,
-		)
+		change_points = apply_threshold_to_scores(scores, threshold, window_size, overlap, step_size)
 		precision, recall = precision_recall_one_to_one(change_points, true_cps, window_size)
 
 		rows.append(
@@ -280,7 +310,7 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 
 	fig, ax = plt.subplots(figsize=(12, 8))
 
-	for method in ["v2"]:
+	for method in ["ref", "v0", "v1", "v2"]:
 		method_curve = agg_curve_df[agg_curve_df["method"] == method].sort_values("threshold")
 		if method_curve.empty:
 			continue
@@ -310,7 +340,7 @@ def plot_precision_recall_with_std(agg_curve_df, agg_auc_df, output_path):
 	ax.grid(True, alpha=0.3)
 	ax.set_xlim(-0.05, 1.05)
 	ax.set_ylim(-0.05, 1.05)
-	# ax.legend(loc="best")
+	ax.legend(loc="best")
 
 	plt.tight_layout()
 	plt.savefig(output_path, dpi=300, bbox_inches="tight")
@@ -363,7 +393,7 @@ def main():
 		args.threshold_step,
 	)
 	dataset_ids = list(range(args.dataset_start, args.dataset_end + 1))
-	methods = ["v2"]
+	methods = ["ref", "v0", "v1", "v2"]  
 
 	print("Configuration:")
 	print(f"  Base folder: {args.base_folder}")
