@@ -210,9 +210,9 @@ def compute_aggregated_nearest_breakpoint_distance(strain_cps_a, strain_cps_b):
     return mean_nearest_breakpoint_distance(strain_cps_a, strain_cps_b, chromosome_length)
 
 
-def compute_pairwise_metrics(strain_names, threshold):
+def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
     """
-    Compute Jaccard Index and ARI for all pairs of strains at a given threshold.
+    Compute all similarity metrics for all pairs of strains at a given threshold.
     
     Parameters
     ----------
@@ -220,17 +220,25 @@ def compute_pairwise_metrics(strain_names, threshold):
         List of strain names to compare
     threshold : float
         Threshold value to use
+    tolerance : int, optional
+        Tolerance window for Jaccard index (default: 100 bp)
         
     Returns
     -------
-    jaccard_matrix : pd.DataFrame
-        Jaccard Index matrix (strain x strain)
-    ari_matrix : pd.DataFrame
-        ARI matrix (strain x strain)
+    dict
+        Dictionary containing DataFrames for each metric:
+        - 'jaccard': Jaccard Index (exact matching)
+        - 'jaccard_tol': Jaccard Index with tolerance
+        - 'ari': Adjusted Rand Index
+        - 'nbp_dist_a_to_b': Nearest-breakpoint distance A→B (asymmetric)
+        - 'nbp_dist_b_to_a': Nearest-breakpoint distance B→A (asymmetric)
     """
     n_strains = len(strain_names)
     jaccard_matrix = np.ones((n_strains, n_strains))
+    jaccard_tol_matrix = np.ones((n_strains, n_strains))
     ari_matrix = np.ones((n_strains, n_strains))
+    nbp_dist_a_to_b_matrix = np.zeros((n_strains, n_strains))
+    nbp_dist_b_to_a_matrix = np.zeros((n_strains, n_strains))
     
     # Load change points for all strains
     strain_changepoints = {}
@@ -241,26 +249,57 @@ def compute_pairwise_metrics(strain_names, threshold):
     for i, strain_a in enumerate(strain_names):
         for j, strain_b in enumerate(strain_names):
             if i < j:  # Only compute upper triangle
+                # Exact Jaccard Index
                 jaccard = compute_aggregated_jaccard(
                     strain_changepoints[strain_a],
                     strain_changepoints[strain_b]
                 )
+                
+                # Jaccard Index with tolerance
+                jaccard_tol = compute_aggregated_jaccard_with_tolerance(
+                    strain_changepoints[strain_a],
+                    strain_changepoints[strain_b],
+                    tol=tolerance
+                )
+                
+                # Adjusted Rand Index
                 ari = compute_aggregated_ari(
                     strain_changepoints[strain_a],
                     strain_changepoints[strain_b]
                 )
                 
-                # Fill both triangles (symmetric)
+                # Nearest-breakpoint distance (asymmetric)
+                nbp_dist = compute_aggregated_nearest_breakpoint_distance(
+                    strain_changepoints[strain_a],
+                    strain_changepoints[strain_b]
+                )
+                
+                # Fill symmetric metrics in both triangles
                 jaccard_matrix[i, j] = jaccard
                 jaccard_matrix[j, i] = jaccard
+                
+                jaccard_tol_matrix[i, j] = jaccard_tol
+                jaccard_tol_matrix[j, i] = jaccard_tol
+                
                 ari_matrix[i, j] = ari
                 ari_matrix[j, i] = ari
+                
+                # Fill asymmetric metrics
+                nbp_dist_a_to_b_matrix[i, j] = nbp_dist['a_to_b']
+                nbp_dist_b_to_a_matrix[i, j] = nbp_dist['b_to_a']
+                nbp_dist_a_to_b_matrix[j, i] = nbp_dist['b_to_a']  # Transpose
+                nbp_dist_b_to_a_matrix[j, i] = nbp_dist['a_to_b']  # Transpose
     
     # Convert to DataFrames with proper labels
-    jaccard_df = pd.DataFrame(jaccard_matrix, index=strain_names, columns=strain_names)
-    ari_df = pd.DataFrame(ari_matrix, index=strain_names, columns=strain_names)
+    results = {
+        'jaccard': pd.DataFrame(jaccard_matrix, index=strain_names, columns=strain_names),
+        'jaccard_tol': pd.DataFrame(jaccard_tol_matrix, index=strain_names, columns=strain_names),
+        'ari': pd.DataFrame(ari_matrix, index=strain_names, columns=strain_names),
+        'nbp_dist_a_to_b': pd.DataFrame(nbp_dist_a_to_b_matrix, index=strain_names, columns=strain_names),
+        'nbp_dist_b_to_a': pd.DataFrame(nbp_dist_b_to_a_matrix, index=strain_names, columns=strain_names)
+    }
     
-    return jaccard_df, ari_df
+    return results
 def plot_heatmap(matrix_df, metric_name, threshold, output_dir):
     """
     Create and save a heatmap for a similarity matrix.

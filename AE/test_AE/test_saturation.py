@@ -54,7 +54,7 @@ REGULARIZATION_WEIGHT = 1e-5  # alpha
 STRAIN = "yEK23"
 RAW_DATA_DIR = "Data/distances_with_zeros_new"   # source data
 TEMP_DIR = "Data/temp_saturation3"                # temporary combined datasets
-OUTPUT_DIR = "AE/results/saturation_skipzeros"             # where CSV results are saved
+OUTPUT_DIR = "AE/results/saturation_skipzeros2"             # where CSV results are saved
 
 MAX_COMBINATIONS = 4   # max combos sampled per group size
 RANDOM_SEED = 42
