@@ -610,5 +610,120 @@ def plot_precision_recall_curves(pr_curves_data, output_path=None, title='Precis
     if output_path is not None:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
+
+
+def jaccard_index_with_tolerance(set_a, set_b, tol):
+    """
+    Calculate Jaccard Index with tolerance using one-to-one matching.
+    
+    For each chromosome, matches change points within tolerance using optimal 
+    one-to-one assignment. Matched pairs count as intersection, and all unique 
+    "entities" (matched pairs + unmatched points) count as union.
+    
+    Parameters
+    ----------
+    set_a : dict
+        Dictionary with chromosome names as keys and sets of change points as values
+    set_b : dict
+        Dictionary with chromosome names as keys and sets of change points as values
+    tol : int
+        Tolerance window in base pairs
+        
+    Returns
+    -------
+    float
+        Jaccard Index with tolerance (aggregated across all chromosomes)
+    """
+    total_intersection = 0
+    total_union = 0
+    
+    all_chroms = set(set_a.keys()) | set(set_b.keys())
+    
+    for chrom in all_chroms:
+        cps_a = sorted(list(set_a.get(chrom, set())))
+        cps_b = sorted(list(set_b.get(chrom, set())))
+        
+        # Use one-to-one matching
+        matches, unmatched_a, unmatched_b = match_cps_one_to_one(cps_a, cps_b, tol)
+        
+        # Intersection = number of matched pairs
+        intersection = len(matches)
+        
+        # Union = matched pairs + unmatched from both sets
+        union = len(matches) + len(unmatched_a) + len(unmatched_b)
+        
+        total_intersection += intersection
+        total_union += union
+    
+    if total_union == 0:
+        return 0.0
+    
+    return total_intersection / total_union
+
+
+def mean_nearest_breakpoint_distance(set_a, set_b, chromosome_lengths):
+    """
+    Calculate mean nearest-breakpoint distance from set A to set B (asymmetric).
+    
+    For each change point in A, finds the nearest change point in B on the same 
+    chromosome and computes the distance. Returns the weighted average across 
+    all chromosomes (weighted by number of change points per chromosome).
+    
+    Parameters
+    ----------
+    set_a : dict
+        Dictionary with chromosome names as keys and sets of change points as values
+    set_b : dict
+        Dictionary with chromosome names as keys and sets of change points as values
+    chromosome_lengths : dict
+        Dictionary with chromosome names as keys and chromosome lengths as values
+        
+    Returns
+    -------
+    dict
+        Dictionary with keys 'a_to_b' and 'b_to_a' containing mean distances
+    """
+    def compute_directional_distance(source, target):
+        """Compute mean distance from source to target."""
+        all_distances = []
+        all_weights = []
+        
+        for chrom in source.keys():
+            cps_source = sorted(list(source.get(chrom, set())))
+            cps_target = sorted(list(target.get(chrom, set())))
+            
+            if len(cps_source) == 0:
+                continue
+            
+            if len(cps_target) == 0:
+                # No target points - use chromosome length as max distance
+                # This gives a penalty for having no matching change points
+                distances = [chromosome_lengths[chrom]] * len(cps_source)
+            else:
+                # Find nearest target point for each source point
+                cps_target_arr = np.array(cps_target)
+                distances = []
+                for cp_s in cps_source:
+                    nearest_dist = np.min(np.abs(cps_target_arr - cp_s))
+                    distances.append(nearest_dist)
+            
+            all_distances.extend(distances)
+            all_weights.extend([1] * len(distances))  # Weight by count
+        
+        if len(all_distances) == 0:
+            return 0.0
+        
+        # Weighted average (uniform weights here, but could weight by chromosome length)
+        mean_dist = np.average(all_distances, weights=all_weights)
+        return float(mean_dist)
+    
+    # Compute both directions
+    a_to_b = compute_directional_distance(set_a, set_b)
+    b_to_a = compute_directional_distance(set_b, set_a)
+    
+    return {
+        'a_to_b': a_to_b,
+        'b_to_a': b_to_a
+    }
     
     return fig, ax
