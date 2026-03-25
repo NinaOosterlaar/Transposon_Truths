@@ -9,6 +9,17 @@ from Utils.plot_config import setup_plot_style, COLORS
 # Set up standardized plot style
 setup_plot_style()
 
+def calculate_jaccard_index(set_a, set_b):
+    """Calculate the Jaccard index between two sets."""
+    intersection = 0
+    union = 0
+    for chrom in set_a.keys():
+        intersection += len(set_a[chrom].intersection(set_b.get(chrom, set())))
+        union += len(set_a[chrom].union(set_b.get(chrom, set())))
+    if union == 0:
+        return 0.0
+    return intersection / union 
+
 def precision(detected_cps, true_cps, tol):
     """Calculate precision of detected change points."""
     true_positives = 0

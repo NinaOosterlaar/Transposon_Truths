@@ -42,8 +42,8 @@ def main():
     total_processed = 0
     total_skipped = 0
     
-    # Process folders 1-6
-    for folder_num in range(1, 7):
+    # Process folders 0-7
+    for folder_num in range(0, 8):
         windows_folder = windows_base / str(folder_num)
         
         if not windows_folder.exists():

@@ -179,8 +179,8 @@ def main():
         print("Step 1: Generating per-chromosome density files (temp)")
         print("="*60)
         
-        # Process folders 1-6 (representing number of combined datasets)
-        for folder_num in range(1, 7):
+        # Process folders 0-7 (representing different sparsity levels)
+        for folder_num in range(0, 8):
             input_folder = os.path.join(base_path, str(folder_num))
             
             if not os.path.exists(input_folder):

@@ -641,7 +641,7 @@ def compare_saturation_levels(base_results_folder, window_folder, cpd_dict,
         
         # Define colors for saturation levels
         color_list = [COLORS['blue'], COLORS['orange'], COLORS['green'], 
-                     COLORS['red'], COLORS['pink'], COLORS['light_blue']]
+                     COLORS['red'], COLORS['pink'], COLORS['light_blue'], COLORS['yellow'], COLORS['black']]
         
         for sat_level in saturation_levels:
             sat_data = combined_df[
@@ -714,7 +714,7 @@ if __name__ == "__main__":
     
     results_df = compare_saturation_levels(
         base_results_folder, window_folder, CPD, output_folder,
-        saturation_levels=[1, 2, 3, 4, 5, 6]
+        saturation_levels=[0, 1, 2, 3, 4, 5, 6, 7]
     )
     
     if results_df is not None:

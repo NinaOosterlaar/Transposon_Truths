@@ -72,9 +72,9 @@ def main():
     total_windows = 0
     total_skipped = 0
     
-    # Process folders 1-6
-    for folder_num in range(1, 7):
-        input_folder = base_path / str(folder_num)
+    # Process folders 0-7
+    for folder_num in range(0, 8):
+        input_folder = base_path / f"{folder_num}"
         
         if not input_folder.exists():
             continue
@@ -99,7 +99,7 @@ def main():
             # Process each chromosome
             for input_file in distance_files:
                 chrom_name = input_file.stem.replace("_distances", "")
-                output_file = output_base / str(folder_num) / dataset_name / f"{chrom_name}_centromere_window.csv"
+                output_file = output_base / f"{folder_num}" / dataset_name / f"{chrom_name}_centromere_window.csv"
                 
                 success = extract_centromere_window(str(input_file), str(output_file))
                 

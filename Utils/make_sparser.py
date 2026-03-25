@@ -84,18 +84,18 @@ def main():
         print(f"Error: Input folder {input_folder} does not exist!")
         return
     
-    # Create sparse versions
-    # 0.2 folder: remove 50% of non-zero values
-    process_all_subfolders(input_folder, output_folder_02, 0.5, "0.2")
+    # # Create sparse versions
+    # # 0.2 folder: remove 50% of non-zero values
+    # process_all_subfolders(input_folder, output_folder_02, 0.5, "0.2")
     
-    # 0.1 folder: remove 75% of non-zero values
-    process_all_subfolders(input_folder, output_folder_01, 0.75, "0.1")
+    # # 0.1 folder: remove 75% of non-zero values
+    # process_all_subfolders(input_folder, output_folder_01, 0.75, "0.1")
     
-    print("\n" + "="*60)
-    print("Sparse data creation complete!")
-    print("="*60)
-    print("\nNow generating density files...")
-    print("="*60)
+    # print("\n" + "="*60)
+    # print("Sparse data creation complete!")
+    # print("="*60)
+    # print("\nNow generating density files...")
+    # print("="*60)
     
     # Add base directory to path and import density functions
     sys.path.insert(0, base_dir)
@@ -105,9 +105,9 @@ def main():
     import generate_test_cpd_densities
     
     # Process both new folders
-    for folder_name in ['0.2', '0.1']:
+    for folder_name in ['0.1']:
         print(f"\n{'='*60}")
-        print(f"Generating densities for folder {folder_name}")
+        print(f"Step 1: Generating per-chromosome density files for folder {folder_name}")
         print('='*60)
         
         input_folder = os.path.join(base_dir, "Data/test_CPD", folder_name)
@@ -116,49 +116,56 @@ def main():
         # Create temp directory
         os.makedirs(temp_path, exist_ok=True)
         
-        # Get all subfolders (yEK23_1, yEK23_2, etc.)
-        subfolders = [f for f in os.listdir(input_folder) 
-                      if os.path.isdir(os.path.join(input_folder, f)) and f.startswith('yEK23')]
+        print(f"\nFolder {folder_name}:")
+        print(f"  - Centromere densities (bin=10000, boolean=True)...")
+        density_from_centromere(
+            input_folder=input_folder,
+            output_folder=temp_path,
+            bin=10000,
+            max_distance_global=None,
+            min_distance_global=None,
+            boolean=True
+        )
         
-        for subfolder in sorted(subfolders):
-            subfolder_path = os.path.join(input_folder, subfolder)
-            print(f"\nProcessing {folder_name}/{subfolder}:")
-            
-            # Generate centromere densities
-            print(f"  - Generating centromere densities...")
-            density_from_centromere(
-                input_folder=subfolder_path,
-                output_folder=temp_path,
-                bin=10000,
-                max_distance_global=None,
-                min_distance_global=None,
-                boolean=True
-            )
-            
-            # Generate nucleosome densities
-            print(f"  - Generating nucleosome densities...")
-            density_from_nucleosome(
-                input_folder=subfolder_path,
-                output_folder=temp_path,
-                boolean=True
-            )
+        print(f"  - Nucleosome densities (boolean=True)...")
+        density_from_nucleosome(
+            input_folder=input_folder,
+            output_folder=temp_path,
+            boolean=True
+        )
         
         # Now combine the per-chromosome files for each subfolder
         print(f"\n{'='*60}")
-        print(f"Combining chromosomes for folder {folder_name}")
-        print('='*60)
+        print(f"Step 2: Combining chromosomes per dataset in folder {folder_name}")
+        print('='*60 + "\n")
         
-        for subfolder in sorted(subfolders):
-            print(f"\nCombining {folder_name}/{subfolder}...")
+        # Walk through temp folder and combine files for each dataset
+        for root, dirs, files in os.walk(temp_path):
+            # Check if this is a dataset folder (contains CSV files)
+            csv_files = [f for f in files if f.endswith(".csv")]
+            if not csv_files:
+                continue
             
-            temp_subfolder_path = os.path.join(temp_path, subfolder)
-            target_folder = os.path.join(input_folder, subfolder)
+            # Get the relative path from temp to determine target location
+            rel_path = os.path.relpath(root, temp_path)
+            if rel_path == ".":
+                continue
             
-            if os.path.exists(temp_subfolder_path):
+            # Extract folder info for display
+            path_parts = rel_path.split(os.sep)
+            
+            # Skip the first level (folder_name) since input_folder already includes it
+            # rel_path will be like "0.1/yEK23_1", but we want just "yEK23_1"
+            if len(path_parts) >= 2:
+                dataset_name = path_parts[1]
+                target_folder = os.path.join(input_folder, dataset_name)
+                
+                print(f"Processing {folder_name}/{dataset_name}...")
+                
                 # Combine centromere files
                 print(f"  - Combining centromere densities...")
                 centromere_df = generate_test_cpd_densities.combine_chromosome_centromere_files(
-                    temp_subfolder_path, target_folder, bin=10000)
+                    root, target_folder, bin=10000)
                 if centromere_df is not None:
                     generate_test_cpd_densities.create_centromere_plot(target_folder, centromere_df, bin=10000)
                     print(f"    ✓ Saved to {target_folder}")
@@ -166,7 +173,7 @@ def main():
                 # Combine nucleosome files
                 print(f"  - Combining nucleosome densities...")
                 nucleosome_df = generate_test_cpd_densities.combine_chromosome_nucleosome_files(
-                    temp_subfolder_path, target_folder)
+                    root, target_folder)
                 if nucleosome_df is not None:
                     generate_test_cpd_densities.create_nucleosome_plot(target_folder, nucleosome_df)
                     print(f"    ✓ Saved to {target_folder}")
