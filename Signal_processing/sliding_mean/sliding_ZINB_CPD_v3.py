@@ -92,7 +92,7 @@ def sliding_ZINB_CPD_v3(
             centr_dist_middle = centromere_distance_to_density.index.max()
 
         # Version 3: pi0 from centromere-dependent saturation/density
-        pi0 = interpolate_density(
+        s0 = interpolate_density(
             centr_dist_middle,
             centromere_distance_to_density.reset_index(),
             'Centromere_Distance_Bin',
@@ -108,7 +108,7 @@ def sliding_ZINB_CPD_v3(
         temp1_nucl = distance_to_density.loc[nucl_dist1].mean()
         temp2_nucl = distance_to_density.loc[nucl_dist2].mean()
         
-        s0 = 1 - pi0
+        # s0 = 1 - pi0
 
         s1 = np.clip(s0 * (temp1_nucl / max(temp0_nucl, eps)), eps, 1 - eps)
         s2 = np.clip(s0 * (temp2_nucl / max(temp0_nucl, eps)), eps, 1 - eps)
