@@ -187,7 +187,7 @@ def process_strain(strain_name, base_data_folder, base_results_folder,
     for chrom in CHROMOSOMES:
         chrom_data_file = os.path.join(strain_data_folder, f"{chrom}_distances.csv")
         if os.path.exists(chrom_data_file):
-            data = read_count_data(chrom_data_file)
+            data = read_count_data(chrom_data_file).copy()
             
             # Remove problematic positions for this chromosome
             for prob_chrom, prob_pos in problematic_positions:
