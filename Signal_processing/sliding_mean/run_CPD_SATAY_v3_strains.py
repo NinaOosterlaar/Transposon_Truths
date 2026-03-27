@@ -8,11 +8,22 @@ import sys
 import subprocess
 import argparse
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 import numpy as np
 import pandas as pd
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
+
+# Thread-safe lock for printing
+print_lock = Lock()
+
+
+def safe_print(*args, **kwargs):
+    """Thread-safe print function."""
+    with print_lock:
+        print(*args, **kwargs)
 
 
 def read_count_data(csv_file):
@@ -92,6 +103,153 @@ def compute_global_outlier_threshold(strain_folder):
     return threshold, n_outliers, len(all_data), total_removed
 
 
+def process_strain(
+    strain_folder,
+    centromere_base,
+    nucleosome_base,
+    output_base,
+    cpd_script,
+    window_sizes,
+    overlap,
+    threshold_start,
+    threshold_end,
+    threshold_step,
+    theta_block_size,
+    n_workers,
+    timeout_seconds,
+):
+    """
+    Process a single strain: run CPD analysis on all chromosomes.
+    
+    Returns:
+        (strain_name, n_processed, n_errors, n_skipped)
+    """
+    strain_name = strain_folder.name
+    n_processed = 0
+    n_errors = 0
+    n_skipped = 0
+    
+    safe_print(f"\n{'='*80}")
+    safe_print(f"Processing {strain_name}")
+    safe_print(f"{'='*80}")
+    
+    # Find corresponding density files
+    centromere_file = centromere_base / f"dataset-{strain_name}_combined_centromere_density_Boolean_True_bin_10000_absolute.csv"
+    nucleosome_file = nucleosome_base / f"dataset-{strain_name}_combined_Boolean_True_nucleosome_density.csv"
+    
+    # Check if density files exist
+    if not centromere_file.exists():
+        safe_print(f"  ⚠ Warning: Centromere density file not found:")
+        safe_print(f"    {centromere_file.name}")
+        safe_print(f"  Skipping {strain_name}")
+        return (strain_name, n_processed, n_errors, 1)
+    
+    if not nucleosome_file.exists():
+        safe_print(f"  ⚠ Warning: Nucleosome density file not found:")
+        safe_print(f"    {nucleosome_file.name}")
+        safe_print(f"  Skipping {strain_name}")
+        return (strain_name, n_processed, n_errors, 1)
+    
+    safe_print(f"  ✓ Centromere file: {centromere_file.name}")
+    safe_print(f"  ✓ Nucleosome file: {nucleosome_file.name}")
+    safe_print()
+    
+    # Find all chromosome files
+    chromosome_files = sorted(strain_folder.glob("Chr*_distances.csv"))
+    
+    if not chromosome_files:
+        safe_print(f"  ⚠ No chromosome files found in {strain_name}")
+        return (strain_name, n_processed, n_errors, 1)
+    
+    # Compute global outlier threshold across all chromosomes for this strain
+    safe_print(f"  Computing global outlier threshold across all chromosomes...")
+    threshold_result = compute_global_outlier_threshold(strain_folder)
+    
+    if threshold_result is None:
+        safe_print(f"  ⚠ Could not compute outlier threshold for {strain_name}")
+        return (strain_name, n_processed, n_errors, 1)
+    
+    outlier_threshold, n_outliers, n_total, n_problematic = threshold_result
+    if n_problematic > 0:
+        safe_print(f"  Removed {n_problematic} problematic position(s) (set to zero)")
+    safe_print(f"  Global 99th percentile (non-zero): {outlier_threshold:.1f}")
+    safe_print(f"  Total outliers to cap: {n_outliers} ({100*n_outliers/n_total:.2f}%) across all chromosomes")
+    safe_print()
+    
+    safe_print(f"  Processing {len(chromosome_files)} chromosomes:")
+    safe_print(f"  Thresholds: {threshold_start} to {threshold_end} (step {threshold_step})")
+    safe_print()
+    
+    # Process each chromosome
+    for chrom_file in chromosome_files:
+        # Extract chromosome name (e.g., "ChrI" from "ChrI_distances.csv")
+        chrom_name = chrom_file.stem.replace("_distances", "")
+        
+        # Output folder: Signal_processing/strains/{strain_name}/{chromosome}/
+        output_folder = output_base / strain_name / chrom_name
+        
+        # Build command - pass threshold range parameters
+        cmd = [
+            sys.executable,
+            str(cpd_script),
+            str(chrom_file),
+            "--output_folder", str(output_folder),
+            "--window_sizes", str(window_sizes[0]),
+            "--overlap", str(overlap),
+            "--theta_block_size", str(theta_block_size),
+            "--threshold_start", str(threshold_start),
+            "--threshold_end", str(threshold_end),
+            "--threshold_step", str(threshold_step),
+            "--outlier_threshold", str(outlier_threshold),
+            "--n_workers", str(n_workers),
+            "--nucleosome_file", str(nucleosome_file),
+            "--centromere_file", str(centromere_file),
+        ]
+        
+        # Run the command
+        try:
+            safe_print(f"    Processing {chrom_name}...")
+            
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                cwd=PROJECT_ROOT,
+                timeout=timeout_seconds
+            )
+            
+            if result.returncode == 0:
+                # Print key diagnostic output (theta, outliers)
+                if result.stdout:
+                    for line in result.stdout.strip().split('\n'):
+                        # Show lines about outlier removal and theta estimation
+                        if any(keyword in line.lower() for keyword in 
+                               ['outlier', 'theta', 'estimated', 'block', 'capped']):
+                            safe_print(f"      {line}")
+                safe_print(f"    ✓ {chrom_name} complete")
+                n_processed += 1
+            else:
+                safe_print(f"    ✗ {chrom_name} failed (exit code {result.returncode})")
+                n_errors += 1
+                if result.stderr:
+                    safe_print(f"      Error output:")
+                    for line in result.stderr.strip().split('\n')[:10]:  # Show first 10 lines
+                        safe_print(f"        {line}")
+                    if len(result.stderr.strip().split('\n')) > 10:
+                        safe_print(f"        ... (truncated)")
+                
+        except subprocess.TimeoutExpired:
+            safe_print(f"    ✗ timeout after {timeout_seconds}s")
+            n_errors += 1
+        except Exception as e:
+            safe_print(f"    ✗ {str(e)[:80]}")
+            n_errors += 1
+    
+    safe_print(f"\n  Completed {strain_name}")
+    
+    return (strain_name, n_processed, n_errors, n_skipped)
+
+
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
@@ -114,6 +272,12 @@ def main():
         type=float,
         default=1.0,
         help="Threshold step size. Default: 1.0",
+    )
+    parser.add_argument(
+        "--n_strain_workers",
+        type=int,
+        default=1,
+        help="Number of strains to process in parallel. Default: 1 (sequential)",
     )
     args = parser.parse_args()
     
@@ -138,6 +302,7 @@ def main():
     threshold_start = args.threshold_start
     threshold_end = args.threshold_end
     threshold_step = args.threshold_step
+    n_strain_workers = args.n_strain_workers
     theta_block_size = 2000  # Local theta estimation in 2000bp blocks
     n_workers = 1
     timeout_seconds = 1800  # 30 minutes per chromosome
@@ -151,6 +316,7 @@ def main():
     print(f"Results:      {output_base}")
     print(f"Script:       {cpd_script}")
     print(f"Thresholds:   {threshold_start} to {threshold_end} (step {threshold_step})")
+    print(f"Parallel:     {n_strain_workers} strain(s) at a time")
     print()
     
     total_processed = 0
@@ -169,133 +335,70 @@ def main():
         print(f"  - {strain_folder.name}")
     print()
     
-    # Process each strain
-    for strain_folder in strain_folders:
-        strain_name = strain_folder.name
-        
-        print(f"\n{'='*80}")
-        print(f"Processing {strain_name}")
-        print(f"{'='*80}")
-        
-        # Find corresponding density files
-        # Format: dataset-strain_FD_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
-        centromere_file = centromere_base / f"dataset-{strain_name}_combined_centromere_density_Boolean_True_bin_10000_absolute.csv"
-        # Format: dataset-strain_FD_combined_Boolean_True_nucleosome_density.csv
-        nucleosome_file = nucleosome_base / f"dataset-{strain_name}_combined_Boolean_True_nucleosome_density.csv"
-        
-        # Check if density files exist
-        if not centromere_file.exists():
-            print(f"  ⚠ Warning: Centromere density file not found:")
-            print(f"    {centromere_file.name}")
-            print(f"  Skipping {strain_name}")
-            total_skipped += 1
-            continue
-        
-        if not nucleosome_file.exists():
-            print(f"  ⚠ Warning: Nucleosome density file not found:")
-            print(f"    {nucleosome_file.name}")
-            print(f"  Skipping {strain_name}")
-            total_skipped += 1
-            continue
-        
-        print(f"  ✓ Centromere file: {centromere_file.name}")
-        print(f"  ✓ Nucleosome file: {nucleosome_file.name}")
+    # Process strains in parallel
+    total_processed = 0
+    total_skipped = 0
+    total_errors = 0
+    
+    if n_strain_workers == 1:
+        # Sequential processing
+        for strain_folder in strain_folders:
+            strain_name, n_proc, n_err, n_skip = process_strain(
+                strain_folder,
+                centromere_base,
+                nucleosome_base,
+                output_base,
+                cpd_script,
+                window_sizes,
+                overlap,
+                threshold_start,
+                threshold_end,
+                threshold_step,
+                theta_block_size,
+                n_workers,
+                timeout_seconds,
+            )
+            total_processed += n_proc
+            total_errors += n_err
+            total_skipped += n_skip
+    else:
+        # Parallel processing
+        print(f"Processing {len(strain_folders)} strains with {n_strain_workers} workers...")
         print()
         
-        # Find all chromosome files
-        chromosome_files = sorted(strain_folder.glob("Chr*_distances.csv"))
-        
-        if not chromosome_files:
-            print(f"  ⚠ No chromosome files found in {strain_name}")
-            total_skipped += 1
-            continue
-        
-        # Compute global outlier threshold across all chromosomes for this strain
-        print(f"  Computing global outlier threshold across all chromosomes...")
-        threshold_result = compute_global_outlier_threshold(strain_folder)
-        
-        if threshold_result is None:
-            print(f"  ⚠ Could not compute outlier threshold for {strain_name}")
-            total_skipped += 1
-            continue
-        
-        outlier_threshold, n_outliers, n_total, n_problematic = threshold_result
-        if n_problematic > 0:
-            print(f"  Removed {n_problematic} problematic position(s) (set to zero)")
-        print(f"  Global 99th percentile (non-zero): {outlier_threshold:.1f}")
-        print(f"  Total outliers to cap: {n_outliers} ({100*n_outliers/n_total:.2f}%) across all chromosomes")
-        print()
-        
-        print(f"  Processing {len(chromosome_files)} chromosomes:")
-        print(f"  Thresholds: {threshold_start} to {threshold_end} (step {threshold_step})")
-        print()
-        
-        # Process each chromosome
-        for chrom_file in chromosome_files:
-            # Extract chromosome name (e.g., "ChrI" from "ChrI_distances.csv")
-            chrom_name = chrom_file.stem.replace("_distances", "")
+        with ThreadPoolExecutor(max_workers=n_strain_workers) as executor:
+            # Submit all strain processing jobs
+            future_to_strain = {
+                executor.submit(
+                    process_strain,
+                    strain_folder,
+                    centromere_base,
+                    nucleosome_base,
+                    output_base,
+                    cpd_script,
+                    window_sizes,
+                    overlap,
+                    threshold_start,
+                    threshold_end,
+                    threshold_step,
+                    theta_block_size,
+                    n_workers,
+                    timeout_seconds,
+                ): strain_folder.name
+                for strain_folder in strain_folders
+            }
             
-            # Output folder: Signal_processing/strains/{strain_name}/{chromosome}/
-            output_folder = output_base / strain_name / chrom_name
-            
-            # Build command - pass threshold range parameters
-            cmd = [
-                sys.executable,
-                str(cpd_script),
-                str(chrom_file),
-                "--output_folder", str(output_folder),
-                "--window_sizes", str(window_sizes[0]),
-                "--overlap", str(overlap),
-                "--theta_block_size", str(theta_block_size),
-                "--threshold_start", str(threshold_start),
-                "--threshold_end", str(threshold_end),
-                "--threshold_step", str(threshold_step),
-                "--outlier_threshold", str(outlier_threshold),
-                "--n_workers", str(n_workers),
-                "--nucleosome_file", str(nucleosome_file),
-                "--centromere_file", str(centromere_file),
-            ]
-            
-            # Run the command
-            try:
-                print(f"    Processing {chrom_name}...")
-                
-                result = subprocess.run(
-                    cmd,
-                    capture_output=True,
-                    text=True,
-                    cwd=PROJECT_ROOT,
-                    timeout=timeout_seconds
-                )
-                
-                if result.returncode == 0:
-                    # Print key diagnostic output (theta, outliers)
-                    if result.stdout:
-                        for line in result.stdout.strip().split('\n'):
-                            # Show lines about outlier removal and theta estimation
-                            if any(keyword in line.lower() for keyword in 
-                                   ['outlier', 'theta', 'estimated', 'block', 'capped']):
-                                print(f"      {line}")
-                    print(f"    ✓ {chrom_name} complete")
-                    total_processed += 1
-                else:
-                    print(f"    ✗ {chrom_name} failed (exit code {result.returncode})")
-                    total_errors += 1
-                    if result.stderr:
-                        print(f"      Error output:")
-                        for line in result.stderr.strip().split('\n')[:10]:  # Show first 10 lines
-                            print(f"        {line}")
-                        if len(result.stderr.strip().split('\n')) > 10:
-                            print(f"        ... (truncated)")
-                    
-            except subprocess.TimeoutExpired:
-                print(f"    ✗ timeout after {timeout_seconds}s")
-                total_errors += 1
-            except Exception as e:
-                print(f"    ✗ {str(e)[:80]}")
-                total_errors += 1
-        
-        print(f"\n  Completed {strain_name}")
+            # Collect results as they complete
+            for future in as_completed(future_to_strain):
+                strain_name = future_to_strain[future]
+                try:
+                    _, n_proc, n_err, n_skip = future.result()
+                    total_processed += n_proc
+                    total_errors += n_err
+                    total_skipped += n_skip
+                except Exception as exc:
+                    safe_print(f"\n✗ {strain_name} generated an exception: {exc}")
+                    total_skipped += 1
     
     # Final summary
     print("\n" + "=" * 80)
