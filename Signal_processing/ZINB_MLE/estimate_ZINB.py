@@ -116,8 +116,8 @@ def estimate_zinb(data, max_iter=100, tol=1e-6, eps=1e-10, theta_min=0.1, theta_
     best_converged = converged_grid[best_idx]
     best_iterations = iterations_grid[best_idx]
     
-    print(f"\nBest theta: {best_theta:.2e} with ll={best_ll:.2f}")
-    print(f"Final parameters: pi={best_pi:.4f}, mu={best_mu:.4f}, theta={best_theta:.4f}")
+    # print(f"\nBest theta: {best_theta:.2e} with ll={best_ll:.2f}")
+    # print(f"Final parameters: pi={best_pi:.4f}, mu={best_mu:.4f}, theta={best_theta:.4f}")
     
     return {
         'pi': best_pi,

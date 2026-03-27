@@ -34,6 +34,39 @@ def read_count_data(csv_file):
 	return df.iloc[:, 1].astype(float).to_numpy()
 
 
+def remove_top_quantile_outliers(data, quantile=0.99, threshold=None):
+	"""
+	Remove outliers by capping non-zero values above the specified quantile.
+	
+	Args:
+		data: Array of count values
+		quantile: Values above this quantile will be capped (default: 0.99 for top 1%)
+		threshold: Pre-computed threshold value (if None, computed from non-zero data)
+		
+	Returns:
+		filtered_data: Data with outliers capped at the threshold value
+		threshold: The threshold value used
+		n_affected: Number of values that were capped
+	"""
+	data_array = np.asarray(data, dtype=np.float64)
+	
+	if threshold is None:
+		# Compute threshold only on non-zero values
+		non_zero_data = data_array[data_array > 0]
+		if len(non_zero_data) > 0:
+			threshold = np.quantile(non_zero_data, quantile)
+		else:
+			threshold = 0.0
+	
+	# Count how many values exceed the threshold (excluding zeros)
+	n_affected = np.sum(data_array > threshold)
+	
+	# Cap values at the threshold (but keep zeros as zeros)
+	filtered_data = np.clip(data_array, None, threshold)
+	
+	return filtered_data, threshold, n_affected
+
+
 def parse_result_file(result_file):
 	"""Parse change points and theta from a version3 result file."""
 	change_points = []
@@ -112,7 +145,11 @@ def estimate_segment_mu_fixed_theta(segment_data, theta_global, eps=1e-10, tol=1
 	return mu, pi
 
 
-def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, max_iter=200):
+def create_segments_with_mu_estimates(data, change_points, theta_global, eps=1e-10, tol=1e-6, max_iter=200):
+	"""
+	Create segments and estimate mu/pi for each, without computing z-scores.
+	
+	"""
 	n = len(data)
 	valid_cps = sorted({int(cp) for cp in change_points if 0 < int(cp) < n})
 	boundaries = [0] + valid_cps + [n]
@@ -146,6 +183,41 @@ def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, ma
 	return segment_rows
 
 
+def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, max_iter=200):
+	"""
+	Estimate segments with mu/pi and add z-scores.
+	
+	Z-scores are computed across all segments in this dataset.
+	"""
+	segment_rows = create_segments_with_mu_estimates(
+		data, change_points, theta_global, eps=eps, tol=tol, max_iter=max_iter
+	)
+
+	# Calculate standardized z-scores for mu_estimate
+	# z = (μ - μ̄) / σ_μ
+	mu_values = np.array([row["mu_estimate"] for row in segment_rows])
+	
+	# Filter out NaN values for statistics
+	valid_mu = mu_values[~np.isnan(mu_values)]
+	
+	if len(valid_mu) > 0:
+		mu_mean = np.mean(valid_mu)
+		mu_std = np.std(valid_mu, ddof=1) if len(valid_mu) > 1 else 0.0
+		
+		# Add z-score to each segment
+		for i, row in enumerate(segment_rows):
+			if np.isnan(mu_values[i]) or mu_std == 0.0:
+				row["mu_z_score"] = np.nan
+			else:
+				row["mu_z_score"] = (mu_values[i] - mu_mean) / mu_std
+	else:
+		# All mu values are NaN
+		for row in segment_rows:
+			row["mu_z_score"] = np.nan
+
+	return segment_rows
+
+
 def process_dataset(dataset_num, base_data_folder, base_results_folder, output_subdir, eps, tol, max_iter):
 	dataset_data_file = os.path.join(base_data_folder, str(dataset_num), "SATAY_with_pi.csv")
 	dataset_results_folder = os.path.join(base_results_folder, str(dataset_num))
@@ -159,6 +231,14 @@ def process_dataset(dataset_num, base_data_folder, base_results_folder, output_s
 		return 0
 
 	data = read_count_data(dataset_data_file)
+	
+	# Remove top 1% outliers (non-zero values only)
+	data, outlier_threshold, n_outliers = remove_top_quantile_outliers(data, quantile=0.99)
+	if n_outliers > 0:
+		print(f"  Dataset {dataset_num}: capped {n_outliers} values ({100*n_outliers/len(data):.2f}%) above threshold {outlier_threshold:.1f}")
+	else:
+		print(f"  Dataset {dataset_num}: no outliers detected (95th percentile = {outlier_threshold:.1f})")
+	
 	processed_files = 0
 
 	window_folders = [

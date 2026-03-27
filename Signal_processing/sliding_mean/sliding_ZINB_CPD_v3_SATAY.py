@@ -66,6 +66,69 @@ def interpolate_density(distance, lookup_df, distance_col, density_col="mean_den
     return float(np.interp(distance, distances, densities))
 
 
+def estimate_local_theta_blocks(data, block_size=2000, eps=1e-10, theta_max=1000):
+    """
+    Estimate theta for non-overlapping blocks of data.
+    
+    Args:
+        data: Count data array
+        block_size: Size of each block in base pairs (default: 2000)
+        eps: Small value for numerical stability
+        theta_max: Maximum allowed theta value
+        
+    Returns:
+        theta_blocks: List of (start, end, theta) tuples for each block
+    """
+    data = np.asarray(data, dtype=np.float64)
+    n = len(data)
+    theta_blocks = []
+    
+    for start in range(0, n, block_size):
+        end = min(start + block_size, n)
+        block_data = data[start:end]
+        
+        # Skip empty blocks
+        if len(block_data) == 0:
+            continue
+        
+        try:
+            results = estimate_zinb(block_data, eps=eps)
+            theta = results["theta"]
+            
+            # Sanity check
+            if theta >= theta_max or theta <= 0:
+                print(f"    Warning: Block [{start}:{end}] has invalid theta={theta:.4f}, using fallback")
+                # Use chromosome-wide estimate as fallback
+                theta = None
+        except Exception as e:
+            print(f"    Warning: Block [{start}:{end}] theta estimation failed: {e}")
+            theta = None
+        
+        theta_blocks.append((start, end, theta))
+    
+    return theta_blocks
+
+
+def get_theta_for_position(position, theta_blocks, theta_fallback):
+    """
+    Get the appropriate theta value for a given position.
+    
+    Args:
+        position: Position in the chromosome
+        theta_blocks: List of (start, end, theta) tuples
+        theta_fallback: Fallback theta if block theta is None
+        
+    Returns:
+        theta: The theta value for this position
+    """
+    for start, end, theta in theta_blocks:
+        if start <= position < end:
+            return theta if theta is not None else theta_fallback
+    
+    # If position not found (shouldn't happen), use fallback
+    return theta_fallback
+
+
 def sliding_ZINB_CPD_v3(
     data,
     nucleosome_distances,
@@ -75,6 +138,7 @@ def sliding_ZINB_CPD_v3(
     threshold,
     eps=1e-10,
     theta_global=None,
+    theta_blocks=None,
     tol=1e-6,
     max_iter=10,
     nucleosome_file="Data_exploration/results/densities/nucleosome_new/combined_All_Boolean_True/ALL_combined_Boolean_True_nucleosome_density.csv",
@@ -93,10 +157,14 @@ def sliding_ZINB_CPD_v3(
     # Create a lookup table for distance to mean density for centromeres
     centromere_distance_to_density = centromere_df.set_index('Bin_Center')['mean_density']
 
+    # Initialize theta (global fallback if using local blocks)
     if theta_global is None or theta_global <= 0:
         theta_global = initialize_theta_global(data, eps=eps)
 
-    print(theta_global)
+    # Determine if using local or global theta
+    use_local_theta = theta_blocks is not None
+    if not use_local_theta:
+        print(f"Using global theta: {theta_global:.4f}")
 
     change_points, scores = [], []
     last_cp, last_score = -np.inf, 0.0
@@ -106,6 +174,13 @@ def sliding_ZINB_CPD_v3(
         w2 = data[start + window_size : start + 2 * window_size]
 
         middle0 = start + window_size
+        
+        # Get theta for this window's center position
+        if use_local_theta:
+            theta = get_theta_for_position(middle0, theta_blocks, theta_global)
+        else:
+            theta = theta_global
+        
         centr_dist_middle = centromere_distances[middle0]
         if centr_dist_middle > centromere_distance_to_density.index.max():
             centr_dist_middle = centromere_distance_to_density.index.max()
@@ -139,13 +214,13 @@ def sliding_ZINB_CPD_v3(
         denom = window_size * (1 - pi1) + window_size * (1 - pi2)
         mu0 = np.clip(sum_y / max(denom, eps), eps, None)
 
-        # Likelihoods
-        ll0_w1 = zinb_log_likelihood(w1, mu0, theta_global, pi1, eps=eps)
-        ll0_w2 = zinb_log_likelihood(w2, mu0, theta_global, pi2, eps=eps)
+        # Likelihoods (using local theta for this window position)
+        ll0_w1 = zinb_log_likelihood(w1, mu0, theta, pi1, eps=eps)
+        ll0_w2 = zinb_log_likelihood(w2, mu0, theta, pi2, eps=eps)
         ll0 = ll0_w1 + ll0_w2
 
-        ll1 = zinb_log_likelihood(w1, mu1, theta_global, pi1, eps=eps)
-        ll2 = zinb_log_likelihood(w2, mu2, theta_global, pi2, eps=eps)
+        ll1 = zinb_log_likelihood(w1, mu1, theta, pi1, eps=eps)
+        ll2 = zinb_log_likelihood(w2, mu2, theta, pi2, eps=eps)
         ll_alt = ll1 + ll2
 
         score = 2.0 * (ll_alt - ll0)
@@ -198,6 +273,39 @@ def apply_threshold_to_scores(scores, threshold, window_size, overlap, step_size
     return change_points
 
 
+def remove_top_quantile_outliers(data, quantile=0.99, threshold=None):
+    """
+    Remove outliers by capping non-zero values above the specified quantile.
+    
+    Args:
+        data: List or array of count values
+        quantile: Values above this quantile will be capped (default: 0.99 for top 1%)
+        threshold: Pre-computed threshold value (if None, computed from non-zero data)
+        
+    Returns:
+        filtered_data: Data with outliers capped at the threshold value
+        threshold: The threshold value used
+        n_affected: Number of values that were capped
+    """
+    data_array = np.asarray(data, dtype=np.float64)
+    
+    if threshold is None:
+        # Compute threshold only on non-zero values
+        non_zero_data = data_array[data_array > 0]
+        if len(non_zero_data) > 0:
+            threshold = np.quantile(non_zero_data, quantile)
+        else:
+            threshold = 0.0
+    
+    # Count how many values exceed the threshold (excluding zeros)
+    n_affected = np.sum(data_array > threshold)
+    
+    # Cap values at the threshold (but keep zeros as zeros)
+    filtered_data = np.clip(data_array, None, threshold)
+    
+    return filtered_data.tolist(), threshold, n_affected
+
+
 def initialize_theta_global(data, eps=1e-10, theta_max=1000):
     results = estimate_zinb(data, eps=eps)
     theta_global = results["theta"]
@@ -230,6 +338,7 @@ def process_window_size(
     overlap,
     thresholds,
     theta_global,
+    theta_blocks,
     output_folder,
     dataset_name,
     nucleosome_file,
@@ -254,6 +363,7 @@ def process_window_size(
         overlap,
         threshold=0,  # No filtering, get all scores
         theta_global=theta_global,
+        theta_blocks=theta_blocks,
         nucleosome_file=nucleosome_file,
         centromere_file=centromere_file,
     )
@@ -306,7 +416,47 @@ def read_input_data(input_file):
     data = [int(float(v)) for v in df[value_col].values]
     nucleosome_distance = [int(float(v)) for v in df[nucleosome_col].values]
     centromere_distance = [int(float(v)) for v in df[centromere_col].values]
-    return data, nucleosome_distance, centromere_distance, value_col, nucleosome_col, centromere_col
+    
+    # Extract chromosome name from filename if possible
+    # Assumes format: path/to/ChrXV_distances.csv
+    chrom_name = None
+    basename = os.path.basename(input_file)
+    if basename.startswith("Chr") and "_distances" in basename:
+        chrom_name = basename.split("_distances")[0]
+    
+    return data, nucleosome_distance, centromere_distance, value_col, nucleosome_col, centromere_col, chrom_name
+
+
+def remove_problematic_positions(data, chrom_name):
+    """
+    Remove known problematic positions by setting them to zero.
+    
+    Args:
+        data: List or array of count values
+        chrom_name: Name of chromosome (e.g., 'ChrXV'), or None if unknown
+    
+    Returns:
+        cleaned_data: Data with problematic positions set to zero
+        n_removed: Number of positions removed
+    """
+    if chrom_name is None:
+        return data, 0
+    
+    data_cleaned = list(data)  # Make a copy
+    n_removed = 0
+    
+    # Known problematic positions: (chromosome, position)
+    problematic_positions = [
+        ('ChrXV', 565596),
+    ]
+    
+    for prob_chrom, prob_pos in problematic_positions:
+        if chrom_name == prob_chrom and prob_pos < len(data_cleaned):
+            if data_cleaned[prob_pos] != 0:
+                data_cleaned[prob_pos] = 0
+                n_removed += 1
+    
+    return data_cleaned, n_removed
 
 
 def run_dataset(
@@ -318,6 +468,8 @@ def run_dataset(
     thresholds,
     n_workers,
     theta_global,
+    theta_block_size,
+    outlier_threshold,
     nucleosome_file,
     centromere_file,
 ):
@@ -326,13 +478,46 @@ def run_dataset(
     nucleosome_file = resolve_path(nucleosome_file)
     centromere_file = resolve_path(centromere_file)
 
-    data, nucleosome_distance, centromere_distance, value_col, nuc_col, cent_col = read_input_data(input_file)
+    data, nucleosome_distance, centromere_distance, value_col, nuc_col, cent_col, chrom_name = read_input_data(input_file)
     print(f"Loaded {len(data)} rows from: {input_file}")
     print(f"Using columns -> value: {value_col}, nucleosome: {nuc_col}, centromere: {cent_col}")
+    
+    # Remove problematic positions
+    data, n_problematic = remove_problematic_positions(data, chrom_name)
+    if n_problematic > 0:
+        print(f"Removed {n_problematic} problematic position(s) (set to zero)")
+    
+    # Remove top 1% outliers before CPD (using pre-computed threshold if provided, non-zero values only)
+    data, actual_threshold, n_outliers = remove_top_quantile_outliers(data, quantile=0.99, threshold=outlier_threshold)
+    if outlier_threshold is not None:
+        print(f"Outlier removal: using global threshold {actual_threshold:.1f}")
+    if n_outliers > 0:
+        print(f"Outlier removal: capped {n_outliers} values ({100*n_outliers/len(data):.2f}%) above threshold {actual_threshold:.1f}")
+    else:
+        print(f"Outlier removal: no values exceeded threshold ({actual_threshold:.1f})")
 
     if theta_global == 0:
         theta_global = initialize_theta_global(data)
-    print(f"Using global theta: {theta_global:.4f}")
+    print(f"Global theta (fallback): {theta_global:.4f}")
+    
+    # Estimate local theta blocks
+    theta_blocks = None
+    if theta_block_size > 0:
+        print(f"\nEstimating local theta in {theta_block_size}bp blocks...")
+        theta_blocks = estimate_local_theta_blocks(data, block_size=theta_block_size)
+        
+        # Print statistics
+        valid_thetas = [theta for _, _, theta in theta_blocks if theta is not None]
+        if valid_thetas:
+            print(f"  Estimated {len(valid_thetas)}/{len(theta_blocks)} blocks successfully")
+            print(f"  Theta range: [{min(valid_thetas):.4f}, {max(valid_thetas):.4f}]")
+            print(f"  Theta mean: {np.mean(valid_thetas):.4f} ± {np.std(valid_thetas):.4f}")
+            print(f"  Using local theta per window (fallback: {theta_global:.4f})")
+        else:
+            print(f"  Warning: No valid theta estimates, using global theta")
+            theta_blocks = None
+    else:
+        print(f"Using global theta for all positions: {theta_global:.4f}")
 
     os.makedirs(output_folder, exist_ok=True)
 
@@ -349,6 +534,7 @@ def run_dataset(
                 overlap,
                 thresholds,
                 theta_global,
+                theta_blocks,
                 output_folder,
                 dataset_name,
                 nucleosome_file,
@@ -367,6 +553,7 @@ def run_dataset(
                 overlap,
                 thresholds,
                 theta_global,
+                theta_blocks,
                 output_folder,
                 dataset_name,
                 nucleosome_file,
@@ -418,6 +605,18 @@ def parse_arguments():
         type=float,
         default=0,
         help="Global theta value (0 means estimate from data).",
+    )
+    parser.add_argument(
+        "--theta_block_size",
+        type=int,
+        default=2000,
+        help="Block size for local theta estimation in bp (0 means use global theta only). Default: 2000",
+    )
+    parser.add_argument(
+        "--outlier_threshold",
+        type=float,
+        default=None,
+        help="Pre-computed outlier threshold value. If not provided, computed as 95th percentile of data.",
     )
     parser.add_argument(
         "--nucleosome_file",
@@ -501,6 +700,8 @@ def main():
                 thresholds=thresholds,
                 n_workers=args.n_workers,
                 theta_global=args.theta_global,
+                theta_block_size=args.theta_block_size,
+                outlier_threshold=args.outlier_threshold,
                 nucleosome_file=nucleosome_file,
                 centromere_file=centromere_file,
             )
@@ -520,6 +721,8 @@ def main():
         thresholds=thresholds,
         n_workers=args.n_workers,
         theta_global=args.theta_global,
+        theta_block_size=args.theta_block_size,
+        outlier_threshold=args.outlier_threshold,
         nucleosome_file=nucleosome_file,
         centromere_file=centromere_file,
     )

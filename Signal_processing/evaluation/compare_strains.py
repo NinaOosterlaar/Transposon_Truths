@@ -15,6 +15,7 @@ import seaborn as sns
 from pathlib import Path
 from collections import defaultdict
 from itertools import combinations
+from scipy.stats import pearsonr, spearmanr
 
 # Add parent directories to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
@@ -51,6 +52,19 @@ chromosome_length = {
 
 # All chromosomes in order
 ALL_CHROMOSOMES = list(chromosome_length.keys())
+
+# List of strains to process
+# Comment out any strains you want to exclude from the analysis
+STRAINS = [
+    'strain_FD',
+    'strain_dnrp',
+    'strain_yEK19',
+    'strain_yEK23',
+    'strain_yTW001',
+    'strain_yWT03a',
+    'strain_yWT04a',
+    'strain_ylic137'
+]
 
 
 def load_changepoints_for_strain(strain_name, threshold, window_size=100, overlap=50, base_path=None):
@@ -210,6 +224,170 @@ def compute_aggregated_nearest_breakpoint_distance(strain_cps_a, strain_cps_b):
     return mean_nearest_breakpoint_distance(strain_cps_a, strain_cps_b, chromosome_length)
 
 
+def load_essentiality_for_strain(strain_name, threshold, window_size=100, overlap=50, base_path=None):
+    """
+    Load essentiality z-scores for all chromosomes of a given strain at a specific threshold.
+    
+    Creates a position-to-z-score mapping by reading segment_mu CSV files.
+    
+    Parameters
+    ----------
+    strain_name : str
+        Name of the strain (e.g., 'strain_FD', 'strain_dnrp')
+    threshold : float
+        Threshold value to load
+    window_size : int, optional
+        Window size parameter (default: 100)
+    overlap : int, optional
+        Overlap percentage (default: 50)
+    base_path : Path, optional
+        Base path to the strains directory. If None, uses default.
+        
+    Returns
+    -------
+    dict
+        Dictionary with chromosome names as keys and numpy arrays (position-to-z-score) as values.
+        Positions with NaN z-scores are set to NaN.
+    """
+    if base_path is None:
+        base_path = Path(__file__).parent.parent / "strains"
+    
+    strain_path = base_path / strain_name
+    essentiality_data = {}
+    
+    files_loaded = 0
+    files_missing = 0
+    total_valid_positions = 0
+    
+    for chrom in ALL_CHROMOSOMES:
+        # Path to segment_mu CSV file
+        segment_file = (strain_path / chrom / f"{chrom}_distances" / f"window{window_size}" / 
+                       "segment_mu" / f"{chrom}_distances_ws{window_size}_ov{overlap}_th{threshold:.2f}_segment_mu.csv")
+        
+        if not segment_file.exists():
+            # No essentiality data for this chromosome - create array of NaNs
+            chrom_length = chromosome_length[chrom]
+            essentiality_data[chrom] = np.full(chrom_length, np.nan)
+            files_missing += 1
+            continue
+        
+        # Read segment data
+        try:
+            df = pd.read_csv(segment_file)
+            chrom_length = chromosome_length[chrom]
+            
+            # Initialize array with NaN
+            z_score_array = np.full(chrom_length, np.nan)
+            
+            # Fill in z-scores for each segment
+            for _, row in df.iterrows():
+                start = int(row['start_index'])
+                end = int(row['end_index_exclusive'])
+                z_score = row['mu_z_score']
+                
+                # Assign z-score to all positions in this segment
+                if start < chrom_length and end <= chrom_length:
+                    z_score_array[start:end] = z_score
+            
+            essentiality_data[chrom] = z_score_array
+            files_loaded += 1
+            
+            # Count valid (non-NaN) positions
+            n_valid = np.sum(~np.isnan(z_score_array))
+            total_valid_positions += n_valid
+            
+        except Exception as e:
+            print(f"    Warning: Could not load {strain_name} {chrom} threshold {threshold}: {e}")
+            chrom_length = chromosome_length[chrom]
+            essentiality_data[chrom] = np.full(chrom_length, np.nan)
+            files_missing += 1
+    
+    # Print summary
+    if files_loaded > 0 or files_missing > 0:
+        print(f"    {strain_name}: loaded {files_loaded} chromosomes, missing {files_missing}, "
+              f"valid positions: {total_valid_positions:,}")
+    
+    return essentiality_data
+
+
+def compute_essentiality_correlation(strain_ess_a, strain_ess_b, method='pearson'):
+    """
+    Compute correlation of essentiality z-scores between two strains.
+    
+    Concatenates all chromosomes and computes correlation across all genomic positions.
+    Positions where either strain has NaN are excluded.
+    
+    Parameters
+    ----------
+    strain_ess_a : dict
+        Essentiality data for strain A (chromosome -> z-score array)
+    strain_ess_b : dict
+        Essentiality data for strain B (chromosome -> z-score array)
+    method : str, optional
+        'pearson' or 'spearman' (default: 'pearson')
+        
+    Returns
+    -------
+    float
+        Correlation coefficient. Returns NaN if insufficient valid data.
+    """
+    # Concatenate all chromosomes in order
+    all_z_a = []
+    all_z_b = []
+    
+    for chrom in ALL_CHROMOSOMES:
+        z_a = strain_ess_a.get(chrom, np.array([]))
+        z_b = strain_ess_b.get(chrom, np.array([]))
+        
+        # Ensure same length
+        min_len = min(len(z_a), len(z_b))
+        if min_len > 0:
+            all_z_a.extend(z_a[:min_len])
+            all_z_b.extend(z_b[:min_len])
+    
+    # Convert to numpy arrays
+    all_z_a = np.array(all_z_a)
+    all_z_b = np.array(all_z_b)
+    
+    # Filter out NaN values
+    valid_mask = ~(np.isnan(all_z_a) | np.isnan(all_z_b))
+    
+    n_valid = np.sum(valid_mask)
+    
+    if n_valid < 2:
+        # Not enough valid data points
+        return np.nan
+    
+    z_a_valid = all_z_a[valid_mask]
+    z_b_valid = all_z_b[valid_mask]
+    
+    # Check for zero variance (all values identical)
+    if np.std(z_a_valid) == 0 or np.std(z_b_valid) == 0:
+        print(f"    Warning: Zero variance detected. Valid points: {n_valid}, "
+              f"Strain A: mean={np.mean(z_a_valid):.4f} std={np.std(z_a_valid):.4f}, "
+              f"Strain B: mean={np.mean(z_b_valid):.4f} std={np.std(z_b_valid):.4f}")
+        return np.nan
+    
+    # Compute correlation
+    try:
+        if method == 'pearson':
+            corr, p_value = pearsonr(z_a_valid, z_b_valid)
+        elif method == 'spearman':
+            corr, p_value = spearmanr(z_a_valid, z_b_valid)
+        else:
+            raise ValueError(f"Unknown method: {method}. Use 'pearson' or 'spearman'.")
+        
+        # Debug: print if correlation is suspiciously high
+        if abs(corr) > 0.99 and n_valid > 10:
+            print(f"    High correlation detected: {method}={corr:.6f}, n_valid={n_valid}, "
+                  f"p-value={p_value:.6e}")
+        
+        return corr
+    except Exception as e:
+        print(f"Warning: Could not compute {method} correlation: {e}")
+        return np.nan
+
+
 def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
     """
     Compute all similarity metrics for all pairs of strains at a given threshold.
@@ -232,6 +410,8 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
         - 'ari': Adjusted Rand Index
         - 'nbp_dist_a_to_b': Nearest-breakpoint distance A→B (asymmetric)
         - 'nbp_dist_b_to_a': Nearest-breakpoint distance B→A (asymmetric)
+        - 'ess_corr_pearson': Essentiality correlation (Pearson)
+        - 'ess_corr_spearman': Essentiality correlation (Spearman)
     """
     n_strains = len(strain_names)
     jaccard_matrix = np.ones((n_strains, n_strains))
@@ -239,11 +419,19 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
     ari_matrix = np.ones((n_strains, n_strains))
     nbp_dist_a_to_b_matrix = np.zeros((n_strains, n_strains))
     nbp_dist_b_to_a_matrix = np.zeros((n_strains, n_strains))
+    ess_corr_pearson_matrix = np.zeros((n_strains, n_strains))
+    ess_corr_spearman_matrix = np.zeros((n_strains, n_strains))
     
     # Load change points for all strains
     strain_changepoints = {}
     for strain in strain_names:
         strain_changepoints[strain] = load_changepoints_for_strain(strain, threshold)
+    
+    # Load essentiality data for all strains
+    print(f"  Loading essentiality data for threshold {threshold}...")
+    strain_essentiality = {}
+    for strain in strain_names:
+        strain_essentiality[strain] = load_essentiality_for_strain(strain, threshold)
     
     # Compute pairwise metrics
     for i, strain_a in enumerate(strain_names):
@@ -274,6 +462,19 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
                     strain_changepoints[strain_b]
                 )
                 
+                # Essentiality correlations (symmetric)
+                ess_pearson = compute_essentiality_correlation(
+                    strain_essentiality[strain_a],
+                    strain_essentiality[strain_b],
+                    method='pearson'
+                )
+                
+                ess_spearman = compute_essentiality_correlation(
+                    strain_essentiality[strain_a],
+                    strain_essentiality[strain_b],
+                    method='spearman'
+                )
+                
                 # Fill symmetric metrics in both triangles
                 jaccard_matrix[i, j] = jaccard
                 jaccard_matrix[j, i] = jaccard
@@ -284,11 +485,22 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
                 ari_matrix[i, j] = ari
                 ari_matrix[j, i] = ari
                 
+                ess_corr_pearson_matrix[i, j] = ess_pearson
+                ess_corr_pearson_matrix[j, i] = ess_pearson
+                
+                ess_corr_spearman_matrix[i, j] = ess_spearman
+                ess_corr_spearman_matrix[j, i] = ess_spearman
+                
                 # Fill asymmetric metrics
                 nbp_dist_a_to_b_matrix[i, j] = nbp_dist['a_to_b']
                 nbp_dist_b_to_a_matrix[i, j] = nbp_dist['b_to_a']
                 nbp_dist_a_to_b_matrix[j, i] = nbp_dist['b_to_a']  # Transpose
                 nbp_dist_b_to_a_matrix[j, i] = nbp_dist['a_to_b']  # Transpose
+    
+    # Fill diagonal for correlation matrices (strain with itself = 1.0)
+    for i in range(n_strains):
+        ess_corr_pearson_matrix[i, i] = 1.0
+        ess_corr_spearman_matrix[i, i] = 1.0
     
     # Convert to DataFrames with proper labels
     results = {
@@ -296,24 +508,28 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
         'jaccard_tol': pd.DataFrame(jaccard_tol_matrix, index=strain_names, columns=strain_names),
         'ari': pd.DataFrame(ari_matrix, index=strain_names, columns=strain_names),
         'nbp_dist_a_to_b': pd.DataFrame(nbp_dist_a_to_b_matrix, index=strain_names, columns=strain_names),
-        'nbp_dist_b_to_a': pd.DataFrame(nbp_dist_b_to_a_matrix, index=strain_names, columns=strain_names)
+        'nbp_dist_b_to_a': pd.DataFrame(nbp_dist_b_to_a_matrix, index=strain_names, columns=strain_names),
+        'ess_corr_pearson': pd.DataFrame(ess_corr_pearson_matrix, index=strain_names, columns=strain_names),
+        'ess_corr_spearman': pd.DataFrame(ess_corr_spearman_matrix, index=strain_names, columns=strain_names)
     }
     
     return results
-def plot_heatmap(matrix_df, metric_name, threshold, output_dir):
+def plot_heatmap(matrix_df, metric_name, threshold, output_dir, metric_short_name=None):
     """
-    Create and save a heatmap for a similarity matrix.
+    Create and save a heatmap for a similarity/distance matrix.
     
     Parameters
     ----------
     matrix_df : pd.DataFrame
-        Similarity matrix (strain x strain)
+        Similarity or distance matrix (strain x strain)
     metric_name : str
-        Name of the metric ('Jaccard Index' or 'Adjusted Rand Index')
+        Full name of the metric for display
     threshold : float
         Threshold value used
     output_dir : Path
         Directory to save the figure
+    metric_short_name : str, optional
+        Short name for file naming (if None, derived from metric_name)
     """
     # Clean strain names for display (remove 'strain_' prefix)
     display_names = [name.replace('strain_', '') for name in matrix_df.index]
@@ -321,30 +537,45 @@ def plot_heatmap(matrix_df, metric_name, threshold, output_dir):
     # Create figure
     fig, ax = plt.subplots(figsize=(10, 8))
     
-    # Determine color limits based on metric
+    # Determine color limits and format based on metric type
     if 'Jaccard' in metric_name:
         vmin, vmax = 0, 1
         cmap = 'YlOrRd'
         fmt = '.3f'
-    else:  # ARI
-        vmin, vmax = -1, 1
+    elif 'ARI' in metric_name or 'Rand Index' in metric_name:
+        vmin, vmax = -0.2, 1
         cmap = 'RdYlGn'
+        fmt = '.3f'
+    elif 'Correlation' in metric_name or 'Essentiality' in metric_name:
+        # Correlation metrics - range from -1 to 1
+        vmin, vmax = -1, 1
+        cmap = 'RdBu_r'  # Red=positive, Blue=negative
+        fmt = '.3f'
+    elif 'Distance' in metric_name or 'NBP' in metric_name:
+        # Distance metrics - lower is better, use reversed colormap
+        vmin, vmax = 0, None  # Let data determine max
+        cmap = 'YlOrRd_r'  # Reversed: yellow=far, red=close
+        fmt = '.0f'  # Integer formatting for base pairs
+    else:
+        # Default
+        vmin, vmax = None, None
+        cmap = 'viridis'
         fmt = '.3f'
     
     # Create heatmap
     sns.heatmap(matrix_df.values, 
-            annot=True, 
-            fmt=fmt,
-            cmap=cmap,
-            vmin=vmin,
-            vmax=vmax,
-            square=True,
-            cbar_kws={'label': metric_name},
-            xticklabels=display_names,
-            yticklabels=display_names,
-            linewidths=0.5,
-            linecolor='gray',
-            ax=ax)
+                annot=True, 
+                fmt=fmt,
+                cmap=cmap,
+                vmin=vmin,
+                vmax=vmax,
+                square=True,
+                cbar_kws={'label': metric_name},
+                xticklabels=display_names,
+                yticklabels=display_names,
+                linewidths=0.5,
+                linecolor='gray',
+                ax=ax)
 
     for label in ax.get_xticklabels():
         label.set_fontsize(12)
@@ -368,33 +599,116 @@ def plot_heatmap(matrix_df, metric_name, threshold, output_dir):
     plt.tight_layout()
     
     # Save figure
-    metric_short = 'jaccard' if 'Jaccard' in metric_name else 'ari'
-    output_file = output_dir / f'{metric_short}_heatmap_threshold_{threshold:.1f}.png'
+    if metric_short_name is None:
+        if 'Jaccard' in metric_name and 'tolerance' in metric_name.lower():
+            metric_short_name = 'jaccard_tol'
+        elif 'Jaccard' in metric_name:
+            metric_short_name = 'jaccard'
+        elif 'ARI' in metric_name or 'Rand Index' in metric_name:
+            metric_short_name = 'ari'
+        elif 'NBP' in metric_name or 'Nearest' in metric_name:
+            # Extract direction from metric name
+            if 'A→B' in metric_name or 'A->B' in metric_name:
+                metric_short_name = 'nbp_dist_a_to_b'
+            else:
+                metric_short_name = 'nbp_dist_b_to_a'
+        else:
+            metric_short_name = 'metric'
+    
+    output_file = output_dir / f'{metric_short_name}_heatmap_threshold_{threshold:.1f}.png'
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"  Saved heatmap: {output_file.name}")
+
+
+def plot_changepoint_counts(strain_names, thresholds, output_dir):
+    """
+    Create bar plots showing the number of change points for each strain at each threshold.
+    
+    Parameters
+    ----------
+    strain_names : list of str
+        List of strain names to analyze
+    thresholds : list of float
+        Threshold values to process
+    output_dir : Path
+        Directory to save the figures
+    """
+    print("Counting change points for all strains...")
+    print()
+    
+    # Count change points for each strain and threshold
+    counts = {threshold: {} for threshold in thresholds}
+    
+    for threshold in thresholds:
+        for strain in strain_names:
+            strain_cps = load_changepoints_for_strain(strain, threshold)
+            # Sum across all chromosomes
+            total_cps = sum(len(cps) for cps in strain_cps.values())
+            counts[threshold][strain] = total_cps
+    
+    # Create a bar plot for each threshold
+    for threshold in thresholds:
+        # Clean strain names for display (remove 'strain_' prefix)
+        display_names = [name.replace('strain_', '') for name in strain_names]
+        strain_counts = [counts[threshold][strain] for strain in strain_names]
+        
+        # Create figure
+        fig, ax = plt.subplots(figsize=(12, 6))
+        
+        # Create bars
+        bars = ax.bar(display_names, strain_counts, color=COLORS['blue'], alpha=0.8, edgecolor='black', linewidth=1.5)
+        
+        # Add value labels on bars
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height,
+                   f'{int(height)}',
+                   ha='center', va='bottom', fontsize=10, fontweight='bold')
+        
+        # Labels and title
+        ax.set_xlabel('Strain', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Number of Change Points', fontsize=12, fontweight='bold')
+        ax.set_title(f'Change Point Counts per Strain (Threshold = {threshold:.1f})', 
+                    fontsize=14, fontweight='bold', pad=20)
+        
+        # Rotate x-axis labels for better readability
+        plt.xticks(rotation=45, ha='right', fontsize=11)
+        plt.yticks(fontsize=11)
+        
+        # Add grid for easier reading
+        ax.grid(axis='y', alpha=0.3, linestyle='--', linewidth=0.5)
+        ax.set_axisbelow(True)
+        
+        # Adjust layout
+        plt.tight_layout()
+        
+        # Save figure
+        output_file = output_dir / f'changepoint_counts_threshold_{threshold:.1f}.png'
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        print(f"Threshold {threshold:.1f}:")
+        for strain, count in counts[threshold].items():
+            print(f"  {strain:20s}: {count:5d} change points")
+        print(f"  Saved: {output_file.name}\n")
+    
+    print()
+
 
 def main():
     """
     Main function to compare strains across multiple thresholds.
     """
     # Configuration
-    strain_names = [
-        'strain_FD',
-        'strain_dnrp',
-        'strain_yEK19',
-        'strain_yEK23',
-        'strain_yTW001',
-        'strain_yWT03a',
-        'strain_yWT04a',
-        'strain_ylic137'
-    ]
+    strain_names = STRAINS  # Use the module-level constant
     
-    thresholds = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+    thresholds = [3, 5, 10, 15]
+    tolerance = 100  # bp tolerance for Jaccard with tolerance
     
     # Create output directory
-    output_dir = Path(__file__).parent / "compare_strains"
+    output_dir = Path(__file__).parent / "compare_strains2"
     output_dir.mkdir(exist_ok=True)
     
     print("=" * 80)
@@ -404,45 +718,56 @@ def main():
     for strain in strain_names:
         print(f"  - {strain}")
     print(f"\nThresholds: {thresholds}")
+    print(f"Tolerance: {tolerance} bp")
     print(f"Output directory: {output_dir}")
     print("=" * 80)
     print()
     
-    # Store all results for CSV export (as multi-index with threshold levels)
-    all_jaccard_results = {}
-    all_ari_results = {}
+    # Plot change point counts for all strains at all thresholds
+    plot_changepoint_counts(strain_names, thresholds, output_dir)
+    
+    # Store all results for CSV export
+    all_results = {
+        'jaccard': {},
+        'jaccard_tol': {},
+        'ari': {},
+        'nbp_dist_a_to_b': {},
+        'nbp_dist_b_to_a': {},
+        'ess_corr_pearson': {},
+        'ess_corr_spearman': {}
+    }
     
     # Process each threshold
     for threshold in thresholds:
         print(f"Processing threshold {threshold:.1f}...")
         
-        # Compute pairwise metrics
-        jaccard_df, ari_df = compute_pairwise_metrics(strain_names, threshold)
+        # Compute pairwise metrics (returns dict of DataFrames)
+        metrics = compute_pairwise_metrics(strain_names, threshold, tolerance=tolerance)
         
-        # Store results with threshold as key
-        all_jaccard_results[threshold] = jaccard_df
-        all_ari_results[threshold] = ari_df
+        # Store results
+        for metric_key, df in metrics.items():
+            all_results[metric_key][threshold] = df
         
-        # Create heatmaps
-        plot_heatmap(jaccard_df, 'Jaccard Index', threshold, output_dir)
-        plot_heatmap(ari_df, 'Adjusted Rand Index', threshold, output_dir)
+        # Create heatmaps for all metrics
+        plot_heatmap(metrics['jaccard'], 'Jaccard Index (Exact)', threshold, output_dir, 'jaccard')
+        plot_heatmap(metrics['jaccard_tol'], f'Jaccard Index (Tolerance {tolerance}bp)', threshold, output_dir, 'jaccard_tol')
+        plot_heatmap(metrics['ari'], 'Adjusted Rand Index', threshold, output_dir, 'ari')
+        plot_heatmap(metrics['nbp_dist_a_to_b'], 'Mean Nearest-Breakpoint Distance (Row→Column)', threshold, output_dir, 'nbp_dist_a_to_b')
+        plot_heatmap(metrics['ess_corr_pearson'], 'Essentiality Correlation (Pearson)', threshold, output_dir, 'ess_corr_pearson')
+        plot_heatmap(metrics['ess_corr_spearman'], 'Essentiality Correlation (Spearman)', threshold, output_dir, 'ess_corr_spearman')
+        # Optionally plot the reverse direction
+        # plot_heatmap(metrics['nbp_dist_b_to_a'], 'Mean Nearest-Breakpoint Distance (Column→Row)', threshold, output_dir, 'nbp_dist_b_to_a')
         
         print(f"  Threshold {threshold:.1f} complete\n")
     
     # Save results to CSV files
     print("Saving results to CSV files...")
     
-    # Jaccard results - save each threshold separately
-    for threshold, jaccard_df in all_jaccard_results.items():
-        jaccard_csv = output_dir / f'jaccard_index_threshold_{threshold:.1f}.csv'
-        jaccard_df.to_csv(jaccard_csv)
-    print(f"  Saved Jaccard Index results for {len(thresholds)} thresholds")
-    
-    # ARI results - save each threshold separately
-    for threshold, ari_df in all_ari_results.items():
-        ari_csv = output_dir / f'ari_threshold_{threshold:.1f}.csv'
-        ari_df.to_csv(ari_csv)
-    print(f"  Saved ARI results for {len(thresholds)} thresholds")
+    for metric_name, threshold_dict in all_results.items():
+        for threshold, df in threshold_dict.items():
+            csv_file = output_dir / f'{metric_name}_threshold_{threshold:.1f}.csv'
+            df.to_csv(csv_file)
+        print(f"  Saved {metric_name} results for {len(thresholds)} thresholds")
     
     print()
     print("=" * 80)

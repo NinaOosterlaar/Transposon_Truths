@@ -479,22 +479,31 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+import glob
+import os
 
 # -----------------------------
-# Load data
+# Load data from multiple k files
 # -----------------------------
-df_true = pd.read_csv("AE/results/results_saturation/saturation.csv")
-# df_false = pd.read_csv("AE/results/saturation_bins/saturation_results_aggregated.csv")
+data_dir = "AE/results/saturation_skipzeros3"
+aggregated_files = sorted(glob.glob(os.path.join(data_dir, "saturation_results_aggregated_k*.csv")))
 
-# Sort both the same way
+# Read and combine all k files
+df_list = []
+for file in aggregated_files:
+    df_temp = pd.read_csv(file)
+    df_list.append(df_temp)
+
+df_true = pd.concat(df_list, ignore_index=True)
+
+# Sort by saturation or n_datasets
 df_true = df_true.sort_values("n_datasets").reset_index(drop=True)
-# df_false = df_false.sort_values("n_datasets").reset_index(drop=True)
 
 # -----------------------------
 # Plot settings
 # -----------------------------
 plt.rcParams.update({
-    "figure.figsize": (12, 9),
+    "figure.figsize": (10, 8),
     "font.size": 12,
     "axes.titlesize": 14,
     "axes.labelsize": 12,
@@ -503,9 +512,6 @@ plt.rcParams.update({
     "axes.spines.right": False,
 })
 
-model_colors = {
-    "Moving average": "black",
-}
 
 split_styles = {
     "train": ":",
@@ -519,71 +525,59 @@ metrics = [
     ("masked_loss", "Masked recon. loss"),
 ]
 
-models = [
-    ("Moving average", df_true),
-]
 
-x_ticks = sorted(df_true["n_datasets"].unique())
 
-fig, axes = plt.subplots(2, 3, figsize=(12, 9), sharex=True)
+# Use saturation as x-axis (convert to percentage)
+x_values = df_true["saturation_mean"] * 100
+x_errors = df_true["saturation_std"] * 100
+
+# Create 2x2 plot instead of 2x3
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
 axes = axes.flatten()
 
 # -----------------------------
-# First 4 panels: metrics
+# All 4 panels: metrics with saturation as x-axis
 # -----------------------------
 for ax, (metric_key, metric_label) in zip(axes[:4], metrics):
-    for model_name, df in models:
-        color = model_colors[model_name]
-
-        for split in ["train", "test"]:
-            ax.errorbar(
-                df["n_datasets"],
-                df[f"{split}_{metric_key}_mean"],
-                yerr=df[f"{split}_{metric_key}_std"],
-                color=color,
-                linestyle=split_styles[split],
-                marker="o",
-                linewidth=2,
-                markersize=5,
-                capsize=3,
-                alpha=0.95,
-            )
+    for split in ["train", "test"]:
+        ax.errorbar(
+            x_values,
+            df_true[f"{split}_{metric_key}_mean"],
+            yerr=df_true[f"{split}_{metric_key}_std"],
+            color="black",
+            linestyle=split_styles[split],
+            marker="o",
+            linewidth=2,
+            markersize=5,
+            capsize=3,
+            alpha=0.95,
+        )
 
     ax.set_title(metric_label)
     ax.set_ylabel(metric_label)
-    ax.set_xlabel("Number of combined datasets")
-    ax.set_xticks(x_ticks)
-    ax.tick_params(axis="x", labelbottom=True)
+    ax.set_xlabel("Saturation level (%)")
+    
+    # Set y-axis limits with padding
+    # Calculate max value including error bars
+    max_vals = []
+    for split in ["train", "test"]:
+        vals = df_true[f"{split}_{metric_key}_mean"].values
+        errs = df_true[f"{split}_{metric_key}_std"].values
+        max_vals.append((vals + errs).max())
+    
+    y_max = max(max_vals) * 1.15  # Add 15% padding at the top
+    
+
+
+    ax.set_ylim(top=y_max)
+
+
+    ax.set_ylim(0, y_max)
+    
     ax.grid(True, alpha=0.3)
 
-# -----------------------------
-# 5th panel: one black saturation line
-# -----------------------------
-ax = axes[4]
-ax.errorbar(
-    df_true["n_datasets"],
-    df_true["saturation_mean"] * 100,
-    yerr=df_true["saturation_std"] * 100,
-    color="black",
-    linestyle="-",
-    marker="o",
-    linewidth=2,
-    markersize=5,
-    capsize=3,
-    alpha=0.95,
-)
-
-ax.set_title("Saturation level")
-ax.set_ylabel("Saturation level (%)")
-ax.set_xlabel("Number of combined datasets")
-ax.set_xticks(x_ticks)
-ax.tick_params(axis="x", labelbottom=True)
-ax.grid(True, alpha=0.3)
-
-axes[5].set_visible(False)
-
 # panel labels
-for ax, label in zip(axes[:5], ["a", "b", "c", "d", "e"]):
+for ax, label in zip(axes[:4], ["a", "b", "c", "d"]):
     ax.text(
         -0.12, 1.05, label,
         transform=ax.transAxes,
@@ -597,19 +591,17 @@ for ax, label in zip(axes[:5], ["a", "b", "c", "d", "e"]):
 # Legend
 # -----------------------------
 legend_handles = [
-    Line2D([0], [0], color=model_colors["Moving average"], lw=2, label="Moving average"),
     Line2D([0], [0], color="black", lw=2, linestyle=":", label="Train"),
     Line2D([0], [0], color="black", lw=2, linestyle="-", label="Test"),
-    Line2D([0], [0], color="black", lw=2, marker="o", label="Saturation"),
 ]
 
-# fig.legend(
-#     handles=legend_handles,
-#     loc="upper center",
-#     bbox_to_anchor=(0.5, 0.99),
-#     ncol=5,
-#     frameon=False,
-# )
+fig.legend(
+    handles=legend_handles,
+    loc="upper center",
+    bbox_to_anchor=(0.5, 0.99),
+    ncol=2,
+    frameon=False,
+)
 
-plt.tight_layout(rect=[0, 0, 1, 0.92])
+plt.tight_layout(rect=[0, 0, 1, 0.95])
 plt.show()
