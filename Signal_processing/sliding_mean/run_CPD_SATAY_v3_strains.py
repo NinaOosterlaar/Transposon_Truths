@@ -98,11 +98,22 @@ def main():
         description="Run sliding_ZINB_CPD_v3_SATAY.py on all strains from Data/combined_strains."
     )
     parser.add_argument(
-        "--thresholds",
+        "--threshold_start",
         type=float,
-        nargs="+",
-        default=[3, 5, 10, 15],
-        help="List of thresholds to test (e.g., 3 5 10 15). Default: [3, 5, 10, 15]",
+        default=3.0,
+        help="Minimum threshold. Default: 3.0",
+    )
+    parser.add_argument(
+        "--threshold_end",
+        type=float,
+        default=15.0,
+        help="Maximum threshold. Default: 15.0",
+    )
+    parser.add_argument(
+        "--threshold_step",
+        type=float,
+        default=1.0,
+        help="Threshold step size. Default: 1.0",
     )
     args = parser.parse_args()
     
@@ -124,7 +135,9 @@ def main():
     # Parameters
     window_sizes = [100]
     overlap = 0.5
-    thresholds = args.thresholds  # Use thresholds from command line
+    threshold_start = args.threshold_start
+    threshold_end = args.threshold_end
+    threshold_step = args.threshold_step
     theta_block_size = 2000  # Local theta estimation in 2000bp blocks
     n_workers = 1
     timeout_seconds = 1800  # 30 minutes per chromosome
@@ -137,7 +150,7 @@ def main():
     print(f"Nucleosomes:  {nucleosome_base}")
     print(f"Results:      {output_base}")
     print(f"Script:       {cpd_script}")
-    print(f"Thresholds:   {thresholds}")
+    print(f"Thresholds:   {threshold_start} to {threshold_end} (step {threshold_step})")
     print()
     
     total_processed = 0
@@ -214,7 +227,7 @@ def main():
         print()
         
         print(f"  Processing {len(chromosome_files)} chromosomes:")
-        print(f"  Thresholds: {thresholds}")
+        print(f"  Thresholds: {threshold_start} to {threshold_end} (step {threshold_step})")
         print()
         
         # Process each chromosome
@@ -225,7 +238,7 @@ def main():
             # Output folder: Signal_processing/strains/{strain_name}/{chromosome}/
             output_folder = output_base / strain_name / chrom_name
             
-            # Build command - pass thresholds as multiple arguments
+            # Build command - pass threshold range parameters
             cmd = [
                 sys.executable,
                 str(cpd_script),
@@ -234,16 +247,14 @@ def main():
                 "--window_sizes", str(window_sizes[0]),
                 "--overlap", str(overlap),
                 "--theta_block_size", str(theta_block_size),
-                "--thresholds"
-            ]
-            # Add each threshold as a separate value
-            cmd.extend([str(t) for t in thresholds])
-            cmd.extend([
+                "--threshold_start", str(threshold_start),
+                "--threshold_end", str(threshold_end),
+                "--threshold_step", str(threshold_step),
                 "--outlier_threshold", str(outlier_threshold),
                 "--n_workers", str(n_workers),
                 "--nucleosome_file", str(nucleosome_file),
                 "--centromere_file", str(centromere_file),
-            ])
+            ]
             
             # Run the command
             try:
