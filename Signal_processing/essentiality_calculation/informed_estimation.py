@@ -168,7 +168,7 @@ def estimate_segments_informed(
 					"length": 0,
 					"raw_mean": np.nan,
 					"centromere_mid_distance": np.nan,
-					"pi_centromere": np.nan,
+					"centromere_density": np.nan,
 					"segment_nucleosome_density": np.nan,
 					"global_nucleosome_density": global_nucl_density,
 					"pi_informed": np.nan,
@@ -183,7 +183,7 @@ def estimate_segments_informed(
 		centr_dist_middle = int(centromere_distances[middle])
 		centr_dist_middle = min(max(centr_dist_middle, cmin), cmax)
 
-		pi_centromere = interpolate_density(
+		centromere_density = interpolate_density(
 			centr_dist_middle,
 			centromere_lookup_df,
 			"Centromere_Distance_Bin",
@@ -192,8 +192,10 @@ def estimate_segments_informed(
 
 		seg_nucl_density = float(distance_to_density.loc[seg_nucl_dist].mean())
 		pi_informed = float(
-			np.clip(pi_centromere * (seg_nucl_density / global_nucl_density), eps, 1.0 - eps)
+			np.clip(centromere_density * (seg_nucl_density / global_nucl_density), eps, 1.0 - eps)
 		)
+
+		pi_informed = 1 - pi_informed
 
 		raw_mean = float(np.mean(segment))
 		mu_informed = float(np.clip(raw_mean / max(1.0 - pi_informed, eps), eps, None))
@@ -206,7 +208,7 @@ def estimate_segments_informed(
 				"length": end - start,
 				"raw_mean": raw_mean,
 				"centromere_mid_distance": centr_dist_middle,
-				"pi_centromere": pi_centromere,
+				"centromere_density": centromere_density,
 				"segment_nucleosome_density": seg_nucl_density,
 				"global_nucleosome_density": global_nucl_density,
 				"pi_informed": pi_informed,
@@ -314,7 +316,7 @@ def parse_arguments():
 	parser.add_argument(
 		"--base_data_folder",
 		type=str,
-		default="Signal_processing/final/SATAY_synthetic",
+		default="Signal_processing/tests/SATAY_synthetic",
 		help="Folder containing SATAY synthetic datasets (1..10).",
 	)
 	parser.add_argument(

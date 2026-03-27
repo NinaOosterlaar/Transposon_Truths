@@ -210,9 +210,6 @@ def sliding_ZINB_CPD_v3(
         pi1 = 1 - s1
         pi2 = 1 - s2
 
-        pi1 = np.clip(pi0 * (temp1_nucl / max(temp0_nucl, eps)), eps, 1 - eps)
-        pi2 = np.clip(pi0 * (temp2_nucl / max(temp0_nucl, eps)), eps, 1 - eps)
-
         # Alternative model: separate mu per window
         mu1 = np.clip(np.mean(w1) / max(1 - pi1, eps), eps, None)
         mu2 = np.clip(np.mean(w2) / max(1 - pi2, eps), eps, None)

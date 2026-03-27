@@ -759,7 +759,7 @@ def parse_arguments():
 	parser.add_argument(
 		"--base_data_folder",
 		type=str,
-		default="Signal_processing/final/SATAY_synthetic",
+		default="Signal_processing/tests/SATAY_synthetic",
 		help="Folder containing SATAY synthetic datasets (1..10).",
 	)
 	parser.add_argument(
