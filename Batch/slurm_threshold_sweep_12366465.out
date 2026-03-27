@@ -1,0 +1,366 @@
+==========================================
+STEP 2: Running Essentiality Calculation (thresholds 1-40)
+==========================================
+================================================================================
+SATAY Strain Essentiality Calculation
+================================================================================
+Data folder: /workspace/Data/combined_strains
+Results folder: /workspace/Signal_processing/strains
+Strains to process: 8
+  - strain_FD
+  - strain_dnrp
+  - strain_yEK19
+  - strain_yEK23
+  - strain_yTW001
+  - strain_yWT03a
+  - strain_yWT04a
+  - strain_ylic137
+Thresholds to process: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0, 29.0, 30.0, 31.0, 32.0, 33.0, 34.0, 35.0, 36.0, 37.0, 38.0, 39.0, 40.0]
+Output subfolder: segment_mu
+Summary output: /workspace/Signal_processing/essentiality_calculation/strain_essentiality_summary.csv
+================================================================================
+
+================================================================================
+Processing strain_FD
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 105.0
+  Total outliers to cap: 41159 (0.34%) across all chromosomes
+
+    ChrI: capped 1268 outliers (0.55%)
+  Processing ChrI: 40 threshold files
+    ChrII: capped 2699 outliers (0.33%)
+  Processing ChrII: 40 threshold files
+    ChrIII: capped 1683 outliers (0.53%)
+  Processing ChrIII: 40 threshold files
+    ChrIV: capped 3146 outliers (0.21%)
+  Processing ChrIV: 40 threshold files
+    ChrV: capped 2485 outliers (0.43%)
+  Processing ChrV: 40 threshold files
+    ChrVI: capped 1370 outliers (0.51%)
+  Processing ChrVI: 40 threshold files
+    ChrVII: capped 2740 outliers (0.25%)
+  Processing ChrVII: 40 threshold files
+    ChrVIII: capped 2128 outliers (0.38%)
+  Processing ChrVIII: 40 threshold files
+    ChrIX: capped 1831 outliers (0.42%)
+  Processing ChrIX: 40 threshold files
+    ChrX: capped 2601 outliers (0.35%)
+  Processing ChrX: 40 threshold files
+    ChrXI: capped 2199 outliers (0.33%)
+  Processing ChrXI: 40 threshold files
+    ChrXII: capped 4705 outliers (0.44%)
+  Processing ChrXII: 40 threshold files
+    ChrXIII: capped 2811 outliers (0.30%)
+  Processing ChrXIII: 40 threshold files
+    ChrXIV: capped 2619 outliers (0.33%)
+  Processing ChrXIV: 40 threshold files
+    ChrXV: capped 4289 outliers (0.39%)
+  Processing ChrXV: 40 threshold files
+    ChrXVI: capped 2585 outliers (0.27%)
+  Processing ChrXVI: 40 threshold files
+
+  Processed 640 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   1.0: 75435 segments, μ̄= 4.2584, σ_μ= 5.6142, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   2.0: 64073 segments, μ̄= 4.3761, σ_μ= 5.6600, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   3.0: 54700 segments, μ̄= 4.5142, σ_μ= 5.7756, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   4.0: 46940 segments, μ̄= 4.6608, σ_μ= 5.8901, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   5.0: 40545 segments, μ̄= 4.8103, σ_μ= 6.0095, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   6.0: 35124 segments, μ̄= 4.9624, σ_μ= 6.1238, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   7.0: 30515 segments, μ̄= 5.1109, σ_μ= 6.2280, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   8.0: 26593 segments, μ̄= 5.2339, σ_μ= 6.3238, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold   9.0: 23277 segments, μ̄= 5.3502, σ_μ= 6.3842, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  10.0: 20382 segments, μ̄= 5.4626, σ_μ= 6.4303, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  11.0: 17941 segments, μ̄= 5.5548, σ_μ= 6.4835, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  12.0: 15954 segments, μ̄= 5.6321, σ_μ= 6.5050, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  13.0: 14082 segments, μ̄= 5.7192, σ_μ= 6.5338, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  14.0: 12560 segments, μ̄= 5.7798, σ_μ= 6.5238, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  15.0: 11138 segments, μ̄= 5.8389, σ_μ= 6.5002, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  16.0: 9942 segments, μ̄= 5.8792, σ_μ= 6.4770, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  17.0: 8855 segments, μ̄= 5.9085, σ_μ= 6.4642, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  18.0: 7939 segments, μ̄= 5.8982, σ_μ= 6.3837, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  19.0: 7154 segments, μ̄= 5.9144, σ_μ= 6.3563, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  20.0: 6405 segments, μ̄= 5.9277, σ_μ= 6.3026, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  21.0: 5723 segments, μ̄= 5.9002, σ_μ= 6.2370, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  22.0: 5101 segments, μ̄= 5.8864, σ_μ= 6.1766, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  23.0: 4573 segments, μ̄= 5.8763, σ_μ= 6.1091, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  24.0: 4111 segments, μ̄= 5.8767, σ_μ= 6.1125, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  25.0: 3676 segments, μ̄= 5.8220, σ_μ= 5.9938, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  26.0: 3271 segments, μ̄= 5.8874, σ_μ= 6.0346, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  27.0: 2892 segments, μ̄= 5.8920, σ_μ= 5.9338, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  28.0: 2590 segments, μ̄= 5.9106, σ_μ= 5.9694, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  29.0: 2315 segments, μ̄= 5.8830, σ_μ= 5.8736, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  30.0: 2102 segments, μ̄= 5.8790, σ_μ= 5.7919, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  31.0: 1882 segments, μ̄= 5.8317, σ_μ= 5.7483, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  32.0: 1674 segments, μ̄= 5.7656, σ_μ= 5.5930, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  33.0: 1504 segments, μ̄= 5.7574, σ_μ= 5.5469, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  34.0: 1343 segments, μ̄= 5.7426, σ_μ= 5.6068, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  35.0: 1197 segments, μ̄= 5.7288, σ_μ= 5.4981, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  36.0: 1081 segments, μ̄= 5.7007, σ_μ= 5.4905, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  37.0:  974 segments, μ̄= 5.7390, σ_μ= 5.6097, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  38.0:  875 segments, μ̄= 5.6802, σ_μ= 5.5551, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  39.0:  806 segments, μ̄= 5.6544, σ_μ= 5.6039, θ=0.161216 (range: 0.141499-0.195640)
+    Threshold  40.0:  718 segments, μ̄= 5.5845, σ_μ= 5.6018, θ=0.161216 (range: 0.141499-0.195640)
+
+  Saving results...
+  Saved 640 segment files
+
+================================================================================
+Processing strain_dnrp
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Global 99th percentile (non-zero): 357.0
+  Total outliers to cap: 11171 (0.09%) across all chromosomes
+
+    ChrI: capped 262 outliers (0.11%)
+  Processing ChrI: 40 threshold files
+    ChrII: capped 741 outliers (0.09%)
+  Processing ChrII: 40 threshold files
+    ChrIII: capped 372 outliers (0.12%)
+  Processing ChrIII: 40 threshold files
+    ChrIV: capped 722 outliers (0.05%)
+  Processing ChrIV: 40 threshold files
+    ChrV: capped 663 outliers (0.11%)
+  Processing ChrV: 40 threshold files
+    ChrVI: capped 291 outliers (0.11%)
+  Processing ChrVI: 40 threshold files
+    ChrVII: capped 625 outliers (0.06%)
+  Processing ChrVII: 40 threshold files
+    ChrVIII: capped 446 outliers (0.08%)
+  Processing ChrVIII: 40 threshold files
+    ChrIX: capped 378 outliers (0.09%)
+  Processing ChrIX: 40 threshold files
+    ChrX: capped 676 outliers (0.09%)
+  Skipping ChrX: results folder not found
+    ChrXI: capped 486 outliers (0.07%)
+  Processing ChrXI: 40 threshold files
+    ChrXII: capped 2299 outliers (0.21%)
+  Processing ChrXII: 40 threshold files
+    ChrXIII: capped 662 outliers (0.07%)
+  Processing ChrXIII: 40 threshold files
+    ChrXIV: capped 509 outliers (0.06%)
+  Processing ChrXIV: 40 threshold files
+    ChrXV: capped 1454 outliers (0.13%)
+  Processing ChrXV: 40 threshold files
+    ChrXVI: capped 585 outliers (0.06%)
+  Processing ChrXVI: 40 threshold files
+
+  Processed 600 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   1.0: 79088 segments, μ̄=18.0622, σ_μ=18.1211, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   2.0: 76386 segments, μ̄=17.9721, σ_μ=18.0039, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   3.0: 73815 segments, μ̄=17.8725, σ_μ=17.9207, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   4.0: 71430 segments, μ̄=17.7509, σ_μ=17.8214, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   5.0: 69145 segments, μ̄=17.6148, σ_μ=17.6939, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   6.0: 66946 segments, μ̄=17.5129, σ_μ=17.6283, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   7.0: 64845 segments, μ̄=17.4144, σ_μ=17.5666, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   8.0: 62923 segments, μ̄=17.3241, σ_μ=17.4740, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   9.0: 61013 segments, μ̄=17.2361, σ_μ=17.3969, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  10.0: 59182 segments, μ̄=17.1751, σ_μ=17.3560, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  11.0: 57491 segments, μ̄=17.1102, σ_μ=17.3138, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  12.0: 55781 segments, μ̄=17.0371, σ_μ=17.2758, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  13.0: 54213 segments, μ̄=16.9862, σ_μ=17.2447, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  14.0: 52615 segments, μ̄=16.9213, σ_μ=17.1804, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  15.0: 51171 segments, μ̄=16.8769, σ_μ=17.1506, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  16.0: 49764 segments, μ̄=16.8553, σ_μ=17.1322, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  17.0: 48411 segments, μ̄=16.8139, σ_μ=17.0999, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  18.0: 47079 segments, μ̄=16.7803, σ_μ=17.0550, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  19.0: 45767 segments, μ̄=16.7744, σ_μ=17.0376, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  20.0: 44500 segments, μ̄=16.7512, σ_μ=16.9848, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  21.0: 43270 segments, μ̄=16.7435, σ_μ=16.9485, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  22.0: 41999 segments, μ̄=16.7257, σ_μ=16.9148, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  23.0: 40880 segments, μ̄=16.7258, σ_μ=16.9000, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  24.0: 39707 segments, μ̄=16.7270, σ_μ=16.8743, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  25.0: 38689 segments, μ̄=16.7375, σ_μ=16.8261, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  26.0: 37598 segments, μ̄=16.7571, σ_μ=16.8040, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  27.0: 36583 segments, μ̄=16.7862, σ_μ=16.7772, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  28.0: 35550 segments, μ̄=16.8203, σ_μ=16.7800, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  29.0: 34514 segments, μ̄=16.8712, σ_μ=16.7778, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  30.0: 33589 segments, μ̄=16.8968, σ_μ=16.7573, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  31.0: 32679 segments, μ̄=16.9355, σ_μ=16.7317, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  32.0: 31773 segments, μ̄=16.9572, σ_μ=16.6922, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  33.0: 30857 segments, μ̄=16.9918, σ_μ=16.6759, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  34.0: 30022 segments, μ̄=17.0612, σ_μ=16.6774, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  35.0: 29136 segments, μ̄=17.1234, σ_μ=16.6535, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  36.0: 28320 segments, μ̄=17.1825, σ_μ=16.6364, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  37.0: 27502 segments, μ̄=17.2788, σ_μ=16.6321, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  38.0: 26660 segments, μ̄=17.3540, σ_μ=16.6227, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  39.0: 25885 segments, μ̄=17.4222, σ_μ=16.5813, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold  40.0: 25141 segments, μ̄=17.4609, σ_μ=16.5644, θ=0.279065 (range: 0.235429-0.325509)
+
+  Saving results...
+  Saved 600 segment files
+
+================================================================================
+Processing strain_yEK19
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 108.0
+  Total outliers to cap: 38789 (0.32%) across all chromosomes
+
+    ChrI: capped 1071 outliers (0.47%)
+  Processing ChrI: 40 threshold files
+    ChrII: capped 2744 outliers (0.34%)
+  Processing ChrII: 40 threshold files
+    ChrIII: capped 1484 outliers (0.47%)
+  Processing ChrIII: 40 threshold files
+    ChrIV: capped 3294 outliers (0.22%)
+  Processing ChrIV: 40 threshold files
+    ChrV: capped 2436 outliers (0.42%)
+  Processing ChrV: 40 threshold files
+    ChrVI: capped 1279 outliers (0.47%)
+  Processing ChrVI: 40 threshold files
+    ChrVII: capped 2797 outliers (0.26%)
+  Processing ChrVII: 40 threshold files
+    ChrVIII: capped 2037 outliers (0.36%)
+  Processing ChrVIII: 40 threshold files
+    ChrIX: capped 1698 outliers (0.39%)
+  Processing ChrIX: 40 threshold files
+    ChrX: capped 2373 outliers (0.32%)
+  Processing ChrX: 40 threshold files
+    ChrXI: capped 2183 outliers (0.33%)
+  Processing ChrXI: 40 threshold files
+    ChrXII: capped 3727 outliers (0.35%)
+  Processing ChrXII: 40 threshold files
+    ChrXIII: capped 2603 outliers (0.28%)
+  Processing ChrXIII: 40 threshold files
+    ChrXIV: capped 2351 outliers (0.30%)
+  Processing ChrXIV: 40 threshold files
+    ChrXV: capped 4282 outliers (0.39%)
+  Processing ChrXV: 40 threshold files
+    ChrXVI: capped 2430 outliers (0.26%)
+  Processing ChrXVI: 40 threshold files
+
+  Processed 640 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   1.0: 75333 segments, μ̄= 4.8331, σ_μ= 5.6885, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   2.0: 63641 segments, μ̄= 4.9693, σ_μ= 5.8184, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   3.0: 54014 segments, μ̄= 5.0945, σ_μ= 5.9347, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   4.0: 46163 segments, μ̄= 5.1945, σ_μ= 6.0318, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   5.0: 39704 segments, μ̄= 5.3066, σ_μ= 6.1528, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   6.0: 34379 segments, μ̄= 5.4195, σ_μ= 6.2593, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   7.0: 29827 segments, μ̄= 5.5111, σ_μ= 6.3143, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   8.0: 26049 segments, μ̄= 5.5996, σ_μ= 6.3717, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold   9.0: 22873 segments, μ̄= 5.7042, σ_μ= 6.4396, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  10.0: 20085 segments, μ̄= 5.7665, σ_μ= 6.4566, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  11.0: 17730 segments, μ̄= 5.8149, σ_μ= 6.4640, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  12.0: 15672 segments, μ̄= 5.8551, σ_μ= 6.4562, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  13.0: 13921 segments, μ̄= 5.8520, σ_μ= 6.3863, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  14.0: 12331 segments, μ̄= 5.8947, σ_μ= 6.3817, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  15.0: 10985 segments, μ̄= 5.8885, σ_μ= 6.3152, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  16.0: 9834 segments, μ̄= 5.8872, σ_μ= 6.2897, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  17.0: 8816 segments, μ̄= 5.8880, σ_μ= 6.2604, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  18.0: 7871 segments, μ̄= 5.8896, σ_μ= 6.2277, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  19.0: 7088 segments, μ̄= 5.8882, σ_μ= 6.1304, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  20.0: 6391 segments, μ̄= 5.8694, σ_μ= 6.0698, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  21.0: 5771 segments, μ̄= 5.8439, σ_μ= 6.0051, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  22.0: 5233 segments, μ̄= 5.8380, σ_μ= 5.9648, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  23.0: 4748 segments, μ̄= 5.8131, σ_μ= 5.8185, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  24.0: 4271 segments, μ̄= 5.8187, σ_μ= 5.7933, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  25.0: 3872 segments, μ̄= 5.8299, σ_μ= 5.7882, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  26.0: 3554 segments, μ̄= 5.8424, σ_μ= 5.7712, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  27.0: 3207 segments, μ̄= 5.8185, σ_μ= 5.5967, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  28.0: 2894 segments, μ̄= 5.7786, σ_μ= 5.4716, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  29.0: 2629 segments, μ̄= 5.7458, σ_μ= 5.4033, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  30.0: 2399 segments, μ̄= 5.7228, σ_μ= 5.3114, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  31.0: 2187 segments, μ̄= 5.7728, σ_μ= 5.3556, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  32.0: 1998 segments, μ̄= 5.6926, σ_μ= 5.2340, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  33.0: 1812 segments, μ̄= 5.6955, σ_μ= 5.2392, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  34.0: 1661 segments, μ̄= 5.6877, σ_μ= 5.1999, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  35.0: 1529 segments, μ̄= 5.6610, σ_μ= 5.1276, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  36.0: 1419 segments, μ̄= 5.7013, σ_μ= 5.1754, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  37.0: 1313 segments, μ̄= 5.7063, σ_μ= 5.1565, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  38.0: 1186 segments, μ̄= 5.6371, σ_μ= 5.0399, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  39.0: 1092 segments, μ̄= 5.6110, σ_μ= 5.0112, θ=0.143132 (range: 0.123155-0.176291)
+    Threshold  40.0: 1012 segments, μ̄= 5.6080, σ_μ= 5.0673, θ=0.143132 (range: 0.123155-0.176291)
+
+  Saving results...
+  Saved 640 segment files
+
+================================================================================
+Processing strain_yEK23
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 121.0
+  Total outliers to cap: 35545 (0.29%) across all chromosomes
+
+    ChrI: capped 1011 outliers (0.44%)
+  Processing ChrI: 40 threshold files
+    ChrII: capped 2270 outliers (0.28%)
+  Processing ChrII: 40 threshold files
+    ChrIII: capped 1575 outliers (0.50%)
+  Processing ChrIII: 40 threshold files
+    ChrIV: capped 2397 outliers (0.16%)
+  Processing ChrIV: 40 threshold files
+    ChrV: capped 2099 outliers (0.36%)
+  Processing ChrV: 40 threshold files
+    ChrVI: capped 1169 outliers (0.43%)
+  Processing ChrVI: 40 threshold files
+    ChrVII: capped 2280 outliers (0.21%)
+  Processing ChrVII: 40 threshold files
+    ChrVIII: capped 1746 outliers (0.31%)
+  Processing ChrVIII: 40 threshold files
+    ChrIX: capped 1532 outliers (0.35%)
+  Processing ChrIX: 40 threshold files
+    ChrX: capped 2119 outliers (0.28%)
+  Processing ChrX: 40 threshold files
+    ChrXI: capped 1811 outliers (0.27%)
+  Processing ChrXI: 40 threshold files
+    ChrXII: capped 5299 outliers (0.49%)
+  Processing ChrXII: 40 threshold files
+    ChrXIII: capped 2245 outliers (0.24%)
+  Processing ChrXIII: 40 threshold files
+    ChrXIV: capped 2164 outliers (0.28%)
+  Processing ChrXIV: 40 threshold files
+    ChrXV: capped 3780 outliers (0.35%)
+  Processing ChrXV: 40 threshold files
+    ChrXVI: capped 2048 outliers (0.22%)
+  Processing ChrXVI: 40 threshold files
+
+  Processed 640 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   1.0: 76606 segments, μ̄= 4.1251, σ_μ= 5.4796, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   2.0: 65814 segments, μ̄= 4.2044, σ_μ= 5.5291, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   3.0: 56611 segments, μ̄= 4.2939, σ_μ= 5.6386, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   4.0: 49140 segments, μ̄= 4.3719, σ_μ= 5.7345, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   5.0: 42713 segments, μ̄= 4.4466, σ_μ= 5.8312, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   6.0: 37370 segments, μ̄= 4.5326, σ_μ= 5.9351, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   7.0: 32768 segments, μ̄= 4.5915, σ_μ= 5.9549, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   8.0: 28912 segments, μ̄= 4.6422, σ_μ= 5.9581, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold   9.0: 25519 segments, μ̄= 4.7041, σ_μ= 5.9786, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  10.0: 22674 segments, μ̄= 4.7516, σ_μ= 5.9752, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  11.0: 20154 segments, μ̄= 4.8118, σ_μ= 6.0030, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  12.0: 17905 segments, μ̄= 4.8654, σ_μ= 6.0371, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  13.0: 15926 segments, μ̄= 4.8794, σ_μ= 6.0297, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  14.0: 14249 segments, μ̄= 4.9265, σ_μ= 6.0671, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  15.0: 12693 segments, μ̄= 4.9676, σ_μ= 6.0537, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  16.0: 11363 segments, μ̄= 4.9770, σ_μ= 6.0467, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  17.0: 10184 segments, μ̄= 4.9803, σ_μ= 5.9940, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  18.0: 9124 segments, μ̄= 4.9780, σ_μ= 5.8979, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  19.0: 8236 segments, μ̄= 5.0038, σ_μ= 5.9152, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  20.0: 7428 segments, μ̄= 5.0166, σ_μ= 5.9036, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  21.0: 6711 segments, μ̄= 5.0371, σ_μ= 5.9024, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  22.0: 6068 segments, μ̄= 5.0247, σ_μ= 5.8129, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  23.0: 5515 segments, μ̄= 4.9985, σ_μ= 5.7872, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  24.0: 4997 segments, μ̄= 4.9747, σ_μ= 5.6758, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  25.0: 4524 segments, μ̄= 4.9556, σ_μ= 5.6084, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  26.0: 4131 segments, μ̄= 4.9826, σ_μ= 5.6330, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  27.0: 3749 segments, μ̄= 4.9993, σ_μ= 5.6209, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  28.0: 3423 segments, μ̄= 5.0018, σ_μ= 5.6089, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  29.0: 3151 segments, μ̄= 5.0162, σ_μ= 5.6268, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  30.0: 2899 segments, μ̄= 5.0283, σ_μ= 5.5742, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  31.0: 2621 segments, μ̄= 5.0498, σ_μ= 5.5470, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  32.0: 2407 segments, μ̄= 5.0768, σ_μ= 5.5956, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  33.0: 2215 segments, μ̄= 5.0542, σ_μ= 5.5213, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  34.0: 2030 segments, μ̄= 5.0599, σ_μ= 5.4603, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  35.0: 1867 segments, μ̄= 5.0183, σ_μ= 5.3688, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  36.0: 1721 segments, μ̄= 5.0270, σ_μ= 5.3370, θ=0.135550 (range: 0.109699-0.191164)
+    Threshold  37.0: 1592 segments, μ̄= 5.0936, σ_μ= 5.4507, θ=0.135550 (range: 0.109699-0.191164)

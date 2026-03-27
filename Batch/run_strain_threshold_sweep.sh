@@ -3,9 +3,9 @@
 #SBATCH --partition=general,insy
 #SBATCH --account=ewi-insy-prb
 #SBATCH --time=24:00:00
-#SBATCH --qos=long
+#SBATCH --qos=medium
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=32G
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=n.i.m.oosterlaar@student.tudelft.nl
@@ -19,23 +19,23 @@ export PROJECT_DIR="/tudelft.net/staff-umbrella/SATAYanalysis/Nina/Thesis"
 
 cd "$PROJECT_DIR"
 
-# Step 1: Run CPD analysis (parallel strains)
-echo "=========================================="
-echo "STEP 1: Running CPD Analysis (thresholds 1-40)"
-echo "=========================================="
-srun apptainer exec \
-  --bind "$PROJECT_DIR":/workspace \
-  --pwd /workspace \
-  "$APPTAINER_IMAGE" \
-  python Signal_processing/sliding_mean/run_CPD_SATAY_v3_strains.py \
-  --threshold_start 1 \
-  --threshold_end 40 \
-  --threshold_step 1 \
-  --n_strain_workers 4
+# # Step 1: Run CPD analysis (parallel strains)
+# echo "=========================================="
+# echo "STEP 1: Running CPD Analysis (thresholds 1-40)"
+# echo "=========================================="
+# srun apptainer exec \
+#   --bind "$PROJECT_DIR":/workspace \
+#   --pwd /workspace \
+#   "$APPTAINER_IMAGE" \
+#   python Signal_processing/sliding_mean/run_CPD_SATAY_v3_strains.py \
+#   --threshold_start 1 \
+#   --threshold_end 40 \
+#   --threshold_step 1 \
+#   --n_strain_workers 4
 
-echo ""
-echo "CPD analysis completed successfully!"
-echo ""
+# echo ""
+# echo "CPD analysis completed successfully!"
+# echo ""
 
 # Step 2: Run essentiality calculation
 echo "=========================================="

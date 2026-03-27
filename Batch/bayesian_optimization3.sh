@@ -6,7 +6,7 @@
 #SBATCH --qos=medium
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=500G
+#SBATCH --mem-per-cpu=64G
 #SBATCH --gres=gpu:1
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=n.i.m.oosterlaar@student.tudelft.nl
@@ -34,4 +34,5 @@ srun apptainer exec \
     --random_state 42 \
     --n_jobs 1 \
     --metric "zinb_nll" \
+    --resume_from "AE/results/bayesian_optimization/checkpoints/checkpoint_zinb_nll_20260324_234640.pkl" \
 

@@ -1,37 +1,31 @@
 #!/bin/sh
-#SBATCH --job-name=AE
-#SBATCH --partition=general,insy
-#SBATCH --account=ewi-insy-prb
-#SBATCH --time=02:00:00
+#SBATCH --job-name=saturation
+#SBATCH --partition=general
+#SBATCH --time=02:30:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=32G
-#SBATCH --gres=gpu:1
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=n.i.m.oosterlaar@student.tudelft.nl
 #SBATCH --output=slurm_%A_%a.out
 #SBATCH --error=slurm_%A_%a.err
-#SBATCH --array=0
+#SBATCH --array=0-5
 
 set -euo pipefail
 
-NOISE_LEVELS=(0.15)
-MU_OFFSET=0.0
-NOISE_LEVEL=${NOISE_LEVELS[$SLURM_ARRAY_TASK_ID]}
-
-
-
-echo "Running with noise_level=${NOISE_LEVEL}"
-echo "Running with mu_offset=${MU_OFFSET}"
+# Map array index to k value (0->1, 1->2, 2->3, etc.)
+K_VALUE=$((SLURM_ARRAY_TASK_ID + 1))
 
 export APPTAINER_IMAGE="/tudelft.net/staff-umbrella/SATAYanalysis/Nina/Thesis/my-container.sif"
 export PROJECT_DIR="/tudelft.net/staff-umbrella/SATAYanalysis/Nina/Thesis"
 
 cd "$PROJECT_DIR"
 
+echo "Running saturation test for k=${K_VALUE} (array task ${SLURM_ARRAY_TASK_ID})"
+
 srun apptainer exec \
   --nv \
   --bind "$PROJECT_DIR":/workspace \
   --pwd /workspace \
   "$APPTAINER_IMAGE" \
-  python AE/main.py --noise_level "$NOISE_LEVEL" --mu_offset "$MU_OFFSET"
+  python AE/test_AE/test_saturation.py --k ${K_VALUE}
