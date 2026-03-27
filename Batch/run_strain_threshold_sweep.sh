@@ -19,34 +19,34 @@ export PROJECT_DIR="/tudelft.net/staff-umbrella/SATAYanalysis/Nina/Thesis"
 
 cd "$PROJECT_DIR"
 
-# # Step 1: Run CPD analysis (parallel strains)
-# echo "=========================================="
-# echo "STEP 1: Running CPD Analysis (thresholds 1-40)"
-# echo "=========================================="
-# srun apptainer exec \
-#   --bind "$PROJECT_DIR":/workspace \
-#   --pwd /workspace \
-#   "$APPTAINER_IMAGE" \
-#   python Signal_processing/sliding_mean/run_CPD_SATAY_v3_strains.py \
-#   --threshold_start 1 \
-#   --threshold_end 40 \
-#   --threshold_step 1 \
-#   --n_strain_workers 4
+# Step 1: Run CPD analysis (parallel strains)
+echo "=========================================="
+echo "STEP 1: Running CPD Analysis (thresholds 1-40)"
+echo "=========================================="
+srun apptainer exec \
+  --bind "$PROJECT_DIR":/workspace \
+  --pwd /workspace \
+  "$APPTAINER_IMAGE" \
+  python Signal_processing/sliding_mean/run_CPD_SATAY_v3_strains.py \
+  --threshold_start 0.5 \
+  --threshold_end 5 \
+  --threshold_step 0.5 \
+  --n_strain_workers 4
 
-# echo ""
-# echo "CPD analysis completed successfully!"
-# echo ""
+echo ""
+echo "CPD analysis completed successfully!"
+echo ""
 
 # Step 2: Run essentiality calculation
 echo "=========================================="
-echo "STEP 2: Running Essentiality Calculation (thresholds 1-40)"
+echo "STEP 2: Running Essentiality Calculation (thresholds 0.5-5 with step 0.5)"
 echo "=========================================="
 srun apptainer exec \
   --bind "$PROJECT_DIR":/workspace \
   --pwd /workspace \
   "$APPTAINER_IMAGE" \
   python Signal_processing/essentiality_calculation/calculate_strain_essentiality.py \
-  --thresholds 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40
+  --thresholds 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
 
 echo ""
 echo "Essentiality calculation completed successfully!"
