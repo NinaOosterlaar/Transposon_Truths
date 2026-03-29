@@ -704,7 +704,7 @@ def main():
     # Configuration
     strain_names = STRAINS  # Use the module-level constant
     
-    thresholds = [3, 5, 10, 15]
+    thresholds = [0.5, 1.0, 1.5, 2.0, 2.5, 3, 3.5, 4, 4.5, 5]  # Thresholds to analyze
     tolerance = 100  # bp tolerance for Jaccard with tolerance
     
     # Create output directory

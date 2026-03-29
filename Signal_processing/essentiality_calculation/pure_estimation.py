@@ -193,16 +193,28 @@ def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, ma
 		data, change_points, theta_global, eps=eps, tol=tol, max_iter=max_iter
 	)
 
-	# Calculate standardized z-scores for mu_estimate
-	# z = (μ - μ̄) / σ_μ
+	# Calculate standardized z-scores for mu_estimate using weighted mean and std
+	# z = (μ - μ̄_weighted) / σ_μ_weighted
+	# Weights are based on segment lengths
 	mu_values = np.array([row["mu_estimate"] for row in segment_rows])
+	lengths = np.array([row["length"] for row in segment_rows])
 	
 	# Filter out NaN values for statistics
-	valid_mu = mu_values[~np.isnan(mu_values)]
+	valid_mask = ~np.isnan(mu_values)
+	valid_mu = mu_values[valid_mask]
+	valid_lengths = lengths[valid_mask]
 	
 	if len(valid_mu) > 0:
-		mu_mean = np.mean(valid_mu)
-		mu_std = np.std(valid_mu, ddof=1) if len(valid_mu) > 1 else 0.0
+		# Compute weighted mean: Σ(mu_i * length_i) / Σ(length_i)
+		total_length = np.sum(valid_lengths)
+		mu_mean = np.sum(valid_mu * valid_lengths) / total_length
+		
+		# Compute weighted standard deviation: sqrt(Σ(length_i * (mu_i - mu_mean)²) / Σ(length_i))
+		if len(valid_mu) > 1:
+			weighted_variance = np.sum(valid_lengths * (valid_mu - mu_mean)**2) / total_length
+			mu_std = np.sqrt(weighted_variance)
+		else:
+			mu_std = 0.0
 		
 		# Add z-score to each segment
 		for i, row in enumerate(segment_rows):
@@ -229,7 +241,7 @@ def process_dataset(dataset_num, base_data_folder, base_results_folder, output_s
 	if not os.path.isdir(dataset_results_folder):
 		print(f"Skipping dataset {dataset_num}: missing result folder {dataset_results_folder}")
 		return 0
-
+		
 	data = read_count_data(dataset_data_file)
 	
 	# Remove top 1% outliers (non-zero values only)

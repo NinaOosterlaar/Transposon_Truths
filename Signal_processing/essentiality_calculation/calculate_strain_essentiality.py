@@ -47,6 +47,7 @@ CHROMOSOMES = [
     "ChrVII", "ChrVIII", "ChrIX", "ChrX", "ChrXI", "ChrXII",
     "ChrXIII", "ChrXIV", "ChrXV", "ChrXVI"
 ]
+# CHROMOSOMES = ["ChrIV"]
 
 
 def add_zscore_to_segments(all_segments_dict, theta_dict, strain_name):
@@ -397,8 +398,8 @@ def parse_arguments():
         "--thresholds",
         type=float,
         nargs="+",
-        default=[3.0, 5.0, 10.0, 15.0],
-        help="List of thresholds to process (e.g., 5.0 10.0 15.0 20.0). If not specified, processes all available thresholds.",
+        default=[0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+        help="List of thresholds to process (e.g., 0.5 1.0 1.5 ... 5.0). If not specified, processes all available thresholds.",
     )
     parser.add_argument(
         "--output_subdir",

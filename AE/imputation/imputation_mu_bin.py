@@ -823,7 +823,7 @@ def discover_available_splits(reconstruction_root_dir: str) -> List[Tuple[str, s
 
 
 def run_full_analysis(
-    reconstruction_root_dir: str = "Data/reconstruction/ZINBAE_layers752_ep92_noise0.150_muoff0.000",
+    reconstruction_root_dir: str = "Data/reconstruction/ZINBAE_layers1168_ep116_noise0.150_muoff0.000",
     output_dir: str = "AE/results/mu_analysis_bin",
     filter_mu_by_original_zeros: bool = True,
     original_data_root_dir: str = "Data/combined_strains",

@@ -75,7 +75,7 @@ def compute_global_outlier_threshold(strain_folder):
         try:
             # Extract chromosome name
             chrom_name = chrom_file.stem.replace("_distances", "")
-            
+
             # Read data
             data = read_count_data(chrom_file)
             
@@ -172,7 +172,7 @@ def process_strain(
     outlier_threshold, n_outliers, n_total, n_problematic = threshold_result
     if n_problematic > 0:
         safe_print(f"  Removed {n_problematic} problematic position(s) (set to zero)")
-    safe_print(f"  Global 99th percentile (non-zero): {outlier_threshold:.1f}")
+    safe_print(f"  Global 95th percentile (non-zero): {outlier_threshold:.1f}")
     safe_print(f"  Total outliers to cap: {n_outliers} ({100*n_outliers/n_total:.2f}%) across all chromosomes")
     safe_print()
     
@@ -260,19 +260,19 @@ def main():
     parser.add_argument(
         "--threshold_start",
         type=float,
-        default=3.0,
+        default=0.5,
         help="Minimum threshold. Default: 3.0",
     )
     parser.add_argument(
         "--threshold_end",
         type=float,
-        default=15.0,
+        default=5.0,
         help="Maximum threshold. Default: 15.0",
     )
     parser.add_argument(
         "--threshold_step",
         type=float,
-        default=1.0,
+        default=0.5,
         help="Threshold step size. Default: 1.0",
     )
     parser.add_argument(

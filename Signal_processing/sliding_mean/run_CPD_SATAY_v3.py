@@ -35,7 +35,7 @@ def main():
     window_sizes = [100]
     overlap = 0.5
     threshold_start = 0.0
-    threshold_end = 40.0
+    threshold_end = 20.0
     threshold_step = 1.0
     n_workers = 1
     

@@ -601,7 +601,7 @@ def parse_arguments():
     )
     parser.add_argument("--overlap", type=float, default=0.5, help="Window overlap in [0, 1).")
     parser.add_argument("--threshold_start", type=float, default=0.0, help="Minimum threshold.")
-    parser.add_argument("--threshold_end", type=float, default=40.0, help="Maximum threshold.")
+    parser.add_argument("--threshold_end", type=float, default=20.0, help="Maximum threshold.")
     parser.add_argument("--threshold_step", type=float, default=1.0, help="Threshold step size.")
     parser.add_argument("--n_workers", type=int, default=1, help="Number of parallel workers.")
     parser.add_argument(

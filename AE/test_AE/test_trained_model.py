@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import hashlib
 import json
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from AE.preprocessing.preprocessing import preprocess_with_split
 from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
@@ -14,9 +14,9 @@ from AE.reconstruct_output import OutputReconstructor
 
 # Test dataset configuration
 INPUT_FOLDER = "Data/combined_strains"
-# test_chromosomes = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
-test_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
-# test_chromosomes = ['ChrVIII', 'ChrXIV', 'ChrXV']
+test_chromosomes = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
+# test_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
+val_chromosomes = ['ChrVIII', 'ChrXIV', 'ChrXV']
 train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
 # No validation set needed for testing
 
@@ -58,38 +58,38 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 # REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 1e-5  # alpha
 
-# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep92_noise0.150_muoff0.000.pt"
-
-# # Preprocessing parameters 
-# FEATURES = ['Nucl']
-# BIN_SIZE = 17
-# MOVING_AVERAGE = False
-# DATA_POINT_LENGTH = 2000
-# STEP_SIZE = int(0.391 * 2000)  
-# # Training parameters 
-# BATCH_SIZE = 128
-# NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.378  
-# MASKED_RECON_WEIGHT = 0.127  # gamma - exact value
-# REGULARIZER = 'none'
-# REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
-
-MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
-
+MODEL_PATH = "AE/results/models/ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt"
 
 # Preprocessing parameters 
 FEATURES = ['Centr']
-BIN_SIZE = 19
-MOVING_AVERAGE = True
+BIN_SIZE = 17
+MOVING_AVERAGE = False
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(0.572 * 2000)  
+STEP_SIZE = int(0.807 * 2000)  
 # Training parameters 
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.516 
-MASKED_RECON_WEIGHT = 0.0327  # gamma - exact value
+PI_THRESHOLD = 0.45 
+MASKED_RECON_WEIGHT = 1.37  # gamma - exact value
 REGULARIZER = 'none'
-REGULARIZATION_WEIGHT = 4.22e-05 
+REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
+
+# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
+
+
+# # Preprocessing parameters 
+# FEATURES = ['Centr']
+# BIN_SIZE = 19
+# MOVING_AVERAGE = True
+# DATA_POINT_LENGTH = 2000
+# STEP_SIZE = int(0.572 * 2000)  
+# # Training parameters 
+# BATCH_SIZE = 64
+# NOISE_LEVEL = 0.15
+# PI_THRESHOLD = 0.516 
+# MASKED_RECON_WEIGHT = 0.0327  # gamma - exact value
+# REGULARIZER = 'none'
+# REGULARIZATION_WEIGHT = 4.22e-05 
 
 # Data caching options
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
@@ -199,16 +199,114 @@ def load_or_preprocess_data(input_folder, train_chroms, test_chroms, features, b
     return test_set, test_metadata
 
 
+def process_split(split_name, split_chromosomes, model, model_config, chrom_embedding, seq_len):
+    """Process a single split (train/val/test) and save reconstructions."""
+    print("\n" + "="*80)
+    print(f"PROCESSING {split_name.upper()} SPLIT ({len(split_chromosomes)} chromosomes)")
+    print("="*80)
+    
+    preprocessing_length = DATA_POINT_LENGTH
+    if preprocessing_length != seq_len:
+        print(
+            f"\nWARNING: preprocessing_length={preprocessing_length} does not match "
+            f"checkpoint seq_length={seq_len}. Using checkpoint seq_length."
+        )
+        preprocessing_length = seq_len
+    
+    # Load or preprocess data for this split
+    chrom = 'Chr' in FEATURES
+    
+    split_set, split_metadata = load_or_preprocess_data(
+        input_folder=INPUT_FOLDER,
+        train_chroms=train_chromosomes,  # CRITICAL: used for normalization calculation
+        test_chroms=split_chromosomes,
+        features=FEATURES,
+        bin_size=BIN_SIZE,
+        moving_average=MOVING_AVERAGE,
+        preprocessing_length=preprocessing_length,
+        step_size=STEP_SIZE,
+        use_cache=USE_CACHED_DATA,
+        cache_dir=PROCESSED_DATA_DIR
+    )
+    
+    print(f"\n{split_name} set size: {len(split_set)}")
+    print(f"{split_name} set shape: {split_set.shape}")
+    
+    # Create dataloader
+    split_dataloader = dataloader_from_array(
+        split_set,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        zinb=True,  
+        chrom=chrom,
+        sample_fraction=1.0,
+        denoise_percentage=NOISE_LEVEL
+    )
+    
+    print(f"{split_name} dataloader: {len(split_dataloader.dataset)} samples, {len(split_dataloader)} batches")
+    
+    # Run inference
+    print(f"\nEvaluating model on {split_name} data...")
+    predictions, latents, metrics, mu_raw, theta, pi = test(
+        model=model,
+        dataloader=split_dataloader,
+        chrom=chrom,
+        chrom_embedding=chrom_embedding,
+        plot=False,  # Disable plotting for efficiency
+        denoise_percent=NOISE_LEVEL,
+        gamma=MASKED_RECON_WEIGHT,
+        pi_threshold=PI_THRESHOLD,
+        regularizer=REGULARIZER,
+        alpha=REGULARIZATION_WEIGHT,
+        eval_mode="",
+        name=""
+    )
+    
+    print(f"\n{split_name.upper()} METRICS:")
+    for key, value in metrics.items():
+        print(f"  {key}: {value}")
+    
+    # Save reconstruction if enabled
+    if RECONSTRUCT:
+        run_name = run_name_from_model_path(MODEL_PATH)
+        reconstruction_base = os.path.join(RECONSTRUCTION_BASE_DIR, run_name)
+        split_reconstruction_dir = os.path.join(reconstruction_base, split_name)
+        os.makedirs(split_reconstruction_dir, exist_ok=True)
+
+        # Save metadata for this split
+        split_metadata_path = os.path.join(split_reconstruction_dir, "metadata.json")
+        with open(split_metadata_path, 'w') as f:
+            json.dump(split_metadata, f, indent=2)
+        print(f"\nMetadata saved to: {split_metadata_path}")
+        print(f"  Contains {len(split_metadata)} window locations")
+
+        # Reconstruct and save
+        reconstructor = OutputReconstructor(split_metadata_path)
+        reconstructed_df = reconstructor.reconstruct_to_dataframe(
+            predictions,
+            aggregation='mean',
+            include_uncertainty=(theta is not None or pi is not None),
+            mu_raw=mu_raw,
+            theta=theta,
+            pi=pi
+        )
+
+        reconstructor.save_as_csv(reconstructed_df, split_reconstruction_dir, split_by_chromosome=True)
+        print(f"\nReconstructed genomic data saved to: {split_reconstruction_dir}")
+    
+    return metrics
+
+
 def load_model_and_test():
     """
-    Load a trained model and evaluate it on the test dataset.
-    Creates visualization plots of the test results.
+    Load a trained model and evaluate it on train, val, and test datasets.
+    Creates separate reconstruction directories for each split.
     
     Uses configuration parameters defined at the top of this file.
     """
-    print("="*50)
+    print("="*80)
     print("LOADING TRAINED MODEL")
-    print("="*50)
+    print("="*80)
     
     # Load the saved model
     checkpoint = torch.load(MODEL_PATH, map_location='cpu', weights_only=False)
@@ -237,7 +335,7 @@ def load_model_and_test():
     
     print(f"  Model expects feature_dim={feat_dim}, use_conv={use_conv}")
     
-    print(f"\nTest Configuration:")
+    print(f"\nConfiguration:")
     print(f"  features: {FEATURES}")
     print(f"  bin_size: {BIN_SIZE}")
     print(f"  moving_average: {MOVING_AVERAGE}")
@@ -250,160 +348,53 @@ def load_model_and_test():
     print(f"  regularizer: {REGULARIZER}")
     print(f"  regularization_weight: {REGULARIZATION_WEIGHT}")
     print(f"  use_cached_data: {USE_CACHED_DATA}")
-    print(f"  output_dir: {OUTPUT_DIR}")
-    
-    # Mirror AE/main.py preprocessing behavior:
-    # when not using moving average, DATA_POINT_LENGTH is converted to bin-count windows.
-
-    preprocessing_length = DATA_POINT_LENGTH
-
-    # Always prioritize the checkpoint's seq_length to avoid shape mismatches
-    # when test-time constants drift from training settings.
-    if preprocessing_length != seq_len:
-        print(
-            f"\nWARNING: preprocessing_length={preprocessing_length} does not match "
-            f"checkpoint seq_length={seq_len}. Using checkpoint seq_length."
-        )
-        preprocessing_length = seq_len
-    
-    # Check if chromosome feature is used
-    chrom = 'Chr' in FEATURES
-    
-    # Load or preprocess test data
-    test_set, test_metadata = load_or_preprocess_data(
-        input_folder=INPUT_FOLDER,
-        train_chroms=train_chromosomes,  # CRITICAL: used for normalization calculation
-        test_chroms=test_chromosomes,
-        features=FEATURES,
-        bin_size=BIN_SIZE,
-        moving_average=MOVING_AVERAGE,
-        preprocessing_length=preprocessing_length,
-        step_size=STEP_SIZE,
-        use_cache=USE_CACHED_DATA,
-        cache_dir=PROCESSED_DATA_DIR
-    )
-    
-    print(f"\nTest set size: {len(test_set)}")
-    print(f"Test set shape: {test_set.shape}")
-    print(f"  - Sequence length: {test_set.shape[1]}")
-    print(f"  - Feature dimension from data: {test_set.shape[2]}")
-    
-    # Create chromosome embedding if needed
-    chrom_embedding = ChromosomeEmbedding() if chrom else None
-    
-    # Create test dataloader
-    test_dataloader = dataloader_from_array(
-        test_set,
-        batch_size=BATCH_SIZE,
-        shuffle=False,
-        zinb=True,  
-        chrom=chrom,
-        sample_fraction=1.0,  # Use all test data
-        denoise_percentage=NOISE_LEVEL
-    )
-    
-    print(f"Test dataloader: {len(test_dataloader.dataset)} samples, {len(test_dataloader)} batches")
     
     # Initialize model with saved configuration
-    print("\n" + "="*50)
+    print("\n" + "="*80)
     print("INITIALIZING MODEL")
-    print("="*50)
+    print("="*80)
     
     model = ZINBAE(**model_config)
-    
-    # Load the trained weights
     model.load_state_dict(checkpoint['model_state_dict'])
-    
     print("Model weights loaded successfully!")
     
-    # Create output directory
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    # Create chromosome embedding if needed
+    chrom = 'Chr' in FEATURES
+    chrom_embedding = ChromosomeEmbedding() if chrom else None
     
-    # Run test function to create plots
-    print("\n" + "="*50)
-    print("EVALUATING ON TEST DATA")
-    print("="*50)
+    # Process each split
+    all_metrics = {}
     
-    # Extract just the final directory name for organizing results
-    # The test function will create: AE/results/{subdir}/{name}/
-    # To save to OUTPUT_DIR, we need to set subdir to the relative path from AE/results/
-    # or use a simple name if OUTPUT_DIR is already under AE/results/
+    splits_to_process = [
+        ('train', train_chromosomes),
+        ('val', val_chromosomes),
+        ('test', test_chromosomes)
+    ]
     
-    # Check if OUTPUT_DIR is under AE/results/
-    if OUTPUT_DIR.startswith("AE/results/"):
-        # Extract the subdirectory structure after AE/results/
-        subdir_path = OUTPUT_DIR.replace("AE/results/", "")
-        # Use the path as subdir and no additional name
-        eval_mode = subdir_path
-        custom_name = ""
-    else:
-        # OUTPUT_DIR is somewhere else - use it as a simple identifier
-        eval_mode = "testing"
-        custom_name = OUTPUT_DIR.replace("/", "_")
+    for split_name, split_chroms in splits_to_process:
+        if split_chroms:  # Only process if chromosomes are defined
+            metrics = process_split(
+                split_name, 
+                split_chroms, 
+                model, 
+                model_config, 
+                chrom_embedding,
+                seq_len
+            )
+            all_metrics[split_name] = metrics
     
-    predictions, latents, test_metrics, mu_raw, theta, pi = test(
-        model=model,
-        dataloader=test_dataloader,
-        chrom=chrom,
-        chrom_embedding=chrom_embedding,
-        plot=True,  # Enable plotting
-        denoise_percent=NOISE_LEVEL,
-        gamma=MASKED_RECON_WEIGHT,
-        pi_threshold=PI_THRESHOLD,
-        regularizer=REGULARIZER,
-        alpha=REGULARIZATION_WEIGHT,
-        eval_mode=eval_mode,
-        name=custom_name
-    )
+    print("\n" + "="*80)
+    print("ALL SPLITS COMPLETE")
+    print("="*80)
     
-    print("\n" + "="*50)
-    print("TEST METRICS")
-    print("="*50)
-    for key, value in test_metrics.items():
-        print(f"  {key}: {value}")
+    run_name = run_name_from_model_path(MODEL_PATH)
+    reconstruction_base = os.path.join(RECONSTRUCTION_BASE_DIR, run_name)
+    print(f"\nAll reconstructions saved to: {reconstruction_base}/")
+    for split_name, split_chroms in splits_to_process:
+        if split_chroms:
+            print(f"  - {split_name}/ : {len(split_chroms)} chromosomes")
     
-    # Save metrics to output directory
-    metrics_path = os.path.join(OUTPUT_DIR, "test_metrics.json")
-    with open(metrics_path, 'w') as f:
-        json.dump(test_metrics, f, indent=2)
-    print(f"\nMetrics saved to: {metrics_path}")
-    
-    if RECONSTRUCT:
-        print("\n" + "="*50)
-        print("RECONSTRUCTING GENOMIC COORDINATES")
-        print("="*50)
-
-        run_name = run_name_from_model_path(MODEL_PATH)
-        reconstruction_dir = os.path.join(RECONSTRUCTION_BASE_DIR, run_name)
-        os.makedirs(reconstruction_dir, exist_ok=True)
-
-        metadata_path = os.path.join(reconstruction_dir, "metadata.json")
-        with open(metadata_path, 'w') as f:
-            json.dump(test_metadata, f, indent=2)
-        print(f"\nMetadata saved to: {metadata_path}")
-        print(f"  Contains {len(test_metadata)} window locations")
-
-        reconstructor = OutputReconstructor(metadata_path)
-        reconstructed_df = reconstructor.reconstruct_to_dataframe(
-            predictions,
-            aggregation='mean',
-            include_uncertainty=(theta is not None or pi is not None),
-            mu_raw=mu_raw,
-            theta=theta,
-            pi=pi
-        )
-
-        reconstructor.save_as_csv(reconstructed_df, reconstruction_dir, split_by_chromosome=True)
-        print(f"\nReconstructed genomic data saved to: {reconstruction_dir}")
-        print("  One CSV per dataset/chromosome with columns:")
-        print("  position, reconstruction, mu, pi, theta")
-
-        print("\n" + "="*50)
-        print("TESTING COMPLETE")
-        print("="*50)
-        print(f"Results saved to: {reconstruction_dir}/")
-
-    return test_metrics
+    return all_metrics
 
 
 if __name__ == "__main__":
