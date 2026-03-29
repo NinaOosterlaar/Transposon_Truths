@@ -1,0 +1,2179 @@
+==========================================
+STEP 1: Running CPD Analysis (thresholds 1-40)
+==========================================
+================================================================================
+Running sliding_ZINB_CPD_v3_SATAY.py on all strains
+================================================================================
+Input data:   /workspace/Data/combined_strains
+Centromeres:  /workspace/Data_exploration/results/densities/centromere_strains/combined_Datasets_Boolean_True_bin_10000_absolute
+Nucleosomes:  /workspace/Data_exploration/results/densities/nucleosome_strains/combined_Datasets_Boolean_True
+Results:      /workspace/Signal_processing/strains
+Script:       /workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py
+Thresholds:   0.5 to 5.0 (step 0.5)
+Parallel:     4 strain(s) at a time
+
+Found 8 strains to process:
+
+  - strain_FD
+  - strain_dnrp
+  - strain_yEK19
+  - strain_yEK23
+  - strain_yTW001
+  - strain_yWT03a
+  - strain_yWT04a
+  - strain_ylic137
+
+Processing 8 strains with 4 workers...
+
+
+================================================================================
+Processing strain_FD
+================================================================================
+
+================================================================================
+Processing strain_dnrp
+================================================================================
+
+================================================================================
+Processing strain_yEK19
+================================================================================
+
+================================================================================
+Processing strain_yEK23
+================================================================================
+  ✓ Centromere file: dataset-strain_FD_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_FD_combined_Boolean_True_nucleosome_density.csv
+
+  ✓ Centromere file: dataset-strain_yEK19_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_yEK19_combined_Boolean_True_nucleosome_density.csv
+
+  ✓ Centromere file: dataset-strain_yEK23_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_yEK23_combined_Boolean_True_nucleosome_density.csv
+
+  ✓ Centromere file: dataset-strain_dnrp_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_dnrp_combined_Boolean_True_nucleosome_density.csv
+
+  Computing global outlier threshold across all chromosomes...
+  Computing global outlier threshold across all chromosomes...
+  Computing global outlier threshold across all chromosomes...
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 51.4
+  Total outliers to cap: 194621 (1.61%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 48.0
+  Total outliers to cap: 175512 (1.45%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+  Global 99th percentile (non-zero): 162.0
+  Total outliers to cap: 55827 (0.46%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 47.9
+  Total outliers to cap: 206383 (1.71%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 2013 values (0.64%) above threshold 162.0
+      Estimated global theta: 0.3002
+      (Estimated global pi: 0.8508, mu: 27.5360)
+      Global theta (fallback): 0.3002
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 0.8310]
+        Theta mean: 0.2989 ± 0.1466
+        Using local theta per window (fallback: 0.3002)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 6955 values (2.20%) above threshold 51.4
+      Estimated global theta: 0.1589
+      (Estimated global pi: 0.1500, mu: 5.3041)
+      Global theta (fallback): 0.1589
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2226 ± 0.1457
+        Using local theta per window (fallback: 0.1589)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 7800 values (2.46%) above threshold 47.9
+      Estimated global theta: 0.1763
+      (Estimated global pi: 0.1500, mu: 4.6808)
+      Global theta (fallback): 0.1763
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 0.9659]
+        Theta mean: 0.2133 ± 0.1270
+        Using local theta per window (fallback: 0.1763)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 7421 values (2.34%) above threshold 48.0
+      Estimated global theta: 0.1534
+      (Estimated global pi: 0.1500, mu: 4.8373)
+      Global theta (fallback): 0.1534
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2253 ± 0.1435
+        Using local theta per window (fallback: 0.1534)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 3704 values (0.46%) above threshold 162.0
+      Estimated global theta: 0.2833
+      (Estimated global pi: 0.8746, mu: 25.1150)
+      Global theta (fallback): 0.2833
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 0.8026]
+        Theta mean: 0.2655 ± 0.1356
+        Using local theta per window (fallback: 0.2833)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 13424 values (1.65%) above threshold 51.4
+      Estimated global theta: 0.1367
+      (Estimated global pi: 0.1500, mu: 4.4016)
+      Global theta (fallback): 0.1367
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1989 ± 0.1374
+        Using local theta per window (fallback: 0.1367)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 14037 values (1.73%) above threshold 47.9
+      Estimated global theta: 0.1534
+      (Estimated global pi: 0.1500, mu: 3.7289)
+      Global theta (fallback): 0.1534
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1927 ± 0.1306
+        Using local theta per window (fallback: 0.1534)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 11771 values (1.45%) above threshold 48.0
+      Estimated global theta: 0.1275
+      (Estimated global pi: 0.1500, mu: 3.6641)
+      Global theta (fallback): 0.1275
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1935 ± 0.1338
+        Using local theta per window (fallback: 0.1275)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 4656 values (0.30%) above threshold 162.0
+      Estimated global theta: 0.2354
+      (Estimated global pi: 0.8740, mu: 19.6352)
+      Global theta (fallback): 0.2354
+      Estimating local theta in 2000bp blocks...
+        Estimated 766/766 blocks successfully
+        Theta range: [0.1000, 0.5941]
+        Theta mean: 0.2332 ± 0.1209
+        Using local theta per window (fallback: 0.2354)
+    ✓ ChrIV complete
+    Processing ChrIX...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 2380 values (0.54%) above threshold 162.0
+      Estimated global theta: 0.3255
+      (Estimated global pi: 0.8685, mu: 28.4348)
+      Global theta (fallback): 0.3255
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 0.7317]
+        Theta mean: 0.3076 ± 0.1398
+        Using local theta per window (fallback: 0.3255)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 1457 values (0.63%) above threshold 162.0
+      Estimated global theta: 0.3002
+      (Estimated global pi: 0.8344, mu: 26.1128)
+      Global theta (fallback): 0.3002
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 0.7233]
+        Theta mean: 0.3203 ± 0.1511
+        Using local theta per window (fallback: 0.3002)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 2826 values (0.50%) above threshold 162.0
+      Estimated global theta: 0.2833
+      (Estimated global pi: 0.8611, mu: 24.9143)
+      Global theta (fallback): 0.2833
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 0.7402]
+        Theta mean: 0.2724 ± 0.1378
+        Using local theta per window (fallback: 0.2833)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+    ✗ timeout after 1800s
+    Processing ChrIX...
+    ✗ timeout after 1800s
+    Processing ChrIX...
+    ✗ timeout after 1800s
+    Processing ChrIX...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 4116 values (0.38%) above threshold 162.0
+      Estimated global theta: 0.2524
+      (Estimated global pi: 0.8693, mu: 21.8497)
+      Global theta (fallback): 0.2524
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 0.6442]
+        Theta mean: 0.2521 ± 0.1333
+        Using local theta per window (fallback: 0.2524)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 1756 values (0.65%) above threshold 162.0
+      Estimated global theta: 0.3144
+      (Estimated global pi: 0.8404, mu: 27.7235)
+      Global theta (fallback): 0.3144
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 0.6517]
+        Theta mean: 0.3240 ± 0.1342
+        Using local theta per window (fallback: 0.3144)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 8867 values (2.02%) above threshold 51.4
+      Estimated global theta: 0.1534
+      (Estimated global pi: 0.1500, mu: 5.1302)
+      Global theta (fallback): 0.1534
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2116 ± 0.1297
+        Using local theta per window (fallback: 0.1534)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 9604 values (2.18%) above threshold 47.9
+      Estimated global theta: 0.1723
+      (Estimated global pi: 0.1500, mu: 4.4328)
+      Global theta (fallback): 0.1723
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2006 ± 0.1016
+        Using local theta per window (fallback: 0.1723)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 8159 values (1.85%) above threshold 48.0
+      Estimated global theta: 0.1465
+      (Estimated global pi: 0.1540, mu: 4.3878)
+      Global theta (fallback): 0.1465
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2067 ± 0.1236
+        Using local theta per window (fallback: 0.1465)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 5430 values (2.36%) above threshold 51.4
+      Estimated global theta: 0.1723
+      (Estimated global pi: 0.1520, mu: 5.7238)
+      Global theta (fallback): 0.1723
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2662 ± 0.2049
+        Using local theta per window (fallback: 0.1723)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 6017 values (2.61%) above threshold 47.9
+      Estimated global theta: 0.1890
+      (Estimated global pi: 0.1500, mu: 5.0323)
+      Global theta (fallback): 0.1890
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2365 ± 0.1729
+        Using local theta per window (fallback: 0.1890)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 5342 values (2.32%) above threshold 48.0
+      Estimated global theta: 0.1912
+      (Estimated global pi: 0.2272, mu: 5.6130)
+      Global theta (fallback): 0.1912
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2595 ± 0.1803
+        Using local theta per window (fallback: 0.1912)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 3204 values (0.56%) above threshold 162.0
+      Estimated global theta: 0.2736
+      (Estimated global pi: 0.8495, mu: 24.5321)
+      Global theta (fallback): 0.2736
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2922 ± 0.1492
+        Using local theta per window (fallback: 0.2736)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 10310 values (1.83%) above threshold 51.4
+      Estimated global theta: 0.1482
+      (Estimated global pi: 0.1500, mu: 4.7631)
+      Global theta (fallback): 0.1482
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2257 ± 0.1698
+        Using local theta per window (fallback: 0.1482)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 10689 values (1.90%) above threshold 47.9
+      Estimated global theta: 0.1664
+      (Estimated global pi: 0.1500, mu: 4.0778)
+      Global theta (fallback): 0.1664
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2258 ± 0.1741
+        Using local theta per window (fallback: 0.1664)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 9284 values (1.65%) above threshold 48.0
+      Estimated global theta: 0.1415
+      (Estimated global pi: 0.1519, mu: 4.0528)
+      Global theta (fallback): 0.1415
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2249 ± 0.1732
+        Using local theta per window (fallback: 0.1415)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 3879 values (0.42%) above threshold 162.0
+      Estimated global theta: 0.2613
+      (Estimated global pi: 0.8701, mu: 22.9348)
+      Global theta (fallback): 0.2613
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 0.7843]
+        Theta mean: 0.2633 ± 0.1360
+        Using local theta per window (fallback: 0.2613)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 6914 values (0.64%) above threshold 162.0
+      Estimated global theta: 0.2583
+      (Estimated global pi: 0.8608, mu: 25.1712)
+      Global theta (fallback): 0.2583
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2342 ± 0.1594
+        Using local theta per window (fallback: 0.2583)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 15409 values (1.41%) above threshold 51.4
+      Estimated global theta: 0.1305
+      (Estimated global pi: 0.1500, mu: 3.9636)
+      Global theta (fallback): 0.1305
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2040 ± 0.1716
+        Using local theta per window (fallback: 0.1305)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 16228 values (1.49%) above threshold 47.9
+      Estimated global theta: 0.1499
+      (Estimated global pi: 0.1500, mu: 3.3973)
+      Global theta (fallback): 0.1499
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1933 ± 0.1492
+        Using local theta per window (fallback: 0.1499)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 3283 values (0.42%) above threshold 162.0
+      Estimated global theta: 0.2705
+      (Estimated global pi: 0.8741, mu: 23.7915)
+      Global theta (fallback): 0.2705
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 0.6986]
+        Theta mean: 0.2554 ± 0.1376
+        Using local theta per window (fallback: 0.2705)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 12936 values (1.19%) above threshold 48.0
+      Estimated global theta: 0.1190
+      (Estimated global pi: 0.1500, mu: 3.2205)
+      Global theta (fallback): 0.1190
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1867 ± 0.1463
+        Using local theta per window (fallback: 0.1190)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 6414 values (2.37%) above threshold 51.4
+      Estimated global theta: 0.1763
+      (Estimated global pi: 0.1500, mu: 5.7564)
+      Global theta (fallback): 0.1763
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2521 ± 0.1660
+        Using local theta per window (fallback: 0.1763)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 6847 values (2.53%) above threshold 47.9
+      Estimated global theta: 0.1956
+      (Estimated global pi: 0.1500, mu: 5.0014)
+      Global theta (fallback): 0.1956
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 0.8907]
+        Theta mean: 0.2361 ± 0.1329
+        Using local theta per window (fallback: 0.1956)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 6026 values (2.23%) above threshold 48.0
+      Estimated global theta: 0.1763
+      (Estimated global pi: 0.1641, mu: 5.1439)
+      Global theta (fallback): 0.1763
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2512 ± 0.1644
+        Using local theta per window (fallback: 0.1763)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 3058 values (0.46%) above threshold 162.0
+      Estimated global theta: 0.3108
+      (Estimated global pi: 0.8874, mu: 28.0329)
+      Global theta (fallback): 0.3108
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 0.6906]
+        Theta mean: 0.2671 ± 0.1292
+        Using local theta per window (fallback: 0.3108)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 11265 values (1.95%) above threshold 51.4
+      Estimated global theta: 0.1570
+      (Estimated global pi: 0.1500, mu: 4.9566)
+      Global theta (fallback): 0.1570
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2309 ± 0.1744
+        Using local theta per window (fallback: 0.1570)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 12013 values (2.08%) above threshold 47.9
+      Estimated global theta: 0.1763
+      (Estimated global pi: 0.1500, mu: 4.3211)
+      Global theta (fallback): 0.1763
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2205 ± 0.1605
+        Using local theta per window (fallback: 0.1763)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 10021 values (1.74%) above threshold 48.0
+      Estimated global theta: 0.1448
+      (Estimated global pi: 0.1521, mu: 4.1577)
+      Global theta (fallback): 0.1448
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2188 ± 0.1574
+        Using local theta per window (fallback: 0.1448)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 3627 values (0.38%) above threshold 162.0
+      Estimated global theta: 0.2495
+      (Estimated global pi: 0.8614, mu: 21.0200)
+      Global theta (fallback): 0.2495
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2614 ± 0.1359
+        Using local theta per window (fallback: 0.2495)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 162.0
+      Outlier removal: capped 5287 values (0.48%) above threshold 162.0
+      Estimated global theta: 0.2674
+      (Estimated global pi: 0.8759, mu: 24.6092)
+      Global theta (fallback): 0.2674
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2590 ± 0.1361
+        Using local theta per window (fallback: 0.2674)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 14077 values (1.52%) above threshold 51.4
+      Estimated global theta: 0.1351
+      (Estimated global pi: 0.1500, mu: 4.1606)
+      Global theta (fallback): 0.1351
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1967 ± 0.1549
+        Using local theta per window (fallback: 0.1351)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 14926 values (1.61%) above threshold 47.9
+      Estimated global theta: 0.1517
+      (Estimated global pi: 0.1500, mu: 3.5504)
+      Global theta (fallback): 0.1517
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1860 ± 0.1357
+        Using local theta per window (fallback: 0.1517)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 12458 values (1.35%) above threshold 48.0
+      Estimated global theta: 0.1232
+      (Estimated global pi: 0.1500, mu: 3.4175)
+      Global theta (fallback): 0.1232
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1856 ± 0.1394
+        Using local theta per window (fallback: 0.1232)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+    ✗ ChrX failed (exit code 1)
+      Error output:
+        Traceback (most recent call last):
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 736, in <module>
+            main()
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 719, in main
+            run_dataset(
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 526, in run_dataset
+            os.makedirs(output_folder, exist_ok=True)
+          File "<frozen os>", line 215, in makedirs
+          File "<frozen os>", line 225, in makedirs
+        OSError: [Errno 28] No space left on device: '/workspace/Signal_processing/strains/strain_dnrp/ChrX'
+
+  Completed strain_dnrp
+
+================================================================================
+Processing strain_yTW001
+================================================================================
+  ✓ Centromere file: dataset-strain_yTW001_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_yTW001_combined_Boolean_True_nucleosome_density.csv
+
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 89.5
+  Total outliers to cap: 59663 (0.49%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 2105 values (0.66%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6648, mu: 6.3474)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 0.4995]
+        Theta mean: 0.1142 ± 0.0452
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 4115 values (0.51%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7111, mu: 6.0163)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 0.6517]
+        Theta mean: 0.1150 ± 0.0470
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 15800 values (1.47%) above threshold 51.4
+      Estimated global theta: 0.1275
+      (Estimated global pi: 0.1500, mu: 3.8640)
+      Global theta (fallback): 0.1275
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2166 ± 0.2103
+        Using local theta per window (fallback: 0.1275)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 18752 values (1.74%) above threshold 47.9
+      Estimated global theta: 0.1431
+      (Estimated global pi: 0.1500, mu: 3.4619)
+      Global theta (fallback): 0.1431
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2100 ± 0.2005
+        Using local theta per window (fallback: 0.1431)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 16736 values (1.55%) above threshold 48.0
+      Estimated global theta: 0.1097
+      (Estimated global pi: 0.1500, mu: 3.2520)
+      Global theta (fallback): 0.1097
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1992 ± 0.1917
+        Using local theta per window (fallback: 0.1097)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 12189 values (1.55%) above threshold 51.4
+      Estimated global theta: 0.1305
+      (Estimated global pi: 0.1500, mu: 4.1505)
+      Global theta (fallback): 0.1305
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1977 ± 0.1456
+        Using local theta per window (fallback: 0.1305)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 13190 values (1.68%) above threshold 47.9
+      Estimated global theta: 0.1499
+      (Estimated global pi: 0.1500, mu: 3.5944)
+      Global theta (fallback): 0.1499
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1947 ± 0.1398
+        Using local theta per window (fallback: 0.1499)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 5455 values (0.36%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7287, mu: 5.2504)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 766/766 blocks successfully
+        Theta range: [0.1000, 0.5171]
+        Theta mean: 0.1122 ± 0.0390
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIV complete
+    Processing ChrIX...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 11118 values (1.42%) above threshold 48.0
+      Estimated global theta: 0.1217
+      (Estimated global pi: 0.1500, mu: 3.5037)
+      Global theta (fallback): 0.1217
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1880 ± 0.1312
+        Using local theta per window (fallback: 0.1217)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 2479 values (0.56%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6859, mu: 6.2849)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 0.3530]
+        Theta mean: 0.1169 ± 0.0412
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 1518 values (0.66%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6459, mu: 6.2108)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1291 ± 0.0939
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 11369 values (1.70%) above threshold 51.4
+      Estimated global theta: 0.1305
+      (Estimated global pi: 0.1500, mu: 4.4071)
+      Global theta (fallback): 0.1305
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1970 ± 0.1307
+        Using local theta per window (fallback: 0.1305)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 11837 values (1.78%) above threshold 47.9
+      Estimated global theta: 0.1482
+      (Estimated global pi: 0.1500, mu: 3.7835)
+      Global theta (fallback): 0.1482
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1866 ± 0.1133
+        Using local theta per window (fallback: 0.1482)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 10146 values (1.52%) above threshold 48.0
+      Estimated global theta: 0.1232
+      (Estimated global pi: 0.1553, mu: 3.7249)
+      Global theta (fallback): 0.1232
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1947 ± 0.1300
+        Using local theta per window (fallback: 0.1232)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 2964 values (0.53%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6840, mu: 5.9984)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 0.3963]
+        Theta mean: 0.1157 ± 0.0446
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 13422 values (1.42%) above threshold 51.4
+      Estimated global theta: 0.1383
+      (Estimated global pi: 0.1500, mu: 4.0894)
+      Global theta (fallback): 0.1383
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2092 ± 0.1749
+        Using local theta per window (fallback: 0.1383)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 4507 values (0.41%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7137, mu: 5.5426)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 0.3530]
+        Theta mean: 0.1143 ± 0.0407
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 14249 values (1.50%) above threshold 47.9
+      Estimated global theta: 0.1570
+      (Estimated global pi: 0.1500, mu: 3.5176)
+      Global theta (fallback): 0.1570
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2029 ± 0.1669
+        Using local theta per window (fallback: 0.1570)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 1982 values (0.73%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6365, mu: 6.4615)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 0.3872]
+        Theta mean: 0.1194 ± 0.0445
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 11447 values (1.21%) above threshold 48.0
+      Estimated global theta: 0.1260
+      (Estimated global pi: 0.1500, mu: 3.3431)
+      Global theta (fallback): 0.1260
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1965 ± 0.1516
+        Using local theta per window (fallback: 0.1260)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 3466 values (0.60%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6661, mu: 6.0359)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 0.8120]
+        Theta mean: 0.1215 ± 0.0629
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 17355 values (1.59%) above threshold 51.4
+      Estimated global theta: 0.1320
+      (Estimated global pi: 0.1500, mu: 4.1796)
+      Global theta (fallback): 0.1320
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1987 ± 0.1560
+        Using local theta per window (fallback: 0.1320)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 17998 values (1.65%) above threshold 47.9
+      Estimated global theta: 0.1499
+      (Estimated global pi: 0.1500, mu: 3.5537)
+      Global theta (fallback): 0.1499
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1925 ± 0.1482
+        Using local theta per window (fallback: 0.1499)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 3896 values (0.42%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7132, mu: 5.5355)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 0.3963]
+        Theta mean: 0.1122 ± 0.0365
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 15327 values (1.40%) above threshold 48.0
+      Estimated global theta: 0.1232
+      (Estimated global pi: 0.1508, mu: 3.4576)
+      Global theta (fallback): 0.1232
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1910 ± 0.1473
+        Using local theta per window (fallback: 0.1232)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 51.4
+      Outlier removal: capped 12118 values (1.62%) above threshold 51.4
+      Estimated global theta: 0.1399
+      (Estimated global pi: 0.1500, mu: 4.3678)
+      Global theta (fallback): 0.1399
+      Estimating local theta in 2000bp blocks...
+        Estimated 373/373 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.2016 ± 0.1438
+        Using local theta per window (fallback: 0.1399)
+    ✓ ChrX complete
+
+  Completed strain_yEK19
+
+================================================================================
+Processing strain_yWT03a
+================================================================================
+  ✓ Centromere file: dataset-strain_yWT03a_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_yWT03a_combined_Boolean_True_nucleosome_density.csv
+
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 10.0
+  Total outliers to cap: 16389 (0.14%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+      Outlier removal: using global threshold 47.9
+      Outlier removal: capped 13029 values (1.75%) above threshold 47.9
+      Estimated global theta: 0.1589
+      (Estimated global pi: 0.1500, mu: 3.7801)
+      Global theta (fallback): 0.1589
+      Estimating local theta in 2000bp blocks...
+        Estimated 373/373 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1953 ± 0.1363
+        Using local theta per window (fallback: 0.1589)
+    ✓ ChrX complete
+
+  Completed strain_FD
+
+================================================================================
+Processing strain_yWT04a
+================================================================================
+  ✓ Centromere file: dataset-strain_yWT04a_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_yWT04a_combined_Boolean_True_nucleosome_density.csv
+
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 39.0
+  Total outliers to cap: 35964 (0.30%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 6761 values (0.63%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7060, mu: 6.4913)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1289 ± 0.1135
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 515 values (0.16%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7747, mu: 0.3316)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1337 ± 0.1213
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 48.0
+      Outlier removal: capped 10768 values (1.44%) above threshold 48.0
+      Estimated global theta: 0.1320
+      (Estimated global pi: 0.1500, mu: 3.6703)
+      Global theta (fallback): 0.1320
+      Estimating local theta in 2000bp blocks...
+        Estimated 373/373 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1941 ± 0.1336
+        Using local theta per window (fallback: 0.1320)
+    ✓ ChrX complete
+
+  Completed strain_yEK23
+
+================================================================================
+Processing strain_ylic137
+================================================================================
+  ✓ Centromere file: dataset-strain_ylic137_combined_centromere_density_Boolean_True_bin_10000_absolute.csv
+  ✓ Nucleosome file: dataset-strain_ylic137_combined_Boolean_True_nucleosome_density.csv
+
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 95.0
+  Total outliers to cap: 55098 (0.46%) across all chromosomes
+
+  Processing 16 chromosomes:
+  Thresholds: 0.5 to 5.0 (step 0.5)
+
+    Processing ChrIII...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 1656 values (0.52%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7078, mu: 2.1241)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 0.5738]
+        Theta mean: 0.1115 ± 0.0484
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 1905 values (0.60%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6887, mu: 5.7901)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 159/159 blocks successfully
+        Theta range: [0.1000, 0.3255]
+        Theta mean: 0.1014 ± 0.0178
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIII complete
+    Processing ChrII...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 3554 values (0.45%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7126, mu: 5.7574)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 0.2967]
+        Theta mean: 0.1101 ± 0.0299
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2344 values (0.29%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7647, mu: 1.6671)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 0.7149]
+        Theta mean: 0.1137 ± 0.0688
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3813 values (0.47%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7216, mu: 5.3649)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 0.5171]
+        Theta mean: 0.1018 ± 0.0222
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 3082 values (0.46%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7259, mu: 6.0268)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 0.2833]
+        Theta mean: 0.1115 ± 0.0324
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 1110 values (0.14%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7760, mu: 0.2997)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 407/407 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1574 ± 0.1400
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrII complete
+    Processing ChrIV...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 4060 values (0.43%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7039, mu: 5.4486)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1169 ± 0.0578
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 5060 values (0.33%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7413, mu: 4.5754)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 766/766 blocks successfully
+        Theta range: [0.1000, 0.2967]
+        Theta mean: 0.1016 ± 0.0136
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIV complete
+    Processing ChrIX...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2910 values (0.19%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7805, mu: 1.3303)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 766/766 blocks successfully
+        Theta range: [0.1000, 0.7843]
+        Theta mean: 0.1066 ± 0.0397
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIV complete
+    Processing ChrIX...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 2401 values (0.55%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7002, mu: 5.6209)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 0.1097]
+        Theta mean: 0.1000 ± 0.0007
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 89.5
+      Outlier removal: capped 6022 values (0.55%) above threshold 89.5
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7186, mu: 6.1635)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1147 ± 0.0624
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 1453 values (0.63%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6640, mu: 5.6982)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 0.2327]
+        Theta mean: 0.1020 ± 0.0144
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 1583 values (0.36%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7387, mu: 1.8812)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 0.1868]
+        Theta mean: 0.1040 ± 0.0153
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIX complete
+    Processing ChrI...
+    ✗ timeout after 1800s
+    Processing ChrIX...
+    ✗ ChrX failed (exit code 1)
+      Error output:
+        Traceback (most recent call last):
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 736, in <module>
+            main()
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 719, in main
+            run_dataset(
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 533, in run_dataset
+            process_window_size(
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 379, in process_window_size
+            save_results(
+          File "/workspace/Signal_processing/sliding_mean/sliding_ZINB_CPD_v3_SATAY.py", line 324, in save_results
+        ... (truncated)
+
+  Completed strain_yTW001
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 1135 values (0.49%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6968, mu: 2.0587)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 0.2866]
+        Theta mean: 0.1090 ± 0.0321
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 2701 values (0.48%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6983, mu: 5.3372)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 0.2524]
+        Theta mean: 0.1018 ± 0.0126
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 651 values (0.15%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7661, mu: 0.3130)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 220/220 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1419 ± 0.1129
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrIX complete
+    Processing ChrI...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 1872 values (0.33%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7392, mu: 1.7658)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 0.4553]
+        Theta mean: 0.1108 ± 0.0454
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 498 values (0.22%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7717, mu: 0.3664)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 116/116 blocks successfully
+        Theta range: [0.1000, 0.6151]
+        Theta mean: 0.1379 ± 0.0976
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrI complete
+    Processing ChrVIII...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 4134 values (0.38%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7280, mu: 4.9031)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 0.3037]
+        Theta mean: 0.1025 ± 0.0167
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 1666 values (0.62%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6606, mu: 5.6982)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 0.7575]
+        Theta mean: 0.1054 ± 0.0563
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3127 values (0.54%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6862, mu: 5.4237)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 0.6442]
+        Theta mean: 0.1047 ± 0.0362
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 725 values (0.13%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7675, mu: 0.2970)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 282/282 blocks successfully
+        Theta range: [0.1000, 0.7934]
+        Theta mean: 0.1420 ± 0.1008
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVIII complete
+    Processing ChrVII...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2360 values (0.22%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7705, mu: 1.4616)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1116 ± 0.0599
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 1661 values (0.61%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.6792, mu: 2.2219)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 0.3530]
+        Theta mean: 0.1099 ± 0.0393
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3875 values (0.42%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7253, mu: 5.0282)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 0.2222]
+        Theta mean: 0.1019 ± 0.0124
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2315 values (0.40%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7357, mu: 1.9092)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1115 ± 0.0644
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 1035 values (0.09%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7764, mu: 0.2654)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1525 ± 0.1291
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVII complete
+    Processing ChrVI...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 5917 values (0.55%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7145, mu: 5.7829)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1148 ± 0.0906
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 487 values (0.18%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7537, mu: 0.3323)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 136/136 blocks successfully
+        Theta range: [0.1000, 0.4995]
+        Theta mean: 0.1253 ± 0.0672
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrVI complete
+    Processing ChrV...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2171 values (0.23%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7671, mu: 1.4979)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 0.7317]
+        Theta mean: 0.1085 ± 0.0447
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3356 values (0.43%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7244, mu: 5.1248)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 0.1783]
+        Theta mean: 0.1007 ± 0.0058
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3103 values (0.47%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7385, mu: 5.5826)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 0.1000]
+        Theta mean: 0.1000 ± 0.0000
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 913 values (0.16%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7788, mu: 0.3219)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 289/289 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1434 ± 0.1205
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrV complete
+    Processing ChrXIII...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 3563 values (0.33%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7517, mu: 1.8304)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1242 ± 0.1110
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3819 values (0.40%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7199, mu: 4.8565)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 0.2643]
+        Theta mean: 0.1026 ± 0.0174
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2140 values (0.27%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7664, mu: 1.6423)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1133 ± 0.0738
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 929 values (0.10%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7734, mu: 0.2641)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 463/463 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1437 ± 0.1084
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIII complete
+    Processing ChrXII...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 5236 values (0.48%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7326, mu: 5.4225)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1043 ± 0.0551
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 1903 values (0.29%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7814, mu: 1.7833)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1150 ± 0.0691
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 95.0
+      Outlier removal: capped 3455 values (0.46%) above threshold 95.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7142, mu: 5.2379)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 373/373 blocks successfully
+        Theta range: [0.1000, 0.3072]
+        Theta mean: 0.1019 ± 0.0162
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrX complete
+
+  Completed strain_ylic137
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2336 values (0.25%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7567, mu: 1.4986)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 0.6517]
+        Theta mean: 0.1071 ± 0.0385
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 2139 values (0.20%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7632, mu: 0.3616)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 540/540 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1786 ± 0.1766
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXII complete
+    Processing ChrXIV...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 3762 values (0.34%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7784, mu: 1.7968)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1118 ± 0.0713
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 890 values (0.11%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7772, mu: 0.2787)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 393/393 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1429 ± 0.1161
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXIV complete
+    Processing ChrXI...
+      Outlier removal: using global threshold 39.0
+      Outlier removal: capped 2181 values (0.29%) above threshold 39.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7567, mu: 1.6483)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 373/373 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1135 ± 0.0766
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrX complete
+
+  Completed strain_yWT04a
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 777 values (0.12%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7925, mu: 0.2956)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 334/334 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1480 ± 0.1399
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXI complete
+    Processing ChrXVI...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 1027 values (0.11%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7785, mu: 0.2684)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 475/475 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1463 ± 0.1121
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXVI complete
+    Processing ChrXV...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 2393 values (0.22%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7962, mu: 0.3645)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 546/546 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1489 ± 0.1312
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrXV complete
+    Processing ChrX...
+      Outlier removal: using global threshold 10.0
+      Outlier removal: capped 848 values (0.11%) above threshold 10.0
+      Estimated global theta: 0.1000
+      (Estimated global pi: 0.7683, mu: 0.2786)
+      Global theta (fallback): 0.1000
+      Estimating local theta in 2000bp blocks...
+        Estimated 373/373 blocks successfully
+        Theta range: [0.1000, 1.0000]
+        Theta mean: 0.1543 ± 0.1488
+        Using local theta per window (fallback: 0.1000)
+    ✓ ChrX complete
+
+  Completed strain_yWT03a
+
+================================================================================
+✓ CPD Analysis Complete!
+================================================================================
+  Chromosomes processed successfully: 122
+  Chromosomes with errors:            6
+  Strains skipped:                    0
+
+  Results saved to: /workspace/Signal_processing/strains
+================================================================================
+
+CPD analysis completed successfully!
+
+==========================================
+STEP 2: Running Essentiality Calculation (thresholds 0.5-5 with step 0.5)
+==========================================
+================================================================================
+SATAY Strain Essentiality Calculation
+================================================================================
+Data folder: /workspace/Data/combined_strains
+Results folder: /workspace/Signal_processing/strains
+Strains to process: 8
+  - strain_FD
+  - strain_dnrp
+  - strain_yEK19
+  - strain_yEK23
+  - strain_yTW001
+  - strain_yWT03a
+  - strain_yWT04a
+  - strain_ylic137
+Thresholds to process: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+Output subfolder: segment_mu
+Summary output: /workspace/Signal_processing/essentiality_calculation/strain_essentiality_summary.csv
+================================================================================
+
+================================================================================
+Processing strain_FD
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 105.0
+  Total outliers to cap: 41159 (0.34%) across all chromosomes
+
+    ChrI: capped 1268 outliers (0.55%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 2699 outliers (0.33%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 1683 outliers (0.53%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 3146 outliers (0.21%)
+  Skipping ChrIV: results folder not found
+    ChrV: capped 2485 outliers (0.43%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 1370 outliers (0.51%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 2740 outliers (0.25%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 2128 outliers (0.38%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 1831 outliers (0.42%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 2601 outliers (0.35%)
+  Processing ChrX: 10 threshold files
+    ChrXI: capped 2199 outliers (0.33%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 4705 outliers (0.44%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 2811 outliers (0.30%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 2619 outliers (0.33%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 4289 outliers (0.39%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 2585 outliers (0.27%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 150 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 64112 segments, μ̄= 4.4510, σ_μ= 5.8504, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   1.0: 55067 segments, μ̄= 4.6237, σ_μ= 6.0084, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   1.5: 47570 segments, μ̄= 4.7968, σ_μ= 6.1413, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   2.0: 41577 segments, μ̄= 4.9554, σ_μ= 6.2734, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   2.5: 36328 segments, μ̄= 5.1206, σ_μ= 6.4235, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   3.0: 32019 segments, μ̄= 5.2808, σ_μ= 6.5699, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   3.5: 28373 segments, μ̄= 5.4238, σ_μ= 6.6678, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   4.0: 25149 segments, μ̄= 5.5970, σ_μ= 6.8104, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   4.5: 22427 segments, μ̄= 5.7505, σ_μ= 6.9451, θ=0.162530 (range: 0.143146-0.195640)
+    Threshold   5.0: 20031 segments, μ̄= 5.8751, σ_μ= 7.0346, θ=0.162530 (range: 0.143146-0.195640)
+
+  Saving results...
+  Saved 150 segment files
+
+================================================================================
+Processing strain_dnrp
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Global 99th percentile (non-zero): 357.0
+  Total outliers to cap: 11171 (0.09%) across all chromosomes
+
+    ChrI: capped 262 outliers (0.11%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 741 outliers (0.09%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 372 outliers (0.12%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 722 outliers (0.05%)
+  Processing ChrIV: 10 threshold files
+    ChrV: capped 663 outliers (0.11%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 291 outliers (0.11%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 625 outliers (0.06%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 446 outliers (0.08%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 378 outliers (0.09%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 676 outliers (0.09%)
+  Skipping ChrX: results folder not found
+    ChrXI: capped 486 outliers (0.07%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 2299 outliers (0.21%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 662 outliers (0.07%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 509 outliers (0.06%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 1454 outliers (0.13%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 585 outliers (0.06%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 150 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 60633 segments, μ̄=16.8965, σ_μ=18.7236, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   1.0: 51451 segments, μ̄=15.9382, σ_μ=18.2161, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   1.5: 44288 segments, μ̄=15.2201, σ_μ=17.6766, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   2.0: 38561 segments, μ̄=14.7232, σ_μ=17.2900, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   2.5: 33767 segments, μ̄=14.3677, σ_μ=16.9199, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   3.0: 29811 segments, μ̄=14.1027, σ_μ=16.5161, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   3.5: 26327 segments, μ̄=13.9129, σ_μ=16.3291, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   4.0: 23474 segments, μ̄=13.7225, σ_μ=16.0219, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   4.5: 21066 segments, μ̄=13.5914, σ_μ=15.9012, θ=0.279065 (range: 0.235429-0.325509)
+    Threshold   5.0: 18960 segments, μ̄=13.4633, σ_μ=15.6805, θ=0.279065 (range: 0.235429-0.325509)
+
+  Saving results...
+  Saved 150 segment files
+
+================================================================================
+Processing strain_yEK19
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 108.0
+  Total outliers to cap: 38789 (0.32%) across all chromosomes
+
+    ChrI: capped 1071 outliers (0.47%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 2744 outliers (0.34%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 1484 outliers (0.47%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 3294 outliers (0.22%)
+  Skipping ChrIV: results folder not found
+    ChrV: capped 2436 outliers (0.42%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 1279 outliers (0.47%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 2797 outliers (0.26%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 2037 outliers (0.36%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 1698 outliers (0.39%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 2373 outliers (0.32%)
+  Processing ChrX: 10 threshold files
+    ChrXI: capped 2183 outliers (0.33%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 3727 outliers (0.35%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 2603 outliers (0.28%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 2351 outliers (0.30%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 4282 outliers (0.39%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 2430 outliers (0.26%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 150 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 61489 segments, μ̄= 5.0191, σ_μ= 5.9449, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   1.0: 51391 segments, μ̄= 5.1878, σ_μ= 6.1536, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   1.5: 43229 segments, μ̄= 5.3591, σ_μ= 6.3544, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   2.0: 36841 segments, μ̄= 5.5054, σ_μ= 6.5301, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   2.5: 31759 segments, μ̄= 5.6432, σ_μ= 6.6679, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   3.0: 27421 segments, μ̄= 5.7707, σ_μ= 6.7996, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   3.5: 23824 segments, μ̄= 5.8907, σ_μ= 6.9386, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   4.0: 20848 segments, μ̄= 6.0053, σ_μ= 7.0818, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   4.5: 18198 segments, μ̄= 6.1230, σ_μ= 7.1940, θ=0.144464 (range: 0.127505-0.176291)
+    Threshold   5.0: 16059 segments, μ̄= 6.2414, σ_μ= 7.2919, θ=0.144464 (range: 0.127505-0.176291)
+
+  Saving results...
+  Saved 150 segment files
+
+================================================================================
+Processing strain_yEK23
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 121.0
+  Total outliers to cap: 35545 (0.29%) across all chromosomes
+
+    ChrI: capped 1011 outliers (0.44%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 2270 outliers (0.28%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 1575 outliers (0.50%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 2397 outliers (0.16%)
+  Skipping ChrIV: results folder not found
+    ChrV: capped 2099 outliers (0.36%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 1169 outliers (0.43%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 2280 outliers (0.21%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 1746 outliers (0.31%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 1532 outliers (0.35%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 2119 outliers (0.28%)
+  Processing ChrX: 10 threshold files
+    ChrXI: capped 1811 outliers (0.27%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 5299 outliers (0.49%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 2245 outliers (0.24%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 2164 outliers (0.28%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 3780 outliers (0.35%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 2048 outliers (0.22%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 150 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 60970 segments, μ̄= 4.3504, σ_μ= 5.8766, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   1.0: 50813 segments, μ̄= 4.4773, σ_μ= 6.0530, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   1.5: 42626 segments, μ̄= 4.6397, σ_μ= 6.2382, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   2.0: 36245 segments, μ̄= 4.7729, σ_μ= 6.4273, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   2.5: 30999 segments, μ̄= 4.8981, σ_μ= 6.5853, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   3.0: 26627 segments, μ̄= 5.0112, σ_μ= 6.7284, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   3.5: 23123 segments, μ̄= 5.1373, σ_μ= 6.9105, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   4.0: 20186 segments, μ̄= 5.2356, σ_μ= 7.0061, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   4.5: 17682 segments, μ̄= 5.3543, σ_μ= 7.1529, θ=0.137274 (range: 0.109699-0.191164)
+    Threshold   5.0: 15512 segments, μ̄= 5.4584, σ_μ= 7.2610, θ=0.137274 (range: 0.109699-0.191164)
+
+  Saving results...
+  Saved 150 segment files
+
+================================================================================
+Processing strain_yTW001
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 198.0
+  Total outliers to cap: 11933 (0.10%) across all chromosomes
+
+    ChrI: capped 286 outliers (0.12%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 808 outliers (0.10%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 452 outliers (0.14%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 904 outliers (0.06%)
+  Processing ChrIV: 10 threshold files
+    ChrV: capped 786 outliers (0.14%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 370 outliers (0.14%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 707 outliers (0.06%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 552 outliers (0.10%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 438 outliers (0.10%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 700 outliers (0.09%)
+  Skipping ChrX: results folder not found
+    ChrXI: capped 500 outliers (0.07%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 1781 outliers (0.17%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 612 outliers (0.07%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 634 outliers (0.08%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 1741 outliers (0.16%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 662 outliers (0.07%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 150 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 58504 segments, μ̄= 4.3618, σ_μ= 5.7310, θ=0.100000
+    Threshold   1.0: 44747 segments, μ̄= 4.1013, σ_μ= 5.6312, θ=0.100000
+    Threshold   1.5: 34658 segments, μ̄= 4.0113, σ_μ= 5.6905, θ=0.100000
+    Threshold   2.0: 27105 segments, μ̄= 3.9902, σ_μ= 5.7684, θ=0.100000
+    Threshold   2.5: 21323 segments, μ̄= 3.9926, σ_μ= 5.9394, θ=0.100000
+    Threshold   3.0: 16962 segments, μ̄= 4.0001, σ_μ= 5.8358, θ=0.100000
+    Threshold   3.5: 13595 segments, μ̄= 4.0293, σ_μ= 6.0091, θ=0.100000
+    Threshold   4.0: 11116 segments, μ̄= 4.0438, σ_μ= 5.8232, θ=0.100000
+    Threshold   4.5: 9100 segments, μ̄= 4.1243, σ_μ= 6.0016, θ=0.100000
+    Threshold   5.0: 7382 segments, μ̄= 4.2584, σ_μ= 6.2634, θ=0.100000
+
+  Saving results...
+  Saved 150 segment files
+
+================================================================================
+Processing strain_yWT03a
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 37.0
+  Total outliers to cap: 3371 (0.03%) across all chromosomes
+
+    ChrI: capped 142 outliers (0.06%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 213 outliers (0.03%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 111 outliers (0.04%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 262 outliers (0.02%)
+  Skipping ChrIV: results folder not found
+    ChrV: capped 193 outliers (0.03%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 59 outliers (0.02%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 165 outliers (0.02%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 117 outliers (0.02%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 140 outliers (0.03%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 126 outliers (0.02%)
+  Processing ChrX: 10 threshold files
+    ChrXI: capped 127 outliers (0.02%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 410 outliers (0.04%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 159 outliers (0.02%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 171 outliers (0.02%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 778 outliers (0.07%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 198 outliers (0.02%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 150 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 32090 segments, μ̄= 0.2975, σ_μ= 0.6802, θ=0.100000
+    Threshold   1.0: 15098 segments, μ̄= 0.3111, σ_μ= 0.6000, θ=0.100000
+    Threshold   1.5: 5665 segments, μ̄= 0.4389, σ_μ= 0.6940, θ=0.100000
+    Threshold   2.0: 1460 segments, μ̄= 0.4816, σ_μ= 0.7862, θ=0.100000
+    Threshold   2.5:  545 segments, μ̄= 0.6302, σ_μ= 1.0093, θ=0.100000
+    Threshold   3.0:  229 segments, μ̄= 0.8322, σ_μ= 1.3113, θ=0.100000
+    Threshold   3.5:  103 segments, μ̄= 1.0281, σ_μ= 1.6223, θ=0.100000
+    Threshold   4.0:   68 segments, μ̄= 1.2737, σ_μ= 1.8919, θ=0.100000
+    Threshold   4.5:   44 segments, μ̄= 1.1744, σ_μ= 1.3518, θ=0.100000
+    Threshold   5.0:   31 segments, μ̄= 0.9862, σ_μ= 1.0302, θ=0.100000
+
+  Saving results...
+  Saved 150 segment files
+
+================================================================================
+Processing strain_yWT04a
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 123.0
+  Total outliers to cap: 7210 (0.06%) across all chromosomes
+
+    ChrI: capped 267 outliers (0.12%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 422 outliers (0.05%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 350 outliers (0.11%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 692 outliers (0.05%)
+  Processing ChrIV: 10 threshold files
+    ChrV: capped 467 outliers (0.08%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 356 outliers (0.13%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 400 outliers (0.04%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 302 outliers (0.05%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 272 outliers (0.06%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 388 outliers (0.05%)
+  Processing ChrX: 10 threshold files
+    ChrXI: capped 351 outliers (0.05%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 652 outliers (0.06%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 377 outliers (0.04%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 415 outliers (0.05%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 1017 outliers (0.09%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 482 outliers (0.05%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 160 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 57144 segments, μ̄= 1.4139, σ_μ= 2.5783, θ=0.100000
+    Threshold   1.0: 39561 segments, μ̄= 1.4429, σ_μ= 2.5628, θ=0.100000
+    Threshold   1.5: 26905 segments, μ̄= 1.4940, σ_μ= 2.6344, θ=0.100000
+    Threshold   2.0: 18965 segments, μ̄= 1.5247, σ_μ= 2.6533, θ=0.100000
+    Threshold   2.5: 13719 segments, μ̄= 1.5592, σ_μ= 2.7379, θ=0.100000
+    Threshold   3.0: 10012 segments, μ̄= 1.5964, σ_μ= 2.7999, θ=0.100000
+    Threshold   3.5: 7238 segments, μ̄= 1.6660, σ_μ= 2.9002, θ=0.100000
+    Threshold   4.0: 5200 segments, μ̄= 1.7738, σ_μ= 3.1217, θ=0.100000
+    Threshold   4.5: 3719 segments, μ̄= 1.8639, σ_μ= 3.2386, θ=0.100000
+    Threshold   5.0: 2626 segments, μ̄= 2.0315, σ_μ= 3.6123, θ=0.100000
+
+  Saving results...
+  Saved 160 segment files
+
+================================================================================
+Processing strain_ylic137
+================================================================================
+  Computing global outlier threshold across all chromosomes...
+  Removed 1 problematic position(s) (set to zero)
+  Global 99th percentile (non-zero): 229.5
+  Total outliers to cap: 11122 (0.09%) across all chromosomes
+
+    ChrI: capped 336 outliers (0.15%)
+  Processing ChrI: 10 threshold files
+    ChrII: capped 701 outliers (0.09%)
+  Processing ChrII: 10 threshold files
+    ChrIII: capped 394 outliers (0.12%)
+  Processing ChrIII: 10 threshold files
+    ChrIV: capped 914 outliers (0.06%)
+  Processing ChrIV: 10 threshold files
+    ChrV: capped 696 outliers (0.12%)
+  Processing ChrV: 10 threshold files
+    ChrVI: capped 324 outliers (0.12%)
+  Processing ChrVI: 10 threshold files
+    ChrVII: capped 729 outliers (0.07%)
+  Processing ChrVII: 10 threshold files
+    ChrVIII: capped 555 outliers (0.10%)
+  Processing ChrVIII: 10 threshold files
+    ChrIX: capped 481 outliers (0.11%)
+  Processing ChrIX: 10 threshold files
+    ChrX: capped 671 outliers (0.09%)
+  Processing ChrX: 10 threshold files
+    ChrXI: capped 563 outliers (0.08%)
+  Processing ChrXI: 10 threshold files
+    ChrXII: capped 1454 outliers (0.13%)
+  Processing ChrXII: 10 threshold files
+    ChrXIII: capped 714 outliers (0.08%)
+  Processing ChrXIII: 10 threshold files
+    ChrXIV: capped 604 outliers (0.08%)
+  Processing ChrXIV: 10 threshold files
+    ChrXV: capped 1321 outliers (0.12%)
+  Processing ChrXV: 10 threshold files
+    ChrXVI: capped 665 outliers (0.07%)
+  Processing ChrXVI: 10 threshold files
+
+  Processed 160 files, skipped 0
+
+  Computing z-scores per threshold...
+    Threshold   0.5: 67153 segments, μ̄= 4.2106, σ_μ= 6.0442, θ=0.100000
+    Threshold   1.0: 53529 segments, μ̄= 4.0221, σ_μ= 5.9048, θ=0.100000
+    Threshold   1.5: 42333 segments, μ̄= 3.9895, σ_μ= 5.8856, θ=0.100000
+    Threshold   2.0: 33295 segments, μ̄= 4.0121, σ_μ= 5.9237, θ=0.100000
+    Threshold   2.5: 26266 segments, μ̄= 4.0515, σ_μ= 6.0119, θ=0.100000
+    Threshold   3.0: 20554 segments, μ̄= 4.1083, σ_μ= 6.1045, θ=0.100000
+    Threshold   3.5: 16306 segments, μ̄= 4.1930, σ_μ= 6.2864, θ=0.100000
+    Threshold   4.0: 12984 segments, μ̄= 4.3004, σ_μ= 6.4761, θ=0.100000
+    Threshold   4.5: 10302 segments, μ̄= 4.4280, σ_μ= 6.7455, θ=0.100000
+    Threshold   5.0: 8123 segments, μ̄= 4.5719, σ_μ= 7.0287, θ=0.100000
+
+  Saving results...
+  Saved 160 segment files
+
+================================================================================
+SUMMARY
+================================================================================
+        strain  processed_files  skipped_files  saved_files  chromosomes_processed  thresholds_processed
+     strain_FD              150              0          150                     15                    10
+   strain_dnrp              150              0          150                     15                    10
+  strain_yEK19              150              0          150                     15                    10
+  strain_yEK23              150              0          150                     15                    10
+ strain_yTW001              150              0          150                     15                    10
+ strain_yWT03a              150              0          150                     15                    10
+ strain_yWT04a              160              0          160                     16                    10
+strain_ylic137              160              0          160                     16                    10
+
+Summary saved to: /workspace/Signal_processing/essentiality_calculation/strain_essentiality_summary.csv
+================================================================================
+
+Done!
+
+Essentiality calculation completed successfully!
+

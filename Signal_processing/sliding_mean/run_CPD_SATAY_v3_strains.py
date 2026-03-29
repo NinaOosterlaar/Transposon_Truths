@@ -184,6 +184,8 @@ def process_strain(
     for chrom_file in chromosome_files:
         # Extract chromosome name (e.g., "ChrI" from "ChrI_distances.csv")
         chrom_name = chrom_file.stem.replace("_distances", "")
+        if chrom_name != "ChrIV":
+            continue
         
         # Output folder: Signal_processing/strains/{strain_name}/{chromosome}/
         output_folder = output_base / strain_name / chrom_name

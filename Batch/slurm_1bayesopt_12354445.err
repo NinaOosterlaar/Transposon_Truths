@@ -1,0 +1,7 @@
+slurmstepd: error: *** JOB 12354445 ON gpu19 CANCELLED AT 2026-03-28T13:17:04 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 12354445.0 ON gpu19 CANCELLED AT 2026-03-28T13:17:04 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+/opt/conda/lib/python3.11/site-packages/joblib/externals/loky/backend/resource_tracker.py:359: UserWarning: resource_tracker: There appear to be 6 leaked semlock objects to clean up at shutdown
+  warnings.warn(
+/opt/conda/lib/python3.11/site-packages/joblib/externals/loky/backend/resource_tracker.py:359: UserWarning: resource_tracker: There appear to be 78 leaked folder objects to clean up at shutdown
+  warnings.warn(

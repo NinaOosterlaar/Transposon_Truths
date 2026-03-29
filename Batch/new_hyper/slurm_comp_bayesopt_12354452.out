@@ -9462,3 +9462,2102 @@ Creating datasets with:
   stride: 1 (fixed), padding: same (fixed)
   Using pre-determined chromosome split
 
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr', 'Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 37640
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 13240
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 14656
+Datasets created with shapes:
+  Train: (37640, 2000, 5)
+  Val: (13240, 2000, 5)
+  Test: (14656, 2000, 5)
+Datasets created:
+  Train: (37640, 2000, 5), Val: (13240, 2000, 5), Test: (14656, 2000, 5)
+
+
+Dataset shapes:
+  Train set: (37640, 2000, 5)
+  Val set: (13240, 2000, 5)
+  Test set: (14656, 2000, 5)
+Randomly sampled 28828/37640 samples (76.6%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 13240
+  Batch size: 64
+Applied denoising with 15.0% masking
+  Dataloader created: 13240 samples, 207 batches
+
+Creating test dataloader:
+  Test set size: 14656
+  Batch size: 64
+Applied denoising with 15.0% masking
+  Dataloader created: 14656 samples, 229 batches
+Number of encoder layers: 2
+Number of decoder layers (excluding heads): 2
+Total number of layers including latent layer: 5
+Epoch [1/103], Total Loss: 6.8691, NLL: 1.4486, Masked: 12.8325, Reg: 143.674373
+Epoch [2/103], Total Loss: 6.4376, NLL: 1.2514, Masked: 12.2779, Reg: 82.115122
+Epoch [3/103], Total Loss: 6.3895, NLL: 1.2103, Masked: 12.2611, Reg: 43.447815
+Epoch [4/103], Total Loss: 6.3992, NLL: 1.1930, Masked: 12.3252, Reg: 20.812591
+Epoch [5/103], Total Loss: 6.4241, NLL: 1.1858, Masked: 12.4012, Reg: 9.085010
+Epoch [6/103], Total Loss: 6.4387, NLL: 1.1684, Masked: 12.4768, Reg: 3.763404
+Epoch [7/103], Total Loss: 6.4849, NLL: 1.1692, Masked: 12.5844, Reg: 1.994630
+Epoch [8/103], Total Loss: 6.5044, NLL: 1.1625, Masked: 12.6465, Reg: 1.559264
+Epoch [9/103], Total Loss: 6.5108, NLL: 1.1545, Masked: 12.6805, Reg: 1.425466
+Epoch [10/103], Total Loss: 6.5145, NLL: 1.1478, Masked: 12.7052, Reg: 1.356811
+Epoch [11/103], Total Loss: 6.5170, NLL: 1.1526, Masked: 12.6997, Reg: 1.363325
+Epoch [12/103], Total Loss: 6.5077, NLL: 1.1430, Masked: 12.7004, Reg: 1.288628
+Epoch [13/103], Total Loss: 6.5061, NLL: 1.1490, Masked: 12.6822, Reg: 1.375828
+Epoch [14/103], Total Loss: 6.5222, NLL: 1.1500, Masked: 12.7181, Reg: 1.363731
+Epoch [15/103], Total Loss: 6.5160, NLL: 1.1523, Masked: 12.6982, Reg: 1.427196
+Epoch [16/103], Total Loss: 6.5177, NLL: 1.1542, Masked: 12.6975, Reg: 1.432582
+Epoch [17/103], Total Loss: 6.5110, NLL: 1.1616, Masked: 12.6641, Reg: 1.442254
+Epoch [18/103], Total Loss: 6.5149, NLL: 1.1532, Masked: 12.6932, Reg: 1.443529
+Epoch [19/103], Total Loss: 6.5147, NLL: 1.1537, Masked: 12.6916, Reg: 1.364143
+Epoch [20/103], Total Loss: 6.5112, NLL: 1.1471, Masked: 12.6988, Reg: 1.305034
+Epoch [21/103], Total Loss: 6.5140, NLL: 1.1516, Masked: 12.6951, Reg: 1.400330
+Epoch [22/103], Total Loss: 6.5165, NLL: 1.1540, Masked: 12.6951, Reg: 1.392584
+Epoch [23/103], Total Loss: 6.5054, NLL: 1.1528, Masked: 12.6716, Reg: 1.384464
+Epoch [24/103], Total Loss: 6.5151, NLL: 1.1513, Masked: 12.6983, Reg: 1.443527
+Epoch [25/103], Total Loss: 6.5085, NLL: 1.1515, Masked: 12.6823, Reg: 1.348223
+Epoch [26/103], Total Loss: 6.5178, NLL: 1.1572, Masked: 12.6907, Reg: 1.418017
+Epoch [27/103], Total Loss: 6.5154, NLL: 1.1538, Masked: 12.6930, Reg: 1.348302
+Epoch [28/103], Total Loss: 6.5091, NLL: 1.1489, Masked: 12.6898, Reg: 1.354887
+Epoch [29/103], Total Loss: 6.5049, NLL: 1.1443, Masked: 12.6905, Reg: 1.308887
+Epoch [30/103], Total Loss: 6.5113, NLL: 1.1498, Masked: 12.6928, Reg: 1.436250
+Epoch [31/103], Total Loss: 6.5077, NLL: 1.1438, Masked: 12.6984, Reg: 1.273524
+Epoch [32/103], Total Loss: 6.5181, NLL: 1.1609, Masked: 12.6827, Reg: 1.401358
+Epoch [33/103], Total Loss: 6.5142, NLL: 1.1534, Masked: 12.6913, Reg: 1.404238
+Epoch [34/103], Total Loss: 6.5040, NLL: 1.1417, Masked: 12.6947, Reg: 1.292954
+Epoch [35/103], Total Loss: 6.5110, NLL: 1.1457, Masked: 12.7018, Reg: 1.338531
+Epoch [36/103], Total Loss: 6.5068, NLL: 1.1461, Masked: 12.6909, Reg: 1.347390
+Epoch [37/103], Total Loss: 6.5171, NLL: 1.1514, Masked: 12.7029, Reg: 1.331165
+Epoch [38/103], Total Loss: 6.5140, NLL: 1.1482, Masked: 12.7029, Reg: 1.344196
+Epoch [39/103], Total Loss: 6.5095, NLL: 1.1478, Masked: 12.6932, Reg: 1.330635
+Epoch [40/103], Total Loss: 6.5178, NLL: 1.1528, Masked: 12.7011, Reg: 1.367835
+Epoch [41/103], Total Loss: 6.5094, NLL: 1.1545, Masked: 12.6772, Reg: 1.427884
+Epoch [42/103], Total Loss: 6.5107, NLL: 1.1413, Masked: 12.7115, Reg: 1.276978
+Epoch [43/103], Total Loss: 6.5081, NLL: 1.1523, Masked: 12.6792, Reg: 1.372065
+Epoch [44/103], Total Loss: 6.5157, NLL: 1.1523, Masked: 12.6972, Reg: 1.360716
+Epoch [45/103], Total Loss: 6.5109, NLL: 1.1425, Masked: 12.7091, Reg: 1.338459
+Epoch [46/103], Total Loss: 6.4981, NLL: 1.1407, Masked: 12.6830, Reg: 1.268245
+Epoch [47/103], Total Loss: 6.5121, NLL: 1.1451, Masked: 12.7059, Reg: 1.299606
+Epoch [48/103], Total Loss: 6.5120, NLL: 1.1548, Masked: 12.6826, Reg: 1.398177
+Epoch [49/103], Total Loss: 6.5094, NLL: 1.1477, Masked: 12.6932, Reg: 1.314507
+Epoch [50/103], Total Loss: 6.5145, NLL: 1.1430, Masked: 12.7165, Reg: 1.312386
+Epoch [51/103], Total Loss: 6.5125, NLL: 1.1460, Masked: 12.7045, Reg: 1.313905
+Epoch [52/103], Total Loss: 6.5128, NLL: 1.1489, Masked: 12.6986, Reg: 1.315708
+Epoch [53/103], Total Loss: 6.5213, NLL: 1.1562, Masked: 12.7013, Reg: 1.382024
+Epoch [54/103], Total Loss: 6.5058, NLL: 1.1416, Masked: 12.6991, Reg: 1.268828
+Epoch [55/103], Total Loss: 6.5088, NLL: 1.1493, Masked: 12.6881, Reg: 1.310280
+Epoch [56/103], Total Loss: 6.5161, NLL: 1.1464, Masked: 12.7122, Reg: 1.327504
+Epoch [57/103], Total Loss: 6.5136, NLL: 1.1469, Masked: 12.7051, Reg: 1.347029
+Epoch [58/103], Total Loss: 6.5024, NLL: 1.1372, Masked: 12.7016, Reg: 1.252218
+Epoch [59/103], Total Loss: 6.5084, NLL: 1.1466, Masked: 12.6935, Reg: 1.258349
+Epoch [60/103], Total Loss: 6.5214, NLL: 1.1523, Masked: 12.7108, Reg: 1.314397
+Epoch [61/103], Total Loss: 6.5137, NLL: 1.1536, Masked: 12.6895, Reg: 1.383528
+Epoch [62/103], Total Loss: 6.5047, NLL: 1.1403, Masked: 12.6995, Reg: 1.260920
+Epoch [63/103], Total Loss: 6.5083, NLL: 1.1467, Masked: 12.6930, Reg: 1.339557
+Epoch [64/103], Total Loss: 6.5159, NLL: 1.1540, Masked: 12.6939, Reg: 1.351299
+Epoch [65/103], Total Loss: 6.5151, NLL: 1.1431, Masked: 12.7176, Reg: 1.286030
+Epoch [66/103], Total Loss: 6.5101, NLL: 1.1513, Masked: 12.6865, Reg: 1.352185
+Epoch [67/103], Total Loss: 6.5115, NLL: 1.1508, Masked: 12.6909, Reg: 1.324811
+Epoch [68/103], Total Loss: 6.5153, NLL: 1.1469, Masked: 12.7093, Reg: 1.326202
+Epoch [69/103], Total Loss: 6.5054, NLL: 1.1442, Masked: 12.6921, Reg: 1.285745
+Epoch [70/103], Total Loss: 6.5114, NLL: 1.1441, Masked: 12.7064, Reg: 1.296230
+Epoch [71/103], Total Loss: 6.5188, NLL: 1.1460, Masked: 12.7196, Reg: 1.303370
+Epoch [72/103], Total Loss: 6.5057, NLL: 1.1436, Masked: 12.6941, Reg: 1.280927
+Epoch [73/103], Total Loss: 6.5030, NLL: 1.1406, Masked: 12.6947, Reg: 1.265029
+Epoch [74/103], Total Loss: 6.5103, NLL: 1.1512, Masked: 12.6873, Reg: 1.299620
+Epoch [75/103], Total Loss: 6.5107, NLL: 1.1478, Masked: 12.6961, Reg: 1.339986
+Epoch [76/103], Total Loss: 6.5045, NLL: 1.1537, Masked: 12.6675, Reg: 1.370628
+Epoch [77/103], Total Loss: 6.5135, NLL: 1.1430, Masked: 12.7140, Reg: 1.353451
+Epoch [78/103], Total Loss: 6.5060, NLL: 1.1485, Masked: 12.6834, Reg: 1.309841
+Epoch [79/103], Total Loss: 6.5062, NLL: 1.1441, Masked: 12.6942, Reg: 1.273076
+Epoch [80/103], Total Loss: 6.5125, NLL: 1.1533, Masked: 12.6875, Reg: 1.350171
+Epoch [81/103], Total Loss: 6.5067, NLL: 1.1473, Masked: 12.6878, Reg: 1.300664
+Epoch [82/103], Total Loss: 6.5064, NLL: 1.1404, Masked: 12.7033, Reg: 1.205282
+Epoch [83/103], Total Loss: 6.5120, NLL: 1.1521, Masked: 12.6890, Reg: 1.359749
+Epoch [84/103], Total Loss: 6.5061, NLL: 1.1419, Masked: 12.6990, Reg: 1.271531
+Epoch [85/103], Total Loss: 6.5079, NLL: 1.1451, Masked: 12.6959, Reg: 1.340017
+Epoch [86/103], Total Loss: 6.5068, NLL: 1.1487, Masked: 12.6847, Reg: 1.363135
+Epoch [87/103], Total Loss: 6.5085, NLL: 1.1445, Masked: 12.6986, Reg: 1.265712
+Epoch [88/103], Total Loss: 6.5036, NLL: 1.1412, Masked: 12.6950, Reg: 1.280408
+Epoch [89/103], Total Loss: 6.5041, NLL: 1.1429, Masked: 12.6919, Reg: 1.285315
+Epoch [90/103], Total Loss: 6.5059, NLL: 1.1434, Masked: 12.6953, Reg: 1.304829
+Epoch [91/103], Total Loss: 6.5061, NLL: 1.1390, Masked: 12.7061, Reg: 1.237694
+Epoch [92/103], Total Loss: 6.5034, NLL: 1.1477, Masked: 12.6792, Reg: 1.307355
+Epoch [93/103], Total Loss: 6.5018, NLL: 1.1440, Masked: 12.6841, Reg: 1.321275
+Epoch [94/103], Total Loss: 6.5104, NLL: 1.1446, Masked: 12.7030, Reg: 1.296305
+Epoch [95/103], Total Loss: 6.5104, NLL: 1.1454, Masked: 12.7011, Reg: 1.302154
+Epoch [96/103], Total Loss: 6.5039, NLL: 1.1441, Masked: 12.6888, Reg: 1.329918
+Epoch [97/103], Total Loss: 6.5149, NLL: 1.1414, Masked: 12.7212, Reg: 1.264794
+Epoch [98/103], Total Loss: 6.5104, NLL: 1.1521, Masked: 12.6852, Reg: 1.295952
+Epoch [99/103], Total Loss: 6.5065, NLL: 1.1439, Masked: 12.6955, Reg: 1.311476
+Epoch [100/103], Total Loss: 6.4993, NLL: 1.1379, Masked: 12.6924, Reg: 1.224758
+Epoch [101/103], Total Loss: 6.5071, NLL: 1.1422, Masked: 12.7009, Reg: 1.314449
+Epoch [102/103], Total Loss: 6.5046, NLL: 1.1423, Masked: 12.6945, Reg: 1.260451
+Epoch [103/103], Total Loss: 6.5204, NLL: 1.1533, Masked: 12.7060, Reg: 1.380795
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 6.483254
+  - ZINB NLL: 1.142642
+Total number of masked values: 1411962
+  - Number of values with pi >= 0.6763636024084296: 719856
+  - Number of values with pi < 0.6763636024084296: 692106
+  - Masked Reconstruction: 12.643346
+  - Regularization: 1.326839
+Mean Absolute Error (MAE): 3.401600
+R² Score: -0.027737
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 13240
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 7.098678
+  - ZINB NLL: 1.167909
+Total number of masked values: 653503
+  - Number of values with pi >= 0.6763636024084296: 335463
+  - Number of values with pi < 0.6763636024084296: 318040
+  - Masked Reconstruction: 14.040482
+  - Regularization: 1.326839
+Mean Absolute Error (MAE): 3.466079
+R² Score: -0.025863
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (1.167909) + masked_loss (14.040482) = 15.208391
+
+>>> Optimizing combined on VALIDATION set: 15.208391
+>>> Full validation metrics: {'total_loss': 7.098678167060783, 'zinb_nll': 1.167909338034892, 'mae': 3.466078519821167, 'r2': -0.025862932205200195, 'masked_loss': 14.040481511487702, 'reg_loss': 1.3268394860341974}
+
+Iteration No: 44 ended. Search finished for the next optimal point.
+Time taken: 4712.8766
+Function value obtained: 15.2084
+Current minimum: 12.0651
+Iteration No: 45 started. Searching for the next optimal point.
+
+================================================================================
+Trial with parameters:
+  features: Centr_Nucl
+  step_size: 0.8199523394605797
+  bin_size: 1
+  sample_fraction: 0.44285846110609695
+  moving_average: False
+  first_layer_size_factor: 88
+  num_layers: 2
+  use_conv: False
+  conv_channel: 120
+  pool_size: 3
+  kernel_size: 7
+  epochs: 127
+  batch_size: 32
+  pi_threshold: 0.6349583240837938
+  learning_rate: 0.0001300519392888294
+  dropout_rate: 0.34363490836780236
+  masked_recon_weight: 2.649034646797606
+  regularizer: l2
+  regularization_weight: 0.001677280089589474
+================================================================================
+
+len(layers): 2
+Creating datasets with:
+  features: ['Centr', 'Nucl']
+  bin_size: 1
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1639 (from fraction 0.8199523394605797)
+  layers: [np.int64(1408), np.int64(704)] (first=1408, num=2)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr', 'Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 33864
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 11912
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 13176
+Datasets created with shapes:
+  Train: (33864, 2000, 5)
+  Val: (11912, 2000, 5)
+  Test: (13176, 2000, 5)
+Datasets created:
+  Train: (33864, 2000, 5), Val: (11912, 2000, 5), Test: (13176, 2000, 5)
+
+
+Dataset shapes:
+  Train set: (33864, 2000, 5)
+  Val set: (11912, 2000, 5)
+  Test set: (13176, 2000, 5)
+Randomly sampled 14996/33864 samples (44.3%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 11912
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 11912 samples, 373 batches
+
+Creating test dataloader:
+  Test set size: 13176
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 13176 samples, 412 batches
+Number of encoder layers: 2
+Number of decoder layers (excluding heads): 2
+Total number of layers including latent layer: 5
+Epoch [1/127], Total Loss: 37.4327, NLL: 1.8328, Masked: 13.4388, Reg: 14.752635
+Epoch [2/127], Total Loss: 34.7691, NLL: 1.4320, Masked: 12.5846, Reg: 13.349544
+Epoch [3/127], Total Loss: 34.4169, NLL: 1.3133, Masked: 12.4965, Reg: 12.387833
+Epoch [4/127], Total Loss: 34.4392, NLL: 1.2383, Masked: 12.5332, Reg: 11.550849
+Epoch [5/127], Total Loss: 34.8520, NLL: 1.1710, Masked: 12.7144, Reg: 10.781215
+Epoch [6/127], Total Loss: 35.0748, NLL: 1.1403, Masked: 12.8101, Reg: 10.042319
+Epoch [7/127], Total Loss: 35.4230, NLL: 1.1141, Masked: 12.9515, Reg: 9.347959
+Epoch [8/127], Total Loss: 35.5460, NLL: 1.1119, Masked: 12.9987, Reg: 8.677629
+Epoch [9/127], Total Loss: 35.7072, NLL: 1.1039, Masked: 13.0626, Reg: 8.054691
+Epoch [10/127], Total Loss: 35.8042, NLL: 1.1006, Masked: 13.1005, Reg: 7.453305
+Epoch [11/127], Total Loss: 35.7263, NLL: 1.1014, Masked: 13.0707, Reg: 6.889662
+Epoch [12/127], Total Loss: 35.7150, NLL: 1.0993, Masked: 13.0673, Reg: 6.361019
+Epoch [13/127], Total Loss: 35.9177, NLL: 1.0954, Masked: 13.1453, Reg: 5.857295
+Epoch [14/127], Total Loss: 35.8364, NLL: 1.0911, Masked: 13.1162, Reg: 5.382937
+Epoch [15/127], Total Loss: 35.8017, NLL: 1.0922, Masked: 13.1027, Reg: 4.931456
+Epoch [16/127], Total Loss: 35.8856, NLL: 1.0864, Masked: 13.1366, Reg: 4.507240
+Epoch [17/127], Total Loss: 35.8788, NLL: 1.0826, Masked: 13.1354, Reg: 4.100333
+Epoch [18/127], Total Loss: 35.7838, NLL: 1.0813, Masked: 13.1001, Reg: 3.724790
+Epoch [19/127], Total Loss: 35.7960, NLL: 1.0785, Masked: 13.1057, Reg: 3.368730
+Epoch [20/127], Total Loss: 35.7750, NLL: 1.0855, Masked: 13.0952, Reg: 3.045251
+Epoch [21/127], Total Loss: 35.7442, NLL: 1.0783, Masked: 13.0862, Reg: 2.742121
+Epoch [22/127], Total Loss: 35.6943, NLL: 1.0795, Masked: 13.0670, Reg: 2.459025
+Epoch [23/127], Total Loss: 35.8049, NLL: 1.0736, Masked: 13.1109, Reg: 2.189645
+Epoch [24/127], Total Loss: 35.7328, NLL: 1.0792, Masked: 13.0816, Reg: 1.943563
+Epoch [25/127], Total Loss: 35.7740, NLL: 1.0686, Masked: 13.1011, Reg: 1.705067
+Epoch [26/127], Total Loss: 35.9114, NLL: 1.0737, Masked: 13.1511, Reg: 1.495961
+Epoch [27/127], Total Loss: 35.8766, NLL: 1.0668, Masked: 13.1406, Reg: 1.300486
+Epoch [28/127], Total Loss: 35.7423, NLL: 1.0667, Masked: 13.0899, Reg: 1.130550
+Epoch [29/127], Total Loss: 35.9441, NLL: 1.0606, Masked: 13.1684, Reg: 0.978811
+Epoch [30/127], Total Loss: 35.7670, NLL: 1.0630, Masked: 13.1006, Reg: 0.846730
+Epoch [31/127], Total Loss: 35.8777, NLL: 1.0615, Masked: 13.1430, Reg: 0.732347
+Epoch [32/127], Total Loss: 35.8921, NLL: 1.0606, Masked: 13.1488, Reg: 0.635442
+Epoch [33/127], Total Loss: 35.7993, NLL: 1.0577, Masked: 13.1148, Reg: 0.549990
+Epoch [34/127], Total Loss: 35.7871, NLL: 1.0585, Masked: 13.1099, Reg: 0.487129
+Epoch [35/127], Total Loss: 35.8579, NLL: 1.0534, Masked: 13.1386, Reg: 0.434636
+Epoch [36/127], Total Loss: 35.9383, NLL: 1.0531, Masked: 13.1690, Reg: 0.388411
+Epoch [37/127], Total Loss: 36.0410, NLL: 1.0555, Masked: 13.2069, Reg: 0.356813
+Epoch [38/127], Total Loss: 36.0784, NLL: 1.0463, Masked: 13.2245, Reg: 0.332616
+Epoch [39/127], Total Loss: 35.9002, NLL: 1.0530, Masked: 13.1547, Reg: 0.334072
+Epoch [40/127], Total Loss: 36.0746, NLL: 1.0515, Masked: 13.2211, Reg: 0.320581
+Epoch [41/127], Total Loss: 35.9857, NLL: 1.0506, Masked: 13.1879, Reg: 0.308396
+Epoch [42/127], Total Loss: 36.0238, NLL: 1.0439, Masked: 13.2048, Reg: 0.299002
+Epoch [43/127], Total Loss: 35.8262, NLL: 1.0508, Masked: 13.1276, Reg: 0.314074
+Epoch [44/127], Total Loss: 35.8170, NLL: 1.0527, Masked: 13.1234, Reg: 0.323264
+Epoch [45/127], Total Loss: 35.7516, NLL: 1.0523, Masked: 13.0988, Reg: 0.326400
+Epoch [46/127], Total Loss: 35.7974, NLL: 1.0564, Masked: 13.1146, Reg: 0.328596
+Epoch [47/127], Total Loss: 35.8764, NLL: 1.0534, Masked: 13.1455, Reg: 0.326721
+Epoch [48/127], Total Loss: 35.8587, NLL: 1.0548, Masked: 13.1383, Reg: 0.327928
+Epoch [49/127], Total Loss: 35.9052, NLL: 1.0520, Masked: 13.1569, Reg: 0.313276
+Epoch [50/127], Total Loss: 35.9635, NLL: 1.0565, Masked: 13.1773, Reg: 0.317462
+Epoch [51/127], Total Loss: 36.0075, NLL: 1.0519, Masked: 13.1956, Reg: 0.315569
+Epoch [52/127], Total Loss: 35.8903, NLL: 1.0553, Masked: 13.1501, Reg: 0.313472
+Epoch [53/127], Total Loss: 35.7936, NLL: 1.0544, Masked: 13.1139, Reg: 0.316291
+Epoch [54/127], Total Loss: 35.8694, NLL: 1.0553, Masked: 13.1422, Reg: 0.316564
+Epoch [55/127], Total Loss: 35.8648, NLL: 1.0526, Masked: 13.1415, Reg: 0.317458
+Epoch [56/127], Total Loss: 35.7872, NLL: 1.0557, Masked: 13.1110, Reg: 0.317007
+Epoch [57/127], Total Loss: 35.7680, NLL: 1.0526, Masked: 13.1049, Reg: 0.315229
+Epoch [58/127], Total Loss: 35.7035, NLL: 1.0575, Masked: 13.0787, Reg: 0.320651
+Epoch [59/127], Total Loss: 35.8894, NLL: 1.0522, Masked: 13.1509, Reg: 0.325379
+Epoch [60/127], Total Loss: 35.8044, NLL: 1.0523, Masked: 13.1188, Reg: 0.323407
+Epoch [61/127], Total Loss: 35.9759, NLL: 1.0500, Masked: 13.1844, Reg: 0.320008
+Epoch [62/127], Total Loss: 35.8345, NLL: 1.0531, Masked: 13.1298, Reg: 0.308401
+Epoch [63/127], Total Loss: 35.8147, NLL: 1.0530, Masked: 13.1224, Reg: 0.309700
+Epoch [64/127], Total Loss: 35.9755, NLL: 1.0487, Masked: 13.1847, Reg: 0.302469
+Epoch [65/127], Total Loss: 35.8402, NLL: 1.0539, Masked: 13.1317, Reg: 0.313723
+Epoch [66/127], Total Loss: 36.0669, NLL: 1.0476, Masked: 13.2196, Reg: 0.300052
+Epoch [67/127], Total Loss: 35.8743, NLL: 1.0516, Masked: 13.1454, Reg: 0.303627
+Epoch [68/127], Total Loss: 36.0128, NLL: 1.0498, Masked: 13.1984, Reg: 0.303417
+Epoch [69/127], Total Loss: 35.8048, NLL: 1.0505, Masked: 13.1196, Reg: 0.302099
+Epoch [70/127], Total Loss: 35.8684, NLL: 1.0533, Masked: 13.1425, Reg: 0.300102
+Epoch [71/127], Total Loss: 35.9182, NLL: 1.0513, Masked: 13.1621, Reg: 0.302625
+Epoch [72/127], Total Loss: 35.8260, NLL: 1.0508, Masked: 13.1275, Reg: 0.301142
+Epoch [73/127], Total Loss: 35.8595, NLL: 1.0510, Masked: 13.1401, Reg: 0.301157
+Epoch [74/127], Total Loss: 35.8038, NLL: 1.0546, Masked: 13.1177, Reg: 0.309584
+Epoch [75/127], Total Loss: 35.8543, NLL: 1.0541, Masked: 13.1369, Reg: 0.315868
+Epoch [76/127], Total Loss: 35.8815, NLL: 1.0530, Masked: 13.1476, Reg: 0.306424
+Epoch [77/127], Total Loss: 35.7233, NLL: 1.0559, Masked: 13.0868, Reg: 0.313084
+Epoch [78/127], Total Loss: 35.6240, NLL: 1.0555, Masked: 13.0494, Reg: 0.318573
+Epoch [79/127], Total Loss: 35.7454, NLL: 1.0565, Masked: 13.0949, Reg: 0.319715
+Epoch [80/127], Total Loss: 35.7486, NLL: 1.0589, Masked: 13.0952, Reg: 0.317785
+Epoch [81/127], Total Loss: 35.7314, NLL: 1.0540, Masked: 13.0906, Reg: 0.310846
+Epoch [82/127], Total Loss: 35.8786, NLL: 1.0549, Masked: 13.1458, Reg: 0.313527
+Epoch [83/127], Total Loss: 35.7754, NLL: 1.0582, Masked: 13.1056, Reg: 0.316920
+Epoch [84/127], Total Loss: 35.8028, NLL: 1.0541, Masked: 13.1175, Reg: 0.310403
+Epoch [85/127], Total Loss: 35.6621, NLL: 1.0534, Masked: 13.0646, Reg: 0.316367
+Epoch [86/127], Total Loss: 35.7846, NLL: 1.0580, Masked: 13.1092, Reg: 0.310942
+Epoch [87/127], Total Loss: 35.6817, NLL: 1.0578, Masked: 13.0704, Reg: 0.313665
+Epoch [88/127], Total Loss: 35.8012, NLL: 1.0533, Masked: 13.1172, Reg: 0.311376
+Epoch [89/127], Total Loss: 35.6601, NLL: 1.0553, Masked: 13.0632, Reg: 0.308732
+Epoch [90/127], Total Loss: 35.7033, NLL: 1.0551, Masked: 13.0796, Reg: 0.312903
+Epoch [91/127], Total Loss: 35.4910, NLL: 1.0559, Masked: 12.9991, Reg: 0.318184
+Epoch [92/127], Total Loss: 35.7382, NLL: 1.0591, Masked: 13.0913, Reg: 0.320684
+Epoch [93/127], Total Loss: 35.6320, NLL: 1.0561, Masked: 13.0522, Reg: 0.308800
+Epoch [94/127], Total Loss: 35.7452, NLL: 1.0554, Masked: 13.0952, Reg: 0.315361
+Epoch [95/127], Total Loss: 35.5836, NLL: 1.0587, Masked: 13.0330, Reg: 0.319313
+Epoch [96/127], Total Loss: 35.7706, NLL: 1.0570, Masked: 13.1043, Reg: 0.318412
+Epoch [97/127], Total Loss: 35.7255, NLL: 1.0557, Masked: 13.0877, Reg: 0.316266
+Epoch [98/127], Total Loss: 35.6915, NLL: 1.0588, Masked: 13.0737, Reg: 0.311321
+Epoch [99/127], Total Loss: 35.6813, NLL: 1.0540, Masked: 13.0717, Reg: 0.312154
+Epoch [100/127], Total Loss: 35.7095, NLL: 1.0604, Masked: 13.0799, Reg: 0.312971
+Epoch [101/127], Total Loss: 35.6957, NLL: 1.0575, Masked: 13.0758, Reg: 0.305020
+Epoch [102/127], Total Loss: 35.7291, NLL: 1.0531, Masked: 13.0900, Reg: 0.308125
+Epoch [103/127], Total Loss: 35.6498, NLL: 1.0547, Masked: 13.0595, Reg: 0.308383
+Epoch [104/127], Total Loss: 35.7764, NLL: 1.0535, Masked: 13.1077, Reg: 0.308382
+Epoch [105/127], Total Loss: 35.8098, NLL: 1.0562, Masked: 13.1193, Reg: 0.316707
+Epoch [106/127], Total Loss: 35.6326, NLL: 1.0571, Masked: 13.0521, Reg: 0.313469
+Epoch [107/127], Total Loss: 35.5068, NLL: 1.0579, Masked: 13.0043, Reg: 0.319259
+Epoch [108/127], Total Loss: 35.6180, NLL: 1.0593, Masked: 13.0458, Reg: 0.323368
+Epoch [109/127], Total Loss: 35.6369, NLL: 1.0567, Masked: 13.0539, Reg: 0.317421
+Epoch [110/127], Total Loss: 35.7094, NLL: 1.0581, Masked: 13.0807, Reg: 0.315036
+Epoch [111/127], Total Loss: 35.5824, NLL: 1.0576, Masked: 13.0330, Reg: 0.317612
+Epoch [112/127], Total Loss: 35.5379, NLL: 1.0586, Masked: 13.0158, Reg: 0.320203
+Epoch [113/127], Total Loss: 35.5756, NLL: 1.0580, Masked: 13.0302, Reg: 0.322299
+Epoch [114/127], Total Loss: 35.4892, NLL: 1.0583, Masked: 12.9975, Reg: 0.319518
+Epoch [115/127], Total Loss: 36.0001, NLL: 1.0527, Masked: 13.1925, Reg: 0.309383
+Epoch [116/127], Total Loss: 35.8492, NLL: 1.0528, Masked: 13.1355, Reg: 0.296589
+Epoch [117/127], Total Loss: 35.6630, NLL: 1.0533, Masked: 13.0650, Reg: 0.300838
+Epoch [118/127], Total Loss: 35.6005, NLL: 1.0575, Masked: 13.0398, Reg: 0.307428
+Epoch [119/127], Total Loss: 35.6867, NLL: 1.0544, Masked: 13.0736, Reg: 0.312115
+Epoch [120/127], Total Loss: 35.6014, NLL: 1.0577, Masked: 13.0401, Reg: 0.311391
+Epoch [121/127], Total Loss: 35.7214, NLL: 1.0587, Masked: 13.0851, Reg: 0.310387
+Epoch [122/127], Total Loss: 35.6926, NLL: 1.0567, Masked: 13.0749, Reg: 0.311446
+Epoch [123/127], Total Loss: 35.6337, NLL: 1.0566, Masked: 13.0527, Reg: 0.316775
+Epoch [124/127], Total Loss: 35.7481, NLL: 1.0598, Masked: 13.0947, Reg: 0.314184
+Epoch [125/127], Total Loss: 35.6346, NLL: 1.0527, Masked: 13.0545, Reg: 0.312715
+Epoch [126/127], Total Loss: 35.5276, NLL: 1.0602, Masked: 13.0113, Reg: 0.322674
+Epoch [127/127], Total Loss: 35.5779, NLL: 1.0566, Masked: 13.0316, Reg: 0.318445
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 35.421755
+  - ZINB NLL: 1.041362
+Total number of masked values: 740996
+  - Number of values with pi >= 0.6349583240837938: 642587
+  - Number of values with pi < 0.6349583240837938: 98409
+  - Masked Reconstruction: 12.978460
+  - Regularization: 0.322568
+Mean Absolute Error (MAE): 2.476879
+R² Score: -0.089486
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 11912
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 39.176044
+  - ZINB NLL: 1.056976
+Total number of masked values: 588395
+  - Number of values with pi >= 0.6349583240837938: 511997
+  - Number of values with pi < 0.6349583240837938: 76398
+  - Masked Reconstruction: 14.389795
+  - Regularization: 0.322568
+Mean Absolute Error (MAE): 2.442862
+R² Score: -0.011456
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (1.056976) + masked_loss (14.389795) = 15.446772
+
+>>> Optimizing combined on VALIDATION set: 15.446772
+>>> Full validation metrics: {'total_loss': 39.17604416692873, 'zinb_nll': 1.0569764397302837, 'mae': 2.4428622722625732, 'r2': -0.01145625114440918, 'masked_loss': 14.389795346577108, 'reg_loss': 0.32256819757863275}
+
+Iteration No: 45 ended. Search finished for the next optimal point.
+Time taken: 4201.5241
+Function value obtained: 15.4468
+Current minimum: 12.0651
+Iteration No: 46 started. Searching for the next optimal point.
+
+================================================================================
+Trial with parameters:
+  features: Centr_Nucl
+  step_size: 0.6090794772053936
+  bin_size: 2
+  sample_fraction: 0.6564560885765856
+  moving_average: False
+  first_layer_size_factor: 57
+  num_layers: 2
+  use_conv: False
+  conv_channel: 107
+  pool_size: 3
+  kernel_size: 5
+  epochs: 120
+  batch_size: 32
+  pi_threshold: 0.6622366273234616
+  learning_rate: 0.00044273988777806134
+  dropout_rate: 0.3431573048070513
+  masked_recon_weight: 0.01427270576034653
+  regularizer: l2
+  regularization_weight: 0.0010559341258598216
+================================================================================
+
+len(layers): 2
+Creating datasets with:
+  features: ['Centr', 'Nucl']
+  bin_size: 2
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1218 (from fraction 0.6090794772053936)
+  layers: [np.int64(912), np.int64(456)] (first=912, num=2)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr', 'Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 22768
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 8008
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 8856
+Datasets created with shapes:
+  Train: (22768, 2000, 5)
+  Val: (8008, 2000, 5)
+  Test: (8856, 2000, 5)
+Datasets created:
+  Train: (22768, 2000, 5), Val: (8008, 2000, 5), Test: (8856, 2000, 5)
+
+
+Dataset shapes:
+  Train set: (22768, 2000, 5)
+  Val set: (8008, 2000, 5)
+  Test set: (8856, 2000, 5)
+Randomly sampled 14946/22768 samples (65.6%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 8008
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 8008 samples, 251 batches
+
+Creating test dataloader:
+  Test set size: 8856
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 8856 samples, 277 batches
+Number of encoder layers: 2
+Number of decoder layers (excluding heads): 2
+Total number of layers including latent layer: 5
+Epoch [1/120], Total Loss: 1.7828, NLL: 1.5738, Masked: 14.6397, Reg: 8.059746
+Epoch [2/120], Total Loss: 1.6895, NLL: 1.4975, Masked: 13.4539, Reg: 6.343290
+Epoch [3/120], Total Loss: 1.6847, NLL: 1.4940, Masked: 13.3650, Reg: 5.000141
+Epoch [4/120], Total Loss: 1.6841, NLL: 1.4929, Masked: 13.4016, Reg: 3.889364
+Epoch [5/120], Total Loss: 1.6830, NLL: 1.4920, Masked: 13.3826, Reg: 2.967293
+Epoch [6/120], Total Loss: 1.6845, NLL: 1.4930, Masked: 13.4194, Reg: 2.213963
+Epoch [7/120], Total Loss: 1.6830, NLL: 1.4918, Masked: 13.3963, Reg: 1.600846
+Epoch [8/120], Total Loss: 1.6844, NLL: 1.4926, Masked: 13.4426, Reg: 1.119578
+Epoch [9/120], Total Loss: 1.6846, NLL: 1.4930, Masked: 13.4212, Reg: 0.752680
+Epoch [10/120], Total Loss: 1.6859, NLL: 1.4939, Masked: 13.4484, Reg: 0.487635
+Epoch [11/120], Total Loss: 1.6891, NLL: 1.4977, Masked: 13.4125, Reg: 0.304455
+Epoch [12/120], Total Loss: 1.6851, NLL: 1.4939, Masked: 13.3948, Reg: 0.180314
+Epoch [13/120], Total Loss: 1.6876, NLL: 1.4959, Masked: 13.4321, Reg: 0.114745
+Epoch [14/120], Total Loss: 1.6860, NLL: 1.4945, Masked: 13.4133, Reg: 0.078122
+Epoch [15/120], Total Loss: 1.6891, NLL: 1.4977, Masked: 13.4104, Reg: 0.066672
+Epoch [16/120], Total Loss: 1.6885, NLL: 1.4968, Masked: 13.4357, Reg: 0.068910
+Epoch [17/120], Total Loss: 1.6891, NLL: 1.4979, Masked: 13.4004, Reg: 0.060172
+Epoch [18/120], Total Loss: 1.6876, NLL: 1.4958, Masked: 13.4365, Reg: 0.062964
+Epoch [19/120], Total Loss: 1.6875, NLL: 1.4961, Masked: 13.4060, Reg: 0.062241
+Epoch [20/120], Total Loss: 1.6894, NLL: 1.4976, Masked: 13.4380, Reg: 0.064220
+Epoch [21/120], Total Loss: 1.6893, NLL: 1.4977, Masked: 13.4255, Reg: 0.060018
+Epoch [22/120], Total Loss: 1.6893, NLL: 1.4976, Masked: 13.4304, Reg: 0.065264
+Epoch [23/120], Total Loss: 1.6895, NLL: 1.4975, Masked: 13.4488, Reg: 0.062278
+Epoch [24/120], Total Loss: 1.6880, NLL: 1.4968, Masked: 13.3946, Reg: 0.062876
+Epoch [25/120], Total Loss: 1.6890, NLL: 1.4972, Masked: 13.4360, Reg: 0.064219
+Epoch [26/120], Total Loss: 1.6885, NLL: 1.4971, Masked: 13.4101, Reg: 0.062633
+Epoch [27/120], Total Loss: 1.6880, NLL: 1.4968, Masked: 13.3913, Reg: 0.062690
+Epoch [28/120], Total Loss: 1.6898, NLL: 1.4983, Masked: 13.4178, Reg: 0.062107
+Epoch [29/120], Total Loss: 1.6879, NLL: 1.4965, Masked: 13.4091, Reg: 0.066857
+Epoch [30/120], Total Loss: 1.6887, NLL: 1.4969, Masked: 13.4373, Reg: 0.062211
+Epoch [31/120], Total Loss: 1.6901, NLL: 1.4982, Masked: 13.4439, Reg: 0.065576
+Epoch [32/120], Total Loss: 1.6889, NLL: 1.4971, Masked: 13.4357, Reg: 0.063482
+Epoch [33/120], Total Loss: 1.6935, NLL: 1.5021, Masked: 13.4101, Reg: 0.064076
+Epoch [34/120], Total Loss: 1.6881, NLL: 1.4968, Masked: 13.4042, Reg: 0.059232
+Epoch [35/120], Total Loss: 1.6870, NLL: 1.4959, Masked: 13.3919, Reg: 0.058052
+Epoch [36/120], Total Loss: 1.6864, NLL: 1.4955, Masked: 13.3719, Reg: 0.057122
+Epoch [37/120], Total Loss: 1.6896, NLL: 1.4977, Masked: 13.4436, Reg: 0.061010
+Epoch [38/120], Total Loss: 1.6915, NLL: 1.4999, Masked: 13.4232, Reg: 0.061989
+Epoch [39/120], Total Loss: 1.6879, NLL: 1.4967, Masked: 13.3922, Reg: 0.059525
+Epoch [40/120], Total Loss: 1.6878, NLL: 1.4968, Masked: 13.3841, Reg: 0.059943
+Epoch [41/120], Total Loss: 1.6878, NLL: 1.4963, Masked: 13.4148, Reg: 0.058727
+Epoch [42/120], Total Loss: 1.6886, NLL: 1.4974, Masked: 13.4007, Reg: 0.059931
+Epoch [43/120], Total Loss: 1.6885, NLL: 1.4969, Masked: 13.4220, Reg: 0.059701
+Epoch [44/120], Total Loss: 1.6885, NLL: 1.4971, Masked: 13.4107, Reg: 0.060361
+Epoch [45/120], Total Loss: 1.6896, NLL: 1.4982, Masked: 13.4096, Reg: 0.058485
+Epoch [46/120], Total Loss: 1.6917, NLL: 1.5002, Masked: 13.4203, Reg: 0.065256
+Epoch [47/120], Total Loss: 1.6878, NLL: 1.4963, Masked: 13.4117, Reg: 0.059224
+Epoch [48/120], Total Loss: 1.6872, NLL: 1.4962, Masked: 13.3784, Reg: 0.056563
+Epoch [49/120], Total Loss: 1.6875, NLL: 1.4963, Masked: 13.3995, Reg: 0.054588
+Epoch [50/120], Total Loss: 1.6870, NLL: 1.4959, Masked: 13.3946, Reg: 0.053644
+Epoch [51/120], Total Loss: 1.6904, NLL: 1.4990, Masked: 13.4130, Reg: 0.065485
+Epoch [52/120], Total Loss: 1.6892, NLL: 1.4979, Masked: 13.4029, Reg: 0.060096
+Epoch [53/120], Total Loss: 1.6881, NLL: 1.4964, Masked: 13.4281, Reg: 0.057498
+Epoch [54/120], Total Loss: 1.6879, NLL: 1.4968, Masked: 13.3886, Reg: 0.060499
+Epoch [55/120], Total Loss: 1.6874, NLL: 1.4962, Masked: 13.3897, Reg: 0.056079
+Epoch [56/120], Total Loss: 1.6871, NLL: 1.4960, Masked: 13.3917, Reg: 0.054026
+Epoch [57/120], Total Loss: 1.6894, NLL: 1.4981, Masked: 13.4076, Reg: 0.058903
+Epoch [58/120], Total Loss: 1.6898, NLL: 1.4981, Masked: 13.4332, Reg: 0.060387
+Epoch [59/120], Total Loss: 1.6891, NLL: 1.4975, Masked: 13.4241, Reg: 0.059424
+Epoch [60/120], Total Loss: 1.6881, NLL: 1.4966, Masked: 13.4164, Reg: 0.057060
+Epoch [61/120], Total Loss: 1.6876, NLL: 1.4967, Masked: 13.3728, Reg: 0.057345
+Epoch [62/120], Total Loss: 1.6875, NLL: 1.4963, Masked: 13.3974, Reg: 0.055592
+Epoch [63/120], Total Loss: 1.6898, NLL: 1.4975, Masked: 13.4712, Reg: 0.062410
+Epoch [64/120], Total Loss: 1.6896, NLL: 1.4980, Masked: 13.4198, Reg: 0.059425
+Epoch [65/120], Total Loss: 1.6924, NLL: 1.5007, Masked: 13.4302, Reg: 0.060434
+Epoch [66/120], Total Loss: 1.6867, NLL: 1.4958, Masked: 13.3734, Reg: 0.054740
+Epoch [67/120], Total Loss: 1.6868, NLL: 1.4962, Masked: 13.3569, Reg: 0.054812
+Epoch [68/120], Total Loss: 1.6874, NLL: 1.4963, Masked: 13.3912, Reg: 0.057997
+Epoch [69/120], Total Loss: 1.6869, NLL: 1.4958, Masked: 13.3861, Reg: 0.057747
+Epoch [70/120], Total Loss: 1.6878, NLL: 1.4964, Masked: 13.4072, Reg: 0.057333
+Epoch [71/120], Total Loss: 1.6863, NLL: 1.4956, Masked: 13.3611, Reg: 0.052600
+Epoch [72/120], Total Loss: 1.6875, NLL: 1.4966, Masked: 13.3795, Reg: 0.058209
+Epoch [73/120], Total Loss: 1.6890, NLL: 1.4975, Masked: 13.4183, Reg: 0.062594
+Epoch [74/120], Total Loss: 1.6875, NLL: 1.4964, Masked: 13.3907, Reg: 0.059605
+Epoch [75/120], Total Loss: 1.6892, NLL: 1.4981, Masked: 13.3930, Reg: 0.057757
+Epoch [76/120], Total Loss: 1.6873, NLL: 1.4963, Masked: 13.3804, Reg: 0.054378
+Epoch [77/120], Total Loss: 1.6870, NLL: 1.4958, Masked: 13.3992, Reg: 0.052580
+Epoch [78/120], Total Loss: 1.6876, NLL: 1.4964, Masked: 13.3926, Reg: 0.056191
+Epoch [79/120], Total Loss: 1.6867, NLL: 1.4957, Masked: 13.3807, Reg: 0.052778
+Epoch [80/120], Total Loss: 1.6905, NLL: 1.4987, Masked: 13.4359, Reg: 0.061499
+Epoch [81/120], Total Loss: 1.6880, NLL: 1.4967, Masked: 13.4060, Reg: 0.059445
+Epoch [82/120], Total Loss: 1.6882, NLL: 1.4970, Masked: 13.3918, Reg: 0.059094
+Epoch [83/120], Total Loss: 1.6877, NLL: 1.4963, Masked: 13.4046, Reg: 0.057705
+Epoch [84/120], Total Loss: 1.6887, NLL: 1.4973, Masked: 13.4079, Reg: 0.056814
+Epoch [85/120], Total Loss: 1.6899, NLL: 1.4982, Masked: 13.4293, Reg: 0.059211
+Epoch [86/120], Total Loss: 1.6870, NLL: 1.4965, Masked: 13.3484, Reg: 0.053653
+Epoch [87/120], Total Loss: 1.6867, NLL: 1.4959, Masked: 13.3685, Reg: 0.053925
+Epoch [88/120], Total Loss: 1.6861, NLL: 1.4952, Masked: 13.3713, Reg: 0.052337
+Epoch [89/120], Total Loss: 1.6882, NLL: 1.4967, Masked: 13.4110, Reg: 0.059143
+Epoch [90/120], Total Loss: 1.6886, NLL: 1.4972, Masked: 13.4121, Reg: 0.061338
+Epoch [91/120], Total Loss: 1.6918, NLL: 1.5001, Masked: 13.4293, Reg: 0.061202
+Epoch [92/120], Total Loss: 1.6890, NLL: 1.4977, Masked: 13.4030, Reg: 0.059000
+Epoch [93/120], Total Loss: 1.6895, NLL: 1.4980, Masked: 13.4157, Reg: 0.064799
+Epoch [94/120], Total Loss: 1.6883, NLL: 1.4969, Masked: 13.4095, Reg: 0.063386
+Epoch [95/120], Total Loss: 1.6879, NLL: 1.4968, Masked: 13.3922, Reg: 0.057514
+Epoch [96/120], Total Loss: 1.6886, NLL: 1.4969, Masked: 13.4312, Reg: 0.055330
+Epoch [97/120], Total Loss: 1.6880, NLL: 1.4969, Masked: 13.3895, Reg: 0.057104
+Epoch [98/120], Total Loss: 1.6887, NLL: 1.4976, Masked: 13.3860, Reg: 0.058099
+Epoch [99/120], Total Loss: 1.6889, NLL: 1.4981, Masked: 13.3685, Reg: 0.057401
+Epoch [100/120], Total Loss: 1.6871, NLL: 1.4963, Masked: 13.3619, Reg: 0.055033
+Epoch [101/120], Total Loss: 1.6875, NLL: 1.4964, Masked: 13.3929, Reg: 0.056312
+Epoch [102/120], Total Loss: 1.6897, NLL: 1.4984, Masked: 13.4084, Reg: 0.059789
+Epoch [103/120], Total Loss: 1.6881, NLL: 1.4968, Masked: 13.4083, Reg: 0.058117
+Epoch [104/120], Total Loss: 1.6883, NLL: 1.4970, Masked: 13.4090, Reg: 0.057712
+Epoch [105/120], Total Loss: 1.6879, NLL: 1.4964, Masked: 13.4181, Reg: 0.056670
+Epoch [106/120], Total Loss: 1.6911, NLL: 1.4993, Masked: 13.4384, Reg: 0.064970
+Epoch [107/120], Total Loss: 1.6869, NLL: 1.4961, Masked: 13.3722, Reg: 0.059011
+Epoch [108/120], Total Loss: 1.6865, NLL: 1.4956, Masked: 13.3774, Reg: 0.053968
+Epoch [109/120], Total Loss: 1.6868, NLL: 1.4959, Masked: 13.3802, Reg: 0.052829
+Epoch [110/120], Total Loss: 1.6871, NLL: 1.4964, Masked: 13.3565, Reg: 0.056369
+Epoch [111/120], Total Loss: 1.6887, NLL: 1.4973, Masked: 13.4096, Reg: 0.057327
+Epoch [112/120], Total Loss: 1.6891, NLL: 1.4979, Masked: 13.3966, Reg: 0.059089
+Epoch [113/120], Total Loss: 1.6870, NLL: 1.4960, Masked: 13.3784, Reg: 0.057691
+Epoch [114/120], Total Loss: 1.6891, NLL: 1.4978, Masked: 13.4076, Reg: 0.057995
+Epoch [115/120], Total Loss: 1.6902, NLL: 1.4991, Masked: 13.3941, Reg: 0.057387
+Epoch [116/120], Total Loss: 1.6887, NLL: 1.4976, Masked: 13.3927, Reg: 0.056384
+Epoch [117/120], Total Loss: 1.6886, NLL: 1.4973, Masked: 13.4058, Reg: 0.061065
+Epoch [118/120], Total Loss: 1.6864, NLL: 1.4959, Masked: 13.3444, Reg: 0.054428
+Epoch [119/120], Total Loss: 1.6896, NLL: 1.4983, Masked: 13.4022, Reg: 0.054541
+Epoch [120/120], Total Loss: 1.6912, NLL: 1.5000, Masked: 13.3940, Reg: 0.061879
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.685187
+  - ZINB NLL: 1.493773
+Total number of masked values: 1170942
+  - Number of values with pi >= 0.6622366273234616: 278242
+  - Number of values with pi < 0.6622366273234616: 892700
+  - Masked Reconstruction: 13.411199
+  - Regularization: 0.061378
+Mean Absolute Error (MAE): 7.860893
+R² Score: -0.202793
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 8008
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 1.707646
+  - ZINB NLL: 1.513504
+Total number of masked values: 634944
+  - Number of values with pi >= 0.6622366273234616: 156471
+  - Number of values with pi < 0.6622366273234616: 478473
+  - Masked Reconstruction: 13.602332
+  - Regularization: 0.061378
+Mean Absolute Error (MAE): 7.866751
+R² Score: -0.177039
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (1.513504) + masked_loss (13.602332) = 15.115836
+
+>>> Optimizing combined on VALIDATION set: 15.115836
+>>> Full validation metrics: {'total_loss': 1.7076463008617664, 'zinb_nll': 1.513504220293714, 'mae': 7.866751194000244, 'r2': -0.17703914642333984, 'masked_loss': 13.602331783149864, 'reg_loss': 0.0613782294088723}
+
+Iteration No: 46 ended. Search finished for the next optimal point.
+Time taken: 2369.8413
+Function value obtained: 15.1158
+Current minimum: 12.0651
+Iteration No: 47 started. Searching for the next optimal point.
+
+================================================================================
+Trial with parameters:
+  features: Centr_Nucl
+  step_size: 0.7221501579093341
+  bin_size: 1
+  sample_fraction: 0.5589127524360811
+  moving_average: False
+  first_layer_size_factor: 83
+  num_layers: 2
+  use_conv: False
+  conv_channel: 109
+  pool_size: 4
+  kernel_size: 7
+  epochs: 88
+  batch_size: 128
+  pi_threshold: 0.6553196899065477
+  learning_rate: 0.00029295598102749244
+  dropout_rate: 0.34328493170373003
+  masked_recon_weight: 1.4427932186770172
+  regularizer: l2
+  regularization_weight: 0.7407153705852598
+================================================================================
+
+len(layers): 2
+Creating datasets with:
+  features: ['Centr', 'Nucl']
+  bin_size: 1
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1444 (from fraction 0.7221501579093341)
+  layers: [np.int64(1328), np.int64(664)] (first=1328, num=2)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr', 'Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 38432
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 13512
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 14960
+Datasets created with shapes:
+  Train: (38432, 2000, 5)
+  Val: (13512, 2000, 5)
+  Test: (14960, 2000, 5)
+Datasets created:
+  Train: (38432, 2000, 5), Val: (13512, 2000, 5), Test: (14960, 2000, 5)
+
+
+Dataset shapes:
+  Train set: (38432, 2000, 5)
+  Val set: (13512, 2000, 5)
+  Test set: (14960, 2000, 5)
+Randomly sampled 21480/38432 samples (55.9%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 13512
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 13512 samples, 106 batches
+
+Creating test dataloader:
+  Test set size: 14960
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 14960 samples, 117 batches
+Number of encoder layers: 2
+Number of decoder layers (excluding heads): 2
+Total number of layers including latent layer: 5
+Epoch [1/88], Total Loss: 27.8443, NLL: 1.9253, Masked: 17.9645, Reg: 5987.422410
+Epoch [2/88], Total Loss: 22.2604, NLL: 1.8694, Masked: 14.1330, Reg: 5512.031241
+Epoch [3/88], Total Loss: 21.8922, NLL: 1.8255, Masked: 13.9082, Reg: 5239.118067
+Epoch [4/88], Total Loss: 21.8014, NLL: 1.7999, Masked: 13.8631, Reg: 4977.610050
+Epoch [5/88], Total Loss: 21.6912, NLL: 1.7884, Masked: 13.7946, Reg: 4725.592254
+Epoch [6/88], Total Loss: 21.6850, NLL: 1.7676, Masked: 13.8047, Reg: 4482.670421
+Epoch [7/88], Total Loss: 21.7286, NLL: 1.7596, Masked: 13.8405, Reg: 4248.482732
+Epoch [8/88], Total Loss: 21.7143, NLL: 1.7531, Masked: 13.8351, Reg: 4022.954307
+Epoch [9/88], Total Loss: 21.6870, NLL: 1.7442, Masked: 13.8223, Reg: 3805.664390
+Epoch [10/88], Total Loss: 21.7176, NLL: 1.7300, Masked: 13.8534, Reg: 3596.353351
+Epoch [11/88], Total Loss: 21.6407, NLL: 1.7133, Masked: 13.8117, Reg: 3394.823565
+Epoch [12/88], Total Loss: 21.7525, NLL: 1.7081, Masked: 13.8928, Reg: 3200.843500
+Epoch [13/88], Total Loss: 21.6607, NLL: 1.6952, Masked: 13.8381, Reg: 3014.335602
+Epoch [14/88], Total Loss: 21.7050, NLL: 1.6967, Masked: 13.8678, Reg: 2834.888342
+Epoch [15/88], Total Loss: 21.7371, NLL: 1.6972, Masked: 13.8896, Reg: 2662.418924
+Epoch [16/88], Total Loss: 21.6923, NLL: 1.6715, Masked: 13.8764, Reg: 2496.876596
+Epoch [17/88], Total Loss: 21.6699, NLL: 1.6629, Masked: 13.8668, Reg: 2337.944364
+Epoch [18/88], Total Loss: 21.7107, NLL: 1.6655, Masked: 13.8934, Reg: 2185.493684
+Epoch [19/88], Total Loss: 21.5997, NLL: 1.6374, Masked: 13.8359, Reg: 2039.499279
+Epoch [20/88], Total Loss: 21.6196, NLL: 1.6296, Masked: 13.8551, Reg: 1899.786474
+Epoch [21/88], Total Loss: 21.7661, NLL: 1.6377, Masked: 13.9509, Reg: 1766.011553
+Epoch [22/88], Total Loss: 21.6306, NLL: 1.6087, Masked: 13.8772, Reg: 1638.511786
+Epoch [23/88], Total Loss: 21.6708, NLL: 1.6159, Masked: 13.9000, Reg: 1516.718620
+Epoch [24/88], Total Loss: 21.6072, NLL: 1.5947, Masked: 13.8707, Reg: 1400.809991
+Epoch [25/88], Total Loss: 21.6971, NLL: 1.5969, Masked: 13.9315, Reg: 1290.482777
+Epoch [26/88], Total Loss: 21.7437, NLL: 1.6039, Masked: 13.9589, Reg: 1185.747472
+Epoch [27/88], Total Loss: 21.6243, NLL: 1.5748, Masked: 13.8963, Reg: 1086.511146
+Epoch [28/88], Total Loss: 21.5379, NLL: 1.5590, Masked: 13.8474, Reg: 992.695742
+Epoch [29/88], Total Loss: 21.6410, NLL: 1.5636, Masked: 13.9157, Reg: 903.989563
+Epoch [30/88], Total Loss: 21.6554, NLL: 1.5555, Masked: 13.9312, Reg: 820.493892
+Epoch [31/88], Total Loss: 21.5229, NLL: 1.5376, Masked: 13.8518, Reg: 742.140400
+Epoch [32/88], Total Loss: 21.4592, NLL: 1.5231, Masked: 13.8177, Reg: 668.719335
+Epoch [33/88], Total Loss: 21.5316, NLL: 1.5184, Masked: 13.8711, Reg: 600.081520
+Epoch [34/88], Total Loss: 21.5434, NLL: 1.5220, Masked: 13.8768, Reg: 536.124423
+Epoch [35/88], Total Loss: 21.6287, NLL: 1.5170, Masked: 13.9394, Reg: 476.690212
+Epoch [36/88], Total Loss: 21.5650, NLL: 1.5001, Masked: 13.9070, Reg: 421.908216
+Epoch [37/88], Total Loss: 21.5122, NLL: 1.4988, Masked: 13.8713, Reg: 371.411393
+Epoch [38/88], Total Loss: 21.5595, NLL: 1.4904, Masked: 13.9099, Reg: 325.001633
+Epoch [39/88], Total Loss: 21.5266, NLL: 1.4934, Masked: 13.8850, Reg: 282.832274
+Epoch [40/88], Total Loss: 21.4957, NLL: 1.4769, Masked: 13.8750, Reg: 244.525316
+Epoch [41/88], Total Loss: 21.4932, NLL: 1.4691, Masked: 13.8787, Reg: 209.975293
+Epoch [42/88], Total Loss: 21.5274, NLL: 1.4763, Masked: 13.8974, Reg: 179.047356
+Epoch [43/88], Total Loss: 21.5280, NLL: 1.4681, Masked: 13.9035, Reg: 151.474728
+Epoch [44/88], Total Loss: 21.5720, NLL: 1.4685, Masked: 13.9337, Reg: 127.174514
+Epoch [45/88], Total Loss: 21.5421, NLL: 1.4697, Masked: 13.9122, Reg: 105.908394
+Epoch [46/88], Total Loss: 21.5325, NLL: 1.4500, Masked: 13.9192, Reg: 87.514917
+Epoch [47/88], Total Loss: 21.5855, NLL: 1.4599, Masked: 13.9491, Reg: 71.746498
+Epoch [48/88], Total Loss: 21.4977, NLL: 1.4486, Masked: 13.8961, Reg: 58.523844
+Epoch [49/88], Total Loss: 21.4318, NLL: 1.4404, Masked: 13.8561, Reg: 47.435542
+Epoch [50/88], Total Loss: 21.4361, NLL: 1.4372, Masked: 13.8612, Reg: 38.309196
+Epoch [51/88], Total Loss: 21.4543, NLL: 1.4328, Masked: 13.8769, Reg: 30.917671
+Epoch [52/88], Total Loss: 21.5018, NLL: 1.4358, Masked: 13.9078, Reg: 25.046454
+Epoch [53/88], Total Loss: 21.5755, NLL: 1.4266, Masked: 13.9652, Reg: 20.526977
+Epoch [54/88], Total Loss: 21.6244, NLL: 1.4408, Masked: 13.9893, Reg: 17.035973
+Epoch [55/88], Total Loss: 21.4684, NLL: 1.4302, Masked: 13.8885, Reg: 14.620680
+Epoch [56/88], Total Loss: 21.5052, NLL: 1.4205, Masked: 13.9207, Reg: 12.848893
+Epoch [57/88], Total Loss: 21.4589, NLL: 1.4276, Masked: 13.8837, Reg: 11.593443
+Epoch [58/88], Total Loss: 21.5046, NLL: 1.4235, Masked: 13.9182, Reg: 10.726092
+Epoch [59/88], Total Loss: 21.5668, NLL: 1.4312, Masked: 13.9560, Reg: 10.188149
+Epoch [60/88], Total Loss: 21.5714, NLL: 1.4302, Masked: 13.9598, Reg: 9.792676
+Epoch [61/88], Total Loss: 21.4464, NLL: 1.4124, Masked: 13.8855, Reg: 9.713254
+Epoch [62/88], Total Loss: 21.4667, NLL: 1.4155, Masked: 13.8975, Reg: 9.564486
+Epoch [63/88], Total Loss: 21.4940, NLL: 1.4148, Masked: 13.9169, Reg: 9.467702
+Epoch [64/88], Total Loss: 21.4485, NLL: 1.4296, Masked: 13.8751, Reg: 9.563362
+Epoch [65/88], Total Loss: 21.4985, NLL: 1.4260, Masked: 13.9122, Reg: 9.508193
+Epoch [66/88], Total Loss: 21.5220, NLL: 1.4259, Masked: 13.9286, Reg: 9.513063
+Epoch [67/88], Total Loss: 21.4582, NLL: 1.4146, Masked: 13.8922, Reg: 9.563303
+Epoch [68/88], Total Loss: 21.5475, NLL: 1.4216, Masked: 13.9493, Reg: 9.441771
+Epoch [69/88], Total Loss: 21.4509, NLL: 1.4099, Masked: 13.8905, Reg: 9.521476
+Epoch [70/88], Total Loss: 21.4770, NLL: 1.4063, Masked: 13.9109, Reg: 9.487431
+Epoch [71/88], Total Loss: 21.4645, NLL: 1.4179, Masked: 13.8942, Reg: 9.538837
+Epoch [72/88], Total Loss: 21.4280, NLL: 1.4154, Masked: 13.8707, Reg: 9.536854
+Epoch [73/88], Total Loss: 21.4738, NLL: 1.4284, Masked: 13.8934, Reg: 9.523625
+Epoch [74/88], Total Loss: 21.4846, NLL: 1.4137, Masked: 13.9112, Reg: 9.526944
+Epoch [75/88], Total Loss: 21.4658, NLL: 1.4089, Masked: 13.9014, Reg: 9.500741
+Epoch [76/88], Total Loss: 21.4762, NLL: 1.4233, Masked: 13.8986, Reg: 9.527924
+Epoch [77/88], Total Loss: 21.5229, NLL: 1.4173, Masked: 13.9352, Reg: 9.470187
+Epoch [78/88], Total Loss: 21.5074, NLL: 1.4135, Masked: 13.9271, Reg: 9.479509
+Epoch [79/88], Total Loss: 21.5084, NLL: 1.4160, Masked: 13.9260, Reg: 9.491732
+Epoch [80/88], Total Loss: 21.5735, NLL: 1.4292, Masked: 13.9620, Reg: 9.413084
+Epoch [81/88], Total Loss: 21.4476, NLL: 1.4163, Masked: 13.8837, Reg: 9.523553
+Epoch [82/88], Total Loss: 21.4729, NLL: 1.4166, Masked: 13.9010, Reg: 9.496575
+Epoch [83/88], Total Loss: 21.5606, NLL: 1.4183, Masked: 13.9606, Reg: 9.461418
+Epoch [84/88], Total Loss: 21.4816, NLL: 1.4047, Masked: 13.9153, Reg: 9.453625
+Epoch [85/88], Total Loss: 21.5314, NLL: 1.4198, Masked: 13.9393, Reg: 9.462074
+Epoch [86/88], Total Loss: 21.5501, NLL: 1.4241, Masked: 13.9493, Reg: 9.411353
+Epoch [87/88], Total Loss: 21.5175, NLL: 1.4176, Masked: 13.9313, Reg: 9.445558
+Epoch [88/88], Total Loss: 21.4465, NLL: 1.4153, Masked: 13.8836, Reg: 9.477852
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 21.069084
+  - ZINB NLL: 1.494586
+Total number of masked values: 1057525
+  - Number of values with pi >= 0.6553196899065477: 1109
+  - Number of values with pi < 0.6553196899065477: 1056416
+  - Masked Reconstruction: 13.567085
+  - Regularization: 9.965047
+Mean Absolute Error (MAE): 7.034479
+R² Score: -0.421947
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 13512
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 21.562339
+  - ZINB NLL: 1.493922
+Total number of masked values: 667361
+  - Number of values with pi >= 0.6553196899065477: 1
+  - Number of values with pi < 0.6553196899065477: 667360
+  - Masked Reconstruction: 13.909420
+  - Regularization: 9.965047
+Mean Absolute Error (MAE): 6.871830
+R² Score: -0.370598
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (1.493922) + masked_loss (13.909420) = 15.403342
+
+>>> Optimizing combined on VALIDATION set: 15.403342
+>>> Full validation metrics: {'total_loss': 21.56233901932368, 'zinb_nll': 1.4939216435343785, 'mae': 6.871829509735107, 'r2': -0.37059783935546875, 'masked_loss': 13.909420061422, 'reg_loss': 9.965047374897125}
+
+Iteration No: 47 ended. Search finished for the next optimal point.
+Time taken: 3858.3008
+Function value obtained: 15.4033
+Current minimum: 12.0651
+Iteration No: 48 started. Searching for the next optimal point.
+
+================================================================================
+Trial with parameters:
+  features: Nucl
+  step_size: 0.7862929079865413
+  bin_size: 4
+  sample_fraction: 0.599117211222594
+  moving_average: False
+  first_layer_size_factor: 91
+  num_layers: 3
+  use_conv: False
+  conv_channel: 100
+  pool_size: 5
+  kernel_size: 7
+  epochs: 67
+  batch_size: 32
+  pi_threshold: 0.568621010440751
+  learning_rate: 0.0038152900768353894
+  dropout_rate: 0.34313953773265005
+  masked_recon_weight: 0.09065390235925976
+  regularizer: l2
+  regularization_weight: 0.0004020816148474917
+================================================================================
+
+len(layers): 3
+Creating datasets with:
+  features: ['Nucl']
+  bin_size: 4
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1572 (from fraction 0.7862929079865413)
+  layers: [np.int64(1456), np.int64(728), np.int64(364)] (first=1456, num=3)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 8840
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3112
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3448
+Datasets created with shapes:
+  Train: (8840, 2000, 4)
+  Val: (3112, 2000, 4)
+  Test: (3448, 2000, 4)
+Datasets created:
+  Train: (8840, 2000, 4), Val: (3112, 2000, 4), Test: (3448, 2000, 4)
+
+
+Dataset shapes:
+  Train set: (8840, 2000, 4)
+  Val set: (3112, 2000, 4)
+  Test set: (3448, 2000, 4)
+Randomly sampled 5296/8840 samples (59.9%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 3112
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 3112 samples, 98 batches
+
+Creating test dataloader:
+  Test set size: 3448
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 3448 samples, 108 batches
+Number of encoder layers: 3
+Number of decoder layers (excluding heads): 3
+Total number of layers including latent layer: 7
+Epoch [1/67], Total Loss: 3.8842, NLL: 2.7778, Masked: 12.2051, Reg: 2.930327
+Epoch [2/67], Total Loss: 3.2723, NLL: 2.2010, Masked: 11.8172, Reg: 1.600647
+Epoch [3/67], Total Loss: 3.2410, NLL: 2.1674, Masked: 11.8429, Reg: 1.023396
+Epoch [4/67], Total Loss: 5.7835, NLL: 2.1609, Masked: 39.9605, Reg: 0.625461
+Epoch [5/67], Total Loss: 3.2547, NLL: 2.1831, Masked: 11.8207, Reg: 0.526976
+Epoch [6/67], Total Loss: 3.1528, NLL: 2.0917, Masked: 11.7045, Reg: 0.355452
+Epoch [7/67], Total Loss: 3.1507, NLL: 2.0895, Masked: 11.7056, Reg: 0.209443
+Epoch [8/67], Total Loss: 3.1775, NLL: 2.1127, Masked: 11.7454, Reg: 0.261609
+Epoch [9/67], Total Loss: 3.1832, NLL: 2.1181, Masked: 11.7490, Reg: 0.473195
+Epoch [10/67], Total Loss: 3.1518, NLL: 2.0897, Masked: 11.7155, Reg: 0.247880
+Epoch [11/67], Total Loss: 3.1566, NLL: 2.0912, Masked: 11.7520, Reg: 0.344918
+Epoch [12/67], Total Loss: 63.4516, NLL: 2.1229, Masked: 676.5144, Reg: 0.555493
+Epoch [13/67], Total Loss: 3.1573, NLL: 2.0928, Masked: 11.7425, Reg: 0.401559
+Epoch [14/67], Total Loss: 3.1513, NLL: 2.0895, Masked: 11.7128, Reg: 0.216319
+Epoch [15/67], Total Loss: 3.1788, NLL: 2.1172, Masked: 11.7108, Reg: 0.217917
+Epoch [16/67], Total Loss: 3.1484, NLL: 2.0881, Masked: 11.6962, Reg: 0.153038
+Epoch [17/67], Total Loss: 3.1634, NLL: 2.1004, Masked: 11.7253, Reg: 0.244853
+Epoch [18/67], Total Loss: 3.1484, NLL: 2.0887, Masked: 11.6890, Reg: 0.238618
+Epoch [19/67], Total Loss: 3.1561, NLL: 2.0936, Masked: 11.7208, Reg: 0.207215
+Epoch [20/67], Total Loss: 3.1569, NLL: 2.0947, Masked: 11.7172, Reg: 0.427186
+Epoch [21/67], Total Loss: 3.1487, NLL: 2.0884, Masked: 11.6964, Reg: 0.168048
+Epoch [22/67], Total Loss: 3.1493, NLL: 2.0889, Masked: 11.6976, Reg: 0.140303
+Epoch [23/67], Total Loss: 3.1497, NLL: 2.0880, Masked: 11.7118, Reg: 0.158934
+Epoch [24/67], Total Loss: 3.1509, NLL: 2.0890, Masked: 11.7137, Reg: 0.123677
+Epoch [25/67], Total Loss: 3.1479, NLL: 2.0885, Masked: 11.6862, Reg: 0.117709
+Epoch [26/67], Total Loss: 3.1498, NLL: 2.0888, Masked: 11.7040, Reg: 0.116381
+Epoch [27/67], Total Loss: 3.1488, NLL: 2.0890, Masked: 11.6907, Reg: 0.116639
+Epoch [28/67], Total Loss: 3.1496, NLL: 2.0887, Masked: 11.7030, Reg: 0.117399
+Epoch [29/67], Total Loss: 3.1504, NLL: 2.0887, Masked: 11.7116, Reg: 0.114683
+Epoch [30/67], Total Loss: 3.1510, NLL: 2.0884, Masked: 11.7216, Reg: 0.112816
+Epoch [31/67], Total Loss: 3.1490, NLL: 2.0877, Masked: 11.7076, Reg: 0.114645
+Epoch [32/67], Total Loss: 3.1466, NLL: 2.0875, Masked: 11.6831, Reg: 0.114150
+Epoch [33/67], Total Loss: 3.1503, NLL: 2.0887, Masked: 11.7104, Reg: 0.112901
+Epoch [34/67], Total Loss: 3.1504, NLL: 2.0888, Masked: 11.7105, Reg: 0.117247
+Epoch [35/67], Total Loss: 3.1475, NLL: 2.0876, Masked: 11.6914, Reg: 0.116972
+Epoch [36/67], Total Loss: 3.1481, NLL: 2.0878, Masked: 11.6955, Reg: 0.113318
+Epoch [37/67], Total Loss: 3.1503, NLL: 2.0891, Masked: 11.7063, Reg: 0.115434
+Epoch [38/67], Total Loss: 3.1477, NLL: 2.0880, Masked: 11.6888, Reg: 0.110945
+Epoch [39/67], Total Loss: 3.1529, NLL: 2.0885, Masked: 11.7417, Reg: 0.111233
+Epoch [40/67], Total Loss: 3.1487, NLL: 2.0884, Masked: 11.6953, Reg: 0.112783
+Epoch [41/67], Total Loss: 3.1471, NLL: 2.0878, Masked: 11.6846, Reg: 0.109431
+Epoch [42/67], Total Loss: 3.1513, NLL: 2.0896, Masked: 11.7116, Reg: 0.112658
+Epoch [43/67], Total Loss: 3.1516, NLL: 2.0882, Masked: 11.7301, Reg: 0.113208
+Epoch [44/67], Total Loss: 3.1472, NLL: 2.0882, Masked: 11.6821, Reg: 0.112232
+Epoch [45/67], Total Loss: 3.1497, NLL: 2.0881, Masked: 11.7103, Reg: 0.110561
+Epoch [46/67], Total Loss: 3.1489, NLL: 2.0881, Masked: 11.7015, Reg: 0.110968
+Epoch [47/67], Total Loss: 3.1496, NLL: 2.0882, Masked: 11.7085, Reg: 0.115259
+Epoch [48/67], Total Loss: 3.1494, NLL: 2.0887, Masked: 11.7015, Reg: 0.111765
+Epoch [49/67], Total Loss: 3.1506, NLL: 2.0879, Masked: 11.7218, Reg: 0.113761
+Epoch [50/67], Total Loss: 3.1547, NLL: 2.0907, Masked: 11.7364, Reg: 0.108840
+Epoch [51/67], Total Loss: 3.1510, NLL: 2.0881, Masked: 11.7245, Reg: 0.115268
+Epoch [52/67], Total Loss: 3.1504, NLL: 2.0883, Masked: 11.7159, Reg: 0.111128
+Epoch [53/67], Total Loss: 3.1500, NLL: 2.0874, Masked: 11.7220, Reg: 0.108646
+Epoch [54/67], Total Loss: 3.1485, NLL: 2.0891, Masked: 11.6862, Reg: 0.115259
+Epoch [55/67], Total Loss: 3.1477, NLL: 2.0883, Masked: 11.6854, Reg: 0.108552
+Epoch [56/67], Total Loss: 3.1462, NLL: 2.0882, Masked: 11.6701, Reg: 0.111562
+Epoch [57/67], Total Loss: 3.1514, NLL: 2.0887, Masked: 11.7221, Reg: 0.116079
+Epoch [58/67], Total Loss: 3.1485, NLL: 2.0880, Masked: 11.6979, Reg: 0.111353
+Epoch [59/67], Total Loss: 3.1513, NLL: 2.0892, Masked: 11.7159, Reg: 0.107656
+Epoch [60/67], Total Loss: 3.1487, NLL: 2.0887, Masked: 11.6923, Reg: 0.110153
+Epoch [61/67], Total Loss: 3.1501, NLL: 2.0877, Masked: 11.7190, Reg: 0.111335
+Epoch [62/67], Total Loss: 3.1475, NLL: 2.0883, Masked: 11.6833, Reg: 0.109232
+Epoch [63/67], Total Loss: 3.1500, NLL: 2.0886, Masked: 11.7084, Reg: 0.114885
+Epoch [64/67], Total Loss: 3.1484, NLL: 2.0871, Masked: 11.7077, Reg: 0.118004
+Epoch [65/67], Total Loss: 3.1491, NLL: 2.0886, Masked: 11.6988, Reg: 0.109108
+Epoch [66/67], Total Loss: 3.1479, NLL: 2.0883, Masked: 11.6889, Reg: 0.106797
+Epoch [67/67], Total Loss: 3.1490, NLL: 2.0891, Masked: 11.6915, Reg: 0.110044
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 3.132658
+  - ZINB NLL: 2.083078
+Total number of masked values: 620008
+  - Number of values with pi >= 0.568621010440751: 10738
+  - Number of values with pi < 0.568621010440751: 609270
+  - Masked Reconstruction: 11.577878
+  - Regularization: 0.105232
+Mean Absolute Error (MAE): 7.874877
+R² Score: -0.012534
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 3112
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 3.188576
+  - ZINB NLL: 2.090254
+Total number of masked values: 362170
+  - Number of values with pi >= 0.568621010440751: 6260
+  - Number of values with pi < 0.568621010440751: 355910
+  - Masked Reconstruction: 12.115555
+  - Regularization: 0.105232
+Mean Absolute Error (MAE): 7.917521
+R² Score: -0.012009
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (2.090254) + masked_loss (12.115555) = 14.205808
+
+>>> Optimizing combined on VALIDATION set: 14.205808
+>>> Full validation metrics: {'total_loss': 3.1885759223702634, 'zinb_nll': 2.0902535820375063, 'mae': 7.917520523071289, 'r2': -0.01200878620147705, 'masked_loss': 12.115554841441176, 'reg_loss': 0.10523212584806764}
+
+Iteration No: 48 ended. Search finished for the next optimal point.
+Time taken: 1135.3221
+Function value obtained: 14.2058
+Current minimum: 12.0651
+Iteration No: 49 started. Searching for the next optimal point.
+
+================================================================================
+Trial with parameters:
+  features: Centr_Nucl
+  step_size: 0.5372220619842746
+  bin_size: 16
+  sample_fraction: 0.7874267497800828
+  moving_average: False
+  first_layer_size_factor: 51
+  num_layers: 2
+  use_conv: False
+  conv_channel: 51
+  pool_size: 6
+  kernel_size: 7
+  epochs: 114
+  batch_size: 128
+  pi_threshold: 0.3209966333654255
+  learning_rate: 0.0007535664443409682
+  dropout_rate: 0.4583379748769104
+  masked_recon_weight: 1.3757732390523416
+  regularizer: l1
+  regularization_weight: 0.011218653952478466
+================================================================================
+
+len(layers): 2
+Creating datasets with:
+  features: ['Centr', 'Nucl']
+  bin_size: 16
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1074 (from fraction 0.5372220619842746)
+  layers: [np.int64(816), np.int64(408)] (first=816, num=2)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr', 'Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 3192
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 1120
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 1240
+Datasets created with shapes:
+  Train: (3192, 2000, 5)
+  Val: (1120, 2000, 5)
+  Test: (1240, 2000, 5)
+Datasets created:
+  Train: (3192, 2000, 5), Val: (1120, 2000, 5), Test: (1240, 2000, 5)
+
+
+Dataset shapes:
+  Train set: (3192, 2000, 5)
+  Val set: (1120, 2000, 5)
+  Test set: (1240, 2000, 5)
+Randomly sampled 2513/3192 samples (78.7%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 1120
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 1120 samples, 9 batches
+
+Creating test dataloader:
+  Test set size: 1240
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 1240 samples, 10 batches
+Number of encoder layers: 2
+Number of decoder layers (excluding heads): 2
+Total number of layers including latent layer: 5
+Epoch [1/114], Total Loss: 408.5449, NLL: 3.0774, Masked: 25.8298, Reg: 369.931544
+Epoch [2/114], Total Loss: 181.3788, NLL: 3.0720, Masked: 25.5579, Reg: 143.144903
+Epoch [3/114], Total Loss: 117.1279, NLL: 3.0667, Masked: 25.2652, Reg: 79.302105
+Epoch [4/114], Total Loss: 98.7893, NLL: 3.0615, Masked: 25.0042, Reg: 61.327737
+Epoch [5/114], Total Loss: 93.9517, NLL: 3.0565, Masked: 24.7357, Reg: 56.864529
+Epoch [6/114], Total Loss: 92.6258, NLL: 3.0516, Masked: 24.4781, Reg: 55.897897
+Epoch [7/114], Total Loss: 92.0531, NLL: 3.0468, Masked: 24.2355, Reg: 55.663801
+Epoch [8/114], Total Loss: 91.5053, NLL: 3.0421, Masked: 23.9960, Reg: 55.450076
+Epoch [9/114], Total Loss: 91.0576, NLL: 3.0376, Masked: 23.7610, Reg: 55.330259
+Epoch [10/114], Total Loss: 90.6036, NLL: 3.0332, Masked: 23.5283, Reg: 55.200709
+Epoch [11/114], Total Loss: 90.1647, NLL: 3.0291, Masked: 23.3202, Reg: 55.052347
+Epoch [12/114], Total Loss: 89.7365, NLL: 3.0249, Masked: 23.1212, Reg: 54.902058
+Epoch [13/114], Total Loss: 89.2979, NLL: 3.0209, Masked: 22.9142, Reg: 54.752289
+Epoch [14/114], Total Loss: 88.8293, NLL: 3.0170, Masked: 22.7169, Reg: 54.559035
+Epoch [15/114], Total Loss: 88.4646, NLL: 3.0132, Masked: 22.5392, Reg: 54.442471
+Epoch [16/114], Total Loss: 88.0760, NLL: 3.0096, Masked: 22.3648, Reg: 54.297452
+Epoch [17/114], Total Loss: 87.6036, NLL: 3.0061, Masked: 22.1818, Reg: 54.080371
+Epoch [18/114], Total Loss: 87.2414, NLL: 3.0026, Masked: 22.0167, Reg: 53.948850
+Epoch [19/114], Total Loss: 86.8460, NLL: 2.9993, Masked: 21.8559, Reg: 53.777888
+Epoch [20/114], Total Loss: 86.4248, NLL: 2.9962, Masked: 21.7143, Reg: 53.554666
+Epoch [21/114], Total Loss: 85.9777, NLL: 2.9930, Masked: 21.5459, Reg: 53.342466
+Epoch [22/114], Total Loss: 85.6982, NLL: 2.9901, Masked: 21.4004, Reg: 53.266047
+Epoch [23/114], Total Loss: 85.2148, NLL: 2.9872, Masked: 21.2698, Reg: 52.965103
+Epoch [24/114], Total Loss: 84.8711, NLL: 2.9843, Masked: 21.1369, Reg: 52.807186
+Epoch [25/114], Total Loss: 84.4975, NLL: 2.9816, Masked: 21.0030, Reg: 52.620530
+Epoch [26/114], Total Loss: 84.1051, NLL: 2.9790, Masked: 20.8768, Reg: 52.404296
+Epoch [27/114], Total Loss: 83.7018, NLL: 2.9765, Masked: 20.7680, Reg: 52.153154
+Epoch [28/114], Total Loss: 83.3899, NLL: 2.9741, Masked: 20.6439, Reg: 52.014611
+Epoch [29/114], Total Loss: 82.9765, NLL: 2.9717, Masked: 20.5282, Reg: 51.762579
+Epoch [30/114], Total Loss: 82.6140, NLL: 2.9695, Masked: 20.4197, Reg: 51.551626
+Epoch [31/114], Total Loss: 82.2257, NLL: 2.9672, Masked: 20.3085, Reg: 51.318517
+Epoch [32/114], Total Loss: 81.8583, NLL: 2.9651, Masked: 20.1990, Reg: 51.103983
+Epoch [33/114], Total Loss: 81.4974, NLL: 2.9631, Masked: 20.1241, Reg: 50.848157
+Epoch [34/114], Total Loss: 81.1670, NLL: 2.9612, Masked: 20.0276, Reg: 50.652347
+Epoch [35/114], Total Loss: 80.7628, NLL: 2.9593, Masked: 19.9420, Reg: 50.367872
+Epoch [36/114], Total Loss: 80.4543, NLL: 2.9575, Masked: 19.8537, Reg: 50.182646
+Epoch [37/114], Total Loss: 80.0680, NLL: 2.9558, Masked: 19.7622, Reg: 49.924038
+Epoch [38/114], Total Loss: 79.7050, NLL: 2.9540, Masked: 19.6850, Reg: 49.668881
+Epoch [39/114], Total Loss: 79.3263, NLL: 2.9524, Masked: 19.5951, Reg: 49.415401
+Epoch [40/114], Total Loss: 79.0583, NLL: 2.9509, Masked: 19.5307, Reg: 49.237592
+Epoch [41/114], Total Loss: 78.6103, NLL: 2.9494, Masked: 19.4585, Reg: 48.890479
+Epoch [42/114], Total Loss: 78.2821, NLL: 2.9480, Masked: 19.3851, Reg: 48.664574
+Epoch [43/114], Total Loss: 77.9756, NLL: 2.9466, Masked: 19.3118, Reg: 48.460251
+Epoch [44/114], Total Loss: 77.5703, NLL: 2.9454, Masked: 19.2583, Reg: 48.129859
+Epoch [45/114], Total Loss: 77.2337, NLL: 2.9442, Masked: 19.1932, Reg: 47.883968
+Epoch [46/114], Total Loss: 76.9163, NLL: 2.9430, Masked: 19.1276, Reg: 47.657987
+Epoch [47/114], Total Loss: 76.5616, NLL: 2.9420, Masked: 19.0762, Reg: 47.375078
+Epoch [48/114], Total Loss: 76.1322, NLL: 2.9410, Masked: 19.0100, Reg: 47.037724
+Epoch [49/114], Total Loss: 75.8837, NLL: 2.9399, Masked: 18.9585, Reg: 46.861207
+Epoch [50/114], Total Loss: 75.4759, NLL: 2.9390, Masked: 18.9051, Reg: 46.527685
+Epoch [51/114], Total Loss: 75.1539, NLL: 2.9381, Masked: 18.8529, Reg: 46.278451
+Epoch [52/114], Total Loss: 74.7972, NLL: 2.9374, Masked: 18.8000, Reg: 45.995310
+Epoch [53/114], Total Loss: 74.4706, NLL: 2.9367, Masked: 18.7650, Reg: 45.717514
+Epoch [54/114], Total Loss: 74.1205, NLL: 2.9359, Masked: 18.7235, Reg: 45.425257
+Epoch [55/114], Total Loss: 73.7688, NLL: 2.9353, Masked: 18.6805, Reg: 45.133329
+Epoch [56/114], Total Loss: 73.4078, NLL: 2.9347, Masked: 18.6352, Reg: 44.835299
+Epoch [57/114], Total Loss: 73.0746, NLL: 2.9341, Masked: 18.5893, Reg: 44.565863
+Epoch [58/114], Total Loss: 72.7818, NLL: 2.9337, Masked: 18.5618, Reg: 44.311281
+Epoch [59/114], Total Loss: 72.3585, NLL: 2.9332, Masked: 18.5145, Reg: 43.953560
+Epoch [60/114], Total Loss: 72.0841, NLL: 2.9329, Masked: 18.4858, Reg: 43.718958
+Epoch [61/114], Total Loss: 71.7464, NLL: 2.9325, Masked: 18.4544, Reg: 43.424871
+Epoch [62/114], Total Loss: 71.3469, NLL: 2.9323, Masked: 18.4192, Reg: 43.073955
+Epoch [63/114], Total Loss: 70.9989, NLL: 2.9320, Masked: 18.3808, Reg: 42.779093
+Epoch [64/114], Total Loss: 70.7557, NLL: 2.9319, Masked: 18.3529, Reg: 42.574385
+Epoch [65/114], Total Loss: 70.3153, NLL: 2.9317, Masked: 18.3296, Reg: 42.166231
+Epoch [66/114], Total Loss: 70.0127, NLL: 2.9316, Masked: 18.2981, Reg: 41.906988
+Epoch [67/114], Total Loss: 69.6990, NLL: 2.9316, Masked: 18.2749, Reg: 41.625237
+Epoch [68/114], Total Loss: 69.3311, NLL: 2.9317, Masked: 18.2517, Reg: 41.289173
+Epoch [69/114], Total Loss: 68.9513, NLL: 2.9317, Masked: 18.2287, Reg: 40.940971
+Epoch [70/114], Total Loss: 68.6809, NLL: 2.9318, Masked: 18.2005, Reg: 40.709297
+Epoch [71/114], Total Loss: 68.3123, NLL: 2.9320, Masked: 18.1823, Reg: 40.365637
+Epoch [72/114], Total Loss: 67.9845, NLL: 2.9322, Masked: 18.1580, Reg: 40.070986
+Epoch [73/114], Total Loss: 67.6336, NLL: 2.9324, Masked: 18.1342, Reg: 39.752750
+Epoch [74/114], Total Loss: 67.3130, NLL: 2.9327, Masked: 18.1146, Reg: 39.458790
+Epoch [75/114], Total Loss: 66.9398, NLL: 2.9331, Masked: 18.0987, Reg: 39.106963
+Epoch [76/114], Total Loss: 66.6369, NLL: 2.9335, Masked: 18.0745, Reg: 38.836961
+Epoch [77/114], Total Loss: 66.2162, NLL: 2.9339, Masked: 18.0522, Reg: 38.446430
+Epoch [78/114], Total Loss: 65.9776, NLL: 2.9344, Masked: 18.0513, Reg: 38.208713
+Epoch [79/114], Total Loss: 65.5972, NLL: 2.9350, Masked: 18.0350, Reg: 37.850103
+Epoch [80/114], Total Loss: 65.2544, NLL: 2.9355, Masked: 18.0167, Reg: 37.531903
+Epoch [81/114], Total Loss: 64.9232, NLL: 2.9361, Masked: 17.9978, Reg: 37.226207
+Epoch [82/114], Total Loss: 64.6260, NLL: 2.9368, Masked: 17.9895, Reg: 36.939622
+Epoch [83/114], Total Loss: 64.2157, NLL: 2.9375, Masked: 17.9728, Reg: 36.551724
+Epoch [84/114], Total Loss: 56.2711, NLL: 2.9394, Masked: 12.4966, Reg: 36.139265
+Epoch [85/114], Total Loss: 54.6578, NLL: 2.9452, Masked: 11.9058, Reg: 35.332907
+Epoch [86/114], Total Loss: 53.6032, NLL: 2.9524, Masked: 11.9025, Reg: 34.275746
+Epoch [87/114], Total Loss: 52.7071, NLL: 2.9601, Masked: 11.9140, Reg: 33.356048
+Epoch [88/114], Total Loss: 51.7964, NLL: 2.9677, Masked: 11.9078, Reg: 32.446273
+Epoch [89/114], Total Loss: 50.8544, NLL: 2.9752, Masked: 11.9144, Reg: 31.487705
+Epoch [90/114], Total Loss: 49.8918, NLL: 2.9832, Masked: 11.8998, Reg: 30.537265
+Epoch [91/114], Total Loss: 49.0643, NLL: 2.9910, Masked: 11.9042, Reg: 29.695755
+Epoch [92/114], Total Loss: 48.1420, NLL: 2.9990, Masked: 11.9018, Reg: 28.768896
+Epoch [93/114], Total Loss: 47.3012, NLL: 3.0069, Masked: 11.9058, Reg: 27.914541
+Epoch [94/114], Total Loss: 46.4677, NLL: 3.0149, Masked: 11.9082, Reg: 27.069812
+Epoch [95/114], Total Loss: 45.6533, NLL: 3.0227, Masked: 11.9078, Reg: 26.248271
+Epoch [96/114], Total Loss: 44.8584, NLL: 3.0300, Masked: 11.9113, Reg: 25.441114
+Epoch [97/114], Total Loss: 44.1362, NLL: 3.0370, Masked: 11.9125, Reg: 24.710330
+Epoch [98/114], Total Loss: 43.4231, NLL: 3.0432, Masked: 11.9071, Reg: 23.998473
+Epoch [99/114], Total Loss: 42.8426, NLL: 3.0483, Masked: 11.9038, Reg: 23.417422
+Epoch [100/114], Total Loss: 42.3296, NLL: 3.0526, Masked: 11.9065, Reg: 22.896413
+Epoch [101/114], Total Loss: 41.8162, NLL: 3.0560, Masked: 11.9071, Reg: 22.378699
+Epoch [102/114], Total Loss: 41.4269, NLL: 3.0588, Masked: 11.9059, Reg: 21.988359
+Epoch [103/114], Total Loss: 41.0431, NLL: 3.0610, Masked: 11.9025, Reg: 21.606956
+Epoch [104/114], Total Loss: 40.6442, NLL: 3.0629, Masked: 11.9203, Reg: 21.181617
+Epoch [105/114], Total Loss: 40.2942, NLL: 3.0648, Masked: 11.9070, Reg: 20.848126
+Epoch [106/114], Total Loss: 40.0271, NLL: 3.0665, Masked: 11.9038, Reg: 20.583730
+Epoch [107/114], Total Loss: 39.5869, NLL: 3.0683, Masked: 11.8994, Reg: 20.147794
+Epoch [108/114], Total Loss: 39.3059, NLL: 3.0700, Masked: 11.9029, Reg: 19.860209
+Epoch [109/114], Total Loss: 38.9634, NLL: 3.0718, Masked: 11.9060, Reg: 19.511643
+Epoch [110/114], Total Loss: 38.6381, NLL: 3.0736, Masked: 11.9061, Reg: 19.184416
+Epoch [111/114], Total Loss: 38.2369, NLL: 3.0755, Masked: 11.9113, Reg: 18.774160
+Epoch [112/114], Total Loss: 37.9983, NLL: 3.0774, Masked: 11.9061, Reg: 18.540764
+Epoch [113/114], Total Loss: 37.5912, NLL: 3.0794, Masked: 11.9026, Reg: 18.136571
+Epoch [114/114], Total Loss: 37.2953, NLL: 3.0814, Masked: 11.9068, Reg: 17.832823
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 37.166086
+  - ZINB NLL: 3.082517
+Total number of masked values: 490979
+  - Number of values with pi >= 0.3209966333654255: 490979
+  - Number of values with pi < 0.3209966333654255: 0
+  - Masked Reconstruction: 11.907363
+  - Regularization: 17.701738
+Mean Absolute Error (MAE): 7.786943
+R² Score: -0.231143
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 1120
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 37.760154
+  - ZINB NLL: 3.063639
+Total number of masked values: 217146
+  - Number of values with pi >= 0.3209966333654255: 217146
+  - Number of values with pi < 0.3209966333654255: 0
+  - Masked Reconstruction: 12.352891
+  - Regularization: 17.701738
+Mean Absolute Error (MAE): 7.856076
+R² Score: -0.229300
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (3.063639) + masked_loss (12.352891) = 15.416530
+
+>>> Optimizing combined on VALIDATION set: 15.416530
+>>> Full validation metrics: {'total_loss': 37.760154070172995, 'zinb_nll': 3.063639272962298, 'mae': 7.856075763702393, 'r2': -0.2292999029159546, 'masked_loss': 12.352891159057616, 'reg_loss': 17.701737684576088}
+
+Iteration No: 49 ended. Search finished for the next optimal point.
+Time taken: 350.9273
+Function value obtained: 15.4165
+Current minimum: 12.0651
+Iteration No: 50 started. Searching for the next optimal point.
+
+================================================================================
+Trial with parameters:
+  features: Centr
+  step_size: 0.7876009890295221
+  bin_size: 1
+  sample_fraction: 0.7046416054291826
+  moving_average: False
+  first_layer_size_factor: 93
+  num_layers: 1
+  use_conv: False
+  conv_channel: 110
+  pool_size: 3
+  kernel_size: 7
+  epochs: 92
+  batch_size: 64
+  pi_threshold: 0.5756651574171754
+  learning_rate: 0.001649090334904075
+  dropout_rate: 0.3436083202211129
+  masked_recon_weight: 0.8405059465697478
+  regularizer: l2
+  regularization_weight: 0.0018652126123456282
+================================================================================
+
+len(layers): 1
+Creating datasets with:
+  features: ['Centr']
+  bin_size: 1
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1575 (from fraction 0.7876009890295221)
+  layers: [np.int64(1488)] (first=1488, num=1)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 35248
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 12384
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 13712
+Datasets created with shapes:
+  Train: (35248, 2000, 4)
+  Val: (12384, 2000, 4)
+  Test: (13712, 2000, 4)
+Datasets created:
+  Train: (35248, 2000, 4), Val: (12384, 2000, 4), Test: (13712, 2000, 4)
+
+
+Dataset shapes:
+  Train set: (35248, 2000, 4)
+  Val set: (12384, 2000, 4)
+  Test set: (13712, 2000, 4)
+Randomly sampled 24837/35248 samples (70.5%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 12384
+  Batch size: 64
+Applied denoising with 15.0% masking
+  Dataloader created: 12384 samples, 194 batches
+
+Creating test dataloader:
+  Test set size: 13712
+  Batch size: 64
+Applied denoising with 15.0% masking
+  Dataloader created: 13712 samples, 215 batches
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Epoch [1/92], Total Loss: 12.5613, NLL: 1.5170, Masked: 13.1400, Reg: 11.938890
+Epoch [2/92], Total Loss: 11.9868, NLL: 1.1435, Masked: 12.9010, Reg: 5.775630
+Epoch [3/92], Total Loss: 12.2835, NLL: 1.0807, Masked: 13.3286, Reg: 2.455545
+Epoch [4/92], Total Loss: 12.3168, NLL: 1.0597, Masked: 13.3933, Reg: 0.892416
+Epoch [5/92], Total Loss: 12.3120, NLL: 1.0527, Masked: 13.3958, Reg: 0.304390
+Epoch [6/92], Total Loss: 12.3208, NLL: 1.0582, Masked: 13.3998, Reg: 0.153693
+Epoch [7/92], Total Loss: 12.3315, NLL: 1.0613, Masked: 13.4088, Reg: 0.118497
+Epoch [8/92], Total Loss: 12.3325, NLL: 1.0651, Masked: 13.4056, Reg: 0.119476
+Epoch [9/92], Total Loss: 12.3229, NLL: 1.0662, Masked: 13.3927, Reg: 0.117454
+Epoch [10/92], Total Loss: 12.5473, NLL: 1.1228, Masked: 13.5923, Reg: 0.423320
+Epoch [11/92], Total Loss: 12.3144, NLL: 1.0602, Masked: 13.3898, Reg: 0.297282
+Epoch [12/92], Total Loss: 12.3241, NLL: 1.0567, Masked: 13.4055, Reg: 0.119419
+Epoch [13/92], Total Loss: 12.3520, NLL: 1.0673, Masked: 13.4261, Reg: 0.128023
+Epoch [14/92], Total Loss: 12.3922, NLL: 1.0770, Masked: 13.4624, Reg: 0.346877
+Epoch [15/92], Total Loss: 12.3017, NLL: 1.0450, Masked: 13.3928, Reg: 0.107784
+Epoch [16/92], Total Loss: 12.3035, NLL: 1.0466, Masked: 13.3930, Reg: 0.098495
+Epoch [17/92], Total Loss: 12.3053, NLL: 1.0469, Masked: 13.3947, Reg: 0.102898
+Epoch [18/92], Total Loss: 12.8278, NLL: 1.1958, Masked: 13.8392, Reg: 0.852402
+Epoch [19/92], Total Loss: 12.3269, NLL: 1.0613, Masked: 13.4034, Reg: 0.283774
+Epoch [20/92], Total Loss: 12.3160, NLL: 1.0508, Masked: 13.4028, Reg: 0.141654
+Epoch [21/92], Total Loss: 12.3052, NLL: 1.0450, Masked: 13.3970, Reg: 0.107987
+Epoch [22/92], Total Loss: 12.5509, NLL: 1.1333, Masked: 13.5843, Reg: 0.599685
+Epoch [23/92], Total Loss: 12.3153, NLL: 1.0525, Masked: 13.4001, Reg: 0.153122
+Epoch [24/92], Total Loss: 12.3001, NLL: 1.0420, Masked: 13.3944, Reg: 0.104566
+Epoch [25/92], Total Loss: 12.2936, NLL: 1.0427, Masked: 13.3859, Reg: 0.097365
+Epoch [26/92], Total Loss: 12.5355, NLL: 1.1280, Masked: 13.5721, Reg: 0.529591
+Epoch [27/92], Total Loss: 12.3036, NLL: 1.0477, Masked: 13.3919, Reg: 0.146588
+Epoch [28/92], Total Loss: 12.3087, NLL: 1.0410, Masked: 13.4057, Reg: 0.102741
+Epoch [29/92], Total Loss: 12.2966, NLL: 1.0409, Masked: 13.3917, Reg: 0.095391
+Epoch [30/92], Total Loss: 12.3036, NLL: 1.0418, Masked: 13.3989, Reg: 0.095858
+Epoch [31/92], Total Loss: 12.7093, NLL: 1.1536, Masked: 13.7485, Reg: 0.823255
+Epoch [32/92], Total Loss: 12.3242, NLL: 1.0620, Masked: 13.3993, Reg: 0.280313
+Epoch [33/92], Total Loss: 12.3098, NLL: 1.0468, Masked: 13.4002, Reg: 0.130073
+Epoch [34/92], Total Loss: 12.3021, NLL: 1.0430, Masked: 13.3957, Reg: 0.106475
+Epoch [35/92], Total Loss: 12.3142, NLL: 1.0471, Masked: 13.4052, Reg: 0.114424
+Epoch [36/92], Total Loss: 12.2907, NLL: 1.0420, Masked: 13.3832, Reg: 0.095648
+Epoch [37/92], Total Loss: 12.2961, NLL: 1.0432, Masked: 13.3883, Reg: 0.095895
+Epoch [38/92], Total Loss: 12.3073, NLL: 1.0428, Masked: 13.4020, Reg: 0.099290
+Epoch [39/92], Total Loss: 12.6352, NLL: 1.1423, Masked: 13.6738, Reg: 0.761065
+Epoch [40/92], Total Loss: 12.3052, NLL: 1.0485, Masked: 13.3928, Reg: 0.202988
+Epoch [41/92], Total Loss: 12.3066, NLL: 1.0402, Masked: 13.4043, Reg: 0.109461
+Epoch [42/92], Total Loss: 12.2913, NLL: 1.0408, Masked: 13.3853, Reg: 0.099337
+Epoch [43/92], Total Loss: 12.3056, NLL: 1.0410, Masked: 13.4022, Reg: 0.096213
+Epoch [44/92], Total Loss: 20.5300, NLL: 1.1518, Masked: 23.0554, Reg: 0.210185
+Epoch [45/92], Total Loss: 12.5999, NLL: 1.1828, Masked: 13.5836, Reg: 0.780142
+Epoch [46/92], Total Loss: 12.3077, NLL: 1.0480, Masked: 13.3963, Reg: 0.160283
+Epoch [47/92], Total Loss: 12.2973, NLL: 1.0400, Masked: 13.3935, Reg: 0.110161
+Epoch [48/92], Total Loss: 12.2989, NLL: 1.0404, Masked: 13.3949, Reg: 0.100172
+Epoch [49/92], Total Loss: 12.3029, NLL: 1.0408, Masked: 13.3992, Reg: 0.097181
+Epoch [50/92], Total Loss: 12.2993, NLL: 1.0415, Masked: 13.3941, Reg: 0.096213
+Epoch [51/92], Total Loss: 12.8329, NLL: 1.2372, Masked: 13.7962, Reg: 0.697980
+Epoch [52/92], Total Loss: 12.3089, NLL: 1.0482, Masked: 13.3976, Reg: 0.330721
+Epoch [53/92], Total Loss: 12.3038, NLL: 1.0393, Masked: 13.4020, Reg: 0.132164
+Epoch [54/92], Total Loss: 12.2970, NLL: 1.0392, Masked: 13.3941, Reg: 0.108913
+Epoch [55/92], Total Loss: 12.3002, NLL: 1.0389, Masked: 13.3982, Reg: 0.100523
+Epoch [56/92], Total Loss: 12.3196, NLL: 1.0459, Masked: 13.4131, Reg: 0.127551
+Epoch [57/92], Total Loss: 12.4974, NLL: 1.0985, Masked: 13.5619, Reg: 0.521989
+Epoch [58/92], Total Loss: 12.2980, NLL: 1.0396, Masked: 13.3948, Reg: 0.127099
+Epoch [59/92], Total Loss: 12.2996, NLL: 1.0388, Masked: 13.3976, Reg: 0.101485
+Epoch [60/92], Total Loss: 12.2994, NLL: 1.0398, Masked: 13.3962, Reg: 0.097244
+Epoch [61/92], Total Loss: 12.3093, NLL: 1.0407, Masked: 13.4069, Reg: 0.096850
+Epoch [62/92], Total Loss: 12.6837, NLL: 1.1597, Masked: 13.7108, Reg: 0.624239
+Epoch [63/92], Total Loss: 12.3324, NLL: 1.0629, Masked: 13.4080, Reg: 0.340834
+Epoch [64/92], Total Loss: 12.3028, NLL: 1.0435, Masked: 13.3958, Reg: 0.127825
+Epoch [65/92], Total Loss: 12.3037, NLL: 1.0411, Masked: 13.3998, Reg: 0.104969
+Epoch [66/92], Total Loss: 12.3001, NLL: 1.0419, Masked: 13.3946, Reg: 0.102011
+Epoch [67/92], Total Loss: 12.3026, NLL: 1.0420, Masked: 13.3974, Reg: 0.100476
+Epoch [68/92], Total Loss: 12.3107, NLL: 1.0447, Masked: 13.4039, Reg: 0.106098
+Epoch [69/92], Total Loss: 12.3131, NLL: 1.0435, Masked: 13.4082, Reg: 0.100257
+Epoch [70/92], Total Loss: 12.7180, NLL: 1.1771, Masked: 13.7309, Reg: 0.803523
+Epoch [71/92], Total Loss: 12.3176, NLL: 1.0495, Masked: 13.4063, Reg: 0.170387
+Epoch [72/92], Total Loss: 12.3138, NLL: 1.0410, Masked: 13.4120, Reg: 0.109784
+Epoch [73/92], Total Loss: 12.2993, NLL: 1.0400, Masked: 13.3959, Reg: 0.099402
+Epoch [74/92], Total Loss: 12.3076, NLL: 1.0408, Masked: 13.4047, Reg: 0.096311
+Epoch [75/92], Total Loss: 12.5794, NLL: 1.1306, Masked: 13.6214, Reg: 0.577030
+Epoch [76/92], Total Loss: 12.3069, NLL: 1.0541, Masked: 13.3881, Reg: 0.187345
+Epoch [77/92], Total Loss: 12.3056, NLL: 1.0404, Masked: 13.4028, Reg: 0.104652
+Epoch [78/92], Total Loss: 12.3080, NLL: 1.0406, Masked: 13.4055, Reg: 0.096848
+Epoch [79/92], Total Loss: 12.2947, NLL: 1.0415, Masked: 13.3886, Reg: 0.097248
+Epoch [80/92], Total Loss: 12.3027, NLL: 1.0436, Masked: 13.3956, Reg: 0.099793
+Epoch [81/92], Total Loss: 12.6117, NLL: 1.1298, Masked: 13.6607, Reg: 0.655491
+Epoch [82/92], Total Loss: 12.2976, NLL: 1.0433, Masked: 13.3899, Reg: 0.148060
+Epoch [83/92], Total Loss: 12.2996, NLL: 1.0397, Masked: 13.3965, Reg: 0.105812
+Epoch [84/92], Total Loss: 12.3031, NLL: 1.0421, Masked: 13.3979, Reg: 0.100757
+Epoch [85/92], Total Loss: 12.3091, NLL: 1.0404, Masked: 13.4071, Reg: 0.095105
+Epoch [86/92], Total Loss: 12.6718, NLL: 1.1692, Masked: 13.6854, Reg: 0.714045
+Epoch [87/92], Total Loss: 12.3203, NLL: 1.0519, Masked: 13.4068, Reg: 0.196772
+Epoch [88/92], Total Loss: 12.2984, NLL: 1.0408, Masked: 13.3938, Reg: 0.112867
+Epoch [89/92], Total Loss: 12.2929, NLL: 1.0399, Masked: 13.3884, Reg: 0.098665
+Epoch [90/92], Total Loss: 12.2950, NLL: 1.0403, Masked: 13.3903, Reg: 0.096394
+Epoch [91/92], Total Loss: 12.7462, NLL: 1.2029, Masked: 13.7338, Reg: 0.723229
+Epoch [92/92], Total Loss: 12.3082, NLL: 1.0493, Masked: 13.3954, Reg: 0.201263
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 12.307763
+  - ZINB NLL: 1.039083
+Total number of masked values: 1220978
+  - Number of values with pi >= 0.5756651574171754: 1220978
+  - Number of values with pi < 0.5756651574171754: 0
+  - Masked Reconstruction: 13.407021
+  - Regularization: 0.123206
+Mean Absolute Error (MAE): 2.209951
+R² Score: -0.042105
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 12384
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 13.394890
+  - ZINB NLL: 1.051150
+Total number of masked values: 612415
+  - Number of values with pi >= 0.5756651574171754: 612415
+  - Number of values with pi < 0.5756651574171754: 0
+  - Masked Reconstruction: 14.686083
+  - Regularization: 0.123206
+Mean Absolute Error (MAE): 2.299927
+R² Score: -0.042233
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (1.051150) + masked_loss (14.686083) = 15.737233
+
+>>> Optimizing combined on VALIDATION set: 15.737233
+>>> Full validation metrics: {'total_loss': 13.394890175925362, 'zinb_nll': 1.0511501429924976, 'mae': 2.299927234649658, 'r2': -0.04223346710205078, 'masked_loss': 14.686082684100445, 'reg_loss': 0.12320602199910621}
+
+
+*** Checkpoint saved at iteration 50 ***
+
+Iteration No: 50 ended. Search finished for the next optimal point.
+Time taken: 4001.4960
+Function value obtained: 15.7372
+Current minimum: 12.0651
+
+================================================================================
+Trial with parameters:
+  features: Centr_Nucl
+  step_size: 0.842234481073519
+  bin_size: 1
+  sample_fraction: 0.5100472782581843
+  moving_average: False
+  first_layer_size_factor: 76
+  num_layers: 3
+  use_conv: False
+  conv_channel: 71
+  pool_size: 5
+  kernel_size: 5
+  epochs: 91
+  batch_size: 32
+  pi_threshold: 0.6727579755170392
+  learning_rate: 0.0005189455233900077
+  dropout_rate: 0.343146007857685
+  masked_recon_weight: 0.3097286796680297
+  regularizer: l2
+  regularization_weight: 0.03680429144435104
+================================================================================
+
+len(layers): 3
+Creating datasets with:
+  features: ['Centr', 'Nucl']
+  bin_size: 1
+  moving_average: False
+  data_point_length: 2000 (from 2000)
+  step_size: 1684 (from fraction 0.842234481073519)
+  layers: [np.int64(1216), np.int64(608), np.int64(304)] (first=1216, num=3)
+  stride: 1 (fixed), padding: same (fixed)
+  Using pre-determined chromosome split
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr', 'Nucl']
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 32960
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 11584
+Column order in final array (Dataset/Chrom split): ['Value', 'Nucleosome_Distance', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 12832
+Datasets created with shapes:
+  Train: (32960, 2000, 5)
+  Val: (11584, 2000, 5)
+  Test: (12832, 2000, 5)
+Datasets created:
+  Train: (32960, 2000, 5), Val: (11584, 2000, 5), Test: (12832, 2000, 5)
+
+
+Dataset shapes:
+  Train set: (32960, 2000, 5)
+  Val set: (11584, 2000, 5)
+  Test set: (12832, 2000, 5)
+Randomly sampled 16811/32960 samples (51.0%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 11584
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 11584 samples, 362 batches
+
+Creating test dataloader:
+  Test set size: 12832
+  Batch size: 32
+Applied denoising with 15.0% masking
+  Dataloader created: 12832 samples, 401 batches
+Number of encoder layers: 3
+Number of decoder layers (excluding heads): 3
+Total number of layers including latent layer: 7
+Epoch [1/91], Total Loss: 5.4918, NLL: 1.4032, Masked: 13.2006, Reg: 261.274034
+Epoch [2/91], Total Loss: 5.0435, NLL: 1.2086, Masked: 12.3813, Reg: 192.782915
+Epoch [3/91], Total Loss: 5.0283, NLL: 1.1905, Masked: 12.3908, Reg: 140.022248
+Epoch [4/91], Total Loss: 5.0341, NLL: 1.1818, Masked: 12.4378, Reg: 98.441384
+Epoch [5/91], Total Loss: 5.0416, NLL: 1.1719, Masked: 12.4939, Reg: 66.352318
+Epoch [6/91], Total Loss: 5.0414, NLL: 1.1643, Masked: 12.5176, Reg: 42.387676
+Epoch [7/91], Total Loss: 5.0547, NLL: 1.1549, Masked: 12.5910, Reg: 25.343248
+Epoch [8/91], Total Loss: 5.0630, NLL: 1.1512, Masked: 12.6300, Reg: 13.989484
+Epoch [9/91], Total Loss: 5.0825, NLL: 1.1378, Masked: 12.7360, Reg: 7.102337
+Epoch [10/91], Total Loss: 5.1025, NLL: 1.1286, Masked: 12.8303, Reg: 3.439827
+Epoch [11/91], Total Loss: 5.1204, NLL: 1.1239, Masked: 12.9031, Reg: 1.842229
+Epoch [12/91], Total Loss: 5.1418, NLL: 1.1241, Masked: 12.9717, Reg: 1.292443
+Epoch [13/91], Total Loss: 5.1418, NLL: 1.1189, Masked: 12.9884, Reg: 1.184027
+Epoch [14/91], Total Loss: 5.1412, NLL: 1.1157, Masked: 12.9966, Reg: 1.131508
+Epoch [15/91], Total Loss: 5.1524, NLL: 1.1143, Masked: 13.0376, Reg: 1.136162
+Epoch [16/91], Total Loss: 5.1455, NLL: 1.1165, Masked: 13.0083, Reg: 1.143205
+Epoch [17/91], Total Loss: 5.1468, NLL: 1.1130, Masked: 13.0238, Reg: 1.115539
+Epoch [18/91], Total Loss: 5.1444, NLL: 1.1168, Masked: 13.0037, Reg: 1.161418
+Epoch [19/91], Total Loss: 5.1487, NLL: 1.1182, Masked: 13.0130, Reg: 1.148347
+Epoch [20/91], Total Loss: 5.1429, NLL: 1.1183, Masked: 12.9939, Reg: 1.147568
+Epoch [21/91], Total Loss: 5.1443, NLL: 1.1155, Masked: 13.0074, Reg: 1.135188
+Epoch [22/91], Total Loss: 5.1389, NLL: 1.1121, Masked: 13.0011, Reg: 1.108744
+Epoch [23/91], Total Loss: 5.1418, NLL: 1.1144, Masked: 13.0029, Reg: 1.139128
+Epoch [24/91], Total Loss: 5.1360, NLL: 1.1222, Masked: 12.9592, Reg: 1.208733
+Epoch [25/91], Total Loss: 5.1450, NLL: 1.1156, Masked: 13.0095, Reg: 1.127278
+Epoch [26/91], Total Loss: 5.1482, NLL: 1.1156, Masked: 13.0197, Reg: 1.130929
+Epoch [27/91], Total Loss: 5.1455, NLL: 1.1132, Masked: 13.0187, Reg: 1.117192
+Epoch [28/91], Total Loss: 5.1468, NLL: 1.1197, Masked: 13.0018, Reg: 1.169407
+Epoch [29/91], Total Loss: 5.1432, NLL: 1.1150, Masked: 13.0056, Reg: 1.155047
+Epoch [30/91], Total Loss: 5.1431, NLL: 1.1123, Masked: 13.0141, Reg: 1.096277
+Epoch [31/91], Total Loss: 5.1468, NLL: 1.1246, Masked: 12.9864, Reg: 1.188176
+Epoch [32/91], Total Loss: 5.1418, NLL: 1.1196, Masked: 12.9862, Reg: 1.170969
+Epoch [33/91], Total Loss: 5.1447, NLL: 1.1138, Masked: 13.0144, Reg: 1.130387
+Epoch [34/91], Total Loss: 5.1435, NLL: 1.1124, Masked: 13.0150, Reg: 1.097881
+Epoch [35/91], Total Loss: 5.1487, NLL: 1.1195, Masked: 13.0087, Reg: 1.161860
+Epoch [36/91], Total Loss: 5.1426, NLL: 1.1179, Masked: 12.9942, Reg: 1.162708
+Epoch [37/91], Total Loss: 5.1507, NLL: 1.1141, Masked: 13.0325, Reg: 1.149099
+Epoch [38/91], Total Loss: 5.1452, NLL: 1.1155, Masked: 13.0103, Reg: 1.150519
+Epoch [39/91], Total Loss: 5.1432, NLL: 1.1226, Masked: 12.9809, Reg: 1.223054
+Epoch [40/91], Total Loss: 5.1444, NLL: 1.1155, Masked: 13.0078, Reg: 1.125636
+Epoch [41/91], Total Loss: 5.1484, NLL: 1.1144, Masked: 13.0243, Reg: 1.096106
+Epoch [42/91], Total Loss: 5.1492, NLL: 1.1191, Masked: 13.0119, Reg: 1.163469
+Epoch [43/91], Total Loss: 5.1546, NLL: 1.1234, Masked: 13.0152, Reg: 1.146869
+Epoch [44/91], Total Loss: 5.1403, NLL: 1.1154, Masked: 12.9950, Reg: 1.134384
+Epoch [45/91], Total Loss: 5.1499, NLL: 1.1099, Masked: 13.0437, Reg: 1.086701
+Epoch [46/91], Total Loss: 5.1497, NLL: 1.1230, Masked: 13.0009, Reg: 1.148594
+Epoch [47/91], Total Loss: 5.1489, NLL: 1.1157, Masked: 13.0215, Reg: 1.148361
+Epoch [48/91], Total Loss: 5.1476, NLL: 1.1159, Masked: 13.0169, Reg: 1.179890
+Epoch [49/91], Total Loss: 5.1450, NLL: 1.1155, Masked: 13.0097, Reg: 1.120544
+Epoch [50/91], Total Loss: 5.1387, NLL: 1.1164, Masked: 12.9867, Reg: 1.181065
+Epoch [51/91], Total Loss: 5.1485, NLL: 1.1170, Masked: 13.0163, Reg: 1.126885
+Epoch [52/91], Total Loss: 5.1510, NLL: 1.1167, Masked: 13.0255, Reg: 1.130631
+Epoch [53/91], Total Loss: 5.1420, NLL: 1.1147, Masked: 13.0027, Reg: 1.149139
+Epoch [54/91], Total Loss: 5.1412, NLL: 1.1130, Masked: 13.0056, Reg: 1.128983
+Epoch [55/91], Total Loss: 5.1366, NLL: 1.1151, Masked: 12.9839, Reg: 1.136488
+Epoch [56/91], Total Loss: 5.1510, NLL: 1.1192, Masked: 13.0175, Reg: 1.185394
+Epoch [57/91], Total Loss: 5.1499, NLL: 1.1204, Masked: 13.0098, Reg: 1.144150
+Epoch [58/91], Total Loss: 5.1437, NLL: 1.1122, Masked: 13.0163, Reg: 1.102209
+Epoch [59/91], Total Loss: 5.1435, NLL: 1.1186, Masked: 12.9949, Reg: 1.215030
+Epoch [60/91], Total Loss: 5.1423, NLL: 1.1146, Masked: 13.0040, Reg: 1.134654
+Epoch [61/91], Total Loss: 5.1476, NLL: 1.1159, Masked: 13.0168, Reg: 1.138150
+Epoch [62/91], Total Loss: 5.1466, NLL: 1.1145, Masked: 13.0180, Reg: 1.122722
+Epoch [63/91], Total Loss: 5.1430, NLL: 1.1167, Masked: 12.9997, Reg: 1.175254
+Epoch [64/91], Total Loss: 5.1538, NLL: 1.1190, Masked: 13.0269, Reg: 1.145759
+Epoch [65/91], Total Loss: 5.1438, NLL: 1.1144, Masked: 13.0095, Reg: 1.134780
+Epoch [66/91], Total Loss: 5.1397, NLL: 1.1137, Masked: 12.9986, Reg: 1.125443
+Epoch [67/91], Total Loss: 5.1414, NLL: 1.1133, Masked: 13.0051, Reg: 1.120381
+Epoch [68/91], Total Loss: 5.1458, NLL: 1.1176, Masked: 13.0058, Reg: 1.164071
+Epoch [69/91], Total Loss: 5.1427, NLL: 1.1194, Masked: 12.9900, Reg: 1.154142
+Epoch [70/91], Total Loss: 5.1379, NLL: 1.1176, Masked: 12.9799, Reg: 1.136445
+Epoch [71/91], Total Loss: 5.1476, NLL: 1.1184, Masked: 13.0089, Reg: 1.158832
+Epoch [72/91], Total Loss: 5.1451, NLL: 1.1181, Masked: 13.0018, Reg: 1.175847
+Epoch [73/91], Total Loss: 5.1446, NLL: 1.1182, Masked: 12.9998, Reg: 1.146692
+Epoch [74/91], Total Loss: 5.1457, NLL: 1.1151, Masked: 13.0132, Reg: 1.152808
+Epoch [75/91], Total Loss: 5.1493, NLL: 1.1142, Masked: 13.0278, Reg: 1.126828
+Epoch [76/91], Total Loss: 5.1398, NLL: 1.1155, Masked: 12.9927, Reg: 1.132247
+Epoch [77/91], Total Loss: 5.1430, NLL: 1.1211, Masked: 12.9851, Reg: 1.167512
+Epoch [78/91], Total Loss: 5.1499, NLL: 1.1157, Masked: 13.0252, Reg: 1.142479
+Epoch [79/91], Total Loss: 5.1448, NLL: 1.1165, Masked: 13.0060, Reg: 1.151522
+Epoch [80/91], Total Loss: 5.1432, NLL: 1.1202, Masked: 12.9885, Reg: 1.139011
+Epoch [81/91], Total Loss: 5.1418, NLL: 1.1124, Masked: 13.0095, Reg: 1.114038
+Epoch [82/91], Total Loss: 5.1589, NLL: 1.1251, Masked: 13.0239, Reg: 1.165845
+Epoch [83/91], Total Loss: 5.1491, NLL: 1.1167, Masked: 13.0190, Reg: 1.129442
+Epoch [84/91], Total Loss: 5.1388, NLL: 1.1162, Masked: 12.9878, Reg: 1.155802
+Epoch [85/91], Total Loss: 5.1347, NLL: 1.1147, Masked: 12.9791, Reg: 1.134244
+Epoch [86/91], Total Loss: 5.1508, NLL: 1.1150, Masked: 13.0301, Reg: 1.140672
+Epoch [87/91], Total Loss: 5.1428, NLL: 1.1127, Masked: 13.0115, Reg: 1.112007
+Epoch [88/91], Total Loss: 5.1470, NLL: 1.1178, Masked: 13.0090, Reg: 1.146647
+Epoch [89/91], Total Loss: 5.1470, NLL: 1.1160, Masked: 13.0148, Reg: 1.169157
+Epoch [90/91], Total Loss: 5.1496, NLL: 1.1180, Masked: 13.0167, Reg: 1.151514
+Epoch [91/91], Total Loss: 5.1455, NLL: 1.1156, Masked: 13.0111, Reg: 1.134093
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 5.057836
+  - ZINB NLL: 1.103794
+Total number of masked values: 824966
+  - Number of values with pi >= 0.6727579755170392: 439670
+  - Number of values with pi < 0.6727579755170392: 385296
+  - Masked Reconstruction: 12.766147
+  - Regularization: 1.065871
+Mean Absolute Error (MAE): 3.716956
+R² Score: -0.056524
+==================================================
+
+
+==================================================
+EVALUATING ON VALIDATION DATA
+Dataset size: 11584
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 5.479850
+  - ZINB NLL: 1.122759
+Total number of masked values: 570887
+  - Number of values with pi >= 0.6727579755170392: 306100
+  - Number of values with pi < 0.6727579755170392: 264787
+  - Masked Reconstruction: 14.067445
+  - Regularization: 1.065871
+Mean Absolute Error (MAE): 3.791763
+R² Score: -0.052408
+==================================================
+
+Skipping reconstruction: metadata is None
+Using combined metric: zinb_nll (1.122759) + masked_loss (14.067445) = 15.190204
+
+>>> Optimizing combined on VALIDATION set: 15.190204
+>>> Full validation metrics: {'total_loss': 5.479850213995296, 'zinb_nll': 1.1227590522795752, 'mae': 3.7917630672454834, 'r2': -0.05240762233734131, 'masked_loss': 14.067444895841799, 'reg_loss': 1.0658712001591093}
+
+Iteration No: 51 ended. Search finished for the next optimal point.
+Time taken: 8110.9896
+Function value obtained: 15.1902
+Current minimum: 12.0651
+
+Optimization result saved to: AE/results/bayesian_optimization/bayesian_opt_result_combined_20260327_013706.pkl
+Result metadata saved to: AE/results/bayesian_optimization/bayesian_opt_result_combined_20260327_013706_metadata.json
+All trial results saved to: AE/results/bayesian_optimization/all_trials_combined_20260327_013706.json
+
+################################################################################
+# Optimization Complete!
+# Optimized metric: combined on VALIDATION set
+# Best validation combined: 12.065055
+# Total trials: 150
+# Best parameters:
+#   features: Centr
+#   step_size: 0.8072591808951624
+#   bin_size: 17
+#   sample_fraction: 0.687546017662249
+#   moving_average: False
+#   first_layer_size_factor: 73
+#   num_layers: 1
+#   use_conv: True
+#   conv_channel: 49
+#   pool_size: 7
+#   kernel_size: 5
+#   epochs: 116
+#   batch_size: 128
+#   pi_threshold: 0.4528244428097045
+#   learning_rate: 0.000152031488211692
+#   dropout_rate: 0.42352333719421714
+#   masked_recon_weight: 1.372407434254122
+#   regularizer: l1
+#   regularization_weight: 0.0003534619028724413
+################################################################################
+
+
+################################################################################
+# Evaluating Best Model on TEST SET
+################################################################################
+
+Retraining with best parameters and evaluating on test set...
+  features: ['Centr']
+  bin_size: 17
+  layers: [np.int64(1168)]
+
+
+Clipping outliers using 95th percentile * 1.5...
+strain_FD: Clipping values above 71.92 (P95=47.94). Clipped 95791/4127807 values (2.32%)
+strain_dnrp: Clipping values above 243.00 (P95=162.00). Clipped 25649/1119454 values (2.29%)
+strain_yEK19: Clipping values above 77.10 (P95=51.40). Clipped 83713/3893623 values (2.15%)
+strain_yEK23: Clipping values above 72.00 (P95=48.00). Clipped 86381/3558407 values (2.43%)
+strain_yTW001: Clipping values above 134.25 (P95=89.50). Clipped 27529/1193409 values (2.31%)
+strain_yWT03a: Clipping values above 15.00 (P95=10.00). Clipped 10602/347679 values (3.05%)
+strain_yWT04a: Clipping values above 58.50 (P95=39.00). Clipped 21095/725406 values (2.91%)
+strain_ylic137: Clipping values above 142.50 (P95=95.00). Clipped 28746/1112684 values (2.58%)
+
+Splitting data using pre-determined chromosomes...
+Standardizing features: ['Centr']
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 2040
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 720
+Column order in final array (Dataset/Chrom split): ['Value', 'Centromere_Distance', 'Value_Raw', 'Size_Factor']
+Removing 0 empty data points out of 800
+Datasets created:
+  Train: (2040, 2000, 4)
+  Val: (720, 2000, 4)
+  Test: (800, 2000, 4)
+
+
+Dataset shapes:
+  Train set: (2040, 2000, 4)
+  Val set: (720, 2000, 4)
+  Test set: (800, 2000, 4)
+Randomly sampled 1402/2040 samples (68.8%)
+Applied denoising with 15.0% masking
+
+Creating validation dataloader:
+  Validation set size: 720
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 720 samples, 6 batches
+
+Creating test dataloader:
+  Test set size: 800
+  Batch size: 128
+Applied denoising with 15.0% masking
+  Dataloader created: 800 samples, 7 batches
+Number of encoder layers: 1
+Number of decoder layers (excluding heads): 1
+Total number of layers including latent layer: 3
+Epoch [1/116], Total Loss: 69.1088, NLL: 3.0529, Masked: 23.1025, Reg: 34.349916
+Epoch [2/116], Total Loss: 47.2947, NLL: 5.0599, Masked: 11.1453, Reg: 26.938928
+Epoch [3/116], Total Loss: 40.0297, NLL: 3.3983, Masked: 11.0075, Reg: 21.524692
+Epoch [4/116], Total Loss: 34.6897, NLL: 3.5771, Masked: 10.1543, Reg: 17.176747
+Epoch [5/116], Total Loss: 30.5674, NLL: 3.2377, Masked: 9.9433, Reg: 13.683386
+Epoch [6/116], Total Loss: 27.8181, NLL: 2.9707, Masked: 9.5237, Reg: 11.776913
+Epoch [7/116], Total Loss: 26.0147, NLL: 2.8478, Masked: 9.1541, Reg: 10.603797
+Epoch [8/116], Total Loss: 24.9168, NLL: 2.8418, Masked: 9.1430, Reg: 9.527059
+Epoch [9/116], Total Loss: 24.1573, NLL: 2.8512, Masked: 9.1619, Reg: 8.732104
+Epoch [10/116], Total Loss: 23.4983, NLL: 2.8395, Masked: 9.1385, Reg: 8.117160
+Epoch [11/116], Total Loss: 22.9412, NLL: 2.8363, Masked: 9.1129, Reg: 7.598343
+Epoch [12/116], Total Loss: 22.5162, NLL: 2.8345, Masked: 9.1192, Reg: 7.166461
+Epoch [13/116], Total Loss: 22.0978, NLL: 2.8389, Masked: 9.1078, Reg: 6.759263
+Epoch [14/116], Total Loss: 21.6947, NLL: 2.8308, Masked: 9.0916, Reg: 6.386574
+Epoch [15/116], Total Loss: 21.4396, NLL: 2.8417, Masked: 9.1208, Reg: 6.080449
+Epoch [16/116], Total Loss: 21.1126, NLL: 2.8324, Masked: 9.0975, Reg: 5.794583
+Epoch [17/116], Total Loss: 20.8968, NLL: 2.8296, Masked: 9.1030, Reg: 5.574177
+Epoch [18/116], Total Loss: 20.6753, NLL: 2.8246, Masked: 9.0905, Reg: 5.374800
+Epoch [19/116], Total Loss: 20.4709, NLL: 2.8275, Masked: 9.0861, Reg: 5.173625
+Epoch [20/116], Total Loss: 20.3483, NLL: 2.8374, Masked: 9.1022, Reg: 5.018925
+Epoch [21/116], Total Loss: 20.2219, NLL: 2.8343, Masked: 9.1117, Reg: 4.882654
+Epoch [22/116], Total Loss: 20.0452, NLL: 2.8191, Masked: 9.0903, Reg: 4.750548
+Epoch [23/116], Total Loss: 19.9203, NLL: 2.8269, Masked: 9.0792, Reg: 4.632972
+Epoch [24/116], Total Loss: 19.8329, NLL: 2.8345, Masked: 9.0941, Reg: 4.517630
+Epoch [25/116], Total Loss: 19.7348, NLL: 2.8323, Masked: 9.0964, Reg: 4.418481
+Epoch [26/116], Total Loss: 19.6276, NLL: 2.8318, Masked: 9.0885, Reg: 4.322689
+Epoch [27/116], Total Loss: 19.5610, NLL: 2.8256, Masked: 9.0926, Reg: 4.256594
+Epoch [28/116], Total Loss: 19.4657, NLL: 2.8257, Masked: 9.0818, Reg: 4.176013
+Epoch [29/116], Total Loss: 19.4085, NLL: 2.8282, Masked: 9.0815, Reg: 4.116789
+Epoch [30/116], Total Loss: 19.3328, NLL: 2.8199, Masked: 9.0749, Reg: 4.058401
+Epoch [31/116], Total Loss: 19.3353, NLL: 2.8330, Masked: 9.0993, Reg: 4.014363
+Epoch [32/116], Total Loss: 19.2593, NLL: 2.8283, Masked: 9.0944, Reg: 3.949852
+Epoch [33/116], Total Loss: 19.2287, NLL: 2.8332, Masked: 9.1010, Reg: 3.905229
+Epoch [34/116], Total Loss: 19.2126, NLL: 2.8378, Masked: 9.1147, Reg: 3.865706
+Epoch [35/116], Total Loss: 19.1481, NLL: 2.8323, Masked: 9.1190, Reg: 3.800745
+Epoch [36/116], Total Loss: 19.0419, NLL: 2.8230, Masked: 9.0794, Reg: 3.758217
+Epoch [37/116], Total Loss: 19.0146, NLL: 2.8273, Masked: 9.0755, Reg: 3.731969
+Epoch [38/116], Total Loss: 18.9997, NLL: 2.8195, Masked: 9.0985, Reg: 3.693361
+Epoch [39/116], Total Loss: 18.9842, NLL: 2.8294, Masked: 9.0931, Reg: 3.675332
+Epoch [40/116], Total Loss: 18.9070, NLL: 2.8297, Masked: 9.0788, Reg: 3.617538
+Epoch [41/116], Total Loss: 18.8738, NLL: 2.8240, Masked: 9.0910, Reg: 3.573180
+Epoch [42/116], Total Loss: 18.8511, NLL: 2.8329, Masked: 9.0877, Reg: 3.546178
+Epoch [43/116], Total Loss: 18.8415, NLL: 2.8292, Masked: 9.1012, Reg: 3.521724
+Epoch [44/116], Total Loss: 18.7549, NLL: 2.8276, Masked: 9.0793, Reg: 3.466838
+Epoch [45/116], Total Loss: 18.7391, NLL: 2.8287, Masked: 9.0883, Reg: 3.437478
+Epoch [46/116], Total Loss: 18.7056, NLL: 2.8272, Masked: 9.0774, Reg: 3.420445
+Epoch [47/116], Total Loss: 18.6459, NLL: 2.8270, Masked: 9.0631, Reg: 3.380757
+Epoch [48/116], Total Loss: 18.6414, NLL: 2.8209, Masked: 9.0795, Reg: 3.359692
+Epoch [49/116], Total Loss: 18.5990, NLL: 2.8285, Masked: 9.0699, Reg: 3.322932
+Epoch [50/116], Total Loss: 18.5653, NLL: 2.8210, Masked: 9.0763, Reg: 3.287959
+Epoch [51/116], Total Loss: 18.5713, NLL: 2.8286, Masked: 9.0947, Reg: 3.261095
+Epoch [52/116], Total Loss: 18.5271, NLL: 2.8347, Masked: 9.0857, Reg: 3.223072
+Epoch [53/116], Total Loss: 18.4758, NLL: 2.8257, Masked: 9.0706, Reg: 3.201493
+Epoch [54/116], Total Loss: 18.4487, NLL: 2.8262, Masked: 9.0746, Reg: 3.168451
+Epoch [55/116], Total Loss: 18.4452, NLL: 2.8225, Masked: 9.0890, Reg: 3.148844
+Epoch [56/116], Total Loss: 18.4144, NLL: 2.8321, Masked: 9.0800, Reg: 3.120871
+Epoch [57/116], Total Loss: 18.3715, NLL: 2.8246, Masked: 9.0769, Reg: 3.089711
+Epoch [58/116], Total Loss: 18.3475, NLL: 2.8253, Masked: 9.0696, Reg: 3.075007
+Epoch [59/116], Total Loss: 18.3399, NLL: 2.8289, Masked: 9.0818, Reg: 3.047047
+Epoch [60/116], Total Loss: 18.3057, NLL: 2.8266, Masked: 9.0758, Reg: 3.023527
+Epoch [61/116], Total Loss: 18.2800, NLL: 2.8244, Masked: 9.0767, Reg: 2.998648
+Epoch [62/116], Total Loss: 18.2290, NLL: 2.8241, Masked: 9.0579, Reg: 2.973847
+Epoch [63/116], Total Loss: 18.2453, NLL: 2.8314, Masked: 9.0717, Reg: 2.963804
+Epoch [64/116], Total Loss: 18.2258, NLL: 2.8241, Masked: 9.0791, Reg: 2.941399
+Epoch [65/116], Total Loss: 18.2096, NLL: 2.8312, Masked: 9.0671, Reg: 2.934709
+Epoch [66/116], Total Loss: 18.1940, NLL: 2.8246, Masked: 9.0798, Reg: 2.908219
+Epoch [67/116], Total Loss: 18.1698, NLL: 2.8239, Masked: 9.0806, Reg: 2.883706
+Epoch [68/116], Total Loss: 18.1292, NLL: 2.8258, Masked: 9.0553, Reg: 2.875761
+Epoch [69/116], Total Loss: 18.1727, NLL: 2.8257, Masked: 9.0916, Reg: 2.869610
+Epoch [70/116], Total Loss: 18.1253, NLL: 2.8253, Masked: 9.0758, Reg: 2.844180
+Epoch [71/116], Total Loss: 18.1358, NLL: 2.8295, Masked: 9.0885, Reg: 2.833234
+Epoch [72/116], Total Loss: 18.0992, NLL: 2.8245, Masked: 9.0825, Reg: 2.809889
+Epoch [73/116], Total Loss: 18.0836, NLL: 2.8269, Masked: 9.0800, Reg: 2.795244
+Epoch [74/116], Total Loss: 18.0882, NLL: 2.8273, Masked: 9.0889, Reg: 2.787211
+Epoch [75/116], Total Loss: 18.0739, NLL: 2.8276, Masked: 9.0838, Reg: 2.779534
+Epoch [76/116], Total Loss: 18.0580, NLL: 2.8279, Masked: 9.0897, Reg: 2.755319
+Epoch [77/116], Total Loss: 18.0355, NLL: 2.8310, Masked: 9.0889, Reg: 2.730837
+Epoch [78/116], Total Loss: 17.9930, NLL: 2.8288, Masked: 9.0682, Reg: 2.718912
+Epoch [79/116], Total Loss: 17.9864, NLL: 2.8345, Masked: 9.0684, Reg: 2.706377
+Epoch [80/116], Total Loss: 18.0280, NLL: 2.8192, Masked: 9.1073, Reg: 2.709851
+Epoch [81/116], Total Loss: 18.0215, NLL: 2.8407, Masked: 9.1039, Reg: 2.686494
+Epoch [82/116], Total Loss: 17.9755, NLL: 2.8334, Masked: 9.0859, Reg: 2.672561
+Epoch [83/116], Total Loss: 17.9787, NLL: 2.8257, Masked: 9.0927, Reg: 2.674112
+Epoch [84/116], Total Loss: 17.9033, NLL: 2.8257, Masked: 9.0645, Reg: 2.637404
+Epoch [85/116], Total Loss: 17.9107, NLL: 2.8262, Masked: 9.0704, Reg: 2.636281
+Epoch [86/116], Total Loss: 17.9604, NLL: 2.8351, Masked: 9.0997, Reg: 2.636697
+Epoch [87/116], Total Loss: 17.9080, NLL: 2.8356, Masked: 9.0859, Reg: 2.602885
+Epoch [88/116], Total Loss: 17.8827, NLL: 2.8224, Masked: 9.0854, Reg: 2.591448
+Epoch [89/116], Total Loss: 17.8849, NLL: 2.8311, Masked: 9.0883, Reg: 2.580930
+Epoch [90/116], Total Loss: 17.8642, NLL: 2.8253, Masked: 9.0773, Reg: 2.581173
+Epoch [91/116], Total Loss: 17.8779, NLL: 2.8333, Masked: 9.0775, Reg: 2.586585
+Epoch [92/116], Total Loss: 17.8654, NLL: 2.8238, Masked: 9.0934, Reg: 2.561774
+Epoch [93/116], Total Loss: 17.8427, NLL: 2.8281, Masked: 9.0794, Reg: 2.553964
+Epoch [94/116], Total Loss: 17.8104, NLL: 2.8225, Masked: 9.0656, Reg: 2.546306
+Epoch [95/116], Total Loss: 17.8072, NLL: 2.8282, Masked: 9.0754, Reg: 2.523942
+Epoch [96/116], Total Loss: 17.8148, NLL: 2.8349, Masked: 9.0842, Reg: 2.512731
+Epoch [97/116], Total Loss: 17.8015, NLL: 2.8315, Masked: 9.0787, Reg: 2.510315
+Epoch [98/116], Total Loss: 17.7995, NLL: 2.8234, Masked: 9.0854, Reg: 2.507289
+Epoch [99/116], Total Loss: 17.7909, NLL: 2.8287, Masked: 9.0817, Reg: 2.498507
+Epoch [100/116], Total Loss: 17.7830, NLL: 2.8270, Masked: 9.0800, Reg: 2.494525
+Epoch [101/116], Total Loss: 17.7525, NLL: 2.8271, Masked: 9.0692, Reg: 2.478789
+Epoch [102/116], Total Loss: 17.7736, NLL: 2.8320, Masked: 9.0878, Reg: 2.469467
+Epoch [103/116], Total Loss: 17.7330, NLL: 2.8271, Masked: 9.0699, Reg: 2.458376
+Epoch [104/116], Total Loss: 17.7558, NLL: 2.8337, Masked: 9.0830, Reg: 2.456454
+Epoch [105/116], Total Loss: 17.7309, NLL: 2.8223, Masked: 9.0913, Reg: 2.431521
+Epoch [106/116], Total Loss: 17.7128, NLL: 2.8265, Masked: 9.0759, Reg: 2.430528
+Epoch [107/116], Total Loss: 17.6875, NLL: 2.8286, Masked: 9.0664, Reg: 2.416057
+Epoch [108/116], Total Loss: 17.6943, NLL: 2.8265, Masked: 9.0685, Reg: 2.422098
+Epoch [109/116], Total Loss: 17.7428, NLL: 2.8229, Masked: 9.1000, Reg: 2.430943
+Epoch [110/116], Total Loss: 17.6976, NLL: 2.8315, Masked: 9.0705, Reg: 2.417756
+Epoch [111/116], Total Loss: 17.6781, NLL: 2.8210, Masked: 9.0753, Reg: 2.402057
+Epoch [112/116], Total Loss: 17.6998, NLL: 2.8386, Masked: 9.0928, Reg: 2.382198
+Epoch [113/116], Total Loss: 17.6641, NLL: 2.8264, Masked: 9.0849, Reg: 2.369489
+Epoch [114/116], Total Loss: 17.6688, NLL: 2.8234, Masked: 9.0813, Reg: 2.382044
+Epoch [115/116], Total Loss: 17.6896, NLL: 2.8435, Masked: 9.0983, Reg: 2.359579
+Epoch [116/116], Total Loss: 17.6337, NLL: 2.8238, Masked: 9.0808, Reg: 2.347372
+
+==================================================
+EVALUATING ON TRAINING DATA
+==================================================
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 17.431911
+  - ZINB NLL: 2.801685
+Total number of masked values: 277705
+  - Number of values with pi >= 0.4528244428097045: 0
+  - Number of values with pi < 0.4528244428097045: 277705
+  - Masked Reconstruction: 8.949806
+  - Regularization: 2.347446
+Mean Absolute Error (MAE): 8.198289
+R² Score: 0.088225
+==================================================
+
+
+==================================================
+EVALUATING ON TEST DATA
+Dataset size: 800
+==================================================
+
+
+==================================================
+TEST RESULTS
+==================================================
+Total Loss: 17.610551
+  - ZINB NLL: 2.822443
+Total number of masked values: 158368
+  - Number of values with pi >= 0.4528244428097045: 0
+  - Number of values with pi < 0.4528244428097045: 158368
+  - Masked Reconstruction: 9.064845
+  - Regularization: 2.347446
+Mean Absolute Error (MAE): 8.318386
+R² Score: 0.104378
+==================================================
+
+
+==================================================
+MODEL SAVED: ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt
+Location: AE/results/models/ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt
+==================================================
+
+Skipping reconstruction: metadata is None
+
+################################################################################
+# TEST SET EVALUATION COMPLETE
+# Test metrics: {'total_loss': 17.610550842285157, 'zinb_nll': 2.822443447113037, 'mae': 8.31838607788086, 'r2': 0.104378342628479, 'masked_loss': 9.064845161437988, 'reg_loss': 2.347446121333577}
+################################################################################
+
+Test results saved to: AE/results/bayesian_optimization/test_results_combined_20260327_013706.json
+
