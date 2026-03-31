@@ -15,10 +15,29 @@ from Utils.plot_config import setup_plot_style
 setup_plot_style()
 
 # Configuration
-genes = ["PRO3", "CDC28", "SEC18", "KAR2", "RIB3", "POL2", "NOT1", "SUP35", "RNR1", "RNR2", "BEM1", "BEM2", "BEM3", "BEM4"]
+genes = [
+    "PRO3", "CDC28", "SEC18", "KAR2", "RIB3", "POL2", "NOT1", "SUP35", "RNR1", "RNR2",
+    "BEM1", "BEM2", "BEM3", "BEM4",
+    "RSR1",      # BUD1 alias
+    "CLA4", "BNI1", "CDC24", "CDC42", "GIC1", "GIC2",
+    "SPA2", "PEA2",
+    "MSB2", "SHO1", "STE20", "STE11", "STE7", "FUS3", "KSS1",
+    "BUD2", "BUD3", "BUD4", "BUD5", "BUD6", "BUD7", "BUD8", "BUD9",
+    "BUD10",     # AXL2 alias
+    "BUD13", "BUD14", "BUD16", "BUD17", "BUD19", "BUD20", "BUD21", "BUD22", "BUD23", "BUD24",
+    "AXL1", "AXL2",
+    "CDC3", "CDC10", "CDC11", "CDC12",   # septins
+    "RGA1", "RGA2",                       # Cdc42 GAPs
+    "EXO70", "SEC3", "SEC4",              # exocytosis/polarized secretion
+    "MYO2", "TPM1",                       # actin/polarized transport
+    "RHO1", "RHO3", "RHO4",
+    "BOI1", "BOI2",
+    "SHE4", "SHE5",
+    "FLO11"
+]
 protein_domain = "PF"
 threshold = 3.0
-strains = ["FD", "dnrp", "yEK19", "yEK23", "ylic137", "yTW001", "yWT03a", "yWT04a"]
+strains = ["FD", "yEK19", "yEK23"]
 window_size = 100
 overlap = 50
 padding_bp = 500  # Base pairs to show before and after gene
@@ -161,8 +180,9 @@ def plot_gene_overview(gene_name, gene_info):
     
     if all_mu_z_scores:
         # Create diverging colormap centered at 0 (RdBu: red for negative, blue for positive)
-        vmin = min(all_mu_z_scores)
-        vmax = max(all_mu_z_scores)
+        # Fixed range for consistency across all figures
+        vmin = -2
+        vmax = 4
         norm = TwoSlopeNorm(vmin=vmin, vcenter=0, vmax=vmax)
         cmap_div = plt.cm.RdBu  # Red for negative, blue for positive
         
@@ -193,7 +213,7 @@ def plot_gene_overview(gene_name, gene_info):
                 domain_center_bp = (domain_start_bp + domain_end_bp) / 2
                 domain_label = f"{domain_id}"
                 ax.text(domain_center_bp, gene_y, domain_label, 
-                       ha='center', va='center', fontsize=8, fontweight='bold',
+                       ha='center', va='center', fontsize=14, fontweight='bold',
                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', 
                                 edgecolor='none', alpha=0.7))
         
@@ -225,7 +245,7 @@ def plot_gene_overview(gene_name, gene_info):
                         if seg_width > (display_end - display_start) * 0.05:  # Only show if >5% of display width
                             seg_center = (seg_start + seg_end) / 2
                             ax.text(seg_center, strain_y, f"{mu_z:.1f}", 
-                                   ha='center', va='center', fontsize=7,
+                                   ha='center', va='center', fontsize=12,
                                    color='white' if abs(norm(mu_z) - 0.5) > 0.3 else 'black',
                                    fontweight='bold')
             
@@ -242,33 +262,34 @@ def plot_gene_overview(gene_name, gene_info):
                     # Normalize count data for display (small height)
                     max_count = region_data['Value'].max()
                     if max_count > 0:
-                        normalized_counts = region_data['Value'] / max_count * 0.25  # Scale to 0.25 units height
+                        normalized_counts = region_data['Value'] / max_count * 0.5  # Scale to 0.5 units height
                         
                         # Plot as a line above the segments
                         ax.plot(region_data['Position'], 
                                strain_y + 0.35 + normalized_counts,
-                               color='darkgray', linewidth=0.8, alpha=0.7, zorder=1)
+                               color='darkgray', linewidth=1.5, alpha=0.7, zorder=10)
     
     # Set axis properties
     ax.set_xlim(display_start, display_end)
     ax.set_ylim(0.5 * y_spacing, (num_rows + 0.5) * y_spacing)
-    ax.set_xlabel('Genomic Position (bp)')
+    ax.set_xlabel('Genomic Position (bp)', fontsize=14)
     ax.set_yticks([y * y_spacing for y in y_positions])
-    ax.set_yticklabels(['Gene\nAnnotation'] + strains)
+    ax.set_yticklabels(['Gene\nAnnotation'] + strains, fontsize=12)
+    ax.tick_params(axis='x', labelsize=12)
     
     # Title
     essential_status = "Essential" if gene_info['essentiality'] else "Non-essential"
     title = (f"{gene_name} ({gene_info['orf']}) - {gene_info['chromosome']}\n"
-             f"{essential_status}, Position: {gene_start:,}-{gene_end:,} bp, "
-             f"Threshold: {threshold}")
-    ax.set_title(title, fontsize=16, fontweight='bold')
+             f"{essential_status} ")
+    ax.set_title(title, fontsize=18, fontweight='bold')
     
     # Add colorbar for mu_z_score
     if all_mu_z_scores:
         sm = plt.cm.ScalarMappable(cmap=cmap_div, norm=norm)
         sm.set_array([])
-        cbar = plt.colorbar(sm, ax=ax, pad=0.02)
-        cbar.set_label('μ z-score', rotation=270, labelpad=20)
+        cbar = plt.colorbar(sm, ax=ax, pad=0.02, fraction=0.046, aspect=20)
+        cbar.set_label('μ z-score', rotation=270, labelpad=25, fontsize=14)
+        cbar.ax.tick_params(labelsize=12)
     
     # Grid
     ax.grid(axis='x', alpha=0.3, linestyle='--')

@@ -9,6 +9,7 @@ from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
 from AE.training.training import test
 from AE.reconstruct_output import OutputReconstructor
+from sklearn.metrics import mean_absolute_error, r2_score
 
 # ========== MODEL AND DATA CONFIGURATION ==========
 
@@ -21,56 +22,62 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 # No validation set needed for testing
 
 # # Path to the trained model
-# MODEL_PATH = "AE/results/models/ZINBAE_20260225_121351_noconv_layers1600_ep30.pt"
+# MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep150_noise0.150_muoff0.000.pt"
+
+# !!! ZINB NLL
 
 # # Preprocessing parameters (should match training configuration)
-# FEATURES = ['Centr']
+# FEATURES = ['Nucl']
 # BIN_SIZE = 1
 # MOVING_AVERAGE = False
 # DATA_POINT_LENGTH = 2000
-# STEP_SIZE = 500
+# STEP_SIZE = 2000
 
 # # Training parameters (should match training configuration)
-# BATCH_SIZE = 32
+# BATCH_SIZE = 128
 # NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.7
+# PI_THRESHOLD = 0.3
 # MASKED_RECON_WEIGHT = 0.001  # gamma
-# REGULARIZER = 'l2'
+# REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 1e-5  # alpha
 
+# !!! COMBINED
+
 # MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
-# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
+# MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
 # # # # MODEL_PATH = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep141.pt"
 # # # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff1.000.pt"
 
 # # Preprocessing parameters 
 # FEATURES = ['Centr']
-# BIN_SIZE = 19
+# BIN_SIZE = 20
 # MOVING_AVERAGE = True
 # DATA_POINT_LENGTH = 2000
-# STEP_SIZE = 894
+# STEP_SIZE = 500
 
 # # Training parameters 
-# BATCH_SIZE = 128
+# BATCH_SIZE = 32
 # NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.7
-# MASKED_RECON_WEIGHT = 0.00872  # gamma
+# PI_THRESHOLD = 0.53
+# MASKED_RECON_WEIGHT = 0.079  # gamma
 # REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 1e-5  # alpha
 
-MODEL_PATH = "AE/results/models/ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt"
+# !!! Masked
+
+MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep93_noise0.150_muoff0.000.pt"
 
 # Preprocessing parameters 
-FEATURES = ['Centr']
-BIN_SIZE = 17
-MOVING_AVERAGE = False
+FEATURES = ['Centr', 'Nucl']
+BIN_SIZE = 20
+MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(0.807 * 2000)  
+STEP_SIZE = int(0.75 * 2000)  
 # Training parameters 
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.45 
-MASKED_RECON_WEIGHT = 1.37  # gamma - exact value
+PI_THRESHOLD = 0.43
+MASKED_RECON_WEIGHT = 0.0033  # gamma - exact value
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 
@@ -98,7 +105,7 @@ USE_CACHED_DATA = True  # Set to True after first run to use cached data with co
 OUTPUT_DIR = "AE/results/final"  # Where plots and metrics will be saved
 MU_OFFSET = 1
 PROCESSED_DATA_DIR = "Data/processed_data"  # Where preprocessed data will be cached
-RECONSTRUCT = True  # Whether to reconstruct genomic coordinates from predictions and save as CSV
+RECONSTRUCT = False  # Whether to reconstruct genomic coordinates from predictions and save as CSV
 RECONSTRUCTION_BASE_DIR = "Data/reconstruction"
 # ================================================
 
@@ -199,6 +206,123 @@ def load_or_preprocess_data(input_folder, train_chroms, test_chroms, features, b
     return test_set, test_metadata
 
 
+def print_parameter_statistics(predictions, mu_raw, theta, pi, raw_counts, masks=None, split_name=""):
+    """
+    Print detailed statistics about ZINB parameters (mu, theta, pi) similar to results_ZINB.py
+    """
+    print("\n" + "="*80)
+    print(f"{split_name.upper()} - OVERALL PARAMETER STATISTICS")
+    print("="*80)
+    
+    # Use RAW COUNTS for comparison
+    actual_counts_flat = raw_counts.flatten()
+    mu_flat = mu_raw.flatten()
+    
+    # Overall metrics
+    abs_err = np.abs(actual_counts_flat - mu_flat)
+    mae = abs_err.mean()
+    mae_std = abs_err.std(ddof=1)
+    r2 = r2_score(actual_counts_flat, mu_flat)
+    
+    # Separate zeros from non-zeros
+    zero_mask = actual_counts_flat == 0
+    non_zero_mask = ~zero_mask
+    
+    # Pi statistics
+    if pi is not None:
+        pi_flat = pi.flatten()
+        mean_pi_zeros = pi_flat[zero_mask].mean() if np.any(zero_mask) else 0
+        mean_pi_nonzeros = pi_flat[non_zero_mask].mean() if np.any(non_zero_mask) else 0
+        std_pi_zeros = pi_flat[zero_mask].std(ddof=1) if np.any(zero_mask) else 0
+        std_pi_nonzeros = pi_flat[non_zero_mask].std(ddof=1) if np.any(non_zero_mask) else 0
+    else:
+        mean_pi_zeros = mean_pi_nonzeros = std_pi_zeros = std_pi_nonzeros = 0
+    
+    # Mu statistics
+    mean_mu_zeros = mu_flat[zero_mask].mean() if np.any(zero_mask) else 0
+    mean_mu_nonzeros = mu_flat[non_zero_mask].mean() if np.any(non_zero_mask) else 0
+    std_mu_zeros = mu_flat[zero_mask].std(ddof=1) if np.any(zero_mask) else 0
+    std_mu_nonzeros = mu_flat[non_zero_mask].std(ddof=1) if np.any(non_zero_mask) else 0
+    
+    # Theta statistics
+    if theta is not None:
+        theta_flat = theta.flatten()
+        mean_theta = theta_flat.mean()
+        std_theta = theta_flat.std(ddof=1)
+    else:
+        mean_theta = std_theta = 0
+    
+    # Print overall statistics
+    print(f"MAE: {mae:.4f}, SD MAE: {mae_std:.4f}")
+    print(f"R²: {r2:.4f}")
+    print(f"Mean π (zeros): {mean_pi_zeros:.4f}, Mean π (non-zeros): {mean_pi_nonzeros:.4f}")
+    print(f"SD π (zeros): {std_pi_zeros:.4f}, SD π (non-zeros): {std_pi_nonzeros:.4f}")
+    print(f"Mean μ (zeros): {mean_mu_zeros:.4f}, Mean μ (non-zeros): {mean_mu_nonzeros:.4f}")
+    print(f"SD μ (zeros): {std_mu_zeros:.4f}, SD μ (non-zeros): {std_mu_nonzeros:.4f}")
+    print(f"Theta mean: {mean_theta:.4f}, Theta SD: {std_theta:.4f}")
+    
+    # Masked values analysis if masks are provided
+    if masks is not None:
+        mask_flat = masks.flatten()
+        masked_positions = mask_flat == True
+        
+        if np.any(masked_positions):
+            print("\n" + "="*80)
+            print(f"{split_name.upper()} - MASKED VALUES PERFORMANCE METRICS")
+            print("="*80)
+            
+            # Extract masked values
+            masked_actual = actual_counts_flat[masked_positions]
+            masked_recon = mu_flat[masked_positions]
+            
+            print(f"Number of masked values: {len(masked_actual)}")
+            
+            # Compute metrics for masked values
+            mae_masked = mean_absolute_error(masked_actual, masked_recon)
+            abs_err_masked = np.abs(masked_actual - masked_recon)
+            mae_std_masked = abs_err_masked.std(ddof=1)
+            r2_masked = r2_score(masked_actual, masked_recon)
+            
+            # Compute detailed statistics for masked values
+            zero_mask_masked = masked_actual == 0
+            non_zero_mask_masked = ~zero_mask_masked
+            
+            # Pi statistics for masked values
+            if pi is not None:
+                masked_pi = pi_flat[masked_positions]
+                mean_pi_zeros_masked = masked_pi[zero_mask_masked].mean() if np.any(zero_mask_masked) else 0
+                mean_pi_nonzeros_masked = masked_pi[non_zero_mask_masked].mean() if np.any(non_zero_mask_masked) else 0
+                std_pi_zeros_masked = masked_pi[zero_mask_masked].std(ddof=1) if np.any(zero_mask_masked) else 0
+                std_pi_nonzeros_masked = masked_pi[non_zero_mask_masked].std(ddof=1) if np.any(non_zero_mask_masked) else 0
+            else:
+                mean_pi_zeros_masked = mean_pi_nonzeros_masked = std_pi_zeros_masked = std_pi_nonzeros_masked = 0
+            
+            # Mu statistics for masked values
+            mean_mu_zeros_masked = masked_recon[zero_mask_masked].mean() if np.any(zero_mask_masked) else 0
+            mean_mu_nonzeros_masked = masked_recon[non_zero_mask_masked].mean() if np.any(non_zero_mask_masked) else 0
+            std_mu_zeros_masked = masked_recon[zero_mask_masked].std(ddof=1) if np.any(zero_mask_masked) else 0
+            std_mu_nonzeros_masked = masked_recon[non_zero_mask_masked].std(ddof=1) if np.any(non_zero_mask_masked) else 0
+            
+            # Theta statistics for masked values
+            if theta is not None:
+                masked_theta = theta_flat[masked_positions]
+                mean_theta_masked = masked_theta.mean()
+                std_theta_masked = masked_theta.std(ddof=1)
+            else:
+                mean_theta_masked = std_theta_masked = 0
+            
+            # Print detailed statistics for masked values
+            print(f"MAE: {mae_masked:.4f}, SD MAE: {mae_std_masked:.4f}")
+            print(f"R²: {r2_masked:.4f}")
+            print(f"Mean π (zeros): {mean_pi_zeros_masked:.4f}, Mean π (non-zeros): {mean_pi_nonzeros_masked:.4f}")
+            print(f"SD π (zeros): {std_pi_zeros_masked:.4f}, SD π (non-zeros): {std_pi_nonzeros_masked:.4f}")
+            print(f"Mean μ (zeros): {mean_mu_zeros_masked:.4f}, Mean μ (non-zeros): {mean_mu_nonzeros_masked:.4f}")
+            print(f"SD μ (zeros): {std_mu_zeros_masked:.4f}, SD μ (non-zeros): {std_mu_nonzeros_masked:.4f}")
+            print(f"Theta mean: {mean_theta_masked:.4f}, Theta SD: {std_theta_masked:.4f}")
+    
+    print("="*80 + "\n")
+
+
 def process_split(split_name, split_chromosomes, model, model_config, chrom_embedding, seq_len):
     """Process a single split (train/val/test) and save reconstructions."""
     print("\n" + "="*80)
@@ -247,7 +371,7 @@ def process_split(split_name, split_chromosomes, model, model_config, chrom_embe
     
     # Run inference
     print(f"\nEvaluating model on {split_name} data...")
-    predictions, latents, metrics, mu_raw, theta, pi = test(
+    predictions, latents, metrics, mu_raw, theta, pi, raw_counts, masks = test(
         model=model,
         dataloader=split_dataloader,
         chrom=chrom,
@@ -265,6 +389,17 @@ def process_split(split_name, split_chromosomes, model, model_config, chrom_embe
     print(f"\n{split_name.upper()} METRICS:")
     for key, value in metrics.items():
         print(f"  {key}: {value}")
+    
+    # Print detailed parameter statistics
+    print_parameter_statistics(
+        predictions=predictions,
+        mu_raw=mu_raw,
+        theta=theta,
+        pi=pi,
+        raw_counts=raw_counts,
+        masks=masks,
+        split_name=split_name
+    )
     
     # Save reconstruction if enabled
     if RECONSTRUCT:

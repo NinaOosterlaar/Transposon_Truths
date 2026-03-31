@@ -506,7 +506,7 @@ def test(model, dataloader, chrom=True, chrom_embedding=None, plot=True, n_examp
                               metrics=metrics, use_conv=use_conv, name=name, subdir=eval_mode, pi_threshold=pi_threshold)
     
     # Return predictions, latents, metrics, and ZINB parameters for reconstruction
-    return all_reconstructions, all_latents, metrics, all_mu_raw, all_theta, all_pi
+    return all_reconstructions, all_latents, metrics, all_mu_raw, all_theta, all_pi, all_raw_counts, all_masks
 
 
 

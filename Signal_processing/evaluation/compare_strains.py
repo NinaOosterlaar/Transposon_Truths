@@ -543,13 +543,13 @@ def plot_heatmap(matrix_df, metric_name, threshold, output_dir, metric_short_nam
         cmap = 'YlOrRd'
         fmt = '.3f'
     elif 'ARI' in metric_name or 'Rand Index' in metric_name:
-        vmin, vmax = -0.2, 1
-        cmap = 'RdYlGn'
+        vmin, vmax = 0, 1
+        cmap = 'Blues'
         fmt = '.3f'
     elif 'Correlation' in metric_name or 'Essentiality' in metric_name:
-        # Correlation metrics - range from -1 to 1
-        vmin, vmax = -1, 1
-        cmap = 'RdBu_r'  # Red=positive, Blue=negative
+        # Correlation metrics - range from 0 to 1
+        vmin, vmax = 0, 1
+        cmap = 'Blues'
         fmt = '.3f'
     elif 'Distance' in metric_name or 'NBP' in metric_name:
         # Distance metrics - lower is better, use reversed colormap

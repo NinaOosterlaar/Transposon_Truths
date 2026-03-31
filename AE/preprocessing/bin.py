@@ -147,7 +147,7 @@ def sliding_window(data, window_size, step_size, moving_average=False):
             value_col_idx = 1 if data.shape[1] > 1 else 0
             non_zero_values = data[:, value_col_idx][data[:, value_col_idx] != 0]
         mean_non_zero_before = np.mean(non_zero_values) if len(non_zero_values) > 0 else 0
-        print(f"Mean non-zero value before moving average: {mean_non_zero_before:.4f}")
+        # print(f"Mean non-zero value before moving average: {mean_non_zero_before:.4f}")
 
     def _moving_average_window(window_data):
         """Compute moving-average output while preserving input dimensionality.
@@ -209,9 +209,9 @@ def sliding_window(data, window_size, step_size, moving_average=False):
         else:
             # Column 1 is the Value column (column 0 is Position in dataframes)
             value_col_idx = 1 if windows_array.shape[1] > 1 else 0
-            non_zero_values_after = windows_array[:, value_col_idx][windows_array[:, value_col_idx] != 0]
-        mean_non_zero_after = np.mean(non_zero_values_after) if len(non_zero_values_after) > 0 else 0
-        print(f"Mean non-zero value after moving average: {mean_non_zero_after:.4f}")
+            # non_zero_values_after = windows_array[:, value_col_idx][windows_array[:, value_col_idx] != 0]
+        # mean_non_zero_after = np.mean(non_zero_values_after) if len(non_zero_values_after) > 0 else 0
+        # print(f"Mean non-zero value after moving average: {mean_non_zero_after:.4f}")
     
     return windows
 

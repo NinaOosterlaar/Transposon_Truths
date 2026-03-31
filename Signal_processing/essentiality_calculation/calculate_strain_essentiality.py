@@ -13,6 +13,8 @@ import os
 import sys
 from pathlib import Path
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from functools import partial
 
 import numpy as np
 import pandas as pd
@@ -29,10 +31,20 @@ from Signal_processing.essentiality_calculation.pure_estimation import (
     remove_top_quantile_outliers
 )
 
+# # List of strains to process
+# STRAINS = [
+#     'strain_FD',
+#     'strain_dnrp',
+#     'strain_yEK19',
+#     'strain_yEK23',
+#     'strain_yTW001',
+#     'strain_yWT03a',
+#     'strain_yWT04a',
+#     'strain_ylic137'
+# ]
+
 # List of strains to process
 STRAINS = [
-    'strain_FD',
-    'strain_dnrp',
     'strain_yEK19',
     'strain_yEK23',
     'strain_yTW001',
@@ -41,13 +53,14 @@ STRAINS = [
     'strain_ylic137'
 ]
 
+
 # All chromosomes in order
 CHROMOSOMES = [
     "ChrI", "ChrII", "ChrIII", "ChrIV", "ChrV", "ChrVI",
     "ChrVII", "ChrVIII", "ChrIX", "ChrX", "ChrXI", "ChrXII",
     "ChrXIII", "ChrXIV", "ChrXV", "ChrXVI"
 ]
-# CHROMOSOMES = ["ChrIV"]
+# CHROMOSOMES = ["ChrX"]
 
 
 def add_zscore_to_segments(all_segments_dict, theta_dict, strain_name):
@@ -72,14 +85,17 @@ def add_zscore_to_segments(all_segments_dict, theta_dict, strain_name):
     # Process each threshold separately
     for threshold, chrom_data in sorted(all_segments_dict.items()):
         # Collect all mu values for this threshold across all chromosomes
+        # Apply log transformation: log(mu + 1) to handle skewed distributions
         threshold_mu_values = []
+        threshold_log_mu_values = []
         for segments in chrom_data.values():
             for seg in segments:
                 mu = seg["mu_estimate"]
                 if not np.isnan(mu):
                     threshold_mu_values.append(mu)
+                    threshold_log_mu_values.append(np.log(mu + 1))
         
-        if len(threshold_mu_values) == 0:
+        if len(threshold_log_mu_values) == 0:
             print(f"    Threshold {threshold:.1f}: No valid μ values")
             # Add NaN z-scores
             for segments in chrom_data.values():
@@ -87,9 +103,9 @@ def add_zscore_to_segments(all_segments_dict, theta_dict, strain_name):
                     seg["mu_z_score"] = np.nan
             continue
         
-        # Compute statistics for this threshold
-        mu_mean = np.mean(threshold_mu_values)
-        mu_std = np.std(threshold_mu_values, ddof=1) if len(threshold_mu_values) > 1 else 0.0
+        # Compute statistics on log-transformed values
+        log_mu_mean = np.mean(threshold_log_mu_values)
+        log_mu_std = np.std(threshold_log_mu_values, ddof=1) if len(threshold_log_mu_values) > 1 else 0.0
         
         # Get theta values for this threshold
         theta_values = list(theta_dict[threshold].values())
@@ -97,23 +113,25 @@ def add_zscore_to_segments(all_segments_dict, theta_dict, strain_name):
         theta_min = np.min(theta_values)
         theta_max = np.max(theta_values)
         
-        # Add z-scores to all segments for this threshold
+        # Add z-scores to all segments for this threshold (based on log-transformed values)
         for segments in chrom_data.values():
             for seg in segments:
                 mu = seg["mu_estimate"]
-                if np.isnan(mu) or mu_std == 0.0:
+                log_mu = np.log(mu + 1)
+                if np.isnan(mu) or not np.isfinite(log_mu) or log_mu_std == 0.0:
                     seg["mu_z_score"] = np.nan
                 else:
-                    seg["mu_z_score"] = (mu - mu_mean) / mu_std
+                    seg["mu_z_score"] = (log_mu - log_mu_mean) / log_mu_std
         
-        # Print statistics including theta
+        # Print statistics including theta (showing both raw and log-transformed stats)
         if theta_min == theta_max:
             theta_str = f"θ={theta_mean:.6f}"
         else:
             theta_str = f"θ={theta_mean:.6f} (range: {theta_min:.6f}-{theta_max:.6f})"
         
+        mu_mean_raw = np.mean(threshold_mu_values)
         print(f"    Threshold {threshold:5.1f}: {len(threshold_mu_values):4d} segments, "
-              f"μ̄={mu_mean:7.4f}, σ_μ={mu_std:7.4f}, {theta_str}")
+              f"μ̄={mu_mean_raw:7.4f}, log(μ̄+1)={log_mu_mean:7.4f}, σ_log(μ)={log_mu_std:7.4f}, {theta_str}")
 
 
 def process_strain(strain_name, base_data_folder, base_results_folder, 
@@ -431,6 +449,12 @@ def parse_arguments():
         default="Signal_processing/essentiality_calculation/strain_essentiality_summary.csv",
         help="Path for summary statistics CSV.",
     )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=4,
+        help="Number of parallel workers to use for processing strains (default: 4).",
+    )
     return parser.parse_args()
 
 
@@ -455,26 +479,44 @@ def main():
     else:
         print(f"Thresholds: All available")
     print(f"Output subfolder: {args.output_subdir}")
+    print(f"Parallel workers: {args.workers}")
     print(f"Summary output: {summary_output}")
     print("="*80)
     
-    # Process each strain
+    # Process each strain in parallel
     summaries = []
     
-    for strain_name in args.strains:
-        summary = process_strain(
-            strain_name=strain_name,
-            base_data_folder=base_data_folder,
-            base_results_folder=base_results_folder,
-            output_subdir=args.output_subdir,
-            thresholds=args.thresholds,
-            eps=args.eps,
-            tol=args.tol,
-            max_iter=args.max_iter
-        )
+    # Create a partial function with fixed parameters
+    process_func = partial(
+        process_strain,
+        base_data_folder=base_data_folder,
+        base_results_folder=base_results_folder,
+        output_subdir=args.output_subdir,
+        thresholds=args.thresholds,
+        eps=args.eps,
+        tol=args.tol,
+        max_iter=args.max_iter
+    )
+    
+    # Use ProcessPoolExecutor for parallel processing
+    with ProcessPoolExecutor(max_workers=args.workers) as executor:
+        # Submit all strain processing tasks
+        future_to_strain = {
+            executor.submit(process_func, strain_name): strain_name
+            for strain_name in args.strains
+        }
         
-        if summary is not None:
-            summaries.append(summary)
+        # Collect results as they complete
+        for future in as_completed(future_to_strain):
+            strain_name = future_to_strain[future]
+            try:
+                summary = future.result()
+                if summary is not None:
+                    summaries.append(summary)
+            except Exception as exc:
+                print(f"\n{'='*80}")
+                print(f"ERROR: {strain_name} generated an exception: {exc}")
+                print(f"{'='*80}\n")
     
     # Save summary statistics
     if summaries:

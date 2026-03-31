@@ -194,36 +194,40 @@ def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, ma
 	)
 
 	# Calculate standardized z-scores for mu_estimate using weighted mean and std
-	# z = (μ - μ̄_weighted) / σ_μ_weighted
+	# Apply log transformation: log(mu + 1) to handle skewed distributions
+	# z = (log(μ + 1) - log_μ̄_weighted) / σ_log_μ_weighted
 	# Weights are based on segment lengths
 	mu_values = np.array([row["mu_estimate"] for row in segment_rows])
 	lengths = np.array([row["length"] for row in segment_rows])
 	
-	# Filter out NaN values for statistics
-	valid_mask = ~np.isnan(mu_values)
-	valid_mu = mu_values[valid_mask]
+	# Apply log transformation
+	log_mu_values = np.log(mu_values + 1)
+	
+	# Filter out NaN and inf values for statistics
+	valid_mask = np.isfinite(log_mu_values)
+	valid_log_mu = log_mu_values[valid_mask]
 	valid_lengths = lengths[valid_mask]
 	
-	if len(valid_mu) > 0:
-		# Compute weighted mean: Σ(mu_i * length_i) / Σ(length_i)
+	if len(valid_log_mu) > 0:
+		# Compute weighted mean: Σ(log_mu_i * length_i) / Σ(length_i)
 		total_length = np.sum(valid_lengths)
-		mu_mean = np.sum(valid_mu * valid_lengths) / total_length
+		log_mu_mean = np.sum(valid_log_mu * valid_lengths) / total_length
 		
-		# Compute weighted standard deviation: sqrt(Σ(length_i * (mu_i - mu_mean)²) / Σ(length_i))
-		if len(valid_mu) > 1:
-			weighted_variance = np.sum(valid_lengths * (valid_mu - mu_mean)**2) / total_length
-			mu_std = np.sqrt(weighted_variance)
+		# Compute weighted standard deviation: sqrt(Σ(length_i * (log_mu_i - log_mu_mean)²) / Σ(length_i))
+		if len(valid_log_mu) > 1:
+			weighted_variance = np.sum(valid_lengths * (valid_log_mu - log_mu_mean)**2) / total_length
+			log_mu_std = np.sqrt(weighted_variance)
 		else:
-			mu_std = 0.0
+			log_mu_std = 0.0
 		
-		# Add z-score to each segment
+		# Add z-score to each segment (based on log-transformed values)
 		for i, row in enumerate(segment_rows):
-			if np.isnan(mu_values[i]) or mu_std == 0.0:
+			if not np.isfinite(log_mu_values[i]) or log_mu_std == 0.0:
 				row["mu_z_score"] = np.nan
 			else:
-				row["mu_z_score"] = (mu_values[i] - mu_mean) / mu_std
+				row["mu_z_score"] = (log_mu_values[i] - log_mu_mean) / log_mu_std
 	else:
-		# All mu values are NaN
+		# All mu values are NaN or inf
 		for row in segment_rows:
 			row["mu_z_score"] = np.nan
 
