@@ -10,6 +10,8 @@ from AE.training.training_utils import dataloader_from_array, ChromosomeEmbeddin
 from AE.training.training import test
 from AE.reconstruct_output import OutputReconstructor
 from sklearn.metrics import mean_absolute_error, r2_score
+from AE.plotting.results_ZINB import density_plots, masked_values_analysis
+import matplotlib.pyplot as plt
 
 # ========== MODEL AND DATA CONFIGURATION ==========
 
@@ -43,43 +45,40 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 
 # !!! COMBINED
 
-# MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
-# MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
-# # # # MODEL_PATH = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep141.pt"
-# # # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff1.000.pt"
 
-# # Preprocessing parameters 
-# FEATURES = ['Centr']
-# BIN_SIZE = 20
-# MOVING_AVERAGE = True
-# DATA_POINT_LENGTH = 2000
-# STEP_SIZE = 500
-
-# # Training parameters 
-# BATCH_SIZE = 32
-# NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.53
-# MASKED_RECON_WEIGHT = 0.079  # gamma
-# REGULARIZER = 'none'
-# REGULARIZATION_WEIGHT = 1e-5  # alpha
-
-# !!! Masked
-
-MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep93_noise0.150_muoff0.000.pt"
-
+MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
 # Preprocessing parameters 
-FEATURES = ['Centr', 'Nucl']
+FEATURES = ['Centr']
 BIN_SIZE = 20
 MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(0.75 * 2000)  
+STEP_SIZE = 500
+
 # Training parameters 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.43
-MASKED_RECON_WEIGHT = 0.0033  # gamma - exact value
+PI_THRESHOLD = 0.53
+MASKED_RECON_WEIGHT = 0.079  # gamma
 REGULARIZER = 'none'
-REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
+REGULARIZATION_WEIGHT = 1e-5  # alpha
+
+# !!! Masked
+
+# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep93_noise0.150_muoff0.000.pt"
+
+# # Preprocessing parameters 
+# FEATURES = ['Centr', 'Nucl']
+# BIN_SIZE = 20
+# MOVING_AVERAGE = True
+# DATA_POINT_LENGTH = 2000
+# STEP_SIZE = int(0.75 * 2000)  
+# # Training parameters 
+# BATCH_SIZE = 64
+# NOISE_LEVEL = 0.15
+# PI_THRESHOLD = 0.43
+# MASKED_RECON_WEIGHT = 0.0033  # gamma - exact value
+# REGULARIZER = 'none'
+# REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 
 # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
 
@@ -105,8 +104,13 @@ USE_CACHED_DATA = True  # Set to True after first run to use cached data with co
 OUTPUT_DIR = "AE/results/final"  # Where plots and metrics will be saved
 MU_OFFSET = 1
 PROCESSED_DATA_DIR = "Data/processed_data"  # Where preprocessed data will be cached
-RECONSTRUCT = False  # Whether to reconstruct genomic coordinates from predictions and save as CSV
+RECONSTRUCT = True  # Whether to reconstruct genomic coordinates from predictions and save as CSV
 RECONSTRUCTION_BASE_DIR = "Data/reconstruction"
+
+# Control which splits to process (to avoid memory issues with large datasets)
+PROCESS_TRAIN = True # Set to False to skip train set (can cause memory issues)
+PROCESS_VAL = True   # Set to False to skip validation set
+PROCESS_TEST = True    # Always process test set
 # ================================================
 
 
@@ -140,6 +144,76 @@ def generate_cache_filename(train_chroms, test_chroms, features, bin_size, movin
     filename = f"{features_str}_bin{bin_size}_ma{moving_average}_len{data_point_length}_step{step_size}_{params_hash}.npy"
     
     return filename
+
+
+def plot_pi_vs_mu(mu, pi, raw_counts, save_dir, prefix="", model_type="ZINB"):
+    """
+    Create a plot showing the relationship between pi (zero-inflation probability) and mu (mean).
+    Distinguishes between actual zeros and non-zeros.
+    
+    Parameters:
+    -----------
+    mu : np.ndarray
+        Mean parameter from ZINB model
+    pi : np.ndarray  
+        Zero-inflation probability from ZINB model
+    raw_counts : np.ndarray
+        Original raw count data
+    save_dir : str
+        Directory to save the plot
+    prefix : str
+        Prefix for the filename
+    model_type : str
+        Model type for the title
+    """
+    if pi is None or raw_counts is None:
+        print("Cannot create pi vs mu plot: pi or raw_counts not available")
+        return
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    mu_flat = mu.flatten()
+    pi_flat = pi.flatten()
+    raw_flat = raw_counts.flatten()
+    
+    # Separate zeros from non-zeros
+    zero_mask = raw_flat == 0
+    non_zero_mask = ~zero_mask
+    
+    # Clip mu for better visualization (remove extreme outliers)
+    mu_clipped = np.clip(mu_flat, 0, np.percentile(mu_flat, 99.5))
+    
+    # Subplot 1: Hexbin plot showing overall relationship
+    axes[0].hexbin(mu_clipped, pi_flat, gridsize=50, cmap='YlOrRd', mincnt=1)
+    axes[0].set_xlabel('Mean (μ)')
+    axes[0].set_ylabel('Zero-inflation Probability (π)')
+    axes[0].set_title(f'{model_type}: π vs μ Relationship')
+    axes[0].grid(True, alpha=0.3)
+    
+    # Subplot 2: Scatter plot distinguishing zeros vs non-zeros
+    # Sample for better visualization
+    sample_size = min(10000, len(mu_flat))
+    sample_indices = np.random.choice(len(mu_flat), size=sample_size, replace=False)
+    
+    # Plot non-zeros first (so zeros are on top)
+    non_zero_sample = sample_indices[non_zero_mask[sample_indices]]
+    zero_sample = sample_indices[zero_mask[sample_indices]]
+    
+    axes[1].scatter(mu_clipped[non_zero_sample], pi_flat[non_zero_sample],
+                   alpha=0.3, s=5, c='orange', label='Observed non-zeros')
+    axes[1].scatter(mu_clipped[zero_sample], pi_flat[zero_sample],
+                   alpha=0.3, s=5, c='blue', label='Observed zeros')
+    axes[1].set_xlabel('Mean (μ)')
+    axes[1].set_ylabel('Zero-inflation Probability (π)')
+    axes[1].set_title(f'{model_type}: π vs μ by Observed Value')
+    axes[1].legend(markerscale=2)
+    axes[1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    save_path = os.path.join(save_dir, f'{prefix}_pi_vs_mu.png')
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"Saved pi vs mu plot to: {save_path}")
 
 
 def load_or_preprocess_data(input_folder, train_chroms, test_chroms, features, bin_size, moving_average, 
@@ -401,6 +475,73 @@ def process_split(split_name, split_chromosomes, model, model_config, chrom_embe
         split_name=split_name
     )
     
+    # Generate plots for test set only
+    if split_name == 'test':
+        print("\n" + "="*80)
+        print("GENERATING PLOTS FOR TEST SET")
+        print("="*80)
+        
+        # Create output directory for plots
+        plot_dir = os.path.join(OUTPUT_DIR, split_name)
+        os.makedirs(plot_dir, exist_ok=True)
+        
+        # Generate filename prefix
+        run_name = run_name_from_model_path(MODEL_PATH)
+        prefix = f"{split_name}_{run_name}"
+        
+        # Calculate metrics needed for plotting
+        actual_counts_flat = raw_counts.flatten()
+        mu_flat = mu_raw.flatten()
+        residuals = actual_counts_flat - mu_flat
+        mae = mean_absolute_error(actual_counts_flat, mu_flat)
+        r2 = r2_score(actual_counts_flat, mu_flat)
+        
+        # 1. Density plots (actual vs predicted, residuals)
+        print("\nGenerating density plots...")
+        density_plots(
+            actual_counts_flat=actual_counts_flat,
+            all_reconstructions_mu=mu_raw,
+            residuals=residuals,
+            comparison_label='Raw Counts',
+            model_type='ZINB',
+            save_dir=plot_dir,
+            prefix=prefix,
+            r2=r2,
+            mae=mae,
+            all_pi=pi
+        )
+        
+        # 2. Masked values analysis (if masks are available)
+        if masks is not None and np.any(masks):
+            print("Generating masked values analysis plot...")
+            masked_values_analysis(
+                all_reconstructions_mu=mu_raw,
+                all_pi=pi,
+                all_raw_counts=raw_counts,
+                all_masks=masks,
+                all_theta=theta,
+                model_type='ZINB',
+                save_dir=plot_dir,
+                prefix=prefix,
+                threshold=PI_THRESHOLD
+            )
+        else:
+            print("No masked values to analyze (masks not available or empty)")
+        
+        # 3. Pi vs Mu relationship plot
+        print("Generating pi vs mu relationship plot...")
+        plot_pi_vs_mu(
+            mu=mu_raw,
+            pi=pi,
+            raw_counts=raw_counts,
+            save_dir=plot_dir,
+            prefix=prefix,
+            model_type='ZINB'
+        )
+        
+        print(f"\nAll plots saved to: {plot_dir}/")
+        print("="*80 + "\n")
+    
     # Save reconstruction if enabled
     if RECONSTRUCT:
         run_name = run_name_from_model_path(MODEL_PATH)
@@ -500,33 +641,42 @@ def load_model_and_test():
     # Process each split
     all_metrics = {}
     
-    splits_to_process = [
-        ('train', train_chromosomes),
-        ('val', val_chromosomes),
-        ('test', test_chromosomes)
-    ]
+    splits_to_process = []
+    if PROCESS_TRAIN and train_chromosomes:
+        splits_to_process.append(('train', train_chromosomes))
+    if PROCESS_VAL and val_chromosomes:
+        splits_to_process.append(('val', val_chromosomes))
+    if PROCESS_TEST and test_chromosomes:
+        splits_to_process.append(('test', test_chromosomes))
+    
+    if not splits_to_process:
+        print("\nWARNING: No splits selected for processing!")
+        print("Enable PROCESS_TRAIN, PROCESS_VAL, or PROCESS_TEST in configuration.")
+        return {}
+    
+    print(f"\nProcessing {len(splits_to_process)} split(s): {[s[0] for s in splits_to_process]}")
     
     for split_name, split_chroms in splits_to_process:
-        if split_chroms:  # Only process if chromosomes are defined
-            metrics = process_split(
-                split_name, 
-                split_chroms, 
-                model, 
-                model_config, 
-                chrom_embedding,
-                seq_len
-            )
-            all_metrics[split_name] = metrics
+        metrics = process_split(
+            split_name, 
+            split_chroms, 
+            model, 
+            model_config, 
+            chrom_embedding,
+            seq_len
+        )
+        all_metrics[split_name] = metrics
     
     print("\n" + "="*80)
     print("ALL SPLITS COMPLETE")
     print("="*80)
     
-    run_name = run_name_from_model_path(MODEL_PATH)
-    reconstruction_base = os.path.join(RECONSTRUCTION_BASE_DIR, run_name)
-    print(f"\nAll reconstructions saved to: {reconstruction_base}/")
-    for split_name, split_chroms in splits_to_process:
-        if split_chroms:
+    if RECONSTRUCT and all_metrics:
+        run_name = run_name_from_model_path(MODEL_PATH)
+        reconstruction_base = os.path.join(RECONSTRUCTION_BASE_DIR, run_name)
+        print(f"\nReconstructions saved to: {reconstruction_base}/")
+        for split_name in all_metrics.keys():
+            split_chroms = dict(splits_to_process).get(split_name, [])
             print(f"  - {split_name}/ : {len(split_chroms)} chromosomes")
     
     return all_metrics
