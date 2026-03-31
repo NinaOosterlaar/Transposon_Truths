@@ -34,20 +34,20 @@ test_chroms = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
 # REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 
-MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
+MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
 
 # Preprocessing parameters
 FEATURES = ['Centr']
-BIN_SIZE = 19
+BIN_SIZE = 20
 MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = 894
+STEP_SIZE = 500
 
 # Training parameters 
-BATCH_SIZE = 128
+BATCH_SIZE = 32
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.7
-MASKED_RECON_WEIGHT = 0.00872  # gamma
+PI_THRESHOLD = 0.53
+MASKED_RECON_WEIGHT = 0.079  # gamma
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 1e-5  # alpha
 
@@ -56,7 +56,7 @@ RAW_DATA_DIR = "Data/distances_with_zeros_new"   # source data
 TEMP_DIR = "Data/temp_saturation4"                # temporary combined datasets
 OUTPUT_DIR = "AE/results/saturation_skipzeros3"             # where CSV results are saved
 
-MAX_COMBINATIONS = 1  # max combos sampled per group size
+MAX_COMBINATIONS = 10  # max combos sampled per group size
 RANDOM_SEED = 42
 
 # ====================================

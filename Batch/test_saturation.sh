@@ -2,10 +2,11 @@
 #SBATCH --job-name=saturation
 #SBATCH --partition=general,insy
 #SBATCH --account=ewi-insy-prb
-#SBATCH --time=02:30:00
+#SBATCH --time=24:00:00
 #SBATCH --ntasks=1
+#SBATCH --qos=medium
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=32G
+#SBATCH --mem-per-cpu=64G
 #SBATCH --gres=gpu:1
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=n.i.m.oosterlaar@student.tudelft.nl

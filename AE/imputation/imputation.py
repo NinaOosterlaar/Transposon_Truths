@@ -130,11 +130,15 @@ def save_plot_data(
     split_label: str,
     results_by_muoffset: Dict[str, Dict],
     strains: Optional[List[str]] = None,
+    mu_offset_folders: Optional[List[str]] = None,
 ) -> None:
     """Save the raw pi values used for plotting to CSV."""
     data_dir = os.path.join(output_dir, "plot_data")
     os.makedirs(data_dir, exist_ok=True)
     file_path = os.path.join(data_dir, f"{file_tag}_pi_values.csv")
+
+    # Use provided mu_offset_folders or fall back to results keys
+    folders_to_use = mu_offset_folders if mu_offset_folders is not None else list(results_by_muoffset.keys())
 
     total_rows = 0
     with open(file_path, "w", newline="") as csvfile:
@@ -148,7 +152,7 @@ def save_plot_data(
             "pi",
         ])
 
-        for muoff_name in MU_OFFSETS:
+        for muoff_name in folders_to_use:
             if muoff_name not in results_by_muoffset:
                 continue
 
@@ -209,11 +213,15 @@ def save_plot_data(
 def compute_mu_offset_difference_summary(
     results_by_muoffset: Dict[str, Dict],
     split_label: str,
+    mu_offset_folders: Optional[List[str]] = None,
 ) -> pd.DataFrame:
     """Summarize mean essential vs non-essential pi differences per mu_offset."""
     rows = []
 
-    for muoff_name in MU_OFFSETS:
+    # Use provided mu_offset_folders or fall back to results keys
+    folders_to_use = mu_offset_folders if mu_offset_folders is not None else list(results_by_muoffset.keys())
+
+    for muoff_name in folders_to_use:
         if muoff_name not in results_by_muoffset:
             continue
 
@@ -916,7 +924,8 @@ def create_comparison_boxplot(
 def create_split_figure_combined(
     results_by_muoffset: Dict[str, Dict],
     split: str,
-    figsize: Tuple = (16, 10)
+    figsize: Tuple = (16, 10),
+    mu_offset_folders: Optional[List[str]] = None,
 ) -> plt.Figure:
     """
     Create one figure with subplots for all mu_offsets.
@@ -926,14 +935,26 @@ def create_split_figure_combined(
         results_by_muoffset: {muoff_name: results_dict}
         split: "train", "val", or "test"
         figsize: Figure size
+        mu_offset_folders: List of mu_offset folder names to process
         
     Returns:
         Matplotlib figure
     """
-    fig, axes = plt.subplots(2, 3, figsize=figsize)
-    axes = axes.flatten()
+    # Use provided mu_offset_folders or fall back to results keys
+    folders_to_use = mu_offset_folders if mu_offset_folders is not None else list(results_by_muoffset.keys())
     
-    for idx, muoff_name in enumerate(MU_OFFSETS):
+    # Determine grid size based on number of folders
+    n_folders = len(folders_to_use)
+    if n_folders == 1:
+        fig, axes = plt.subplots(1, 1, figsize=(8, 6))
+        axes = [axes]
+    else:
+        ncols = min(3, n_folders)
+        nrows = (n_folders + ncols - 1) // ncols
+        fig, axes = plt.subplots(nrows, ncols, figsize=figsize)
+        axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+    
+    for idx, muoff_name in enumerate(folders_to_use):
         ax = axes[idx]
         
         if muoff_name not in results_by_muoffset:
@@ -965,9 +986,9 @@ def create_split_figure_combined(
             ax.set_xticks([])
             ax.set_yticks([])
     
-    # Hide last subplot if odd number
-    if len(MU_OFFSETS) < len(axes):
-        axes[len(MU_OFFSETS)].axis('off')
+    # Hide unused subplots
+    for idx in range(len(folders_to_use), len(axes)):
+        axes[idx].axis('off')
     
     fig.suptitle(f'Essential vs Non-Essential Genes - {split.upper()}', 
                  fontsize=14, fontweight='bold', y=0.995)
@@ -980,7 +1001,8 @@ def create_split_figure_per_strain(
     results_by_muoffset: Dict[str, Dict],
     strain: str,
     split: str,
-    figsize: Tuple = (16, 10)
+    figsize: Tuple = (16, 10),
+    mu_offset_folders: Optional[List[str]] = None,
 ) -> plt.Figure:
     """
     Create one figure with subplots for all mu_offsets for a specific strain.
@@ -990,14 +1012,26 @@ def create_split_figure_per_strain(
         strain: Strain name
         split: "train", "val", or "test"
         figsize: Figure size
+        mu_offset_folders: List of mu_offset folder names to process
         
     Returns:
         Matplotlib figure
     """
-    fig, axes = plt.subplots(2, 3, figsize=figsize)
-    axes = axes.flatten()
+    # Use provided mu_offset_folders or fall back to results keys
+    folders_to_use = mu_offset_folders if mu_offset_folders is not None else list(results_by_muoffset.keys())
     
-    for idx, muoff_name in enumerate(MU_OFFSETS):
+    # Determine grid size based on number of folders
+    n_folders = len(folders_to_use)
+    if n_folders == 1:
+        fig, axes = plt.subplots(1, 1, figsize=(8, 6))
+        axes = [axes]
+    else:
+        ncols = min(3, n_folders)
+        nrows = (n_folders + ncols - 1) // ncols
+        fig, axes = plt.subplots(nrows, ncols, figsize=figsize)
+        axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+    
+    for idx, muoff_name in enumerate(folders_to_use):
         ax = axes[idx]
         
         if muoff_name not in results_by_muoffset:
@@ -1038,8 +1072,9 @@ def create_split_figure_per_strain(
             ax.set_xticks([])
             ax.set_yticks([])
     
-    # Hide last subplot
-    axes[len(MU_OFFSETS)].axis('off')
+    # Hide unused subplots
+    for idx in range(len(folders_to_use), len(axes)):
+        axes[idx].axis('off')
     
     fig.suptitle(f'{strain} - Essential vs Non-Essential Genes - {split.upper()}', 
                  fontsize=14, fontweight='bold', y=0.995)
@@ -1056,6 +1091,7 @@ def run_full_analysis(
     moving_average_window_size: int = WINDOW_SIZE,
     moving_average_step_size: int = STEP_SIZE,
     position_mode: str = POSITION_MODE_AUTO,
+    mu_offset_folders: Optional[List[str]] = None,
 ) -> None:
     """
     Run complete analysis: load genes, process all splits and mu_offsets,
@@ -1073,6 +1109,8 @@ def run_full_analysis(
         position_mode:
             Position convention to use ('auto', 'index', 'center').
             In 'auto' mode, inferred from each split metadata.json.
+        mu_offset_folders: Optional list of mu_offset folder names to process.
+            If None, uses MU_OFFSETS constant. Use this to specify custom folder names.
     """
 
     if position_mode not in VALID_POSITION_MODES:
@@ -1084,6 +1122,9 @@ def run_full_analysis(
         output_dir = f"{output_dir}_original_zero_filter"
 
     os.makedirs(output_dir, exist_ok=True)
+    
+    # Use custom mu_offset folders if provided, otherwise use the default MU_OFFSETS
+    folders_to_process = mu_offset_folders if mu_offset_folders is not None else MU_OFFSETS
     
     print("Loading gene data...")
     genes_by_chr = load_gene_data(mu_offset_root_dir)
@@ -1099,7 +1140,7 @@ def run_full_analysis(
         print("Using all pi values (original zero filter disabled).")
     
     # Find all strains from first mu_offset/train
-    sample_dir = os.path.join(mu_offset_root_dir, "muoff0", "train")
+    sample_dir = os.path.join(mu_offset_root_dir, folders_to_process[0], "train")
     all_strains = sorted([d for d in os.listdir(sample_dir) 
                          if os.path.isdir(os.path.join(sample_dir, d)) and d.startswith('strain_')])
     print(f"Found strains: {all_strains}")
@@ -1121,7 +1162,7 @@ def run_full_analysis(
         # Results organized by mu_offset
         results_by_muoffset = {}
         
-        for muoff_name in MU_OFFSETS:
+        for muoff_name in folders_to_process:
             mu_offset_dir = os.path.join(mu_offset_root_dir, muoff_name)
             
             if not os.path.exists(mu_offset_dir):
@@ -1161,9 +1202,14 @@ def run_full_analysis(
             split_label=split,
             results_by_muoffset=results_by_muoffset,
             strains=all_strains,
+            mu_offset_folders=folders_to_process,
         )
 
-        diff_df = compute_mu_offset_difference_summary(results_by_muoffset, split_label=split)
+        diff_df = compute_mu_offset_difference_summary(
+            results_by_muoffset, 
+            split_label=split,
+            mu_offset_folders=folders_to_process,
+        )
         if not diff_df.empty:
             diff_data_dir = os.path.join(output_dir, "plot_data")
             os.makedirs(diff_data_dir, exist_ok=True)
@@ -1184,7 +1230,11 @@ def run_full_analysis(
         
         # Generate figures for combined analysis
         print(f"  Creating combined analysis figure...")
-        fig_combined = create_split_figure_combined(results_by_muoffset, split)
+        fig_combined = create_split_figure_combined(
+            results_by_muoffset, 
+            split, 
+            mu_offset_folders=folders_to_process,
+        )
         fig_path_combined = os.path.join(output_dir, f"{split}_combined.png")
         fig_combined.savefig(fig_path_combined, dpi=150, bbox_inches='tight')
         print(f"    Saved: {fig_path_combined}")
@@ -1193,7 +1243,12 @@ def run_full_analysis(
         # Generate figures for each strain
         print(f"  Creating per-strain analysis figures...")
         for strain in all_strains:
-            fig_strain = create_split_figure_per_strain(results_by_muoffset, strain, split)
+            fig_strain = create_split_figure_per_strain(
+                results_by_muoffset, 
+                strain, 
+                split,
+                mu_offset_folders=folders_to_process,
+            )
             fig_path_strain = os.path.join(output_dir, f"{split}_{strain}.png")
             fig_strain.savefig(fig_path_strain, dpi=150, bbox_inches='tight')
             print(f"    Saved: {fig_path_strain}")
@@ -1204,7 +1259,7 @@ def run_full_analysis(
     print(f"{'='*60}")
 
     all_sets_results = {}
-    for muoff_name in MU_OFFSETS:
+    for muoff_name in folders_to_process:
         if muoff_name not in overall_by_muoffset:
             continue
 
@@ -1227,9 +1282,14 @@ def run_full_analysis(
             file_tag="all_sets_combined",
             split_label="all_sets",
             results_by_muoffset=all_sets_results,
+            mu_offset_folders=folders_to_process,
         )
 
-        diff_df = compute_mu_offset_difference_summary(all_sets_results, split_label="all_sets")
+        diff_df = compute_mu_offset_difference_summary(
+            all_sets_results, 
+            split_label="all_sets",
+            mu_offset_folders=folders_to_process,
+        )
         if not diff_df.empty:
             diff_data_dir = os.path.join(output_dir, "plot_data")
             os.makedirs(diff_data_dir, exist_ok=True)
@@ -1248,7 +1308,11 @@ def run_full_analysis(
         else:
             print("    Skipping overall mu_offset difference plot: no data found.")
 
-        fig_all_sets = create_split_figure_combined(all_sets_results, split="all_sets")
+        fig_all_sets = create_split_figure_combined(
+            all_sets_results, 
+            split="all_sets",
+            mu_offset_folders=folders_to_process,
+        )
         fig_path_all_sets = os.path.join(output_dir, "all_sets_all_strains_combined.png")
         fig_all_sets.savefig(fig_path_all_sets, dpi=150, bbox_inches='tight')
         print(f"    Saved: {fig_path_all_sets}")
@@ -1263,7 +1327,7 @@ def run_full_analysis(
     for strain in all_strains:
         strain_all_sets_results = {}
 
-        for muoff_name in MU_OFFSETS:
+        for muoff_name in folders_to_process:
             if muoff_name not in overall_by_strain_muoffset.get(strain, {}):
                 continue
 
@@ -1292,9 +1356,13 @@ def run_full_analysis(
                 split_label="all_sets",
                 results_by_muoffset=strain_all_sets_results,
                 strains=[strain],
+                mu_offset_folders=folders_to_process,
             )
             fig_strain_all_sets = create_split_figure_per_strain(
-                strain_all_sets_results, strain, split="all_sets"
+                strain_all_sets_results, 
+                strain, 
+                split="all_sets",
+                mu_offset_folders=folders_to_process,
             )
             fig_path_strain_all_sets = os.path.join(output_dir, f"all_sets_{strain}.png")
             fig_strain_all_sets.savefig(fig_path_strain_all_sets, dpi=150, bbox_inches='tight')
@@ -1309,4 +1377,9 @@ def run_full_analysis(
 
 
 if __name__ == "__main__":
-    run_full_analysis()
+    # Run analysis on specific ZINBAE reconstruction folder
+    run_full_analysis(
+        mu_offset_root_dir="Data/reconstruction",
+        output_dir="AE/results/pi_analysis_ZINBAE_layers1600",
+        mu_offset_folders=["ZINBAE_layers1600_ep144_noise0.150_muoff0.000"],
+    )
