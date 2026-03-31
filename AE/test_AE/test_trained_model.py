@@ -109,8 +109,8 @@ RECONSTRUCTION_BASE_DIR = "Data/reconstruction"
 
 # Control which splits to process (to avoid memory issues with large datasets)
 PROCESS_TRAIN = True # Set to False to skip train set (can cause memory issues)
-PROCESS_VAL = True   # Set to False to skip validation set
-PROCESS_TEST = True    # Always process test set
+PROCESS_VAL = True  # Set to False to skip validation set
+PROCESS_TEST = False   # Always process test set
 # ================================================
 
 
@@ -148,8 +148,8 @@ def generate_cache_filename(train_chroms, test_chroms, features, bin_size, movin
 
 def plot_pi_vs_mu(mu, pi, raw_counts, save_dir, prefix="", model_type="ZINB"):
     """
-    Create a plot showing the relationship between pi (zero-inflation probability) and mu (mean).
-    Distinguishes between actual zeros and non-zeros.
+    Create a plot showing the relationship between pi (zero-inflation probability) and mu (mean)
+    for positions where the original raw count is zero.
     
     Parameters:
     -----------
@@ -170,43 +170,51 @@ def plot_pi_vs_mu(mu, pi, raw_counts, save_dir, prefix="", model_type="ZINB"):
         print("Cannot create pi vs mu plot: pi or raw_counts not available")
         return
     
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
     mu_flat = mu.flatten()
     pi_flat = pi.flatten()
     raw_flat = raw_counts.flatten()
     
-    # Separate zeros from non-zeros
+    # Filter to only keep positions where original raw count is zero
     zero_mask = raw_flat == 0
-    non_zero_mask = ~zero_mask
+    mu_zeros = mu_flat[zero_mask]
+    pi_zeros = pi_flat[zero_mask]
+    
+    n_zeros = len(mu_zeros)
+    print(f"Number of original zero positions: {n_zeros} ({100*n_zeros/len(raw_flat):.2f}% of data)")
+    
+    if n_zeros == 0:
+        print("No zero positions found, skipping pi vs mu plot")
+        return
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
     
     # Clip mu for better visualization (remove extreme outliers)
-    mu_clipped = np.clip(mu_flat, 0, np.percentile(mu_flat, 99.5))
+    mu_zeros_clipped = np.clip(mu_zeros, 0, np.percentile(mu_zeros, 99.5))
     
-    # Subplot 1: Hexbin plot showing overall relationship
-    axes[0].hexbin(mu_clipped, pi_flat, gridsize=50, cmap='YlOrRd', mincnt=1)
+    # Subplot 1: Hexbin plot showing density of relationship for zeros
+    axes[0].hexbin(mu_zeros_clipped, pi_zeros, gridsize=50, cmap='Blues', mincnt=1)
     axes[0].set_xlabel('Mean (μ)')
     axes[0].set_ylabel('Zero-inflation Probability (π)')
-    axes[0].set_title(f'{model_type}: π vs μ Relationship')
+    axes[0].set_title(f'{model_type}: π vs μ for Original Zeros\n(n={n_zeros:,} positions)')
     axes[0].grid(True, alpha=0.3)
     
-    # Subplot 2: Scatter plot distinguishing zeros vs non-zeros
-    # Sample for better visualization
-    sample_size = min(10000, len(mu_flat))
-    sample_indices = np.random.choice(len(mu_flat), size=sample_size, replace=False)
+    # Subplot 2: Scatter plot for zeros
+    # Sample for better visualization if too many points
+    sample_size = min(10000, len(mu_zeros))
+    if len(mu_zeros) > sample_size:
+        sample_indices = np.random.choice(len(mu_zeros), size=sample_size, replace=False)
+        mu_sample = mu_zeros_clipped[sample_indices]
+        pi_sample = pi_zeros[sample_indices]
+        title_suffix = f'\n(showing {sample_size:,} of {n_zeros:,} points)'
+    else:
+        mu_sample = mu_zeros_clipped
+        pi_sample = pi_zeros
+        title_suffix = f'\n(n={n_zeros:,} points)'
     
-    # Plot non-zeros first (so zeros are on top)
-    non_zero_sample = sample_indices[non_zero_mask[sample_indices]]
-    zero_sample = sample_indices[zero_mask[sample_indices]]
-    
-    axes[1].scatter(mu_clipped[non_zero_sample], pi_flat[non_zero_sample],
-                   alpha=0.3, s=5, c='orange', label='Observed non-zeros')
-    axes[1].scatter(mu_clipped[zero_sample], pi_flat[zero_sample],
-                   alpha=0.3, s=5, c='blue', label='Observed zeros')
+    axes[1].scatter(mu_sample, pi_sample, alpha=0.3, s=5, c='blue')
     axes[1].set_xlabel('Mean (μ)')
     axes[1].set_ylabel('Zero-inflation Probability (π)')
-    axes[1].set_title(f'{model_type}: π vs μ by Observed Value')
-    axes[1].legend(markerscale=2)
+    axes[1].set_title(f'{model_type}: π vs μ for Original Zeros{title_suffix}')
     axes[1].grid(True, alpha=0.3)
     
     plt.tight_layout()

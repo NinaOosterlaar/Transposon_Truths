@@ -180,7 +180,7 @@ def run_inference_and_save(model, data, metadata, model_label, split_name):
         denoise_percentage=NOISE_LEVEL,
     )
 
-    predictions, _, _, mu_raw, theta, pi = test(
+    predictions, _, _, mu_raw, theta, pi, _, _ = test(
         model=model,
         dataloader=dataloader,
         chrom=chrom,

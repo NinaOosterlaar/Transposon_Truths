@@ -206,7 +206,7 @@ def main_with_datasets(
         print(f"Dataset size: {len(eval_dataloader.dataset)}")
         print(f"{'='*50}\n")
         
-        _, _, eval_metrics = test(
+        _, _, eval_metrics, _, _, _, _, _ = test(
             model=zinbae_model,
             dataloader=eval_dataloader,
             pi_threshold=pi_threshold,

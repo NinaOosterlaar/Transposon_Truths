@@ -259,7 +259,7 @@ def _eval_split(model, data_split, use_chrom, chrom_embedding, split_label):
         denoise_percentage=NOISE_LEVEL,
     )
 
-    _, _, metrics, _, _, _ = test(
+    _, _, metrics, _, _, _, _, _ = test(
         model=model,
         dataloader=dataloader,
         chrom=use_chrom,

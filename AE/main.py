@@ -370,7 +370,7 @@ def main_with_datasets(
         print(f"Dataset size: {len(eval_dataloader.dataset)}")
         print(f"{'='*50}\n")
 
-        eval_predictions, _, split_eval_metrics, eval_mu_raw, eval_theta, eval_pi = test(
+        eval_predictions, _, split_eval_metrics, eval_mu_raw, eval_theta, eval_pi, _, _ = test(
             model=zinbae_model,
             dataloader=eval_dataloader,
             pi_threshold=pi_threshold,

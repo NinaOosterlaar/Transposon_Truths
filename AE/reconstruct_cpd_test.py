@@ -157,7 +157,7 @@ def reconstruct_test_cpd(
         
         # Run inference
         print("Running model inference...")
-        predictions, _, metrics, mu_raw, theta, pi = test(
+        predictions, _, metrics, mu_raw, theta, pi, _, _ = test(
             model=zinbae_model,
             dataloader=combined_dataloader,
             pi_threshold=pi_threshold,

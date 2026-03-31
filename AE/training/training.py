@@ -235,7 +235,7 @@ def train(model, dataloader, num_epochs=50, learning_rate=1e-3, chrom=False, chr
     print("EVALUATING ON TRAINING DATA")
     print("="*50)
     
-    _, _, train_metrics, _, _, _ = test(model, dataloader, chrom=chrom, chrom_embedding=chrom_embedding, 
+    _, _, train_metrics, _, _, _, _, _ = test(model, dataloader, chrom=chrom, chrom_embedding=chrom_embedding, 
                                 plot=plot, n_examples=5, beta=beta, name=name, 
                                 denoise_percent=denoise_percent, eval_mode="training", 
                                 gamma=gamma, pi_threshold=pi_threshold, regularizer=regularizer, alpha=alpha)
@@ -585,7 +585,7 @@ if __name__ == "__main__":
                               chrom=chrom, chrom_embedding=chrom_embedding, plot=True, name=results_subdir, denoise_percent=args.denoise_percent,
                               regularizer=args.regularizer, alpha=args.alpha, gamma=args.gamma, pi_threshold=args.pi_threshold)
         
-        zinbae_reconstructions, zinbae_latents, zinbae_metrics, _, _, _ = test(trained_zinbae, test_dataloader, 
+        zinbae_reconstructions, zinbae_latents, zinbae_metrics, _, _, _, _, _ = test(trained_zinbae, test_dataloader, 
                                                                       chrom=chrom, chrom_embedding=chrom_embedding, 
                                                                       plot=True, n_examples=5, name=results_subdir, 
                                                                       denoise_percent=args.denoise_percent,
@@ -604,7 +604,7 @@ if __name__ == "__main__":
                                chrom=chrom, chrom_embedding=chrom_embedding, plot=True, beta=args.beta, name=results_subdir, denoise_percent=args.denoise_percent,
                                regularizer=args.regularizer, alpha=args.alpha, gamma=args.gamma, pi_threshold=args.pi_threshold)
         
-        zinbvae_reconstructions, zinbvae_latents, zinbvae_metrics, _, _, _ = test(trained_zinbvae, test_dataloader, 
+        zinbvae_reconstructions, zinbvae_latents, zinbvae_metrics, _, _, _, _, _ = test(trained_zinbvae, test_dataloader, 
                                                                          chrom=chrom, chrom_embedding=chrom_embedding, 
                                                                          plot=True, n_examples=5, beta=args.beta, name=results_subdir, 
                                                                          denoise_percent=args.denoise_percent,

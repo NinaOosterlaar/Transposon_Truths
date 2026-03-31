@@ -248,7 +248,7 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
         denoise_percentage=noise_level,
     )
 
-    predictions, _, split_metrics, _, _, _ = test(
+    predictions, _, split_metrics, _, _, _, _, _ = test(
         model=model,
         dataloader=split_dataloader,
         chrom=chrom,
