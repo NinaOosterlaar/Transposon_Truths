@@ -46,21 +46,21 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 # !!! COMBINED
 
 
-MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
-# Preprocessing parameters 
-FEATURES = ['Centr']
-BIN_SIZE = 20
-MOVING_AVERAGE = True
-DATA_POINT_LENGTH = 2000
-STEP_SIZE = 500
+# MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
+# # Preprocessing parameters 
+# FEATURES = ['Centr']
+# BIN_SIZE = 20
+# MOVING_AVERAGE = True
+# DATA_POINT_LENGTH = 2000
+# STEP_SIZE = 500
 
-# Training parameters 
-BATCH_SIZE = 32
-NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.53
-MASKED_RECON_WEIGHT = 0.079  # gamma
-REGULARIZER = 'none'
-REGULARIZATION_WEIGHT = 1e-5  # alpha
+# # Training parameters 
+# BATCH_SIZE = 32
+# NOISE_LEVEL = 0.15
+# PI_THRESHOLD = 0.53
+# MASKED_RECON_WEIGHT = 0.079  # gamma
+# REGULARIZER = 'none'
+# REGULARIZATION_WEIGHT = 1e-5  # alpha
 
 # !!! Masked
 
@@ -97,20 +97,37 @@ REGULARIZATION_WEIGHT = 1e-5  # alpha
 # REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 4.22e-05 
 
+# !!! Binned
+MODEL_PATH = "AE/results/models/ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt"
+
+# Preprocessing parameters 
+FEATURES = ['Centr']
+BIN_SIZE = 17
+MOVING_AVERAGE = False
+DATA_POINT_LENGTH = 2000
+STEP_SIZE = int(0.81 * 2000)  
+# Training parameters 
+BATCH_SIZE = 128
+NOISE_LEVEL = 0.15
+PI_THRESHOLD = 0.45
+MASKED_RECON_WEIGHT = 1.37  # gamma - exact value
+REGULARIZER = 'l1'
+REGULARIZATION_WEIGHT = 0.00035
+
 # Data caching options
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
 
 # Output directory for results and plots
 OUTPUT_DIR = "AE/results/final"  # Where plots and metrics will be saved
-MU_OFFSET = 1
+MU_OFFSET = 0
 PROCESSED_DATA_DIR = "Data/processed_data"  # Where preprocessed data will be cached
 RECONSTRUCT = True  # Whether to reconstruct genomic coordinates from predictions and save as CSV
 RECONSTRUCTION_BASE_DIR = "Data/reconstruction"
 
 # Control which splits to process (to avoid memory issues with large datasets)
-PROCESS_TRAIN = True # Set to False to skip train set (can cause memory issues)
-PROCESS_VAL = True  # Set to False to skip validation set
-PROCESS_TEST = False   # Always process test set
+PROCESS_TRAIN = False # Set to False to skip train set (can cause memory issues)
+PROCESS_VAL = False # Set to False to skip validation set
+PROCESS_TEST = True   # Always process test set
 # ================================================
 
 
