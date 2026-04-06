@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import re
+import argparse
 from sliding_performance import (read_change_points, plot_metric_vs_threshold, 
                                  plot_all_metrics_comparison, plot_roc_curves)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
@@ -441,12 +442,19 @@ def evaluate_saturation_level(saturation_level, base_results_folder, window_fold
                 continue
             
             # Check if results exist for this chromosome
-            chrom_results_path = os.path.join(
+            chrom_results_path_nested = os.path.join(
                 dataset_folder, f"Chr{chrom}", f"Chr{chrom}_centromere_window", 
                 f"window{window_size}"
             )
-            
-            if not os.path.exists(chrom_results_path):
+            chrom_results_path_flat = os.path.join(
+                dataset_folder, f"Chr{chrom}", f"window{window_size}"
+            )
+
+            if os.path.exists(chrom_results_path_nested):
+                chrom_results_path = chrom_results_path_nested
+            elif os.path.exists(chrom_results_path_flat):
+                chrom_results_path = chrom_results_path_flat
+            else:
                 continue
             
             # Read chromosome data
@@ -702,23 +710,76 @@ def compare_saturation_levels(base_results_folder, window_folder, cpd_dict,
     return combined_df
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Evaluate SATAY CPD performance for reconstruction outputs."
+    )
+    parser.add_argument(
+        "--results_base",
+        default="Signal_processing/Results/reconstruction_cpd",
+        help="Base folder containing method subfolders (e.g. ZINB, Gaussian).",
+    )
+    parser.add_argument(
+        "--window_folder",
+        default="Data/reconstruction_cpd_test_all_chrom/centromere_window",
+        help="Folder containing centromere windows per saturation/dataset.",
+    )
+    parser.add_argument(
+        "--output_root",
+        default="Signal_processing/Results/reconstruction_cpd/evaluation",
+        help="Output root where per-method evaluation folders are created.",
+    )
+    parser.add_argument(
+        "--methods",
+        nargs="+",
+        default=["ZINB", "Gaussian"],
+        help="Method subfolders under --results_base to evaluate.",
+    )
+    parser.add_argument(
+        "--saturation_levels",
+        nargs="+",
+        type=int,
+        default=[0, 1, 2, 3, 4, 5, 6, 7],
+        help="Saturation levels to evaluate.",
+    )
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
     print("="*60)
     print("SATAY Change Point Detection Performance Evaluation")
     print("="*60)
-    
-    # Compare saturation levels 
-    base_results_folder = "Signal_processing/Results/test_CPD_SATAY_CPD_v3"
-    window_folder = "Data/test_CPD/centromere_windows"
-    output_folder = "Signal_processing/evaluation/saturation_comparison_v3"
-    
-    results_df = compare_saturation_levels(
-        base_results_folder, window_folder, CPD, output_folder,
-        saturation_levels=[0, 1, 2, 3, 4, 5, 6, 7]
-    )
-    
-    if results_df is not None:
+
+    args = parse_args()
+
+    os.makedirs(args.output_root, exist_ok=True)
+
+    for method in args.methods:
         print("\n" + "="*60)
-        print("Evaluation Complete!")
+        print(f"Evaluating method: {method}")
         print("="*60)
+
+        base_results_folder = os.path.join(args.results_base, method)
+        output_folder = os.path.join(args.output_root, method)
+
+        if not os.path.exists(base_results_folder):
+            print(f"Skipping {method}: results folder not found: {base_results_folder}")
+            continue
+
+        results_df = compare_saturation_levels(
+            base_results_folder,
+            args.window_folder,
+            CPD,
+            output_folder,
+            saturation_levels=args.saturation_levels,
+        )
+
+        if results_df is not None:
+            print(f"Completed {method}. Outputs: {output_folder}")
+        else:
+            print(f"No evaluation results generated for {method}")
+
+    print("\n" + "="*60)
+    print("Evaluation Complete!")
+    print("="*60)
 

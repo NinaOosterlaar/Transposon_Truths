@@ -64,21 +64,21 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 
 # !!! Masked
 
-# MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep93_noise0.150_muoff0.000.pt"
+MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep93_noise0.150_muoff0.000.pt"
 
-# # Preprocessing parameters 
-# FEATURES = ['Centr', 'Nucl']
-# BIN_SIZE = 20
-# MOVING_AVERAGE = True
-# DATA_POINT_LENGTH = 2000
-# STEP_SIZE = int(0.75 * 2000)  
-# # Training parameters 
-# BATCH_SIZE = 64
-# NOISE_LEVEL = 0.15
-# PI_THRESHOLD = 0.43
-# MASKED_RECON_WEIGHT = 0.0033  # gamma - exact value
-# REGULARIZER = 'none'
-# REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
+# Preprocessing parameters 
+FEATURES = ['Centr', 'Nucl']
+BIN_SIZE = 20
+MOVING_AVERAGE = True
+DATA_POINT_LENGTH = 2000
+STEP_SIZE = int(0.75 * 2000)  
+# Training parameters 
+BATCH_SIZE = 64
+NOISE_LEVEL = 0.15
+PI_THRESHOLD = 0.43
+MASKED_RECON_WEIGHT = 0.0033  # gamma - exact value
+REGULARIZER = 'none'
+REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 
 # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
 
@@ -98,21 +98,21 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 # REGULARIZATION_WEIGHT = 4.22e-05 
 
 # !!! Binned
-MODEL_PATH = "AE/results/models/ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt"
+# MODEL_PATH = "AE/results/models/ZINBAE_layers1168_ep116_noise0.150_muoff0.000.pt"
 
-# Preprocessing parameters 
-FEATURES = ['Centr']
-BIN_SIZE = 17
-MOVING_AVERAGE = False
-DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(0.81 * 2000)  
-# Training parameters 
-BATCH_SIZE = 128
-NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.45
-MASKED_RECON_WEIGHT = 1.37  # gamma - exact value
-REGULARIZER = 'l1'
-REGULARIZATION_WEIGHT = 0.00035
+# # Preprocessing parameters 
+# FEATURES = ['Centr']
+# BIN_SIZE = 17
+# MOVING_AVERAGE = False
+# DATA_POINT_LENGTH = 2000
+# STEP_SIZE = int(0.81 * 2000)  
+# # Training parameters 
+# BATCH_SIZE = 128
+# NOISE_LEVEL = 0.15
+# PI_THRESHOLD = 0.45
+# MASKED_RECON_WEIGHT = 1.37  # gamma - exact value
+# REGULARIZER = 'l1'
+# REGULARIZATION_WEIGHT = 0.00035
 
 # Data caching options
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
@@ -125,9 +125,9 @@ RECONSTRUCT = True  # Whether to reconstruct genomic coordinates from prediction
 RECONSTRUCTION_BASE_DIR = "Data/reconstruction"
 
 # Control which splits to process (to avoid memory issues with large datasets)
-PROCESS_TRAIN = False # Set to False to skip train set (can cause memory issues)
+PROCESS_TRAIN = True # Set to False to skip train set (can cause memory issues)
 PROCESS_VAL = False # Set to False to skip validation set
-PROCESS_TEST = True   # Always process test set
+PROCESS_TEST = False   # Always process test set
 # ================================================
 
 

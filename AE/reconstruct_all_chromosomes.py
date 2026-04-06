@@ -107,6 +107,7 @@ def reconstruct_test_cpd(
         print(f"Processing: {subdir}/{replicate}")
         print(f"{'='*60}")
         
+        
         # Preprocess this replicate's data
         # For all-chromosome models, we use all chromosomes as "train" to fit the scaler
         train_set, val_set, test_set, train_metadata, val_metadata, test_metadata, _, _, _ = preprocess_with_split(
@@ -209,7 +210,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model_path",
         type=str,
-        default=None,
+        default="AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000_all.pt",
         help="Path to trained model. If not provided, will use most recent model."
     )
     parser.add_argument(
@@ -241,12 +242,6 @@ if __name__ == "__main__":
     
     # Find model if not specified
     model_path = args.model_path
-    if model_path is None:
-        model_path = find_latest_model("AE/results/models", pattern="ZINBAE_*_all.pt")
-        if model_path is None:
-            print("Error: No model found. Please train a model first or specify --model_path")
-            sys.exit(1)
-        print(f"Using most recent model: {model_path}")
     
     # Run reconstruction with configuration matching training
     reconstruct_test_cpd(

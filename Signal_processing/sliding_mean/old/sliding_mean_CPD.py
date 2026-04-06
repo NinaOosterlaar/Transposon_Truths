@@ -2,6 +2,7 @@ import numpy as np
 import os, sys
 import matplotlib.pyplot as plt
 import argparse
+import pandas as pd
 
 
 """
@@ -80,28 +81,68 @@ def parse_arguments():
     parser.add_argument("input_file", type=str, help="Path to the input CSV file containing the count data.")
     parser.add_argument("--output_folder", type=str, default="Signal_processing/results/sliding_mean/sliding_mean_CPD", help="Output folder for results.")
     parser.add_argument("--dataset_name", type=str, default="dataset", help="Name of the dataset being processed.")
+    parser.add_argument("--window_sizes", type=int, nargs="+", default=[100],
+                        help="One or more sliding window sizes (default: 100).")
+    parser.add_argument("--overlap", type=float, default=0.5,
+                        help="Window overlap fraction in [0, 1).")
+    parser.add_argument("--threshold_start", type=float, default=0.0,
+                        help="Start of threshold range (inclusive).")
+    parser.add_argument("--threshold_end", type=float, default=20.0,
+                        help="End of threshold range (inclusive).")
+    parser.add_argument("--threshold_step", type=float, default=1.0,
+                        help="Step for threshold range.")
     return parser.parse_args()
+
+
+def read_signal_values(input_file):
+    """Read signal values from a centromere window CSV.
+
+    Prefers a `value` column; otherwise falls back to the second column.
+    """
+    df = pd.read_csv(input_file)
+    if df.empty:
+        return np.array([], dtype=float)
+
+    if "value" in df.columns:
+        values = pd.to_numeric(df["value"], errors="coerce")
+    elif len(df.columns) >= 2:
+        values = pd.to_numeric(df.iloc[:, 1], errors="coerce")
+    else:
+        raise ValueError(f"Could not find a usable signal column in {input_file}")
+
+    values = values.dropna().to_numpy(dtype=float)
+    return values
 
 
 if __name__ == "__main__":
     args = parse_arguments()
     input_file = args.input_file
-    window_size = [10, 30, 50, 80]
-    overlap = 0.5
-    thresholds = np.concatenate([
-        np.linspace(0.5, 2, 8),   # Low thresholds for high recall
-        np.linspace(2, 6, 15),     # Your current range
-        np.linspace(6, 10, 8)      # High thresholds for high precision
-    ])
+    window_size = args.window_sizes
+    overlap = args.overlap
+    thresholds = np.arange(
+        args.threshold_start,
+        args.threshold_end + (args.threshold_step * 0.5),
+        args.threshold_step,
+        dtype=float,
+    )
     output_folder = args.output_folder + f"/{args.dataset_name}"
     dataset_name = args.dataset_name
-    
-    # Read data
-    # datasets = read_csv_file_with_distances(input_file)
-    with open(input_file, "r") as f:
-        lines = f.readlines()[1:]  # Skip header
-        data = [int(line.strip().split(",")[1]) for line in lines]
+
+    if overlap < 0 or overlap >= 1:
+        raise ValueError("--overlap must be in [0, 1).")
+    if args.threshold_step <= 0:
+        raise ValueError("--threshold_step must be > 0.")
+    if len(window_size) == 0:
+        raise ValueError("--window_sizes must contain at least one value.")
+
+    data = read_signal_values(input_file)
+    if data.size == 0:
+        raise ValueError(f"No valid signal values found in {input_file}")
+
     for ws in window_size:
+        if ws <= 1:
+            raise ValueError("All window sizes must be > 1.")
+
         # Create a subfolder for each window size
         window_output_folder = os.path.join(output_folder, f"window{ws}")
         for threshold in thresholds:

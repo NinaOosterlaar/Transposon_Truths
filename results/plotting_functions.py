@@ -121,7 +121,7 @@ def plot_enrichment(
                label='No Enrichment' if not use_log2 else 'No Enrichment (log2=0)')
     
     # Formatting
-    ax.set_xlabel('μ Z-Score (Bin Center)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('μ Z-Score', fontsize=12, fontweight='bold')
     ylabel = 'Log₂(Enrichment)' if use_log2 else 'Enrichment (Fold Change)'
     ax.set_ylabel(ylabel, fontsize=12, fontweight='bold')
     ax.set_title(title, fontsize=14, fontweight='bold')
@@ -174,7 +174,7 @@ def plot_counts(
            color=COLORS['red'], edgecolor='black', linewidth=0.5)
     
     # Formatting
-    ax.set_xlabel('μ Z-Score (Bin Center)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('μ Z-Score', fontsize=12, fontweight='bold')
     ax.set_ylabel('Position Count', fontsize=12, fontweight='bold')
     ax.set_title(title, fontsize=14, fontweight='bold')
     ax.legend(loc='best', framealpha=0.9)

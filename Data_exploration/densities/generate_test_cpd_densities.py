@@ -3,8 +3,9 @@ import sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from Utils.plot_config import setup_plot_style
+from Utils.SGD_API.yeast_architecture import Centromeres, Nucleosomes
 
 setup_plot_style()
 
@@ -259,5 +260,218 @@ def main():
         raise
 
 
+def build_per_position_signal(chrom_name, chrom_csv_path, metadata_df):
+    """Convert reconstruction window-index predictions to a per-position genomic signal.
+
+    Each window value is assigned to its full [start_pos, end_pos] span, then overlapping
+    windows are averaged at each genomic position.
+    """
+    df = pd.read_csv(chrom_csv_path)
+    chrom_meta = metadata_df[metadata_df['chromosome'] == chrom_name][['window_index', 'start_pos', 'end_pos']].copy()
+    if chrom_meta.empty:
+        return None
+
+    windows = df.merge(chrom_meta, left_on='position', right_on='window_index', how='inner')
+    if windows.empty:
+        return None
+
+    windows['start_pos'] = windows['start_pos'].astype(int)
+    windows['end_pos'] = windows['end_pos'].astype(int)
+
+    max_pos = int(windows['end_pos'].max())
+    diff_sum = np.zeros(max_pos + 2, dtype=float)
+    diff_count = np.zeros(max_pos + 2, dtype=float)
+
+    starts = windows['start_pos'].to_numpy(dtype=int)
+    ends = windows['end_pos'].to_numpy(dtype=int)
+    values = windows['reconstruction'].to_numpy(dtype=float)
+
+    np.add.at(diff_sum, starts, values)
+    np.add.at(diff_sum, ends + 1, -values)
+    np.add.at(diff_count, starts, 1.0)
+    np.add.at(diff_count, ends + 1, -1.0)
+
+    sum_signal = np.cumsum(diff_sum[:-1])
+    count_signal = np.cumsum(diff_count[:-1])
+    valid_mask = count_signal > 0
+    if not valid_mask.any():
+        return None
+
+    positions = np.where(valid_mask)[0]
+    reconstruction_signal = sum_signal[valid_mask] / count_signal[valid_mask]
+
+    return pd.DataFrame({
+        'genomic_position': positions,
+        'reconstruction': reconstruction_signal,
+    })
+
+
+def compute_nucleosome_distances(chrom_name, positions, nucleosomes_obj):
+    """Vectorized nearest-nucleosome distance for many genomic positions."""
+    middles = np.array(nucleosomes_obj.get_middles(chrom_name), dtype=int)
+    if middles.size == 0:
+        return None
+    middles.sort()
+
+    positions = np.asarray(positions, dtype=int)
+    idx = np.searchsorted(middles, positions, side='left')
+
+    left_idx = np.clip(idx - 1, 0, middles.size - 1)
+    right_idx = np.clip(idx, 0, middles.size - 1)
+
+    left_dist = np.abs(positions - middles[left_idx])
+    right_dist = np.abs(middles[right_idx] - positions)
+    return np.minimum(left_dist, right_dist)
+
+
+def process_chrom_csv_centromere(chrom_name, chrom_csv_path, temp_folder, centromeres_obj, bin=10000, boolean=True):
+    """Read a reconstruction Chr.csv, compute centromere distances, and write a per-chromosome
+    centromere density CSV in the format combine_chromosome_centromere_files expects.
+
+    The 'position' column in each Chr*.csv is already a genomic bp coordinate produced by
+    OutputReconstructor.reconstruct_to_dataframe (linear interpolation of window positions).
+    No metadata mapping is needed.
+    """
+    signal_df = pd.read_csv(chrom_csv_path)
+    if signal_df.empty:
+        print(f"    Empty CSV for {chrom_name}. Skipping centromere density.")
+        return
+
+    signal_df['Centromere_Distance'] = signal_df['position'].apply(
+        lambda pos: centromeres_obj.compute_distance(chrom_name, int(pos))
+    )
+    if boolean:
+        signal_df['Value'] = signal_df['reconstruction'].apply(lambda x: 1 if x > 0 else 0)
+    else:
+        signal_df['Value'] = signal_df['reconstruction']
+
+    max_distance = signal_df['Centromere_Distance'].max()
+    min_distance = signal_df['Centromere_Distance'].min()
+    data_range = max(abs(min_distance), abs(max_distance))
+    n_bins_each_side = int(np.ceil(data_range / bin)) + 1
+    bin_centers = np.arange(-n_bins_each_side * bin, (n_bins_each_side + 1) * bin, bin)
+    bin_edges = bin_centers - bin / 2
+    bin_edges = np.append(bin_edges, bin_edges[-1] + bin)
+
+    signal_df['Distance_Bin'] = pd.cut(signal_df['Centromere_Distance'], bins=bin_edges, right=False, include_lowest=True)
+    density = signal_df.groupby('Distance_Bin')['Value'].sum().reset_index()
+    density['Bin_Center'] = density['Distance_Bin'].apply(lambda x: x.left + bin / 2)
+    density['Density_per_bp'] = density['Value'] / bin
+    density = density.sort_values('Bin_Center')
+
+    os.makedirs(temp_folder, exist_ok=True)
+    output_file = os.path.join(temp_folder, f"{chrom_name}_Boolean:{boolean}_bin:{bin}_centromere_density.csv")
+    density[['Bin_Center', 'Density_per_bp']].to_csv(output_file, index=False)
+
+
+def process_chrom_csv_nucleosome(chrom_name, chrom_csv_path, temp_folder, nucleosomes_obj, nucleosomes_normalization, boolean=True):
+    """Read a reconstruction Chr.csv, compute nucleosome distances, and write a per-chromosome
+    nucleosome density CSV in the format combine_chromosome_nucleosome_files expects.
+
+    The 'position' column in each Chr*.csv is already a genomic bp coordinate.
+    """
+    signal_df = pd.read_csv(chrom_csv_path)
+    if signal_df.empty:
+        print(f"    Empty CSV for {chrom_name}. Skipping nucleosome density.")
+        return
+
+    if boolean:
+        signal_df['Value'] = signal_df['reconstruction'].apply(lambda x: 1 if x > 0 else 0)
+    else:
+        signal_df['Value'] = signal_df['reconstruction']
+
+    nuc_distances = compute_nucleosome_distances(
+        chrom_name,
+        signal_df['position'].to_numpy(dtype=int),
+        nucleosomes_obj
+    )
+    if nuc_distances is None:
+        print(f"    No nucleosome middles for {chrom_name}. Skipping nucleosome density.")
+        return
+    signal_df['Nucleosome_Distance'] = nuc_distances.astype(int)
+
+    counts = {}
+    for _, row in signal_df.iterrows():
+        dist = int(row['Nucleosome_Distance'])
+        counts[dist] = counts.get(dist, 0) + row['Value']
+
+    norm = nucleosomes_normalization.get(chrom_name, {})
+    normalized = {}
+    for dist, val in counts.items():
+        if dist in norm:
+            normalized[dist] = val / norm[dist]
+    for dist in norm:
+        if dist not in normalized:
+            normalized[dist] = 0
+
+    os.makedirs(temp_folder, exist_ok=True)
+    output_file = os.path.join(temp_folder, f"{chrom_name}_Boolean:_{boolean}_nucleosome_density.csv")
+    with open(output_file, "w") as f:
+        f.write("distance,density\n")
+        for dist, dens in normalized.items():
+            f.write(f"{dist},{dens}\n")
+
+
+def main_reconstruction():
+    base_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "..", "Data", "reconstruction_cpd_test_all_chrom")
+    )
+    temp_path = os.path.join(base_path, "_temp_densities")
+
+    print("Loading nucleosome normalization data...")
+    nucleosomes_obj = Nucleosomes()
+    centromeres_obj = Centromeres()
+    nucleosomes_normalization = {}
+    all_chroms = [f"Chr{r}" for r in ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI"]]
+    for chrom in all_chroms:
+        nucleosomes_normalization[chrom] = nucleosomes_obj.compute_exposure(chrom)
+
+    for folder_num in range(8):
+        folder_path = os.path.join(base_path, str(folder_num))
+        if not os.path.exists(folder_path):
+            continue
+        for strain_name in os.listdir(folder_path):
+            strain_path = os.path.join(folder_path, strain_name)
+            if not os.path.isdir(strain_path):
+                continue
+
+            # Chromosome CSVs live one level deeper: strain_path/strain_name/ChrX.csv
+            chrom_dir = os.path.join(strain_path, strain_name)
+            if not os.path.isdir(chrom_dir):
+                continue
+
+            temp_dataset_folder = os.path.join(temp_path, str(folder_num), strain_name)
+            output_folder = strain_path  # next to metadata.json
+
+            print(f"\nProcessing {folder_num}/{strain_name}...")
+            for csv_file in os.listdir(chrom_dir):
+                if not csv_file.endswith(".csv"):
+                    continue
+                chrom_name = csv_file.replace(".csv", "")
+                chrom_csv_path = os.path.join(chrom_dir, csv_file)
+
+                process_chrom_csv_centromere(
+                    chrom_name, chrom_csv_path, temp_dataset_folder, centromeres_obj
+                )
+                process_chrom_csv_nucleosome(
+                    chrom_name, chrom_csv_path, temp_dataset_folder,
+                    nucleosomes_obj, nucleosomes_normalization
+                )
+
+            print(f"  - Combining centromere densities...")
+            centromere_df = combine_chromosome_centromere_files(temp_dataset_folder, output_folder, bin=10000)
+            if centromere_df is not None:
+                create_centromere_plot(output_folder, centromere_df, bin=10000)
+                print(f"    Saved to {output_folder}")
+
+            print(f"  - Combining nucleosome densities...")
+            nucleosome_df = combine_chromosome_nucleosome_files(temp_dataset_folder, output_folder)
+            if nucleosome_df is not None:
+                create_nucleosome_plot(output_folder, nucleosome_df)
+                print(f"    Saved to {output_folder}")
+
+    print("\nDone. Combined files saved next to each metadata.json.")
+
+
 if __name__ == "__main__":
-    main()
+    main_reconstruction()

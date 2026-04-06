@@ -1380,6 +1380,6 @@ if __name__ == "__main__":
     # Run analysis on specific ZINBAE reconstruction folder
     run_full_analysis(
         mu_offset_root_dir="Data/reconstruction",
-        output_dir="AE/results/pi_analysis_ZINBAE_layers1600",
-        mu_offset_folders=["ZINBAE_layers1600_ep144_noise0.150_muoff0.000"],
+        output_dir="AE/results/pi_analysis_ZINBAE_layers752",
+        mu_offset_folders=["ZINBAE_layers752_ep93_noise0.150_muoff0.000"],
     )
