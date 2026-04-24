@@ -1,7 +1,9 @@
 strain,processed_files,skipped_files,saved_files,chromosomes_processed,thresholds_processed
-strain_yWT03a,160,0,160,16,10
-strain_yTW001,160,0,160,16,10
-strain_yEK19,160,0,160,16,10
-strain_yEK23,160,0,160,16,10
-strain_yWT04a,160,0,160,16,10
-strain_ylic137,160,0,160,16,10
+strain_dnrp,16,0,16,16,1
+strain_yTW001,16,0,16,16,1
+strain_yEK19,16,0,16,16,1
+strain_FD,16,0,16,16,1
+strain_yEK23,16,0,16,16,1
+strain_yWT04a,16,0,16,16,1
+strain_yWT03a,16,0,16,16,1
+strain_ylic137,16,0,16,16,1

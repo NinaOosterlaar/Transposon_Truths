@@ -1,12 +1,3 @@
-"""
-Visualization Functions for Essentiality Enrichment Analysis
-
-Creates publication-quality plots:
-1. Stacked bar plot of within-bin percentages
-2. Enrichment line plot (with optional log2 scale)
-3. Count distribution bar plot
-"""
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd

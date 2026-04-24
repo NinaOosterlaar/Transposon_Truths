@@ -1,13 +1,3 @@
-"""
-Compare mu z-scores between essential and non-essential genes.
-
-This script:
-1. Loads gene information (essential vs non-essential)
-2. Loads segment_mu data from change point detection results
-3. Maps segments to genes using position-weighted averaging
-4. Creates box plots comparing essential vs non-essential genes
-"""
-
 import sys
 import os
 import json
@@ -140,13 +130,14 @@ class EssentialityAnalysis:
         df.to_csv(output_file, index=False)
         print(f"  Saved results: {output_file}")
     
-    def process_strain_threshold(self, strain, threshold):
+    def process_strain_threshold(self, strain, threshold, mu_z=0.25):
         """
         Process all chromosomes for a given strain and threshold.
         
         Parameters:
         strain (str): Strain name (e.g., 'strain_dnrp')
         threshold (str): Threshold value (e.g., '2.00')
+        mu_z (float): Mu Z-score threshold for merged segments (e.g., 0.25)
         """
         print(f"\nProcessing {strain} with threshold {threshold}...")
         
@@ -161,14 +152,14 @@ class EssentialityAnalysis:
                 continue
             
             chrom_name = chrom_dir.name
-            segment_mu_path = chrom_dir / f"{chrom_name}_distances" / "window100" / "segment_mu"
+            merged_segments_path = chrom_dir / f"{chrom_name}_distances" / "window100" / "merged_segments"
             
-            if not segment_mu_path.exists():
+            if not merged_segments_path.exists():
                 continue
             
             # Find the CSV file for this threshold
-            csv_pattern = f"{chrom_name}_distances_ws100_ov50_th{threshold}_segment_mu.csv"
-            csv_file = segment_mu_path / csv_pattern
+            csv_pattern = f"{chrom_name}_th{threshold}_merged_segments_muZ{mu_z}.csv"
+            csv_file = merged_segments_path / csv_pattern
             
             if not csv_file.exists():
                 continue
@@ -197,7 +188,7 @@ class EssentialityAnalysis:
         # Generate and save individual plot immediately
         self.create_individual_plot(strain, threshold)
     
-    def collect_all_data(self):
+    def collect_all_data(self, mu_z=0.25):
         """Process all strains and thresholds, generating plots as we go."""
         # Define thresholds to analyze
         thresholds = ['0.50', '1.00', '1.50', '2.00', '2.50', '3.00', '3.50', '4.00', '4.50', '5.00']
@@ -214,7 +205,7 @@ class EssentialityAnalysis:
             print(f"{'='*60}")
             
             for strain in strains:
-                self.process_strain_threshold(strain, threshold)
+                self.process_strain_threshold(strain, threshold, mu_z)
             
             # After all strains for this threshold, create combined plot
             self.create_combined_plot(threshold)

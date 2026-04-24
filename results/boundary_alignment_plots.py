@@ -1,12 +1,3 @@
-"""
-Visualization functions for change point to boundary alignment analysis.
-
-This module creates:
-1. Distance vs Threshold plots (mean/median distances to boundaries)
-2. Genes with Nearby Change Points plots (essential vs non-essential)
-3. Change Points with Nearby Boundaries plots (by boundary type)
-"""
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -147,12 +138,13 @@ def plot_distance_vs_threshold(
                 linestyle=linestyle
             )
     
-    ax.set_xlabel('Threshold', fontsize=12)
-    ax.set_ylabel(f'{metric.capitalize()} Distance to Nearest Boundary (bp)', fontsize=12)
+    ax.set_xlabel('Threshold', fontsize=16)
+    ax.set_ylabel(f'{metric.capitalize()} Distance to Nearest Boundary (bp)', fontsize=16)
     ax.set_title(f'{metric.capitalize()} Distance: Change Points to Gene Boundaries', 
-                fontsize=14, fontweight='bold')
+                fontsize=22, fontweight='bold')
+    ax.tick_params(axis='both', labelsize=16)
     
-    ax.legend(frameon=True, loc='best', fontsize=10, ncol=2)
+    ax.legend(frameon=True, loc='best', ncol=2, fontsize=16)
     ax.grid(True, alpha=0.3)
     
     plt.tight_layout()
@@ -230,12 +222,13 @@ def plot_boundary_to_cp_distance(
                 linestyle=boundary_linestyles[boundary_cat]
             )
     
-    ax.set_xlabel('Threshold', fontsize=12)
-    ax.set_ylabel(f'{metric.capitalize()} Distance to Nearest Change Point (bp)', fontsize=12)
+    ax.set_xlabel('Threshold', fontsize=16)
+    ax.set_ylabel(f'{metric.capitalize()} Distance to Nearest Change Point (bp)', fontsize=16)
     ax.set_title(f'{metric.capitalize()} Distance: Gene Boundaries to Change Points', 
-                fontsize=14, fontweight='bold')
+                fontsize=22, fontweight='bold')
+    ax.tick_params(axis='both', labelsize=16)
     
-    ax.legend(frameon=True, loc='best', fontsize=10, ncol=2)
+    ax.legend(frameon=True, loc='best', ncol=2, fontsize=16)
     ax.grid(True, alpha=0.3)
     
     plt.tight_layout()
@@ -286,13 +279,14 @@ def plot_genes_with_nearby_changepoints(
                 linestyle=linestyle
             )
 
-    ax.set_xlabel('Threshold', fontsize=12)
-    ax.set_ylabel('Percentage of Genes (%)', fontsize=12)
+    ax.set_xlabel('Threshold', fontsize=16)
+    ax.set_ylabel('Percentage of Genes (%)', fontsize=16)
     ax.set_title(
         'Genes with Change Point Within ±100 bp',
-        fontsize=14,
+        fontsize=22,
         fontweight='bold'
     )
+    ax.tick_params(axis='both', labelsize=16)
 
     ax.grid(True, alpha=0.3)
     ax.set_ylim(bottom=0)
@@ -307,8 +301,8 @@ def plot_genes_with_nearby_changepoints(
         title="Strain",
         loc='lower left',
         frameon=True,
-        fontsize=10,
-        title_fontsize=11
+        fontsize=16,
+        title_fontsize=16
     )
     ax.add_artist(legend1)
 
@@ -322,8 +316,8 @@ def plot_genes_with_nearby_changepoints(
         title="Gene class",
         loc='lower right',
         frameon=True,
-        fontsize=10,
-        title_fontsize=11
+        fontsize=16,
+        title_fontsize=16
     )
 
     plt.tight_layout()
@@ -398,12 +392,13 @@ def plot_changepoints_with_nearby_boundaries(
                 linestyle=linestyle
             )
     
-    ax.set_xlabel('Threshold', fontsize=12)
-    ax.set_ylabel('Percentage of Change Points (%)', fontsize=12)
+    ax.set_xlabel('Threshold', fontsize=16)
+    ax.set_ylabel('Percentage of Change Points (%)', fontsize=16)
     ax.set_title('Change Points with Boundary Within ±100 bp', 
-                fontsize=14, fontweight='bold')
+                fontsize=22, fontweight='bold')
+    ax.tick_params(axis='both', labelsize=16)
     
-    ax.legend(frameon=True, loc='best', fontsize=10, ncol=2)
+    ax.legend(frameon=True, loc='best', ncol=2, fontsize=16)
     ax.grid(True, alpha=0.3)
     ax.set_ylim(bottom=0)
     

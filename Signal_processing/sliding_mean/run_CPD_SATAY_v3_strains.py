@@ -184,8 +184,6 @@ def process_strain(
     for chrom_file in chromosome_files:
         # Extract chromosome name (e.g., "ChrI" from "ChrI_distances.csv")
         chrom_name = chrom_file.stem.replace("_distances", "")
-        if chrom_name != "ChrX":
-            continue
         
         # Output folder: Signal_processing/strains/{strain_name}/{chromosome}/
         output_folder = output_base / strain_name / chrom_name
@@ -260,13 +258,13 @@ def main():
     parser.add_argument(
         "--threshold_start",
         type=float,
-        default=0.5,
+        default=5.0,
         help="Minimum threshold. Default: 3.0",
     )
     parser.add_argument(
         "--threshold_end",
         type=float,
-        default=5.0,
+        default=10.0,
         help="Maximum threshold. Default: 15.0",
     )
     parser.add_argument(
@@ -278,7 +276,7 @@ def main():
     parser.add_argument(
         "--n_strain_workers",
         type=int,
-        default=1,
+        default=8,
         help="Number of strains to process in parallel. Default: 1 (sequential)",
     )
     args = parser.parse_args()

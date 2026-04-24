@@ -1,14 +1,3 @@
-"""
-Position-Level Binning and Enrichment Analysis
-
-This module performs position-level analysis by:
-1. Loading segment data with mu_z_scores
-2. Expanding segments to individual positions
-3. Classifying each position (essential/non-essential/outside)
-4. Binning positions by mu_z_score
-5. Computing counts, percentages, and enrichment values
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -43,17 +32,19 @@ class PositionLevelAnalyzer:
         base_path: Path,
         strain: str,
         threshold: float = 3.0,
+        mu_z: float = 0.25,
         chromosomes: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
-        Load segment_mu data for a specific strain and threshold.
+        Load merged_segments data for a specific strain and threshold.
         
-        Path structure: Signal_processing/strains/strain_{strain}/{chrom}/{chrom}_distances/window100/segment_mu/{chrom}_distances_ws100_ov50_th{threshold:.2f}_segment_mu.csv
+        Path structure: Signal_processing/strains/strain_{strain}/{chrom}/{chrom}_distances/window100/merged_segments/{chrom}_th{threshold:.2f}_merged_segments_muZ{mu_z}.csv
         
         Args:
             base_path: Base path to Signal_processing/strains/
             strain: Strain name (e.g., 'FD', 'yEK19', 'yEK23')
             threshold: Threshold value to filter (e.g., 3.0)
+            mu_z: Mu Z-score threshold for merged segments (e.g., 0.25)
             chromosomes: List of chromosomes to include (default: all ChrI-ChrXVI)
         
         Returns:
@@ -68,9 +59,9 @@ class PositionLevelAnalyzer:
         strain_path = base_path / f"strain_{strain}"
         
         for chrom in chromosomes:
-            # Build the full path to segment_mu file
+            # Build the full path to merged_segments file
             segment_file = (strain_path / chrom / f"{chrom}_distances" / "window100" / 
-                          "segment_mu" / f"{chrom}_distances_ws100_ov50_th{threshold:.2f}_segment_mu.csv")
+                          "merged_segments" / f"{chrom}_th{threshold:.2f}_merged_segments_muZ{mu_z}.csv")
             
             if not segment_file.exists():
                 logger.warning(f"File not found: {segment_file}")
@@ -247,6 +238,7 @@ class PositionLevelAnalyzer:
         base_path: Path,
         strain: str,
         threshold: float = 3.0,
+        mu_z: float = 0.25,
         bin_edges: Optional[np.ndarray] = None,
         n_bins: int = 10
     ) -> pd.DataFrame:
@@ -257,6 +249,7 @@ class PositionLevelAnalyzer:
             base_path: Base path to Signal_processing/strains/
             strain: Strain name
             threshold: Score threshold
+            mu_z: Mu Z-score threshold for merged segments
             bin_edges: Custom bin edges
             n_bins: Number of bins
         
@@ -268,7 +261,7 @@ class PositionLevelAnalyzer:
         logger.info(f"{'='*60}")
         
         # Load segment data
-        segments_df = self.load_segment_data(base_path, strain, threshold)
+        segments_df = self.load_segment_data(base_path, strain, threshold, mu_z)
         
         # Perform binning and aggregation
         summary_df = self.bin_and_aggregate(segments_df, bin_edges, n_bins)

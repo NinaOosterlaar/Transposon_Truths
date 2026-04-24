@@ -170,3 +170,7 @@ Data_exploration/results/
 /results/genes_overview_plots
 /results/boundary_alignment
 /results/essentiality_enrichment
+/Signal_processing/Results2
+/results
+*.png
+*.pdf

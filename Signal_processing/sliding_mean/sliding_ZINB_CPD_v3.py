@@ -47,13 +47,32 @@ def interpolate_density(distance, lookup_df, distance_col, density_col='NonZero_
     # Use numpy's interp for linear interpolation
     return np.interp(distance, distances, densities)
 
+
+def extract_change_points_from_scores(scores, window_size, overlap, threshold):
+    """Derive change points for a given threshold from precomputed scores."""
+    step_size = max(1, int(window_size * (1 - overlap)))
+    change_points = []
+    last_cp, last_score = -np.inf, 0.0
+
+    for idx, score in enumerate(scores):
+        if score > threshold:
+            cp = idx * step_size + window_size
+            if (cp - last_cp) >= window_size:
+                change_points.append(cp)
+                last_cp, last_score = cp, score
+            elif score > last_score:
+                change_points[-1] = cp
+                last_cp, last_score = cp, score
+
+    return change_points
+
 def sliding_ZINB_CPD_v3(
     data,
     nucleosome_distances,
     centromere_distances,
     window_size,
     overlap,
-    threshold,
+    threshold=None,
     eps=1e-10,
     theta_global=None,
     tol=1e-6,
@@ -79,8 +98,7 @@ def sliding_ZINB_CPD_v3(
 
     print(theta_global)
 
-    change_points, scores = [], []
-    last_cp, last_score = -np.inf, 0.0
+    scores = []
 
     for start in range(0, n - 2 * window_size + 1, step_size):
         w1 = data[start : start + window_size]
@@ -137,14 +155,10 @@ def sliding_ZINB_CPD_v3(
         score = 2.0 * (ll_alt - ll0)
         scores.append(score)
 
-        if score > threshold:
-            cp = start + window_size
-            if (cp - last_cp) >= window_size:
-                change_points.append(cp)
-                last_cp, last_score = cp, score
-            elif score > last_score:
-                change_points[-1] = cp
-                last_cp, last_score = cp, score
+    if threshold is None:
+        return [], scores
+
+    change_points = extract_change_points_from_scores(scores, window_size, overlap, threshold)
 
     return change_points, scores
     
@@ -173,9 +187,23 @@ def save_results(output_folder, dataset_name, change_points, scores, theta_globa
 def process_window_size(ws, data, nucleosome_distances, centromere_distances, overlap, thresholds, theta_global, output_folder, dataset_name, nucleosome_file, centromere_file):
     """Process all thresholds for a given window size."""
     window_output_folder = os.path.join(output_folder, f"window{ws}")
+
+    print(f"Processing window size: {ws} (single sliding pass for all thresholds)")
+    _, scores = sliding_ZINB_CPD_v3(
+        data,
+        nucleosome_distances,
+        centromere_distances,
+        ws,
+        overlap,
+        threshold=None,
+        theta_global=theta_global,
+        nucleosome_file=nucleosome_file,
+        centromere_file=centromere_file,
+    )
+
     for threshold in thresholds:
-        print(f"Processing window size: {ws}, threshold: {threshold:.2f}")
-        change_points, scores = sliding_ZINB_CPD_v3(data, nucleosome_distances, centromere_distances, ws, overlap, threshold, theta_global=theta_global, nucleosome_file=nucleosome_file, centromere_file=centromere_file)
+        print(f"Applying threshold {threshold:.2f} on precomputed scores (ws={ws})")
+        change_points = extract_change_points_from_scores(scores, ws, overlap, threshold)
         save_results(window_output_folder, dataset_name, change_points, scores, theta_global, ws, overlap, threshold)
     return ws
 
@@ -191,18 +219,18 @@ def parse_arguments():
 
 if __name__ == "__main__":
     # Configuration
-    base_data_folder = "Signal_processing/final/SATAY_synthetic"
+    base_data_folder = "Data/SATAY_synthetic"
     base_output_folder = "Signal_processing/results/version4"
     
     window_size = [100]
     overlap = 0.5
-    thresholds = np.linspace(0, 15, 16)  # 16 thresholds from 0 to 15
+    thresholds = np.linspace(0, 15, 31)  # 16 thresholds from 0 to 15
     
     print(f"Thresholds: {thresholds}")
     print(f"Processing datasets 1-10 from {base_data_folder}")
     
     # Process each dataset (1-10)
-    for dataset_num in range(1,2):
+    for dataset_num in range(1,11):
         print(f"\n{'='*60}")
         print(f"Processing dataset {dataset_num}")
         print(f"{'='*60}")

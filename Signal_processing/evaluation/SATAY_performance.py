@@ -38,6 +38,40 @@ CPD = {
     "XVI": [-580, -170, -70, 80,],
 }
 
+saturation = [3.2, 6.6, 13.1, 20.5, 28.8, 34.4, 39.2, 43.1]
+
+
+def infer_combined_strain_folder(run_name, data_root):
+    """Map a run folder such as yEK23_1 to Data/combined_strains/strain_yEK23."""
+    candidates = [run_name, re.sub(r'_\d+$', '', run_name)]
+
+    for candidate in candidates:
+        strain_folder = os.path.join(data_root, f"strain_{candidate}")
+        if os.path.exists(strain_folder):
+            return strain_folder
+
+    raise FileNotFoundError(
+        f"Could not resolve a strain folder for run '{run_name}' under {data_root}"
+    )
+
+
+def get_satay_test_window_path(run_folder, chrom, window_size):
+    """Return the nested window folder for SATAY test results if present."""
+    nested_path = os.path.join(
+        run_folder,
+        f"Chr{chrom}",
+        f"Chr{chrom}_centromere_window",
+        f"window{window_size}",
+    )
+    if os.path.exists(nested_path):
+        return nested_path
+
+    flat_path = os.path.join(run_folder, f"Chr{chrom}", f"window{window_size}")
+    if os.path.exists(flat_path):
+        return flat_path
+
+    return None
+
 
 
 def get_available_chromosomes(input_folder, data_folder, cpd_dict):
@@ -167,29 +201,50 @@ def evaluate_chromosome(chrom, input_folder, data_folder, cpd_dict):
             # Convert to centromere coordinates
             detected_cps = list(np.array(detected_positions) - 1000)  # Assuming positions are sorted and start from the first position in the data
             
+            # Handle case with no detected change points: precision is undefined, recall is 0
+            if len(detected_cps) == 0:
+                for tol_name, tol_value in tolerances.items():
+                    results.append({
+                        'chromosome': chrom,
+                        'window_size': window_size,
+                        'threshold': threshold,
+                        'tolerance_type': tol_name,
+                        'tolerance_value': tol_value,
+                        'precision': np.nan,  # undefined when no predictions
+                        'recall': 0.0,         # 0 out of N true points found
+                        # 'F1': np.nan,
+                        'num_detected': 0,
+                        'num_true': len(true_cps),
+                        # 'annotation_error': np.nan,
+                        # 'hausdorff_distance': np.nan,
+                        # 'rand_index': np.nan,
+                        # 'adjusted_rand_index': np.nan,
+                        # 'mae_localization': np.nan,
+                    })
+                continue
+            
             # Store for ROC curves
             if window_size not in window_threshold_cps:
                 window_threshold_cps[window_size] = []
             window_threshold_cps[window_size].append((threshold, detected_cps))
             
-            # Calculate tolerance-independent metrics
-            ann_error = annotation_error(detected_cps, true_cps)
-            hausdorff = hausdorff_distance(true_cps, detected_cps)
-            rand_idx = rand_index(true_cps, detected_cps, n_points)
-            adj_rand_idx = adjusted_rand_index(true_cps, detected_cps, n_points)
-            
-            # Calculate MAE localization error
-            matches, _, _ = match_cps_one_to_one(true_cps, detected_cps, window_size)
-            if matches:
-                mae_loc = np.mean([abs(pred - true) for pred, true in matches])
-            else:
-                mae_loc = np.inf
+            # Commented out: non-PR metrics.
+            # ann_error = annotation_error(detected_cps, true_cps)
+            # hausdorff = hausdorff_distance(true_cps, detected_cps)
+            # rand_idx = rand_index(true_cps, detected_cps, n_points)
+            # adj_rand_idx = adjusted_rand_index(true_cps, detected_cps, n_points)
+            #
+            # matches, _, _ = match_cps_one_to_one(true_cps, detected_cps, window_size)
+            # if matches:
+            #     mae_loc = np.mean([abs(pred - true) for pred, true in matches])
+            # else:
+            #     mae_loc = np.inf
             
             # Calculate metrics for each tolerance
             for tol_name, tol_value in tolerances.items():
                 prec = precision(detected_cps, true_cps, tol_value)
                 rec = recall(detected_cps, true_cps, tol_value)
-                f1 = F1_score(prec, rec)
+                # f1 = F1_score(prec, rec)
                 
                 results.append({
                     'chromosome': chrom,
@@ -199,14 +254,14 @@ def evaluate_chromosome(chrom, input_folder, data_folder, cpd_dict):
                     'tolerance_value': tol_value,
                     'precision': prec,
                     'recall': rec,
-                    'F1': f1,
+                    # 'F1': f1,
                     'num_detected': len(detected_cps),
                     'num_true': len(true_cps),
-                    'annotation_error': ann_error,
-                    'hausdorff_distance': hausdorff,
-                    'rand_index': rand_idx,
-                    'adjusted_rand_index': adj_rand_idx,
-                    'mae_localization': mae_loc,
+                    # 'annotation_error': ann_error,
+                    # 'hausdorff_distance': hausdorff,
+                    # 'rand_index': rand_idx,
+                    # 'adjusted_rand_index': adj_rand_idx,
+                    # 'mae_localization': mae_loc,
                 })
     
     return results, window_threshold_cps
@@ -265,19 +320,18 @@ def evaluate_all_chromosomes(input_folder, data_folder, output_folder, cpd_dict)
     output_plots_folder = os.path.join(output_folder, "performance_plots")
     os.makedirs(output_plots_folder, exist_ok=True)
     
-    # Tolerance-independent metric plots (combined across all chromosomes)
-    plot_all_metrics_comparison(combined_df, output_plots_folder, "All_Chromosomes")
-    
-    plot_metric_vs_threshold(combined_df, 'annotation_error', output_plots_folder, "All_Chromosomes",
-                            metric_label='Annotation Error (|#predicted - #true|)', use_log_scale=False)
-    plot_metric_vs_threshold(combined_df, 'hausdorff_distance', output_plots_folder, "All_Chromosomes",
-                            metric_label='Hausdorff Distance', use_log_scale=True, exclude_inf=True)
-    plot_metric_vs_threshold(combined_df, 'mae_localization', output_plots_folder, "All_Chromosomes",
-                            metric_label='MAE Localization Error', use_log_scale=True, exclude_inf=True)
-    plot_metric_vs_threshold(combined_df, 'rand_index', output_plots_folder, "All_Chromosomes",
-                            metric_label='Rand Index', use_log_scale=False)
-    plot_metric_vs_threshold(combined_df, 'adjusted_rand_index', output_plots_folder, "All_Chromosomes",
-                            metric_label='Adjusted Rand Index', use_log_scale=False)
+    # Commented out: non-PR metric plots.
+    # plot_all_metrics_comparison(combined_df, output_plots_folder, "All_Chromosomes")
+    # plot_metric_vs_threshold(combined_df, 'annotation_error', output_plots_folder, "All_Chromosomes",
+    #                         metric_label='Annotation Error (|#predicted - #true|)', use_log_scale=False)
+    # plot_metric_vs_threshold(combined_df, 'hausdorff_distance', output_plots_folder, "All_Chromosomes",
+    #                         metric_label='Hausdorff Distance', use_log_scale=True, exclude_inf=True)
+    # plot_metric_vs_threshold(combined_df, 'mae_localization', output_plots_folder, "All_Chromosomes",
+    #                         metric_label='MAE Localization Error', use_log_scale=True, exclude_inf=True)
+    # plot_metric_vs_threshold(combined_df, 'rand_index', output_plots_folder, "All_Chromosomes",
+    #                         metric_label='Rand Index', use_log_scale=False)
+    # plot_metric_vs_threshold(combined_df, 'adjusted_rand_index', output_plots_folder, "All_Chromosomes",
+    #                         metric_label='Adjusted Rand Index', use_log_scale=False)
     
     # Precision-Recall and ROC curves for each tolerance
     for tol_name in ["full_window", "half_window", "quarter_window"]:
@@ -326,69 +380,63 @@ def evaluate_all_chromosomes(input_folder, data_folder, output_folder, cpd_dict)
             figsize=(10, 8)
         )
     
-    # ROC curves
-    print("\nCreating ROC curves...")
-    for tol_name in ["full_window", "half_window", "quarter_window"]:
-        roc_curves_data = []
-        
-        # Get tolerance value
-        tol_value = None
-        for _, row in combined_df[combined_df['tolerance_type'] == tol_name].iloc[:1].iterrows():
-            tol_value = int(row['tolerance_value'])
-            break
-        
-        if tol_value is None:
-            continue
-        
-        for window_size in window_sizes:
-            # Combine detected CPs and true CPs from all chromosomes
-            combined_threshold_cps_list = []
-            combined_true_cps = []
-            total_n_points = 0
-            
-            for chrom in available_chroms:
-                if window_size in all_window_threshold_cps[chrom]:
-                    threshold_cps_list = all_window_threshold_cps[chrom][window_size]
-                    
-                    # Get true CPs and n_points for this chromosome
-                    data_file = os.path.join(data_folder, f"Chr{chrom}_centromere_window.csv")
-                    chrom_data = read_chromosome_data(data_file)
-                    n_points = len(chrom_data)
-                    true_cps = cpd_dict[chrom]
-                    
-                    # Store for aggregation
-                    if not combined_threshold_cps_list:
-                        # Initialize with thresholds from first chromosome
-                        combined_threshold_cps_list = [(th, []) for th, _ in threshold_cps_list]
-                    
-                    # Aggregate detected CPs for each threshold
-                    for i, (th, detected_cps) in enumerate(threshold_cps_list):
-                        combined_threshold_cps_list[i] = (th, combined_threshold_cps_list[i][1] + detected_cps)
-                    
-                    combined_true_cps.extend(true_cps)
-                    total_n_points += n_points
-            
-            if combined_threshold_cps_list and total_n_points > 0:
-                fpr, tpr, thresholds = roc_curve_from_cps_by_threshold(
-                    combined_threshold_cps_list, combined_true_cps, total_n_points, tol_value
-                )
-                
-                if len(fpr) > 0:
-                    roc_curves_data.append({
-                        'fprs': fpr,
-                        'tprs': tpr,
-                        'label': f'Window {window_size}',
-                        'marker': 'o',
-                        'markersize': 4,
-                        'linewidth': 2
-                    })
-        
-        plot_roc_curves(
-            roc_curves_data,
-            output_plots_folder,
-            tol_name,
-            "All_Chromosomes"
-        )
+    # Commented out: ROC curve generation.
+    # print("\nCreating ROC curves...")
+    # for tol_name in ["full_window", "half_window", "quarter_window"]:
+    #     roc_curves_data = []
+    #
+    #     tol_value = None
+    #     for _, row in combined_df[combined_df['tolerance_type'] == tol_name].iloc[:1].iterrows():
+    #         tol_value = int(row['tolerance_value'])
+    #         break
+    #
+    #     if tol_value is None:
+    #         continue
+    #
+    #     for window_size in window_sizes:
+    #         combined_threshold_cps_list = []
+    #         combined_true_cps = []
+    #         total_n_points = 0
+    #
+    #         for chrom in available_chroms:
+    #             if window_size in all_window_threshold_cps[chrom]:
+    #                 threshold_cps_list = all_window_threshold_cps[chrom][window_size]
+    #
+    #                 data_file = os.path.join(data_folder, f"Chr{chrom}_centromere_window.csv")
+    #                 chrom_data = read_chromosome_data(data_file)
+    #                 n_points = len(chrom_data)
+    #                 true_cps = cpd_dict[chrom]
+    #
+    #                 if not combined_threshold_cps_list:
+    #                     combined_threshold_cps_list = [(th, []) for th, _ in threshold_cps_list]
+    #
+    #                 for i, (th, detected_cps) in enumerate(threshold_cps_list):
+    #                     combined_threshold_cps_list[i] = (th, combined_threshold_cps_list[i][1] + detected_cps)
+    #
+    #                 combined_true_cps.extend(true_cps)
+    #                 total_n_points += n_points
+    #
+    #         if combined_threshold_cps_list and total_n_points > 0:
+    #             fpr, tpr, thresholds = roc_curve_from_cps_by_threshold(
+    #                 combined_threshold_cps_list, combined_true_cps, total_n_points, tol_value
+    #             )
+    #
+    #             if len(fpr) > 0:
+    #                 roc_curves_data.append({
+    #                     'fprs': fpr,
+    #                     'tprs': tpr,
+    #                     'label': f'Window {window_size}',
+    #                     'marker': 'o',
+    #                     'markersize': 4,
+    #                     'linewidth': 2
+    #                 })
+    #
+    #     plot_roc_curves(
+    #         roc_curves_data,
+    #         output_plots_folder,
+    #         tol_name,
+    #         "All_Chromosomes"
+    #     )
     
     print("\n" + "="*60)
     print("Performance evaluation completed!")
@@ -436,6 +484,9 @@ def evaluate_saturation_level(saturation_level, base_results_folder, window_fold
         
         print(f"  Processing {dataset}...")
         
+        # Aggregate TP/counts across all chromosomes, per threshold+tolerance, for this dataset.
+        dataset_aggregates = {}
+
         # Process each chromosome
         for chrom in CHROMS:
             if chrom not in cpd_dict or len(cpd_dict[chrom]) == 0:
@@ -463,7 +514,6 @@ def evaluate_saturation_level(saturation_level, base_results_folder, window_fold
                 continue
             
             chrom_data = read_chromosome_data(data_file)
-            n_points = len(chrom_data)
             true_cps = cpd_dict[chrom]
             
             # Define tolerances
@@ -476,6 +526,7 @@ def evaluate_saturation_level(saturation_level, base_results_folder, window_fold
             # Get result files
             result_files = [f for f in os.listdir(chrom_results_path) 
                            if f.endswith('.txt')]
+            result_files.sort()
             
             for result_file in result_files:
                 # Extract threshold from filename
@@ -491,25 +542,51 @@ def evaluate_saturation_level(saturation_level, base_results_folder, window_fold
                 # Convert to centromere coordinates (assuming position 0 is at index 1000)
                 detected_cps = [pos - 1000 for pos in detected_positions]
                 
-                # Calculate metrics for each tolerance
+                # Accumulate counts for each tolerance; dataset-level precision/recall is
+                # computed after combining all chromosomes in this dataset.
                 for tol_name, tol_value in tolerances.items():
-                    prec = precision(detected_cps, true_cps, tol_value)
-                    rec = recall(detected_cps, true_cps, tol_value)
-                    f1 = F1_score(prec, rec)
-                    
-                    all_results.append({
-                        'saturation_level': saturation_level,
-                        'dataset': dataset,
-                        'chromosome': chrom,
-                        'threshold': threshold,
-                        'tolerance_type': tol_name,
-                        'tolerance_value': tol_value,
-                        'precision': prec,
-                        'recall': rec,
-                        'F1': f1,
-                        'num_detected': len(detected_cps),
-                        'num_true': len(true_cps),
-                    })
+                    key = (threshold, tol_name, tol_value)
+                    if key not in dataset_aggregates:
+                        dataset_aggregates[key] = {
+                            'tp_detected': 0,
+                            'tp_true': 0,
+                            'num_detected': 0,
+                            'num_true': 0,
+                        }
+
+                    tp_detected = sum(
+                        1 for cp in detected_cps
+                        if any(abs(cp - true_cp) <= tol_value for true_cp in true_cps)
+                    )
+                    tp_true = sum(
+                        1 for true_cp in true_cps
+                        if any(abs(cp - true_cp) <= tol_value for cp in detected_cps)
+                    )
+
+                    dataset_aggregates[key]['tp_detected'] += tp_detected
+                    dataset_aggregates[key]['tp_true'] += tp_true
+                    dataset_aggregates[key]['num_detected'] += len(detected_cps)
+                    dataset_aggregates[key]['num_true'] += len(true_cps)
+
+        for (threshold, tol_name, tol_value), counts in dataset_aggregates.items():
+            if counts['num_detected'] == 0:
+                prec = np.nan
+            else:
+                prec = counts['tp_detected'] / counts['num_detected']
+
+            rec = counts['tp_true'] / counts['num_true'] if counts['num_true'] > 0 else 0.0
+
+            all_results.append({
+                'saturation_level': saturation_level,
+                'dataset': dataset,
+                'threshold': threshold,
+                'tolerance_type': tol_name,
+                'tolerance_value': tol_value,
+                'precision': prec,
+                'recall': rec,
+                'num_detected': counts['num_detected'],
+                'num_true': counts['num_true'],
+            })
     
     if not all_results:
         print(f"  No results found for saturation level {saturation_level}")
@@ -521,14 +598,14 @@ def evaluate_saturation_level(saturation_level, base_results_folder, window_fold
     averaged_df = results_df.groupby(['threshold', 'tolerance_type', 'tolerance_value']).agg({
         'precision': 'mean',
         'recall': 'mean',
-        'F1': 'mean',
+        # 'F1': 'mean',
         'num_detected': 'mean',
         'num_true': 'mean',
     }).reset_index()
     
     averaged_df['saturation_level'] = saturation_level
     
-    print(f"  Processed {len(results_df)} individual results")
+    print(f"  Processed {len(results_df)} dataset-level results")
     print(f"  Averaged to {len(averaged_df)} threshold/tolerance combinations")
     
     return averaged_df
@@ -686,27 +763,232 @@ def compare_saturation_levels(base_results_folder, window_folder, cpd_dict,
         plt.close()
         print(f"  Saved: {plot_path}")
     
-    # Create summary statistics
-    print("\n" + "="*60)
-    print("Summary Statistics")
-    print("="*60)
+    # Commented out: summary metric reporting beyond PR curves.
+    # print("\n" + "="*60)
+    # print("Summary Statistics")
+    # print("="*60)
+    #
+    # print("\nSaturation levels (% non-zero positions):")
+    # for level, (num_nz, total, pct) in saturation_stats.items():
+    #     if pct is not None:
+    #         print(f"  Level {level}: {num_nz}/{total} ({pct:.1f}%)")
+    #
+    # print("\nMean metrics by saturation level and tolerance:")
+    # summary = combined_df.groupby(['saturation_level', 'tolerance_type'])[
+    #     ['precision', 'recall', 'F1']
+    # ].mean()
+    # print(summary)
+    #
+    # summary_csv = os.path.join(output_folder, "saturation_summary.csv")
+    # summary.to_csv(summary_csv)
+    # print(f"\nSaved summary to {summary_csv}")
     
-    print("\nSaturation levels (% non-zero positions):")
-    for level, (num_nz, total, pct) in saturation_stats.items():
-        if pct is not None:
-            print(f"  Level {level}: {num_nz}/{total} ({pct:.1f}%)")
-    
-    print("\nMean metrics by saturation level and tolerance:")
-    summary = combined_df.groupby(['saturation_level', 'tolerance_type'])[
-        ['precision', 'recall', 'F1']
-    ].mean()
-    print(summary)
-    
-    # Save summary
-    summary_csv = os.path.join(output_folder, "saturation_summary.csv")
-    summary.to_csv(summary_csv)
-    print(f"\nSaved summary to {summary_csv}")
-    
+    return combined_df
+
+
+def evaluate_satay_test_level(saturation_level, base_results_folder, data_root, cpd_dict,
+                              window_size=100):
+    """Evaluate one SATAY test level from Signal_processing/results/test_CPD_SATAY_CPD_v3."""
+    saturation_folder = os.path.join(base_results_folder, str(saturation_level))
+
+    if not os.path.exists(saturation_folder):
+        print(f"SATAY test level {saturation_level} folder not found!")
+        return None
+
+    run_folders = [
+        run_name for run_name in os.listdir(saturation_folder)
+        if os.path.isdir(os.path.join(saturation_folder, run_name))
+    ]
+
+    print(f"\nSATAY test level {saturation_level}: Found {len(run_folders)} runs")
+
+    all_results = []
+    thresholds = np.arange(0, 21, 1, dtype=float)
+    tol_name = "full_window"
+    tol_value = window_size
+
+    for threshold in thresholds:
+        tp_total = 0
+        fp_total = 0
+        fn_total = 0
+        num_detected_total = 0
+        num_true_total = 0
+        has_points = False
+
+        for run_name in run_folders:
+            run_folder = os.path.join(saturation_folder, run_name)
+            try:
+                strain_folder = infer_combined_strain_folder(run_name, data_root)
+            except FileNotFoundError as exc:
+                print(f"  Warning: {exc}")
+                continue
+
+            for chrom in CHROMS:
+                if chrom not in cpd_dict or len(cpd_dict[chrom]) == 0:
+                    continue
+
+                chrom_results_path = get_satay_test_window_path(run_folder, chrom, window_size)
+                if chrom_results_path is None:
+                    continue
+
+                data_file = os.path.join(strain_folder, f"Chr{chrom}_distances.csv")
+                if not os.path.exists(data_file):
+                    continue
+
+                result_files = [
+                    filename for filename in os.listdir(chrom_results_path)
+                    if filename.endswith('.txt')
+                ]
+
+                threshold_file = None
+                for result_file in result_files:
+                    match = re.search(r'th(\d+\.\d+)', result_file)
+                    if not match:
+                        continue
+                    file_threshold = float(match.group(1))
+                    if np.isclose(file_threshold, threshold):
+                        threshold_file = result_file
+                        break
+
+                if threshold_file is None:
+                    continue
+
+                true_cps = cpd_dict[chrom]
+                file_path = os.path.join(chrom_results_path, threshold_file)
+                detected_positions = read_change_points(file_path)
+                detected_cps = [pos - 1000 for pos in detected_positions]
+
+                matches, unmatched_pred, unmatched_true = match_cps_one_to_one(
+                    true_cps, detected_cps, tol_value
+                )
+
+                tp_total += len(matches)
+                fp_total += len(unmatched_pred)
+                fn_total += len(unmatched_true)
+                num_detected_total += len(np.unique(np.asarray(detected_cps, dtype=int)))
+                num_true_total += len(np.unique(np.asarray(true_cps, dtype=int)))
+                has_points = True
+
+        if not has_points:
+            continue
+
+        precision_value = tp_total / (tp_total + fp_total) if (tp_total + fp_total) > 0 else np.nan
+        recall_value = tp_total / (tp_total + fn_total) if (tp_total + fn_total) > 0 else 0.0
+
+        all_results.append({
+            'saturation_level': saturation_level,
+            'threshold': threshold,
+            'tolerance_type': tol_name,
+            'tolerance_value': tol_value,
+            'TP': tp_total,
+            'FP': fp_total,
+            'FN': fn_total,
+            'precision': precision_value,
+            'recall': recall_value,
+            'num_detected': num_detected_total,
+            'num_true': num_true_total,
+        })
+
+    if not all_results:
+        print(f"  No results found for SATAY test level {saturation_level}")
+        return None
+
+    results_df = pd.DataFrame(all_results).sort_values('threshold').reset_index(drop=True)
+    print(f"  Aggregated to {len(results_df)} threshold points")
+
+    return results_df
+
+
+def compare_satay_test_levels(base_results_folder, data_root, cpd_dict,
+                              output_folder, saturation_levels=None, window_size=100):
+    """Compare SATAY test results across top-level folders in test_CPD_SATAY_CPD_v3."""
+    print("=" * 60)
+    print("Comparing SATAY Test Results")
+    print("=" * 60)
+
+    os.makedirs(output_folder, exist_ok=True)
+
+    if saturation_levels is None:
+        saturation_levels = sorted(
+            int(name) for name in os.listdir(base_results_folder)
+            if name.isdigit() and os.path.isdir(os.path.join(base_results_folder, name))
+        )
+
+    all_level_results = []
+
+    for sat_level in saturation_levels:
+        sat_results = evaluate_satay_test_level(
+            sat_level,
+            base_results_folder,
+            data_root,
+            cpd_dict,
+            window_size=window_size,
+        )
+        if sat_results is not None:
+            all_level_results.append(sat_results)
+
+    if not all_level_results:
+        print("No SATAY test results found!")
+        return None
+
+    combined_df = pd.concat(all_level_results, ignore_index=True)
+    output_csv = os.path.join(output_folder, "satay_test_comparison_results.csv")
+    combined_df.to_csv(output_csv, index=False)
+    print(f"\nSaved combined results to {output_csv}")
+
+    print("\n" + "=" * 60)
+    print("Creating Precision-Recall Curves")
+    print("=" * 60)
+
+    for tol_name in ["full_window"]:
+        print(f"\nTolerance: {tol_name}")
+
+        fig, ax = plt.subplots(figsize=(10, 8))
+        color_list = [
+            COLORS['blue'], COLORS['orange'], COLORS['green'], COLORS['red'],
+            COLORS['pink'], COLORS['light_blue'], COLORS['yellow'], COLORS['black'],
+        ]
+
+        for idx, sat_level in enumerate(saturation_levels):
+            sat_data = combined_df[
+                (combined_df['saturation_level'] == sat_level) &
+                (combined_df['tolerance_type'] == tol_name)
+            ].sort_values('threshold')
+
+            if len(sat_data) == 0:
+                continue
+
+            # Get saturation percentage from the saturation list
+            sat_pct = saturation[sat_level] if sat_level < len(saturation) else None
+            label = f'Saturation: {sat_pct:.1f}%' if sat_pct is not None else f'Level {sat_level}'
+
+            ax.plot(
+                sat_data['recall'],
+                sat_data['precision'],
+                marker='o',
+                linewidth=2,
+                markersize=4,
+                label=label,
+                color=color_list[idx % len(color_list)],
+            )
+
+        ax.set_xlabel('Recall', fontsize=14)
+        ax.set_ylabel('Precision', fontsize=14)
+        ax.set_title(
+            f'Precision-Recall Curves for test_CPD_SATAY_CPD_v3\n(Tolerance: {tol_name})',
+            fontsize=16,
+            fontweight='bold',
+        )
+        ax.legend(fontsize=12)
+        ax.grid(True, alpha=0.3)
+        ax.set_xlim([0, 1.05])
+        ax.set_ylim([0, 1.05])
+
+        plot_path = os.path.join(output_folder, f'pr_curve_satay_test_{tol_name}.png')
+        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  Saved: {plot_path}")
+
     return combined_df
 
 
@@ -715,32 +997,49 @@ def parse_args():
         description="Evaluate SATAY CPD performance for reconstruction outputs."
     )
     parser.add_argument(
+        "--mode",
+        choices=["satay-test", "reconstruction"],
+        default="satay-test",
+        help="Evaluation mode. 'satay-test' reads Signal_processing/results/test_CPD_SATAY_CPD_v3.",
+    )
+    parser.add_argument(
         "--results_base",
-        default="Signal_processing/Results/reconstruction_cpd",
-        help="Base folder containing method subfolders (e.g. ZINB, Gaussian).",
+        default="Signal_processing/results/test_CPD_SATAY_CPD_v3",
+        help="Base results folder. In satay-test mode this should point to test_CPD_SATAY_CPD_v3.",
     )
     parser.add_argument(
         "--window_folder",
         default="Data/reconstruction_cpd_test_all_chrom/centromere_window",
-        help="Folder containing centromere windows per saturation/dataset.",
+        help="Folder containing centromere windows per saturation/dataset for reconstruction mode.",
+    )
+    parser.add_argument(
+        "--data_root",
+        default="Data/combined_strains",
+        help="Root folder containing strain signal CSVs for satay-test mode.",
     )
     parser.add_argument(
         "--output_root",
-        default="Signal_processing/Results/reconstruction_cpd/evaluation",
-        help="Output root where per-method evaluation folders are created.",
+        default="Signal_processing/results/test_CPD_SATAY_CPD_v3/evaluation",
+        help="Output root where evaluation folders are created.",
     )
     parser.add_argument(
         "--methods",
         nargs="+",
         default=["ZINB", "Gaussian"],
-        help="Method subfolders under --results_base to evaluate.",
+        help="Method subfolders under --results_base to evaluate in reconstruction mode.",
     )
     parser.add_argument(
         "--saturation_levels",
         nargs="+",
         type=int,
         default=[0, 1, 2, 3, 4, 5, 6, 7],
-        help="Saturation levels to evaluate.",
+        help="Top-level numeric folders to evaluate.",
+    )
+    parser.add_argument(
+        "--window_size",
+        type=int,
+        default=100,
+        help="Window size to evaluate.",
     )
     return parser.parse_args()
 
@@ -753,6 +1052,26 @@ if __name__ == "__main__":
     args = parse_args()
 
     os.makedirs(args.output_root, exist_ok=True)
+
+    if args.mode == "satay-test":
+        results_df = compare_satay_test_levels(
+            args.results_base,
+            args.data_root,
+            CPD,
+            args.output_root,
+            saturation_levels=args.saturation_levels,
+            window_size=args.window_size,
+        )
+
+        if results_df is not None:
+            print(f"Completed satay-test evaluation. Outputs: {args.output_root}")
+        else:
+            print("No evaluation results generated for satay-test mode")
+
+        print("\n" + "="*60)
+        print("Evaluation Complete!")
+        print("="*60)
+        sys.exit(0)
 
     for method in args.methods:
         print("\n" + "="*60)

@@ -32,19 +32,9 @@ from Signal_processing.essentiality_calculation.pure_estimation import (
 )
 
 # # List of strains to process
-# STRAINS = [
-#     'strain_FD',
-#     'strain_dnrp',
-#     'strain_yEK19',
-#     'strain_yEK23',
-#     'strain_yTW001',
-#     'strain_yWT03a',
-#     'strain_yWT04a',
-#     'strain_ylic137'
-# ]
-
-# List of strains to process
 STRAINS = [
+    'strain_FD',
+    'strain_dnrp',
     'strain_yEK19',
     'strain_yEK23',
     'strain_yTW001',

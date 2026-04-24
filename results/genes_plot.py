@@ -41,6 +41,7 @@ strains = ["FD", "yEK19", "yEK23"]
 window_size = 100
 overlap = 50
 padding_bp = 500  # Base pairs to show before and after gene
+mu_z_threshold = 0.25  # muZ parameter for merged segments
 
 # Paths
 gene_info_path = Path(__file__).parent.parent / "Utils" / "SGD_API" / "architecture_info" / "yeast_genes_with_info.json"
@@ -72,13 +73,14 @@ def load_gene_info():
 
 
 def load_strain_segments(strain, chromosome, threshold, window_size):
-    """Load segment mu data for a specific strain, chromosome, and threshold."""
+    """Load segment data for a specific strain, chromosome, and threshold."""
     # Convert chromosome format
     chr_short = chromosome.replace('Chromosome_', 'Chr')
     
+    # Use merged_segments directory
     file_path = (strains_data_path / f"strain_{strain}" / chr_short / 
-                 f"{chr_short}_distances" / f"window{window_size}" / "segment_mu" /
-                 f"{chr_short}_distances_ws{window_size}_ov{overlap}_th{threshold:.2f}_segment_mu.csv")
+                 f"{chr_short}_distances" / f"window{window_size}" / "merged_segments" /
+                 f"{chr_short}_th{threshold:.2f}_merged_segments_muZ{mu_z_threshold:.2f}.csv")
     
     if not file_path.exists():
         print(f"Warning: File not found: {file_path}")
@@ -102,6 +104,39 @@ def load_count_data(strain, chromosome):
     return df
 
 
+def calculate_global_percentiles(strains):
+    """Calculate 95th percentile across all chromosomes for each strain."""
+    percentiles = {}
+    
+    # Yeast chromosomes use Roman numerals
+    roman_numerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 
+                      'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI']
+    chromosomes = [f"Chr{num}" for num in roman_numerals]
+    
+    for strain in strains:
+        print(f"Calculating global percentile for strain {strain}...")
+        all_values = []
+        
+        strain_dir = count_data_path / f"strain_{strain}"
+        if not strain_dir.exists():
+            print(f"Warning: Strain directory not found: {strain_dir}")
+            continue
+        
+        # Load all chromosome data
+        for chrom in chromosomes:
+            file_path = strain_dir / f"{chrom}_distances.csv"
+            if file_path.exists():
+                df = pd.read_csv(file_path)
+                all_values.extend(df['Value'].values)
+        
+        if all_values:
+            percentiles[strain] = np.percentile(all_values, 95)
+        else:
+            percentiles[strain] = None
+    
+    return percentiles
+
+
 def get_overlapping_segments(segments_df, start, end):
     """Filter segments that overlap with the specified region."""
     if segments_df is None:
@@ -112,7 +147,7 @@ def get_overlapping_segments(segments_df, start, end):
     return segments_df[mask].copy()
 
 
-def plot_gene_overview(gene_name, gene_info):
+def plot_gene_overview(gene_name, gene_info, strain_percentiles):
     """Create overview plot for a single gene showing protein domains and strain segments."""
     
     # Calculate display region
@@ -145,7 +180,7 @@ def plot_gene_overview(gene_name, gene_info):
     
     # Generate random colors for each domain
     np.random.seed(42)  # For reproducibility
-    cmap = plt.cm.get_cmap('tab20')
+    cmap = plt.colormaps['tab20']
     
     for idx, (domain_id, domain_data) in enumerate(protein_domains.items()):
         color = cmap(idx % 20)
@@ -249,7 +284,7 @@ def plot_gene_overview(gene_name, gene_info):
                                    color='white' if abs(norm(mu_z) - 0.5) > 0.3 else 'black',
                                    fontweight='bold')
             
-            # Add count data above the segments
+            # Add count data above the segments (scaled individually per strain)
             count_data = load_count_data(strain, gene_info['chromosome'])
             if count_data is not None:
                 # Filter to display region
@@ -258,16 +293,53 @@ def plot_gene_overview(gene_name, gene_info):
                     (count_data['Position'] <= display_end)
                 ]
                 
+                
                 if len(region_data) > 0:
-                    # Normalize count data for display (small height)
-                    max_count = region_data['Value'].max()
-                    if max_count > 0:
-                        normalized_counts = region_data['Value'] / max_count * 0.5  # Scale to 0.5 units height
+                    # Use THIS strain's global 95th percentile to filter outliers
+                    strain_global_percentile = strain_percentiles.get(strain)
+                    
+                    
+                    if strain_global_percentile is not None and strain_global_percentile > 0:
+                        # Filter out values above THIS strain's global 95th percentile
+                        filtered_data = region_data[region_data['Value'] <= strain_global_percentile].copy()
                         
-                        # Plot as a line above the segments
-                        ax.plot(region_data['Position'], 
-                               strain_y + 0.35 + normalized_counts,
-                               color='darkgray', linewidth=1.5, alpha=0.7, zorder=10)
+                        
+                        if len(filtered_data) > 0:
+                            # Normalize by THIS strain's LOCAL maximum in this region (independent scaling)
+                            strain_local_max = filtered_data['Value'].max()
+                            
+                            if len(filtered_data) > 0:
+                                strain_local_max = filtered_data['Value'].max()
+
+                                if strain_local_max > 0:
+                                    baseline = strain_y + 0.35
+
+                                    # One horizontal zero-line per strain
+                                    ax.hlines(
+                                        baseline,
+                                        display_start,
+                                        display_end,
+                                        color='darkgray',
+                                        linewidth=0.8,
+                                        alpha=0.5,
+                                        zorder=8
+                                    )
+
+                                    # Plot only nonzero peaks
+                                    nonzero_data = filtered_data[filtered_data['Value'] > 0].copy()
+
+                                    if len(nonzero_data) > 0:
+                                        normalized_counts = nonzero_data['Value'] / strain_local_max * 0.3
+
+                                        ax.vlines(
+                                            nonzero_data['Position'],
+                                            baseline,
+                                            baseline + normalized_counts,
+                                            color='darkgray',
+                                            linewidth=1.0,
+                                            alpha=0.7,
+                                            zorder=10
+                                        )
     
     # Set axis properties
     ax.set_xlim(display_start, display_end)
@@ -293,12 +365,12 @@ def plot_gene_overview(gene_name, gene_info):
     
     # Grid
     ax.grid(axis='x', alpha=0.3, linestyle='--')
-    ax.axhline(y_positions[1] * y_spacing - 0.5 * y_spacing, color='gray', linestyle='-', linewidth=1, alpha=0.5)
+
     
     plt.tight_layout()
     
     # Save figure
-    output_file = output_dir / f"{gene_name}_{gene_info['orf']}_overview.png"
+    output_file = output_dir / f"{gene_name}_{gene_info['orf']}_overview_merged.png"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Saved: {output_file}")
     
@@ -310,16 +382,20 @@ def main():
     print("Loading gene information...")
     gene_dict = load_gene_info()
     
+    print(f"\nCalculating global 95th percentiles for all strains...")
+    strain_percentiles = calculate_global_percentiles(strains)
+    
     print(f"\nGenerating overview plots for {len(gene_dict)} genes...")
     print(f"Threshold: {threshold}")
     print(f"Strains: {', '.join(strains)}")
     print(f"Padding: ±{padding_bp} bp")
+    print(f"Using merged segments with muZ threshold: {mu_z_threshold}")
     print(f"Output directory: {output_dir}\n")
     
     for gene_name in genes:
         if gene_name in gene_dict:
             print(f"Processing {gene_name}...")
-            plot_gene_overview(gene_name, gene_dict[gene_name])
+            plot_gene_overview(gene_name, gene_dict[gene_name], strain_percentiles)
         else:
             print(f"Warning: {gene_name} not found in gene info file")
     

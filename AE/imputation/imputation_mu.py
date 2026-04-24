@@ -25,7 +25,7 @@ CHROMOSOMES = [
 SPLITS = ["train", "val", "test"]
 
 # Window parameters for position mapping
-WINDOW_SIZE = 19
+WINDOW_SIZE = 20
 STEP_SIZE = 1
 
 # Position mapping conventions

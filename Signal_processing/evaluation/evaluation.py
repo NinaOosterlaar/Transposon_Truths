@@ -481,7 +481,7 @@ def mean_absolute_error(y_true, y_pred):
 
 
 def precision_recall_curve(detected_cps_list, precisions, recalls, thresholds=None, 
-                           label=None, ax=None, color=None, marker='o', markersize=4, 
+                           label=None, ax=None, color=COLORS['black'], marker='o', markersize=4, 
                            linewidth=2, alpha=1.0):
     """
     Create a precision-recall curve from lists of detected change points at different thresholds.
@@ -538,8 +538,6 @@ def precision_recall_curve(detected_cps_list, precisions, recalls, thresholds=No
             'linewidth': linewidth,
             'alpha': alpha
         }
-        if label is not None:
-            plot_kwargs['label'] = label
         if color is not None:
             plot_kwargs['color'] = color
             

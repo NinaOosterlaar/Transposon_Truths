@@ -1,7 +1,3 @@
-"""
-Quick script to compute boundary-to-changepoint distances from existing data.
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path

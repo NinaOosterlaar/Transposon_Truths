@@ -323,6 +323,186 @@ def plot_all_metrics_comparison(results_df, output_folder, dataset_name):
     print(f"Saved comparison plot: {output_path}")
 
 
+def create_all_datasets_metric_plots(combined_df, output_folder):
+    """Create aggregate metric plots across all datasets.
+
+    Aggregates tolerance-independent metrics by taking the mean across datasets
+    for each (window_size, threshold) pair.
+    """
+    plots_folder = os.path.join(output_folder, "performance_plots", "all_datasets")
+    os.makedirs(plots_folder, exist_ok=True)
+
+    # Keep one row per dataset/window/threshold because these metrics do not depend on tolerance.
+    unique_rows = combined_df.drop_duplicates(subset=['dataset_id', 'window_size', 'threshold'])
+
+    def mean_without_inf(series):
+        cleaned = series.replace([np.inf, -np.inf], np.nan)
+        return cleaned.mean()
+
+    aggregated = (
+        unique_rows
+        .groupby(['window_size', 'threshold'], as_index=False)
+        .agg({
+            'annotation_error': 'mean',
+            'hausdorff_distance': mean_without_inf,
+            'mae_localization': mean_without_inf,
+            'rand_index': 'mean',
+            'adjusted_rand_index': 'mean',
+        })
+    )
+
+    if aggregated.empty:
+        print("No combined rows available for all-datasets metric plots.")
+        return
+
+    dataset_name = "all_datasets_mean"
+    plot_all_metrics_comparison(aggregated, plots_folder, dataset_name)
+    plot_metric_vs_threshold(
+        aggregated,
+        'annotation_error',
+        plots_folder,
+        dataset_name,
+        metric_label='Annotation Error (|#predicted - #true|)',
+        use_log_scale=False,
+    )
+    plot_metric_vs_threshold(
+        aggregated,
+        'hausdorff_distance',
+        plots_folder,
+        dataset_name,
+        metric_label='Hausdorff Distance',
+        use_log_scale=True,
+        exclude_inf=True,
+    )
+    plot_metric_vs_threshold(
+        aggregated,
+        'mae_localization',
+        plots_folder,
+        dataset_name,
+        metric_label='MAE Localization Error',
+        use_log_scale=True,
+        exclude_inf=True,
+    )
+    plot_metric_vs_threshold(
+        aggregated,
+        'rand_index',
+        plots_folder,
+        dataset_name,
+        metric_label='Rand Index',
+        use_log_scale=False,
+    )
+    plot_metric_vs_threshold(
+        aggregated,
+        'adjusted_rand_index',
+        plots_folder,
+        dataset_name,
+        metric_label='Adjusted Rand Index',
+        use_log_scale=False,
+    )
+    print(f"All-datasets metric plots saved to {plots_folder}")
+
+
+def create_all_datasets_precision_recall_curves(combined_df, output_folder):
+    """Create combined precision-recall curves across all datasets.
+
+    For each tolerance and window size, precision/recall are averaged across
+    datasets at each threshold. Cases with no detected change points keep
+    precision as NaN and recall as 0 in the aggregated table.
+    """
+    plots_folder = os.path.join(output_folder, "performance_plots", "all_datasets")
+    os.makedirs(plots_folder, exist_ok=True)
+
+    tolerance_types = ["full window", "half window", "quarter window"]
+    aggregate_rows = []
+
+    for tol_name in tolerance_types:
+        tol_df = combined_df[combined_df['tolerance_type'] == tol_name].copy()
+        if tol_df.empty:
+            continue
+
+        pr_curves_data = []
+
+        for window_size in sorted(tol_df['window_size'].unique()):
+            window_df = tol_df[tol_df['window_size'] == window_size].copy()
+
+            aggregated = (
+                window_df
+                .groupby('threshold', as_index=False)
+                .agg({
+                    'precision': 'mean',  # keeps NaN if all datasets are NaN
+                    'recall': 'mean',
+                    'dataset_id': 'nunique',
+                })
+                .rename(columns={'dataset_id': 'num_datasets'})
+                .sort_values('threshold')
+            )
+
+            for _, row in aggregated.iterrows():
+                aggregate_rows.append({
+                    'tolerance_type': tol_name,
+                    'window_size': window_size,
+                    'threshold': row['threshold'],
+                    'mean_precision': row['precision'],
+                    'mean_recall': row['recall'],
+                    'num_datasets': int(row['num_datasets']),
+                })
+
+            # PR plotting and AUC require finite precision and recall values.
+            valid_mask = np.isfinite(aggregated['precision'].values) & np.isfinite(aggregated['recall'].values)
+            if np.sum(valid_mask) == 0:
+                continue
+
+            recalls = aggregated.loc[valid_mask, 'recall'].values
+            precisions = aggregated.loc[valid_mask, 'precision'].values
+            thresholds = aggregated.loc[valid_mask, 'threshold'].values
+
+            pr_data = precision_recall_curve(
+                detected_cps_list=None,
+                precisions=precisions,
+                recalls=recalls,
+                thresholds=thresholds,
+                label=f'Window {window_size}'
+            )
+
+            recalls_curve = np.asarray(pr_data['recalls'])
+            precisions_curve = np.asarray(pr_data['precisions'])
+            finite_curve = np.isfinite(recalls_curve) & np.isfinite(precisions_curve)
+            recalls_curve = recalls_curve[finite_curve]
+            precisions_curve = precisions_curve[finite_curve]
+
+            if len(recalls_curve) == 0:
+                continue
+
+            pr_curves_data.append({
+                'recalls': recalls_curve,
+                'precisions': precisions_curve,
+                'label': f'Window {window_size}',
+                'color': 'black',
+                'marker': 'o',
+                'markersize': 4,
+                'linewidth': 2,
+            })
+
+        if pr_curves_data:
+            tol_slug = tol_name.replace(' ', '_')
+            title = f'Combined Precision-Recall Curve (Tolerance: {tol_name})'
+
+            plot_path = os.path.join(plots_folder, f'precision_recall_combined_{tol_slug}.png')
+            plot_precision_recall_curves(
+                pr_curves_data,
+                output_path=plot_path,
+                title=title,
+                figsize=(10, 8),
+            )
+            print(f"Saved combined PR curve: {plot_path}")
+
+    if aggregate_rows:
+        aggregate_df = pd.DataFrame(aggregate_rows)
+        aggregate_csv = os.path.join(output_folder, "precision_recall_aggregated_all_datasets.csv")
+        aggregate_df.to_csv(aggregate_csv, index=False)
+        print(f"Saved combined PR table: {aggregate_csv}")
+
+
 def plot_roc_curves(roc_curves_data, output_folder, tol_name, dataset_name):
     """Plot ROC curves for different window sizes.
     
@@ -477,9 +657,15 @@ def evaluate_all_windows_and_thresholds(data_file, input_folder, output_folder, 
             
             # Calculate metrics for each tolerance
             for tol_name, tol_value in tolerances.items():
-                prec = precision(detected_cps, true_cps, tol_value)
-                rec = recall(detected_cps, true_cps, tol_value)
-                f1 = F1_score(prec, rec)
+                # Handle case with no detected change points: precision is undefined, recall is 0
+                if len(detected_cps) == 0:
+                    prec = np.nan  # undefined when no predictions
+                    rec = 0.0      # 0 out of N true points found
+                    f1 = np.nan
+                else:
+                    prec = precision(detected_cps, true_cps, tol_value)
+                    rec = recall(detected_cps, true_cps, tol_value)
+                    f1 = F1_score(prec, rec)
                 
                 results.append({
                     'window_size': window_size,
@@ -508,7 +694,6 @@ def evaluate_all_windows_and_thresholds(data_file, input_folder, output_folder, 
     # Create precision-recall curves for each window and tolerance using evaluation.py functions
     for tol_name in ["full window", "half window", "quarter window"]:
         pr_curves_data = []
-        auc_values = []  # Store AUC values for title
         
         for window_folder in window_folders:
             window_size = int(window_folder.replace("window", ""))
@@ -529,29 +714,18 @@ def evaluate_all_windows_and_thresholds(data_file, input_folder, output_folder, 
                     label=f'Window {window_size}'
                 )
                 
-                # Calculate AUC using sklearn
-                recalls = pr_data['recalls']
-                precisions = pr_data['precisions']
-                # Sort by recall for proper AUC calculation
-                sort_idx = np.argsort(recalls)
-                pr_auc = auc(recalls[sort_idx], precisions[sort_idx])
-                auc_values.append(pr_auc)
-                
                 pr_curves_data.append({
                     'recalls': pr_data['recalls'],
                     'precisions': pr_data['precisions'],
-                    'label': f'Window {window_size} (AUC={pr_auc:.3f})',
+                    'label': f'Window {window_size}',
+                    'color': 'black',
                     'marker': 'o',
                     'markersize': 4,
                     'linewidth': 2
                 })
         
-        # Create title with average AUC if we have data
-        if auc_values:
-            avg_auc = np.mean(auc_values)
-            title = f'Precision-Recall Curve (Tolerance: {tol_name}, Avg AUC={avg_auc:.3f})'
-        else:
-            title = f'Precision-Recall Curve (Tolerance: {tol_name})'
+        # No AUC text in title.
+        title = f'Precision-Recall Curve (Tolerance: {tol_name})'
         
         # Use the evaluation.py function to create the plot
         plot_path = os.path.join(output_plots_folder, f'precision_recall_{tol_name}.png')
@@ -626,27 +800,66 @@ def evaluate_all_windows_and_thresholds(data_file, input_folder, output_folder, 
 
 
 if __name__ == "__main__":
-    # Specify which dataset to analyze
-    # theta = 0
-    dataset_name = 'SATAY_synthetic'  # Options: 'pretty_data', 'realistic_data', 'noisy_data', 'SATAY_synthetic'
-    input_folder = f"Signal_processing/results/sliding_mean/sliding_ZINB_CPD/0/{dataset_name}"
-    data_file = f"Signal_processing/sample_data/{dataset_name}.csv"
-    output_folder = f"Signal_processing/results/sliding_cpd_performance/ZINB_shift/"
+    # Compare version4 results against SATAY_synthetic ground truth files.
+    results_root = "Signal_processing/results/version4"
+    truth_root = "Data/SATAY_synthetic"
+    output_folder = "Signal_processing/results/sliding_cpd_performance/version4_vs_satay_synthetic"
     other_file = True
-    
-    # Evaluate performance metrics
-    print(f"Analyzing dataset: {dataset_name}")
-    print("="*50)
-    results_df = evaluate_all_windows_and_thresholds(data_file, input_folder, output_folder, dataset_name, other_file=other_file)
-    print("\nSummary statistics by window size and tolerance:")
-    print(results_df.groupby(['window_size', 'tolerance_type'])[['precision', 'recall', 'F1']].mean())
-    
-    print("\nOverall summary statistics (tolerance-independent metrics):")
-    # For tolerance-independent metrics, take unique values per window/threshold combination
-    unique_results = results_df.drop_duplicates(subset=['window_size', 'threshold'])
-    # Print the mean and maximum values of annotation error, Hausdorff distance, and MAE localization error for each window size
-    for window_size in sorted(unique_results['window_size'].unique()):
-        window_data = unique_results[unique_results['window_size'] == window_size]
+
+    os.makedirs(output_folder, exist_ok=True)
+
+    # Only evaluate dataset IDs that exist in both folders.
+    result_ids = {d for d in os.listdir(results_root) if os.path.isdir(os.path.join(results_root, d))}
+    truth_ids = {d for d in os.listdir(truth_root) if os.path.isdir(os.path.join(truth_root, d))}
+    dataset_ids = sorted(result_ids.intersection(truth_ids), key=lambda x: int(x))
+
+    if not dataset_ids:
+        raise ValueError(
+            f"No matching dataset folders found between {results_root} and {truth_root}."
+        )
+
+    all_results = []
+
+    for dataset_id in dataset_ids:
+        dataset_name = f"SATAY_synthetic_{dataset_id}"
+        input_folder = os.path.join(results_root, dataset_id)
+        data_file = os.path.join(truth_root, dataset_id, "SATAY_without_pi.csv")
+
+        if not os.path.exists(data_file):
+            print(f"Skipping dataset {dataset_id}: missing data file {data_file}")
+            continue
+
+        print(f"\nAnalyzing dataset: {dataset_name}")
+        print("=" * 50)
+
+        results_df = evaluate_all_windows_and_thresholds(
+            data_file,
+            input_folder,
+            output_folder,
+            dataset_name,
+            other_file=other_file,
+        )
+        results_df['dataset_id'] = int(dataset_id)
+        all_results.append(results_df)
+
+        print("\nSummary statistics by window size and tolerance:")
+        print(results_df.groupby(['window_size', 'tolerance_type'])[['precision', 'recall', 'F1']].mean())
+
+    if not all_results:
+        raise ValueError("No datasets were evaluated. Check input folders and data files.")
+
+    combined_df = pd.concat(all_results, ignore_index=True)
+    combined_csv = os.path.join(output_folder, "performance_metrics_version4_all_datasets.csv")
+    combined_df.to_csv(combined_csv, index=False)
+    print(f"\nCombined results saved to {combined_csv}")
+
+    print("\nCombined summary by window size and tolerance:")
+    print(combined_df.groupby(['window_size', 'tolerance_type'])[['precision', 'recall', 'F1']].mean())
+
+    print("\nCombined tolerance-independent summary by window size:")
+    unique_combined = combined_df.drop_duplicates(subset=['dataset_id', 'window_size', 'threshold'])
+    for window_size in sorted(unique_combined['window_size'].unique()):
+        window_data = unique_combined[unique_combined['window_size'] == window_size]
         print(f"\nWindow size: {window_size}")
         print(f"  Mean annotation error: {window_data['annotation_error'].mean():.2f}")
         print(f"  Max annotation error: {window_data['annotation_error'].max()}")
@@ -654,10 +867,8 @@ if __name__ == "__main__":
         print(f"  Max Hausdorff distance: {window_data['hausdorff_distance'].replace(np.inf, np.nan).max()}")
         print(f"  Mean MAE localization error: {window_data['mae_localization'].replace(np.inf, np.nan).mean():.2f}")
         print(f"  Max MAE localization error: {window_data['mae_localization'].replace(np.inf, np.nan).max()}")
-    
-    # # Create overlay plots for visualization
-    # print("\n" + "="*50)
-    # print("Creating overlay plots...")
-    # print("="*50)
-    # create_overlay_plots(dataset_name=dataset_name, num_plots=3, section_length=5000)
+
+    # Create all-datasets aggregate performance metric plots.
+    create_all_datasets_metric_plots(combined_df, output_folder)
+    create_all_datasets_precision_recall_curves(combined_df, output_folder)
     

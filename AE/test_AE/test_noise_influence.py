@@ -19,7 +19,7 @@ test_chromosomes = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
 val_chromosomes = ['ChrVIII', 'ChrXIV', 'ChrXV']
 train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
   # No validation set needed for testing
-noise_levels = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]  # Noise levels to test (as percentages of data points to corrupt)
+noise_levels = [0.10, 0.15, 0.25, 0.5, 0.75, 0.9]  # Noise levels to test (as percentages of data points to corrupt)
 
 
 # MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
@@ -220,6 +220,11 @@ def save_rows_to_csv(rows, output_path):
         'mae_sd',
         'r2',
         'masked_loss',
+        'pi_zero',
+        'pi_non_zero',
+        'mu_zero',
+        'mu_non_zero',
+        'theta',
         'kl_loss',
         'reg_loss',
     ]
@@ -248,7 +253,7 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
         denoise_percentage=noise_level,
     )
 
-    predictions, _, split_metrics, _, _, _, _, _ = test(
+    predictions, _, split_metrics, all_mu_raw, all_theta, all_pi, all_raw_counts, all_masks = test(
         model=model,
         dataloader=split_dataloader,
         chrom=chrom,
@@ -277,6 +282,23 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     mae_mean = float(per_sample_mae.mean())
     mae_sd = float(per_sample_mae.std())
 
+    # Compute additional ZINB parameter metrics
+    # Flatten arrays for easier processing
+    raw_flat = all_raw_counts.flatten()
+    mu_flat = all_mu_raw.flatten()
+    theta_flat = all_theta.flatten()
+    pi_flat = all_pi.flatten()
+    
+    # Split by zero/non-zero raw counts
+    zero_mask = raw_flat == 0
+    non_zero_mask = raw_flat > 0
+    
+    pi_zero = float(pi_flat[zero_mask].mean()) if zero_mask.sum() > 0 else 0.0
+    pi_non_zero = float(pi_flat[non_zero_mask].mean()) if non_zero_mask.sum() > 0 else 0.0
+    mu_zero = float(mu_flat[zero_mask].mean()) if zero_mask.sum() > 0 else 0.0
+    mu_non_zero = float(mu_flat[non_zero_mask].mean()) if non_zero_mask.sum() > 0 else 0.0
+    theta_mean = float(theta_flat.mean())
+
     row = {
         'model_path': MODEL_PATH,
         'trained_noise_level': float(NOISE_LEVEL),
@@ -288,6 +310,11 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     row.update(to_serializable_metrics(split_metrics))
     row['mae'] = mae_mean
     row['mae_sd'] = mae_sd
+    row['pi_zero'] = pi_zero
+    row['pi_non_zero'] = pi_non_zero
+    row['mu_zero'] = mu_zero
+    row['mu_non_zero'] = mu_non_zero
+    row['theta'] = theta_mean
     return row
 
 
@@ -389,11 +416,17 @@ def load_model_and_evaluate_noise_sweep():
             results_rows.append(split_row)
 
             print("  Metrics summary:")
-            print(f"    total_loss: {split_row.get('total_loss')}")
-            print(f"    zinb_nll:   {split_row.get('zinb_nll')}")
-            print(f"    mse:        {split_row.get('mse')}")
-            print(f"    mae:        {split_row.get('mae')}")
-            print(f"    r2:         {split_row.get('r2')}")
+            print(f"    total_loss:   {split_row.get('total_loss'):.6f}")
+            print(f"    zinb_nll:     {split_row.get('zinb_nll'):.6f}")
+            print(f"    mse:          {split_row.get('mse'):.6f}")
+            print(f"    mae:          {split_row.get('mae'):.6f}")
+            print(f"    r2:           {split_row.get('r2'):.6f}")
+            print(f"    masked_loss:  {split_row.get('masked_loss', 0.0):.6f}")
+            print(f"    pi_zero:      {split_row.get('pi_zero'):.6f}")
+            print(f"    pi_non_zero:  {split_row.get('pi_non_zero'):.6f}")
+            print(f"    mu_zero:      {split_row.get('mu_zero'):.6f}")
+            print(f"    mu_non_zero:  {split_row.get('mu_non_zero'):.6f}")
+            print(f"    theta:        {split_row.get('theta'):.6f}")
 
     save_rows_to_csv(results_rows, RESULTS_CSV_PATH)
     return results_rows

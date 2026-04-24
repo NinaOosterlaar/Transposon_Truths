@@ -1,13 +1,3 @@
-"""
-Utilities for analyzing alignment between change points and gene/protein boundaries.
-
-This module provides functions to:
-1. Extract gene, CDS, and protein domain boundaries from the SGD database
-2. Extract change points from segment_mu files
-3. Compute distances between change points and boundaries
-4. Analyze overlap statistics within configurable windows
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -127,16 +117,18 @@ def extract_change_points(
     strains_data_path: Path,
     threshold: float,
     strain: Optional[str] = None,
+    mu_z: float = 0.25,
     window_size: int = 100,
     overlap: int = 50
 ) -> pd.DataFrame:
     """
-    Extract change points (segment boundaries) from segment_mu files.
+    Extract change points (segment boundaries) from merged_segments files.
     
     Args:
         strains_data_path: Path to Signal_processing/strains directory
         threshold: Threshold value to filter files
         strain: Specific strain to extract (None = all strains)
+        mu_z: Mu Z-score threshold for merged segments (e.g., 0.25)
         window_size: Window size used in analysis
         overlap: Overlap used in analysis
         
@@ -158,8 +150,8 @@ def extract_change_points(
     for strain_name in strains_to_process:
         for chrom in chromosomes:
             file_path = (strains_data_path / f"strain_{strain_name}" / chrom / 
-                        f"{chrom}_distances" / f"window{window_size}" / "segment_mu" /
-                        f"{chrom}_distances_ws{window_size}_ov{overlap}_th{threshold:.2f}_segment_mu.csv")
+                        f"{chrom}_distances" / f"window{window_size}" / "merged_segments" /
+                        f"{chrom}_th{threshold:.2f}_merged_segments_muZ{mu_z}.csv")
             
             if not file_path.exists():
                 continue

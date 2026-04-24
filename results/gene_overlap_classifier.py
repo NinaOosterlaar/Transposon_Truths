@@ -1,15 +1,3 @@
-"""
-Gene Overlap Classifier for Position-Level Analysis
-
-This module provides utilities to classify individual genomic positions
-based on their overlap with essential genes, non-essential genes, or regions
-outside gene boundaries.
-
-Priority: essential > non-essential > outside
-
-Reuses SGD_Genes class from Utils/SGD_API/yeast_genes.py
-"""
-
 import sys
 from pathlib import Path
 from typing import Dict, List

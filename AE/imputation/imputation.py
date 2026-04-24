@@ -5,10 +5,9 @@ import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-from pathlib import Path
 from collections import defaultdict
 from typing import Any, Dict, List, Tuple, Optional, Set
+from scipy.stats import mannwhitneyu
 
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
@@ -31,7 +30,7 @@ MU_OFFSETS = ["muoff0", "muoff1", "muoff2", "muoff4", "muoff5"]
 SPLITS = ["train", "val", "test"]
 
 # Window parameters for position mapping
-WINDOW_SIZE = 19
+WINDOW_SIZE = 20
 STEP_SIZE = 1
 POSITION_MODE_AUTO = "auto"
 POSITION_MODE_INDEX = "index"
@@ -879,11 +878,41 @@ def process_single_chromosomal_split(
     return results
 
 
+def calculate_statistical_significance(
+    essential_pi: np.ndarray,
+    nonessential_pi: np.ndarray,
+) -> Dict[str, float]:
+    """
+    Calculate Mann-Whitney U test between essential and non-essential pi values.
+    
+    Args:
+        essential_pi: Array of pi values for essential genes
+        nonessential_pi: Array of pi values for non-essential genes
+        
+    Returns:
+        Dictionary with:
+        - 'mann_whitney_pvalue': p-value from Mann-Whitney U test
+    """
+    # Remove NaN values
+    essential_clean = essential_pi[~np.isnan(essential_pi)]
+    nonessential_clean = nonessential_pi[~np.isnan(nonessential_pi)]
+    
+    # Mann-Whitney U test (non-parametric test for comparing two groups)
+    u_stat, p_value = mannwhitneyu(
+        essential_clean, 
+        nonessential_clean, 
+        alternative='two-sided'
+    )
+    
+    return {'mann_whitney_pvalue': p_value}
+
+
 def create_comparison_boxplot(
     ax,
     essential_pi: np.ndarray,
     nonessential_pi: np.ndarray,
-    title: str
+    title: str,
+    show_stats: bool = True
 ) -> None:
     """
     Create a boxplot comparing essential vs non-essential gene pi values.
@@ -893,6 +922,7 @@ def create_comparison_boxplot(
         essential_pi: Array of pi values for essential genes
         nonessential_pi: Array of pi values for non-essential genes
         title: Title for the subplot
+        show_stats: If True, display statistical test results on the plot
     """
     data_to_plot = [essential_pi, nonessential_pi]
     
@@ -900,7 +930,8 @@ def create_comparison_boxplot(
         data_to_plot,
         labels=['Essential', 'Non-Essential'],
         patch_artist=True,
-        widths=0.6
+        widths=0.6,
+        medianprops=dict(color='#666666', linewidth=1.5)
     )
     
     # Color the boxes
@@ -912,6 +943,26 @@ def create_comparison_boxplot(
     ax.set_ylabel('π value', fontsize=10)
     ax.set_title(title, fontsize=11, fontweight='bold')
     ax.grid(axis='y', alpha=0.3, linestyle='--')
+    
+    # Add statistical significance if requested
+    if show_stats and len(essential_pi) > 0 and len(nonessential_pi) > 0:
+        stats_results = calculate_statistical_significance(essential_pi, nonessential_pi)
+        p_value = stats_results['mann_whitney_pvalue']
+        
+        # Format p-value with test name
+        if p_value < 0.001:
+            p_text = 'Mann-Whitney U: p < 0.001***'
+        elif p_value < 0.01:
+            p_text = f'Mann-Whitney U: p = {p_value:.3f}**'
+        elif p_value < 0.05:
+            p_text = f'Mann-Whitney U: p = {p_value:.3f}*'
+        else:
+            p_text = f'Mann-Whitney U: p = {p_value:.3f} ns'
+        
+        # Add p-value text to plot
+        ax.text(0.5, 0.98, p_text, 
+                transform=ax.transAxes, ha='center', va='top',
+                fontsize=9, bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='gray'))
     
     # # Add sample size info
     # n_ess = len(essential_pi)

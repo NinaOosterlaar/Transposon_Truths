@@ -1,15 +1,3 @@
-"""
-Change Point to Gene Boundary Alignment Analysis
-
-This script analyzes how well change points align with gene, CDS, and protein domain boundaries.
-For different thresholds, it computes:
-1. Mean/median distances from change points to nearest boundaries
-2. Percentage of genes with nearby change points (within window)
-3. Percentage of change points with nearby boundaries (within window)
-
-Results are analyzed per-strain and combined across all strains.
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path
