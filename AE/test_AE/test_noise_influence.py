@@ -4,11 +4,12 @@ import numpy as np
 import hashlib
 import json
 import csv
+import glob
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from AE.preprocessing.preprocessing import preprocess_with_split
 from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
-from AE.training.training import test
+from AE.training.training import test, train
 
 # ========== MODEL AND DATA CONFIGURATION ==========
 
@@ -19,13 +20,8 @@ test_chromosomes = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
 val_chromosomes = ['ChrVIII', 'ChrXIV', 'ChrXV']
 train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'ChrXI', 'ChrXIII', 'ChrXVI']
   # No validation set needed for testing
-noise_levels = [0.10, 0.15, 0.25, 0.5, 0.75, 0.9]  # Noise levels to test (as percentages of data points to corrupt)
+noise_levels = [0.10, 0.15, 0.25, 0.5, 0.75, 0.9]  # Noise levels to train and test
 
-
-# !!! COMBINED
-
-
-MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
 # Preprocessing parameters 
 FEATURES = ['Centr']
 BIN_SIZE = 20
@@ -33,13 +29,23 @@ MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
 STEP_SIZE = 500
 
+# Model architecture
+LATENT_DIM = 16
+HIDDEN_DIMS = [1600]  # Example: [1600] for single hidden layer
+USE_CONV = False
+
 # Training parameters 
 BATCH_SIZE = 32
-NOISE_LEVEL = 0.15
+NUM_EPOCHS = 144
+LEARNING_RATE = 1e-3
 PI_THRESHOLD = 0.53
 MASKED_RECON_WEIGHT = 0.079  # gamma
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 1e-5  # alpha
+MU_OFFSET = 0.0
+
+# Model saving/loading
+MODEL_DIR = "AE/results/models"
 
 # Data caching options
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
@@ -239,7 +245,7 @@ def save_rows_to_csv(rows, output_path):
     print(f"\nNoise sweep metrics saved to: {output_path}")
 
 
-def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, chrom_embedding):
+def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, chrom_embedding, training_noise_level):
     """Run one split/noise evaluation and return a row for CSV output."""
     split_dataloader = dataloader_from_array(
         split_set,
@@ -298,8 +304,8 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     theta_mean = float(theta_flat.mean())
 
     row = {
-        'model_path': MODEL_PATH,
-        'trained_noise_level': float(NOISE_LEVEL),
+        'model_path': 'runtime_model',
+        'trained_noise_level': float(training_noise_level),
         'eval_noise_level': float(noise_level),
         'split': split_name,
         'n_samples': int(len(split_dataloader.dataset)),
@@ -316,45 +322,107 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     return row
 
 
-def load_model_and_evaluate_noise_sweep():
+def find_existing_model(noise_level, model_dir=MODEL_DIR):
+    """Find an existing model trained with the specified noise level."""
+    # Search for models with the pattern noise{noise_level:.3f}
+    pattern = f"{model_dir}/ZINBAE_*noise{noise_level:.3f}*.pt"
+    matching_models = glob.glob(pattern)
+    
+    if matching_models:
+        # Return the first matching model (or could add logic to pick the best)
+        return matching_models[0]
+    return None
+
+
+def train_new_model(train_set, noise_level, chrom, chrom_embedding):
+    """Train a new ZINBAE model with the specified noise level."""
+    print(f"\nTraining new model with noise_level={noise_level}")
+    
+    # Calculate number of input features
+    n_features = train_set.shape[2]  # Features from preprocessing
+    input_size = n_features  # Will include Centr + chromosome embedding if chrom=True
+    
+    # Create model
+    model = ZINBAE(
+        input_size=input_size,
+        hidden_dims=HIDDEN_DIMS,
+        latent_dim=LATENT_DIM,
+        seq_length=DATA_POINT_LENGTH,
+        use_conv=USE_CONV,
+        mu_offset=MU_OFFSET,
+    )
+    
+    # Create training dataloader
+    train_dataloader = dataloader_from_array(
+        train_set,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        zinb=True,
+        chrom=chrom,
+        sample_fraction=1.0,
+        denoise_percentage=noise_level,
+    )
+    
+    # Train the model
+    model, train_metrics = train(
+        model=model,
+        dataloader=train_dataloader,
+        num_epochs=NUM_EPOCHS,
+        learning_rate=LEARNING_RATE,
+        chrom=chrom,
+        chrom_embedding=chrom_embedding,
+        plot=False,
+        name=f"noise{noise_level:.3f}",
+        denoise_percent=noise_level,
+        gamma=MASKED_RECON_WEIGHT,
+        pi_threshold=PI_THRESHOLD,
+        regularizer=REGULARIZER,
+        alpha=REGULARIZATION_WEIGHT,
+    )
+    
+    # Save the model
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    layers_str = "_".join(map(str, HIDDEN_DIMS))
+    model_filename = f"ZINBAE_layers{layers_str}_ep{NUM_EPOCHS}_noise{noise_level:.3f}_muoff{MU_OFFSET:.3f}.pt"
+    model_path = os.path.join(MODEL_DIR, model_filename)
+    
+    model_config = {
+        'input_size': input_size,
+        'hidden_dims': HIDDEN_DIMS,
+        'latent_dim': LATENT_DIM,
+        'seq_length': DATA_POINT_LENGTH,
+        'use_conv': USE_CONV,
+        'mu_offset': MU_OFFSET,
+    }
+    
+    torch.save({
+        'model_state_dict': model.state_dict(),
+        'model_config': model_config,
+        'train_metrics': train_metrics,
+    }, model_path)
+    
+    print(f"Model saved to: {model_path}")
+    return model, model_config
+
+
+def train_and_evaluate_all_noise_levels():
     """
-    Load a trained model and evaluate train/val/test performance over noise_levels.
-    Saves one CSV with one row per (split, noise_level).
+    For each noise level:
+    1. Find or train a model with that noise level
+    2. Evaluate that model across all noise levels
+    Saves one CSV with one row per (trained_noise_level, eval_noise_level, split).
     """
     print("="*50)
-    print("LOADING TRAINED MODEL")
+    print("NOISE INFLUENCE EXPERIMENT")
     print("="*50)
-
-    checkpoint = torch.load(MODEL_PATH, map_location='cpu', weights_only=False)
-    model_config = checkpoint['model_config']
-
-    print("\nModel architecture from checkpoint:")
-    for key, value in model_config.items():
-        print(f"  {key}: {value}")
-
-    seq_len = model_config.get('seq_length', DATA_POINT_LENGTH)
-    preprocessing_length = DATA_POINT_LENGTH
-    if preprocessing_length != seq_len:
-        print(
-            f"\nWARNING: preprocessing_length={preprocessing_length} does not match "
-            f"checkpoint seq_length={seq_len}. Using checkpoint seq_length."
-        )
-        preprocessing_length = seq_len
-
-    print("\nEvaluation configuration:")
-    print(f"  features: {FEATURES}")
-    print(f"  bin_size: {BIN_SIZE}")
-    print(f"  moving_average: {MOVING_AVERAGE}")
-    print(f"  data_point_length: {preprocessing_length}")
-    print(f"  step_size: {STEP_SIZE}")
-    print(f"  batch_size: {BATCH_SIZE}")
-    print(f"  trained_noise_level: {NOISE_LEVEL}")
-    print(f"  eval_noise_levels: {noise_levels}")
-    print(f"  output_csv: {RESULTS_CSV_PATH}")
-
+    print(f"Training noise levels: {noise_levels}")
+    print(f"Evaluation noise levels: {noise_levels}")
+    print(f"Output CSV: {RESULTS_CSV_PATH}")
+    
+    # Load/preprocess data once
     chrom = 'Chr' in FEATURES
     chrom_embedding = ChromosomeEmbedding() if chrom else None
-
+    
     train_set, val_set, test_set, _ = load_or_preprocess_data(
         input_folder=INPUT_FOLDER,
         train_chroms=train_chromosomes,
@@ -363,72 +431,90 @@ def load_model_and_evaluate_noise_sweep():
         features=FEATURES,
         bin_size=BIN_SIZE,
         moving_average=MOVING_AVERAGE,
-        preprocessing_length=preprocessing_length,
+        preprocessing_length=DATA_POINT_LENGTH,
         step_size=STEP_SIZE,
         use_cache=USE_CACHED_DATA,
         cache_dir=PROCESSED_DATA_DIR,
     )
-
+    
     split_data = {
         'train': train_set,
         'val': val_set,
         'test': test_set,
     }
-
+    
     print("\nLoaded split sizes:")
     for split_name, split_set in split_data.items():
         if split_set is None:
             print(f"  {split_name}: None")
         else:
             print(f"  {split_name}: {len(split_set)} windows")
-
-    print("\n" + "="*50)
-    print("INITIALIZING MODEL")
-    print("="*50)
-    model = ZINBAE(**model_config)
-    model.load_state_dict(checkpoint['model_state_dict'])
-    print("Model weights loaded successfully!")
-
+    
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-    results_rows = []
-    for noise_level in noise_levels:
-        print("\n" + "="*50)
-        print(f"EVALUATING NOISE LEVEL: {noise_level}")
-        print("="*50)
-
-        for split_name, split_set in split_data.items():
-            if split_set is None or len(split_set) == 0:
-                print(f"Skipping split '{split_name}': no data")
-                continue
-
-            print(f"\nEvaluating split='{split_name}' at noise={noise_level}")
-            split_row = evaluate_split_for_noise(
-                model=model,
-                split_name=split_name,
-                split_set=split_set,
-                noise_level=noise_level,
+    all_results_rows = []
+    
+    # Loop through each training noise level
+    for training_noise_level in noise_levels:
+        print("\n" + "="*70)
+        print(f"PROCESSING TRAINING NOISE LEVEL: {training_noise_level}")
+        print("="*70)
+        
+        # Check if model exists
+        existing_model_path = find_existing_model(training_noise_level)
+        
+        if existing_model_path:
+            print(f"Found existing model: {existing_model_path}")
+            checkpoint = torch.load(existing_model_path, map_location='cpu', weights_only=False)
+            model_config = checkpoint['model_config']
+            model = ZINBAE(**model_config)
+            model.load_state_dict(checkpoint['model_state_dict'])
+            print("Model loaded successfully!")
+        else:
+            print(f"No existing model found for noise_level={training_noise_level}")
+            print("Training new model...")
+            model, model_config = train_new_model(
+                train_set=train_set,
+                noise_level=training_noise_level,
                 chrom=chrom,
                 chrom_embedding=chrom_embedding,
             )
-            results_rows.append(split_row)
-
-            print("  Metrics summary:")
-            print(f"    total_loss:   {split_row.get('total_loss'):.6f}")
-            print(f"    zinb_nll:     {split_row.get('zinb_nll'):.6f}")
-            print(f"    mse:          {split_row.get('mse'):.6f}")
-            print(f"    mae:          {split_row.get('mae'):.6f}")
-            print(f"    r2:           {split_row.get('r2'):.6f}")
-            print(f"    masked_loss:  {split_row.get('masked_loss', 0.0):.6f}")
-            print(f"    pi_zero:      {split_row.get('pi_zero'):.6f}")
-            print(f"    pi_non_zero:  {split_row.get('pi_non_zero'):.6f}")
-            print(f"    mu_zero:      {split_row.get('mu_zero'):.6f}")
-            print(f"    mu_non_zero:  {split_row.get('mu_non_zero'):.6f}")
-            print(f"    theta:        {split_row.get('theta'):.6f}")
-
-    save_rows_to_csv(results_rows, RESULTS_CSV_PATH)
-    return results_rows
+        
+        # Evaluate this model across all evaluation noise levels
+        for eval_noise_level in noise_levels:
+            print("\n" + "-"*50)
+            print(f"Evaluating at noise_level={eval_noise_level}")
+            print("-"*50)
+            
+            for split_name, split_set in split_data.items():
+                if split_set is None or len(split_set) == 0:
+                    print(f"Skipping split '{split_name}': no data")
+                    continue
+                
+                print(f"\nEvaluating split='{split_name}'")
+                split_row = evaluate_split_for_noise(
+                    model=model,
+                    split_name=split_name,
+                    split_set=split_set,
+                    noise_level=eval_noise_level,
+                    chrom=chrom,
+                    chrom_embedding=chrom_embedding,
+                    training_noise_level=training_noise_level,
+                )
+                all_results_rows.append(split_row)
+                
+                print("  Metrics:")
+                print(f"    zinb_nll: {split_row.get('zinb_nll'):.6f}, "
+                      f"mae: {split_row.get('mae'):.6f}, "
+                      f"r2: {split_row.get('r2'):.6f}")
+    
+    # Save all results to CSV
+    save_rows_to_csv(all_results_rows, RESULTS_CSV_PATH)
+    print("\n" + "="*70)
+    print("EXPERIMENT COMPLETE")
+    print("="*70)
+    print(f"Results saved to: {RESULTS_CSV_PATH}")
+    return all_results_rows
 
 
 if __name__ == "__main__":
-    load_model_and_evaluate_noise_sweep()
+    train_and_evaluate_all_noise_levels()
