@@ -1,53 +1,155 @@
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from matplotlib.ticker import MaxNLocator
-# from matplotlib.gridspec import GridSpec
-# from Utils.plot_config import setup_plot_style, COLORS
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+from matplotlib.gridspec import GridSpec
+from Utils.plot_config import setup_plot_style, COLORS
 
-# # =========================================================
-# # Plot style
-# # =========================================================
-# setup_plot_style()
+# =========================================================
+# Plot style
+# =========================================================
+setup_plot_style()
 
-# plt.rcParams.update({
-#     "font.size": 11,
-#     "axes.titlesize": 13,
-#     "axes.labelsize": 11,
-#     "xtick.labelsize": 10,
-#     "ytick.labelsize": 10,
-#     "legend.fontsize": 10,
-#     "figure.titlesize": 16,
-# })
+# =========================================================
+# Load and prepare data
+# =========================================================
+df = pd.read_csv('AE/results/noise_sweep_metrics.csv')
 
-# # =========================================================
-# # Labels / colors
-# # =========================================================
-# models = ["Combined", "ZINB NLL", "Masked recon.", "Combined bins"]
-# splits = ["Train", "Val", "Test"]
+# Filter rows where trained_noise_level == eval_noise_level
+df_filtered = df[df['trained_noise_level'] == df['eval_noise_level']].copy()
 
-# model_colors = {
-#     "Combined": COLORS["blue"],
-#     "ZINB NLL": COLORS["orange"],
-#     "Masked recon.": COLORS["green"],
-#     "Combined bins": COLORS["red"],
-# }
+# Filter only train and test splits
+df_filtered = df_filtered[df_filtered['split'].isin(['train', 'test'])]
 
-# # =========================================================
-# # Data
-# # =========================================================
-# recon_core = {
-#     "ZINB NLL": {
-#         "values": {
-#             "Train": [1.84, 0.91, 2.05, 2.82],
-#             "Val":   [1.88, 0.886, 2.10, 2.83],
-#             "Test":  [1.87, 0.98, 2.10, 2.82],
-#         },
-#         "errors": {
-#             "Train": [0.0, 0.0, 0.0, 0.0],
-#             "Val":   [0.0, 0.0, 0.0, 0.0],
-#             "Test":  [0.0, 0.0, 0.0, 0.0],
-#         },
-#     },
+# Sort by noise level for plotting
+df_filtered = df_filtered.sort_values('trained_noise_level')
+
+# Separate train and test
+df_train = df_filtered[df_filtered['split'] == 'train']
+df_test = df_filtered[df_filtered['split'] == 'test']
+
+noise_levels = df_train['trained_noise_level'].values
+
+# =========================================================
+# Figure 1: Loss metrics (ZINB NLL, MAE, R2, Masked Recon)
+# =========================================================
+fig1, axes = plt.subplots(2, 2, figsize=(10, 8))
+fig1.subplots_adjust(hspace=0.3, wspace=0.3, top=0.93)
+
+# Subplot labels
+labels = ['a', 'b', 'c', 'd']
+titles = ['ZINB NLL Loss', 'MAE', 'R²', 'Masked Reconstruction Loss']
+metrics = ['zinb_nll', 'mae', 'r2', 'masked_loss']
+
+for idx, (ax, label, title, metric) in enumerate(zip(axes.flat, labels, titles, metrics)):
+    # Plot train (dashed black) and test (solid black)
+    ax.plot(noise_levels, df_train[metric].values, 
+            marker='o', linewidth=2, markersize=6, 
+            color='black', linestyle='--', label='Train')
+    
+    # Add error bars for MAE test data
+    if metric == 'mae':
+        ax.errorbar(noise_levels, df_test[metric].values, 
+                    yerr=df_test['mae_sd'].values,
+                    marker='s', linewidth=2, markersize=6, 
+                    color='black', linestyle='-', label='Test',
+                    capsize=3, capthick=1.5)
+    else:
+        ax.plot(noise_levels, df_test[metric].values, 
+                marker='s', linewidth=2, markersize=6, 
+                color='black', linestyle='-', label='Test')
+    
+    ax.set_xlabel('Noise Level')
+    ax.set_ylabel(title)
+    ax.grid(True, alpha=0.3)
+    ax.legend(fontsize=10)
+    
+    # Set y-axis to start at 0
+    ylim = ax.get_ylim()
+    if metric == 'r2':
+        ax.set_ylim(0, 1)
+    else:
+        ax.set_ylim(0, max(ylim[1], 0.1))
+    
+    # Add subplot label on top left, outside the plot
+    ax.text(-0.15, 1.05, label, transform=ax.transAxes,
+            fontsize=16, fontweight='bold', va='bottom')
+
+plt.savefig('noise_sweep_figure1.png', dpi=300, bbox_inches='tight')
+print("Saved Figure 1: noise_sweep_figure1.png")
+
+# =========================================================
+# Figure 2: Distribution parameters (Pi, Mu, Theta)
+# =========================================================
+fig2, axes = plt.subplots(1, 3, figsize=(18, 5))
+fig2.subplots_adjust(wspace=0.3, top=0.88)
+
+# Subplot a: Pi (zero and non-zero for train and test)
+ax = axes[0]
+ax.plot(noise_levels, df_train['pi_zero'].values, 
+        marker='o', linewidth=2, markersize=6, linestyle='--',
+        color=COLORS['blue'], label='Train Zero')
+ax.plot(noise_levels, df_train['pi_non_zero'].values, 
+        marker='s', linewidth=2, markersize=6, linestyle='--',
+        color=COLORS['light_blue'], label='Train Non-Zero')
+ax.plot(noise_levels, df_test['pi_zero'].values, 
+        marker='o', linewidth=2, markersize=6, linestyle='-',
+        color=COLORS['blue'], label='Test Zero')
+ax.plot(noise_levels, df_test['pi_non_zero'].values, 
+        marker='s', linewidth=2, markersize=6, linestyle='-',
+        color=COLORS['light_blue'], label='Test Non-Zero')
+ax.set_xlabel('Noise Level')
+ax.set_ylabel(r'$\pi$')
+ax.set_ylim(0, 1)
+ax.grid(True, alpha=0.3)
+ax.legend(fontsize=10)
+ax.text(-0.15, 1.05, 'a', transform=ax.transAxes,
+        fontsize=16, fontweight='bold', va='bottom')
+
+# Subplot b: Mu (zero and non-zero for train and test)
+ax = axes[1]
+ax.plot(noise_levels, df_train['mu_zero'].values, 
+        marker='o', linewidth=2, markersize=6, linestyle='--',
+        color=COLORS['blue'], label='Train Zero')
+ax.plot(noise_levels, df_train['mu_non_zero'].values, 
+        marker='s', linewidth=2, markersize=6, linestyle='--',
+        color=COLORS['light_blue'], label='Train Non-Zero')
+ax.plot(noise_levels, df_test['mu_zero'].values, 
+        marker='o', linewidth=2, markersize=6, linestyle='-',
+        color=COLORS['blue'], label='Test Zero')
+ax.plot(noise_levels, df_test['mu_non_zero'].values, 
+        marker='s', linewidth=2, markersize=6, linestyle='-',
+        color=COLORS['light_blue'], label='Test Non-Zero')
+ax.set_xlabel('Noise Level')
+ax.set_ylabel(r'$\mu$')
+ylim = ax.get_ylim()
+ax.set_ylim(0, max(ylim[1], 0.1))
+ax.grid(True, alpha=0.3)
+ax.legend(fontsize=10)
+ax.text(-0.15, 1.05, 'b', transform=ax.transAxes,
+        fontsize=16, fontweight='bold', va='bottom')
+
+# Subplot c: Theta (train and test)
+ax = axes[2]
+ax.plot(noise_levels, df_train['theta'].values, 
+        marker='o', linewidth=2, markersize=6, linestyle='--',
+        color=COLORS['blue'], label='Train')
+ax.plot(noise_levels, df_test['theta'].values, 
+        marker='s', linewidth=2, markersize=6, linestyle='-',
+        color=COLORS['blue'], label='Test')
+ax.set_xlabel('Noise Level')
+ax.set_ylabel(r'$\theta$')
+ylim = ax.get_ylim()
+ax.set_ylim(0, max(ylim[1], 0.1))
+ax.grid(True, alpha=0.3)
+ax.legend(fontsize=10)
+ax.text(-0.15, 1.05, 'c', transform=ax.transAxes,
+        fontsize=16, fontweight='bold', va='bottom')
+
+plt.savefig('noise_sweep_figure2.png', dpi=300, bbox_inches='tight')
+print("Saved Figure 2: noise_sweep_figure2.png")
+
+plt.show()
 #     r"$R^2$": {
 #         "values": {
 #             "Train": [0.88, -2.4, 0.75, 0.09],

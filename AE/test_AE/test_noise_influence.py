@@ -231,11 +231,17 @@ def save_rows_to_csv(rows, output_path):
         'mae_sd',
         'r2',
         'masked_loss',
+        'masked_loss_sd',
         'pi_zero',
+        'pi_zero_sd',
         'pi_non_zero',
+        'pi_non_zero_sd',
         'mu_zero',
+        'mu_zero_sd',
         'mu_non_zero',
+        'mu_non_zero_sd',
         'theta',
+        'theta_sd',
         'kl_loss',
         'reg_loss',
     ]
@@ -292,6 +298,23 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     per_sample_mae = abs_diff.reshape(abs_diff.shape[0], -1).mean(axis=1)
     mae_mean = float(per_sample_mae.mean())
     mae_sd = float(per_sample_mae.std())
+    
+    # Compute per-sample masked loss (if masks are available)
+    masked_loss_sd = 0.0
+    if all_masks is not None and all_masks.sum() > 0:
+        # Compute reconstruction: mu * (pi < pi_threshold)
+        reconstruction = all_mu_raw * (all_pi < PI_THRESHOLD).astype(float)
+        # Compute absolute error for masked values per sample
+        masked_abs_diff = np.abs(all_raw_counts - reconstruction)
+        # Apply mask and compute per-sample mean
+        per_sample_masked_loss = []
+        for i in range(all_masks.shape[0]):
+            sample_mask = all_masks[i]
+            if sample_mask.sum() > 0:
+                sample_loss = masked_abs_diff[i][sample_mask].mean()
+                per_sample_masked_loss.append(sample_loss)
+        if len(per_sample_masked_loss) > 0:
+            masked_loss_sd = float(np.std(per_sample_masked_loss))
 
     # Compute additional ZINB parameter metrics
     # Flatten arrays for easier processing
@@ -304,11 +327,21 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     zero_mask = raw_flat == 0
     non_zero_mask = raw_flat > 0
     
+    # Compute means and standard deviations for pi
     pi_zero = float(pi_flat[zero_mask].mean()) if zero_mask.sum() > 0 else 0.0
+    pi_zero_sd = float(pi_flat[zero_mask].std()) if zero_mask.sum() > 0 else 0.0
     pi_non_zero = float(pi_flat[non_zero_mask].mean()) if non_zero_mask.sum() > 0 else 0.0
+    pi_non_zero_sd = float(pi_flat[non_zero_mask].std()) if non_zero_mask.sum() > 0 else 0.0
+    
+    # Compute means and standard deviations for mu
     mu_zero = float(mu_flat[zero_mask].mean()) if zero_mask.sum() > 0 else 0.0
+    mu_zero_sd = float(mu_flat[zero_mask].std()) if zero_mask.sum() > 0 else 0.0
     mu_non_zero = float(mu_flat[non_zero_mask].mean()) if non_zero_mask.sum() > 0 else 0.0
+    mu_non_zero_sd = float(mu_flat[non_zero_mask].std()) if non_zero_mask.sum() > 0 else 0.0
+    
+    # Compute mean and standard deviation for theta
     theta_mean = float(theta_flat.mean())
+    theta_sd = float(theta_flat.std())
 
     row = {
         'model_path': 'runtime_model',
@@ -321,11 +354,18 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
     row.update(to_serializable_metrics(split_metrics))
     row['mae'] = mae_mean
     row['mae_sd'] = mae_sd
+    if 'masked_loss' in split_metrics or masked_loss_sd > 0:
+        row['masked_loss_sd'] = masked_loss_sd
     row['pi_zero'] = pi_zero
+    row['pi_zero_sd'] = pi_zero_sd
     row['pi_non_zero'] = pi_non_zero
+    row['pi_non_zero_sd'] = pi_non_zero_sd
     row['mu_zero'] = mu_zero
+    row['mu_zero_sd'] = mu_zero_sd
     row['mu_non_zero'] = mu_non_zero
+    row['mu_non_zero_sd'] = mu_non_zero_sd
     row['theta'] = theta_mean
+    row['theta_sd'] = theta_sd
     return row
 
 

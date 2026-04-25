@@ -67,9 +67,11 @@ STRAINS = [
 ]
 
 
-def load_changepoints_for_strain(strain_name, threshold, window_size=100, overlap=50, base_path=None):
+def load_changepoints_for_strain(strain_name, threshold, window_size=100, overlap=50, muZ_threshold=0.25, base_path=None):
     """
-    Load change points for all chromosomes of a given strain at a specific threshold.
+    Load change points from merged segments for all chromosomes of a given strain.
+    
+    Extracts segment boundaries (both start and end indices) as changepoints.
     
     Parameters
     ----------
@@ -81,6 +83,8 @@ def load_changepoints_for_strain(strain_name, threshold, window_size=100, overla
         Window size parameter (default: 100)
     overlap : int, optional
         Overlap percentage (default: 50)
+    muZ_threshold : float, optional
+        muZ threshold for merged segments (default: 0.25)
     base_path : Path, optional
         Base path to the strains directory. If None, uses default.
         
@@ -96,24 +100,30 @@ def load_changepoints_for_strain(strain_name, threshold, window_size=100, overla
     changepoints = {}
     
     for chrom in ALL_CHROMOSOMES:
-        # Path to change point file
-        cp_file = (strain_path / chrom / f"{chrom}_distances" / f"window{window_size}" / 
-                   f"{chrom}_distances_ws{window_size}_ov{overlap}_th{threshold:.2f}.txt")
+        # Path to merged segments file
+        merged_seg_file = (strain_path / chrom / f"{chrom}_distances" / f"window{window_size}" / 
+                          "merged_segments" / f"{chrom}_th{threshold:.2f}_merged_segments_muZ{muZ_threshold:.2f}.csv")
         
-        if cp_file.exists():
-            # Read change points (one per line), skip metadata lines
-            cps = []
-            with open(cp_file, 'r') as f:
-                for line in f:
-                    line = line.strip()
-                    # Skip empty lines and lines containing metadata (scores:, theta_global:, etc.)
-                    if line and not any(line.startswith(prefix) for prefix in ['scores:', 'theta_global:', 'window_size:']):
-                        try:
-                            cps.append(int(line))
-                        except ValueError:
-                            # Skip lines that aren't valid integers
-                            continue
-            changepoints[chrom] = set(cps)
+        if merged_seg_file.exists():
+            # Read merged segments CSV
+            try:
+                df = pd.read_csv(merged_seg_file)
+                cps = set()
+                
+                # Extract all segment boundaries
+                for _, row in df.iterrows():
+                    start = int(row['start_index'])
+                    end = int(row['end_index_exclusive'])
+                    cps.add(start)
+                    cps.add(end)
+                
+                # Remove 0 if present (not a true changepoint, just the start)
+                cps.discard(0)
+                
+                changepoints[chrom] = cps
+            except Exception as e:
+                print(f"    Warning: Could not load {strain_name} {chrom} merged segments: {e}")
+                changepoints[chrom] = set()
         else:
             # Empty set if file doesn't exist
             changepoints[chrom] = set()
@@ -224,11 +234,11 @@ def compute_aggregated_nearest_breakpoint_distance(strain_cps_a, strain_cps_b):
     return mean_nearest_breakpoint_distance(strain_cps_a, strain_cps_b, chromosome_length)
 
 
-def load_essentiality_for_strain(strain_name, threshold, window_size=100, overlap=50, base_path=None):
+def load_essentiality_for_strain(strain_name, threshold, window_size=100, overlap=50, muZ_threshold=0.25, base_path=None):
     """
-    Load essentiality z-scores for all chromosomes of a given strain at a specific threshold.
+    Load essentiality z-scores from merged segments for all chromosomes of a given strain.
     
-    Creates a position-to-z-score mapping by reading segment_mu CSV files.
+    Creates a position-to-z-score mapping by reading merged segments CSV files.
     
     Parameters
     ----------
@@ -240,6 +250,8 @@ def load_essentiality_for_strain(strain_name, threshold, window_size=100, overla
         Window size parameter (default: 100)
     overlap : int, optional
         Overlap percentage (default: 50)
+    muZ_threshold : float, optional
+        muZ threshold for merged segments (default: 0.25)
     base_path : Path, optional
         Base path to the strains directory. If None, uses default.
         
@@ -260,20 +272,20 @@ def load_essentiality_for_strain(strain_name, threshold, window_size=100, overla
     total_valid_positions = 0
     
     for chrom in ALL_CHROMOSOMES:
-        # Path to segment_mu CSV file
-        segment_file = (strain_path / chrom / f"{chrom}_distances" / f"window{window_size}" / 
-                       "segment_mu" / f"{chrom}_distances_ws{window_size}_ov{overlap}_th{threshold:.2f}_segment_mu.csv")
+        # Path to merged segments CSV file
+        merged_seg_file = (strain_path / chrom / f"{chrom}_distances" / f"window{window_size}" / 
+                          "merged_segments" / f"{chrom}_th{threshold:.2f}_merged_segments_muZ{muZ_threshold:.2f}.csv")
         
-        if not segment_file.exists():
+        if not merged_seg_file.exists():
             # No essentiality data for this chromosome - create array of NaNs
             chrom_length = chromosome_length[chrom]
             essentiality_data[chrom] = np.full(chrom_length, np.nan)
             files_missing += 1
             continue
         
-        # Read segment data
+        # Read merged segment data
         try:
-            df = pd.read_csv(segment_file)
+            df = pd.read_csv(merged_seg_file)
             chrom_length = chromosome_length[chrom]
             
             # Initialize array with NaN
@@ -297,7 +309,7 @@ def load_essentiality_for_strain(strain_name, threshold, window_size=100, overla
             total_valid_positions += n_valid
             
         except Exception as e:
-            print(f"    Warning: Could not load {strain_name} {chrom} threshold {threshold}: {e}")
+            print(f"    Warning: Could not load {strain_name} {chrom} merged segments: {e}")
             chrom_length = chromosome_length[chrom]
             essentiality_data[chrom] = np.full(chrom_length, np.nan)
             files_missing += 1
@@ -388,7 +400,7 @@ def compute_essentiality_correlation(strain_ess_a, strain_ess_b, method='pearson
         return np.nan
 
 
-def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
+def compute_pairwise_metrics(strain_names, threshold, tolerance=100, muZ_threshold=0.25):
     """
     Compute all similarity metrics for all pairs of strains at a given threshold.
     
@@ -400,6 +412,8 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
         Threshold value to use
     tolerance : int, optional
         Tolerance window for Jaccard index (default: 100 bp)
+    muZ_threshold : float, optional
+        muZ threshold for merged segments (default: 0.25)
         
     Returns
     -------
@@ -422,16 +436,16 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100):
     ess_corr_pearson_matrix = np.zeros((n_strains, n_strains))
     ess_corr_spearman_matrix = np.zeros((n_strains, n_strains))
     
-    # Load change points for all strains
+    # Load change points for all strains from merged segments
     strain_changepoints = {}
     for strain in strain_names:
-        strain_changepoints[strain] = load_changepoints_for_strain(strain, threshold)
+        strain_changepoints[strain] = load_changepoints_for_strain(strain, threshold, muZ_threshold=muZ_threshold)
     
-    # Load essentiality data for all strains
+    # Load essentiality data for all strains from merged segments
     print(f"  Loading essentiality data for threshold {threshold}...")
     strain_essentiality = {}
     for strain in strain_names:
-        strain_essentiality[strain] = load_essentiality_for_strain(strain, threshold)
+        strain_essentiality[strain] = load_essentiality_for_strain(strain, threshold, muZ_threshold=muZ_threshold)
     
     # Compute pairwise metrics
     for i, strain_a in enumerate(strain_names):
@@ -622,7 +636,7 @@ def plot_heatmap(matrix_df, metric_name, threshold, output_dir, metric_short_nam
     print(f"  Saved heatmap: {output_file.name}")
 
 
-def plot_changepoint_counts(strain_names, thresholds, output_dir):
+def plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=0.25):
     """
     Create bar plots showing the number of change points for each strain at each threshold.
     
@@ -634,8 +648,10 @@ def plot_changepoint_counts(strain_names, thresholds, output_dir):
         Threshold values to process
     output_dir : Path
         Directory to save the figures
+    muZ_threshold : float, optional
+        muZ threshold for merged segments (default: 0.25)
     """
-    print("Counting change points for all strains...")
+    print("Counting change points from merged segments for all strains...")
     print()
     
     # Count change points for each strain and threshold
@@ -643,7 +659,7 @@ def plot_changepoint_counts(strain_names, thresholds, output_dir):
     
     for threshold in thresholds:
         for strain in strain_names:
-            strain_cps = load_changepoints_for_strain(strain, threshold)
+            strain_cps = load_changepoints_for_strain(strain, threshold, muZ_threshold=muZ_threshold)
             # Sum across all chromosomes
             total_cps = sum(len(cps) for cps in strain_cps.values())
             counts[threshold][strain] = total_cps
@@ -699,32 +715,34 @@ def plot_changepoint_counts(strain_names, thresholds, output_dir):
 
 def main():
     """
-    Main function to compare strains across multiple thresholds.
+    Main function to compare strains using merged segments.
     """
     # Configuration
     strain_names = STRAINS  # Use the module-level constant
     
-    thresholds = [0.5, 1.0, 1.5, 2.0, 2.5, 3, 3.5, 4, 4.5, 5]  # Thresholds to analyze
+    thresholds = [3.0]  # Thresholds to analyze (using merged segments)
     tolerance = 100  # bp tolerance for Jaccard with tolerance
+    muZ_threshold = 0.25  # muZ threshold for merged segments
     
     # Create output directory
-    output_dir = Path(__file__).parent / "compare_strains2"
+    output_dir = Path(__file__).parent / "compare_strains_merged_segments"
     output_dir.mkdir(exist_ok=True)
     
     print("=" * 80)
-    print("Comparing Change Point Detection Results Across Strains")
+    print("Comparing Strains Using Merged Segments")
     print("=" * 80)
     print(f"Strains: {len(strain_names)}")
     for strain in strain_names:
         print(f"  - {strain}")
     print(f"\nThresholds: {thresholds}")
+    print(f"muZ threshold: {muZ_threshold}")
     print(f"Tolerance: {tolerance} bp")
     print(f"Output directory: {output_dir}")
     print("=" * 80)
     print()
     
     # Plot change point counts for all strains at all thresholds
-    plot_changepoint_counts(strain_names, thresholds, output_dir)
+    plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=muZ_threshold)
     
     # Store all results for CSV export
     all_results = {
@@ -742,7 +760,7 @@ def main():
         print(f"Processing threshold {threshold:.1f}...")
         
         # Compute pairwise metrics (returns dict of DataFrames)
-        metrics = compute_pairwise_metrics(strain_names, threshold, tolerance=tolerance)
+        metrics = compute_pairwise_metrics(strain_names, threshold, tolerance=tolerance, muZ_threshold=muZ_threshold)
         
         # Store results
         for metric_key, df in metrics.items():

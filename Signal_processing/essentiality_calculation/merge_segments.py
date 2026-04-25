@@ -6,7 +6,7 @@ from typing import Dict, List
 import numpy as np
 
 
-DEFAULT_STRAINS = ["strain_yEK23", "strain_yEK19", "strain_FD"]
+DEFAULT_STRAINS = ["strain_yEK23", "strain_yEK19", "strain_FD", "strain_dnrp", "strain_ylic137", "strain_yTW001", "strain_yWT03a", "strain_yWT04a"]
 
 
 def format_threshold(value: float) -> str:
