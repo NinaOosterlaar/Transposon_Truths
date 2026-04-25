@@ -22,26 +22,24 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
 noise_levels = [0.10, 0.15, 0.25, 0.5, 0.75, 0.9]  # Noise levels to test (as percentages of data points to corrupt)
 
 
-# MODEL_PATH = "AE/results/models/ZINBAE_20260226_195349_noconv_layers752_ep141.pt"
-MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
-# # # # MODEL_PATH = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep141.pt"
-# # # MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff1.000.pt"
+# !!! COMBINED
 
+
+MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
 # Preprocessing parameters 
 FEATURES = ['Centr']
-BIN_SIZE = 19
+BIN_SIZE = 20
 MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = 894
+STEP_SIZE = 500
 
 # Training parameters 
-BATCH_SIZE = 128
+BATCH_SIZE = 32
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.7
-MASKED_RECON_WEIGHT = 0.00872  # gamma
+PI_THRESHOLD = 0.53
+MASKED_RECON_WEIGHT = 0.079  # gamma
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 1e-5  # alpha
-
 
 # Data caching options
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
