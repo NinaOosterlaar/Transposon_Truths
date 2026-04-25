@@ -22,27 +22,34 @@ train_chromosomes = ['ChrIII', 'ChrIV', 'ChrIX', 'ChrVI', 'ChrVII', 'ChrX', 'Chr
   # No validation set needed for testing
 noise_levels = [0.10, 0.15, 0.25, 0.5, 0.75, 0.9]  # Noise levels to train and test
 
-# Preprocessing parameters 
+# Preprocessing parameters (from main.py active config)
 FEATURES = ['Centr']
 BIN_SIZE = 20
 MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = 500
+STEP_SIZE = int(DATA_POINT_LENGTH * 0.25)  # 500
 
 # Model architecture
 LATENT_DIM = 16
-HIDDEN_DIMS = [1600]  # Example: [1600] for single hidden layer
-USE_CONV = False
+HIDDEN_DIMS = [1600]
+USE_CONV = True
+CONV_CHANNEL = 118
+POOL_SIZE = 8
+POOLING_OPERATION = 'max'
+KERNEL_SIZE = 9
+PADDING = 'same'
+STRIDE = 1
 
-# Training parameters 
+# Training parameters (from main.py active config)
 BATCH_SIZE = 32
 NUM_EPOCHS = 144
-LEARNING_RATE = 1e-3
+LEARNING_RATE = 0.00002
 PI_THRESHOLD = 0.53
-MASKED_RECON_WEIGHT = 0.079  # gamma
+MASKED_RECON_WEIGHT = 0.078  # gamma
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 1e-5  # alpha
 MU_OFFSET = 0.0
+DROPOUT_RATE = 0.0
 
 # Model saving/loading
 MODEL_DIR = "AE/results/models"
@@ -338,21 +345,7 @@ def train_new_model(train_set, noise_level, chrom, chrom_embedding):
     """Train a new ZINBAE model with the specified noise level."""
     print(f"\nTraining new model with noise_level={noise_level}")
     
-    # Calculate number of input features
-    n_features = train_set.shape[2]  # Features from preprocessing
-    input_size = n_features  # Will include Centr + chromosome embedding if chrom=True
-    
-    # Create model
-    model = ZINBAE(
-        input_size=input_size,
-        hidden_dims=HIDDEN_DIMS,
-        latent_dim=LATENT_DIM,
-        seq_length=DATA_POINT_LENGTH,
-        use_conv=USE_CONV,
-        mu_offset=MU_OFFSET,
-    )
-    
-    # Create training dataloader
+    # Create training dataloader first to calculate feature dimension
     train_dataloader = dataloader_from_array(
         train_set,
         batch_size=BATCH_SIZE,
@@ -361,6 +354,26 @@ def train_new_model(train_set, noise_level, chrom, chrom_embedding):
         chrom=chrom,
         sample_fraction=1.0,
         denoise_percentage=noise_level,
+    )
+    
+    # Calculate feature dimension the same way as main.py
+    feature_dim = train_dataloader.dataset.tensors[0].shape[2] + 1
+    if chrom and chrom_embedding is not None:
+        feature_dim += chrom_embedding.embedding.embedding_dim
+    
+    # Create model with same architecture as main.py
+    model = ZINBAE(
+        seq_length=DATA_POINT_LENGTH,
+        feature_dim=feature_dim,
+        layers=HIDDEN_DIMS,
+        use_conv=USE_CONV,
+        conv_channels=CONV_CHANNEL,
+        pool_size=POOL_SIZE,
+        kernel_size=KERNEL_SIZE,
+        padding=PADDING,
+        stride=STRIDE,
+        dropout=DROPOUT_RATE,
+        mu_offset=MU_OFFSET,
     )
     
     # Train the model
@@ -387,11 +400,16 @@ def train_new_model(train_set, noise_level, chrom, chrom_embedding):
     model_path = os.path.join(MODEL_DIR, model_filename)
     
     model_config = {
-        'input_size': input_size,
-        'hidden_dims': HIDDEN_DIMS,
-        'latent_dim': LATENT_DIM,
         'seq_length': DATA_POINT_LENGTH,
+        'feature_dim': feature_dim,
+        'layers': HIDDEN_DIMS,
         'use_conv': USE_CONV,
+        'conv_channels': CONV_CHANNEL,
+        'pool_size': POOL_SIZE,
+        'kernel_size': KERNEL_SIZE,
+        'padding': PADDING,
+        'stride': STRIDE,
+        'dropout': DROPOUT_RATE,
         'mu_offset': MU_OFFSET,
     }
     
