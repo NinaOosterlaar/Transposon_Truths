@@ -330,14 +330,20 @@ def evaluate_split_for_noise(model, split_name, split_set, noise_level, chrom, c
 
 
 def find_existing_model(noise_level, model_dir=MODEL_DIR):
-    """Find an existing model trained with the specified noise level."""
-    # Search for models with the pattern noise{noise_level:.3f}
-    pattern = f"{model_dir}/ZINBAE_*noise{noise_level:.3f}*.pt"
+    """Find an existing model trained with the specified noise level and matching architecture."""
+    # Build more specific pattern to match current architecture
+    layers_str = "_".join(map(str, HIDDEN_DIMS))
+    
+    # Search for models with matching layers, epochs, and noise level
+    pattern = f"{model_dir}/ZINBAE_layers{layers_str}_ep{NUM_EPOCHS}_noise{noise_level:.3f}*.pt"
     matching_models = glob.glob(pattern)
     
     if matching_models:
-        # Return the first matching model (or could add logic to pick the best)
+        # Return the first matching model
+        print(f"  Pattern used: ZINBAE_layers{layers_str}_ep{NUM_EPOCHS}_noise{noise_level:.3f}*.pt")
         return matching_models[0]
+    
+    print(f"  No model found matching: ZINBAE_layers{layers_str}_ep{NUM_EPOCHS}_noise{noise_level:.3f}*.pt")
     return None
 
 
