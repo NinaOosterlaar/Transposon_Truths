@@ -480,16 +480,52 @@ def train_and_evaluate_all_noise_levels():
         # Check if model exists
         existing_model_path = find_existing_model(training_noise_level)
         
+        model = None
+        model_config = None
+        
         if existing_model_path:
             print(f"Found existing model: {existing_model_path}")
-            checkpoint = torch.load(existing_model_path, map_location='cpu', weights_only=False)
-            model_config = checkpoint['model_config']
-            model = ZINBAE(**model_config)
-            model.load_state_dict(checkpoint['model_state_dict'])
-            print("Model loaded successfully!")
-        else:
-            print(f"No existing model found for noise_level={training_noise_level}")
-            print("Training new model...")
+            try:
+                checkpoint = torch.load(existing_model_path, map_location='cpu', weights_only=False)
+                model_config = checkpoint['model_config']
+                
+                # Calculate expected feature dimension for current preprocessing
+                temp_dataloader = dataloader_from_array(
+                    train_set[:1],  # Just one sample to get dimensions
+                    batch_size=1,
+                    shuffle=False,
+                    zinb=True,
+                    chrom=chrom,
+                    sample_fraction=1.0,
+                    denoise_percentage=training_noise_level,
+                )
+                expected_feature_dim = temp_dataloader.dataset.tensors[0].shape[2] + 1
+                if chrom and chrom_embedding is not None:
+                    expected_feature_dim += chrom_embedding.embedding.embedding_dim
+                
+                # Check if model config matches current preprocessing
+                loaded_feature_dim = model_config.get('feature_dim')
+                if loaded_feature_dim != expected_feature_dim:
+                    print(f"WARNING: Model feature_dim mismatch!")
+                    print(f"  Loaded model expects: {loaded_feature_dim}")
+                    print(f"  Current preprocessing produces: {expected_feature_dim}")
+                    print(f"  Skipping incompatible model, will train new one")
+                    model = None
+                else:
+                    model = ZINBAE(**model_config)
+                    model.load_state_dict(checkpoint['model_state_dict'])
+                    print("Model loaded successfully!")
+            except Exception as e:
+                print(f"Error loading model: {e}")
+                print("Will train new model instead")
+                model = None
+        
+        if model is None:
+            if existing_model_path:
+                print(f"Existing model incompatible, training new model...")
+            else:
+                print(f"No existing model found for noise_level={training_noise_level}")
+                print("Training new model...")
             model, model_config = train_new_model(
                 train_set=train_set,
                 noise_level=training_noise_level,
