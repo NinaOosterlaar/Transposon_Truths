@@ -158,7 +158,7 @@ Data_exploration/results/
 /Data_exploration/plot_SATAY
 /Signal_processing/final/results
 /Signal_processing/final/SATAY_synthetic
-/Signal_processing/strains
+/SATAY_CPD_results/CPD_SATAY_results
 /Signal_processing/tests
 /Signal_processing/alternative
 /Signal_processing/alternative
@@ -174,3 +174,4 @@ Data_exploration/results/
 /results
 *.png
 *.pdf
+*.csv
