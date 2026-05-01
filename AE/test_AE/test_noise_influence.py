@@ -58,8 +58,8 @@ MODEL_DIR = "AE/results/models"
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
 
 # Output directory for optional plots and for the noise sweep CSV
-OUTPUT_DIR = "AE/results/final"
-RESULTS_CSV_PATH = "AE/results/noise_sweep_metrics.csv"
+OUTPUT_DIR = "AE/results/extra_results/final"
+RESULTS_CSV_PATH = "AE/results/main_results/noise_sweep_metrics.csv"
 PLOT_SWEEP = False
 PROCESSED_DATA_DIR = "Data/processed_data"  # Where preprocessed data will be cached
 # ================================================

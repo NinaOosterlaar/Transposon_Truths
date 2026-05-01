@@ -147,7 +147,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-dir",
         type=Path,
-        default=Path("Signal_processing/strains"),
+        default=Path("SATAY_CPD_results/CPD_SATAY_results"),
         help="Base directory containing strain_* folders.",
     )
     parser.add_argument(

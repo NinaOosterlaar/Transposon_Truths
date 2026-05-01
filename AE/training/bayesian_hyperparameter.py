@@ -132,7 +132,7 @@ RANDOM_STATE = 42  # For reproducibility
 N_INITIAL_POINTS = 10  # Random exploration before Bayesian optimization
 
 # Results directory
-RESULTS_DIR = "AE/results/bayesian_optimization"
+RESULTS_DIR = "AE/results/extra_results/bayesian_optimization"
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 

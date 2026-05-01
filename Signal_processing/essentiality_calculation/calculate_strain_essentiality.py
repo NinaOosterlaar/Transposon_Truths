@@ -392,7 +392,7 @@ def parse_arguments():
     parser.add_argument(
         "--base_results_folder",
         type=str,
-        default="Signal_processing/strains",
+        default="SATAY_CPD_results/CPD_SATAY_results",
         help="Folder containing change point detection results.",
     )
     parser.add_argument(
@@ -436,7 +436,7 @@ def parse_arguments():
     parser.add_argument(
         "--summary_output",
         type=str,
-        default="Signal_processing/essentiality_calculation/strain_essentiality_summary.csv",
+        default="Signal_processing/results_new/essentiality_calculation/strain_essentiality_summary.csv",
         help="Path for summary statistics CSV.",
     )
     parser.add_argument(

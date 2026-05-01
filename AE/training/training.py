@@ -519,7 +519,7 @@ def parser_args():
     parser.add_argument('--filename', type=str, default='',
                         help='Base filename for loading data (default: empty string)')
     parser.add_argument('--results_subdir', type=str, default='',
-                        help='Subdirectory name for organizing results (e.g., "small_data"). Creates AE/results/training/<subdir>/ and AE/results/testing/<subdir>/')
+                        help='Subdirectory name for organizing results (e.g., "small_data"). Creates AE/results/extra_results/training/<subdir>/ and AE/results/extra_results/testing/<subdir>/')
     parser.add_argument('--denoise_percent', type=float, default=0,
                         help='Percentage of non-zero values to randomly set to zero for denoising (0.0 to 1.0, default: 0.3)')
     parser.add_argument('--sample_fraction', type=float, default=0.5,

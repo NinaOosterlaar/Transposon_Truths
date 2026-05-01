@@ -259,7 +259,7 @@ def saturation_against_bin_size(data, bin_sizes, plot = True):
         plot_saturation_vs_bin_size(densities, bin_sizes)
     return densities
 
-def plot_saturation_vs_bin_size(densities, bin_sizes, output_folder="AE/results/"):
+def plot_saturation_vs_bin_size(densities, bin_sizes, output_folder="AE/results/extra_results/Saturation/"):
     """Plot saturation against bin sizes for different datasets.
     For each dataset create a plot that shows both the moving_average and binned values.
     Also show a plot with all datasets together for comparison, one with moving_average and one with binned.
@@ -268,19 +268,6 @@ def plot_saturation_vs_bin_size(densities, bin_sizes, output_folder="AE/results/
         densities (Dictionary): Saturation densities per dataset and bin size.
         bin_sizes (list): List of bin sizes used.
     """
-    # for dataset in densities:
-    #     plt.figure()
-    #     plt.plot(bin_sizes, densities[dataset]['bins'], marker='o', label='Binned')
-    #     plt.plot(bin_sizes, densities[dataset]['moving_average'], marker='o', label='Moving Average')
-    #     plt.xlabel('Bin Size')
-    #     plt.ylabel('Saturation')
-    #     plt.title(f'Saturation vs Bin Size for {dataset}')
-    #     plt.legend()
-    #     plt.grid(True)
-    #     plt.tight_layout()
-    #     # Save plot
-    #     plt.savefig(os.path.join(output_folder, f"saturation_vs_bin_size_{dataset}.png"))
-    # Plot binned saturation for all datasets
     fig, ax = plt.subplots(figsize=(12, 8))
     for dataset in densities:
         ax.plot(bin_sizes, densities[dataset]['bins'], marker='o', label=dataset, markersize=4)
@@ -352,7 +339,7 @@ if __name__ == "__main__":
     # # Save densities to a file
     # with open(os.path.join(output_folder, "saturation_densities.json"), 'w') as f:
     #     json.dump(densities, f, indent=4)
-    with open("AE/results/saturation_densities.json", 'r') as f:
+    with open("AE/results/extra_results/Saturation/saturation_densities.json", 'r') as f:
         densities = json.load(f)
     plot_saturation_vs_bin_size(densities, bin_sizes)
     

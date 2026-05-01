@@ -8,7 +8,7 @@ from AE.preprocessing.preprocessing import preprocess_with_split
 from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
 from AE.training.training import test
-from AE.reconstruct_output import OutputReconstructor
+from AE.reconstruction.reconstruct_output import OutputReconstructor
 from sklearn.metrics import mean_absolute_error, r2_score
 from AE.plotting.results_ZINB import density_plots, masked_values_analysis
 import matplotlib.pyplot as plt
@@ -118,7 +118,7 @@ REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 USE_CACHED_DATA = True  # Set to True after first run to use cached data with correct parameters
 
 # Output directory for results and plots
-OUTPUT_DIR = "AE/results/final"  # Where plots and metrics will be saved
+OUTPUT_DIR = "AE/results/extra_results/final"  # Where plots and metrics will be saved
 MU_OFFSET = 0
 PROCESSED_DATA_DIR = "Data/processed_data"  # Where preprocessed data will be cached
 RECONSTRUCT = True  # Whether to reconstruct genomic coordinates from predictions and save as CSV

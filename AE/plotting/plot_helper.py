@@ -53,9 +53,9 @@ def prepare_output_dirs(save_dir=None, subdir="testing", name=""):
     """
     if save_dir is None:
         if name:
-            save_dir = os.path.join(AE_DIR, 'results', subdir, name)
+            save_dir = os.path.join(AE_DIR, 'results', 'extra_results', subdir, name)
         else:
-            save_dir = os.path.join(AE_DIR, 'results', subdir)
+            save_dir = os.path.join(AE_DIR, 'results', 'extra_results', subdir)
     else:
         save_dir = os.path.dirname(save_dir) if os.path.isfile(save_dir) else save_dir
     

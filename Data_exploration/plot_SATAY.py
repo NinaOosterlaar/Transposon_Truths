@@ -344,7 +344,7 @@ if __name__ == "__main__":
     pred = retrieve_pred_from_cpd(window_size, threshold, base_dir)
     in_dir = "Data/combined_strains/strain_yEK23"
     # out_dir = "Data_exploration/plot_SATAY"
-    out_dir_figures = "Data_exploration/plot_SATAY/version2"
+    out_dir_figures = "Data_exploration/plot_centromere_windows/version2"
     out_dir_samples = "Signal_processing/sample_data/Centromere_region"
 
     for chrom in CHROMS:

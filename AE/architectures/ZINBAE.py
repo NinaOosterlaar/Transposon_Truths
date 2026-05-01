@@ -170,12 +170,6 @@ class ZINBAE(nn.Module):
         pi = torch.sigmoid(self.pi_layer(D))
         pi = pi.clamp(1e-5, 1 - 1e-5)
 
-        
-        # apply size factors to μ
-        # if size_factors.dim() == 1:
-        #     size_factors = size_factors.unsqueeze(1)  # (batch, 1)
-        # mu = mu_hat * size_factors                   # broadcast over seq_length
-        
         return mu, theta, pi, z
     
 class ZINBVAE(nn.Module):

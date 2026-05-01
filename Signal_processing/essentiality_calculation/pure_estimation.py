@@ -122,6 +122,23 @@ def parse_result_filename(filename):
 	}
 
 
+def find_window_folders(root_folder, window_size=None):
+	"""Recursively find all folders starting with 'window' under root_folder.
+	
+	Args:
+		root_folder: Root directory to search
+		window_size: Optional window size to filter (e.g., 100 for 'window100')
+	"""
+	window_folders = []
+	for dirpath, dirnames, _ in os.walk(root_folder):
+		for dirname in dirnames:
+			if dirname.startswith("window"):
+				# If window_size is specified, only include matching folders
+				if window_size is None or dirname == f"window{window_size}":
+					window_folders.append(os.path.join(dirpath, dirname))
+	return sorted(window_folders)
+
+
 def estimate_segment_mu_fixed_theta(segment_data, theta_global, eps=1e-10, tol=1e-6, max_iter=200):
 	"""Estimate segment mu and pi with fixed theta using EM-style updates."""
 	segment_data = np.asarray(segment_data, dtype=np.float64)
@@ -234,9 +251,13 @@ def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, ma
 	return segment_rows
 
 
-def process_dataset(dataset_num, base_data_folder, base_results_folder, output_subdir, eps, tol, max_iter):
+def process_dataset(dataset_num, base_data_folder, base_results_folder, output_base_folder, output_subdir, window_size, eps, tol, max_iter, outlier_capping=True):
 	dataset_data_file = os.path.join(base_data_folder, str(dataset_num), "SATAY_with_pi.csv")
+	
+	# Try both naming conventions: "dataset_X" and "X"
 	dataset_results_folder = os.path.join(base_results_folder, str(dataset_num))
+	if not os.path.isdir(dataset_results_folder):
+		dataset_results_folder = os.path.join(base_results_folder, f"dataset_{dataset_num}")
 
 	if not os.path.exists(dataset_data_file):
 		print(f"Skipping dataset {dataset_num}: missing data file {dataset_data_file}")
@@ -248,20 +269,21 @@ def process_dataset(dataset_num, base_data_folder, base_results_folder, output_s
 		
 	data = read_count_data(dataset_data_file)
 	
-	# Remove top 1% outliers (non-zero values only)
-	data, outlier_threshold, n_outliers = remove_top_quantile_outliers(data, quantile=0.99)
-	if n_outliers > 0:
-		print(f"  Dataset {dataset_num}: capped {n_outliers} values ({100*n_outliers/len(data):.2f}%) above threshold {outlier_threshold:.1f}")
+	# Apply outlier capping if requested (default for real SATAY data)
+	if outlier_capping:
+		data, outlier_threshold, n_outliers = remove_top_quantile_outliers(data, quantile=0.99)
+		if n_outliers > 0:
+			print(f"  Dataset {dataset_num}: capped {n_outliers} values ({100*n_outliers/len(data):.2f}%) above threshold {outlier_threshold:.1f}")
+		else:
+			print(f"  Dataset {dataset_num}: no outliers detected (99th percentile = {outlier_threshold:.1f}")
 	else:
-		print(f"  Dataset {dataset_num}: no outliers detected (95th percentile = {outlier_threshold:.1f})")
+		print(f"  Dataset {dataset_num}: outlier capping disabled (using raw count data)")
 	
 	processed_files = 0
 
-	window_folders = [
-		os.path.join(dataset_results_folder, name)
-		for name in sorted(os.listdir(dataset_results_folder))
-		if os.path.isdir(os.path.join(dataset_results_folder, name)) and name.startswith("window")
-	]
+	# Recursively find all window folders (handles nested strain/chromosome/region structure)
+	# Filter by window_size if specified
+	window_folders = find_window_folders(dataset_results_folder, window_size=window_size)
 
 	for window_folder in window_folders:
 		result_files = [
@@ -272,7 +294,10 @@ def process_dataset(dataset_num, base_data_folder, base_results_folder, output_s
 		if not result_files:
 			continue
 
-		output_folder = os.path.join(window_folder, output_subdir)
+		# Mirror the input folder structure in the output folder
+		# Replace base_results_folder path with output_base_folder path
+		relative_path = os.path.relpath(window_folder, dataset_results_folder)
+		output_folder = os.path.join(output_base_folder, f"dataset_{dataset_num}", relative_path, output_subdir)
 		os.makedirs(output_folder, exist_ok=True)
 
 		for result_name in result_files:
@@ -315,14 +340,20 @@ def parse_arguments():
 	parser.add_argument(
 		"--base_data_folder",
 		type=str,
-		default="Signal_processing/final/SATAY_synthetic",
+		default="Data/SATAY_synthetic",
 		help="Folder containing SATAY synthetic datasets (1..10).",
 	)
 	parser.add_argument(
 		"--base_results_folder",
 		type=str,
-		default="Signal_processing/results/version3",
-		help="Folder containing version3 CPD outputs.",
+		default="Signal_processing/results_new/compare_window_performance",
+		help="Folder containing version3 CPD outputs (input).",
+	)
+	parser.add_argument(
+		"--output_base_folder",
+		type=str,
+		default="Signal_processing/results_new/essentiality_score",
+		help="Base folder where segment mu outputs will be written.",
 	)
 	parser.add_argument(
 		"--datasets",
@@ -337,9 +368,27 @@ def parse_arguments():
 		default="segment_mu",
 		help="Subfolder created inside each window folder for segment outputs.",
 	)
+	parser.add_argument(
+		"--window_size",
+		type=int,
+		default=100,
+		help="Window size to process (e.g., 100 for 'window100' folders). Set to None to process all.",
+	)
 	parser.add_argument("--eps", type=float, default=1e-10, help="Numerical epsilon.")
 	parser.add_argument("--tol", type=float, default=1e-6, help="Convergence tolerance for mu updates.")
 	parser.add_argument("--max_iter", type=int, default=200, help="Maximum EM iterations per segment.")
+	parser.add_argument(
+		"--outlier_capping",
+		action="store_true",
+		default=True,
+		help="Apply outlier capping (top 1%% quantile) to count data. Default: True for real SATAY data. Use --no-outlier_capping for synthetic data.",
+	)
+	parser.add_argument(
+		"--no-outlier_capping",
+		dest="outlier_capping",
+		action="store_false",
+		help="Disable outlier capping for synthetic data where ground truth is known.",
+	)
 	return parser.parse_args()
 
 
@@ -347,6 +396,7 @@ def main():
 	args = parse_arguments()
 	base_data_folder = resolve_path(args.base_data_folder)
 	base_results_folder = resolve_path(args.base_results_folder)
+	output_base_folder = resolve_path(args.output_base_folder)
 
 	total_files = 0
 	for dataset_num in args.datasets:
@@ -354,10 +404,13 @@ def main():
 			dataset_num=dataset_num,
 			base_data_folder=base_data_folder,
 			base_results_folder=base_results_folder,
+			output_base_folder=output_base_folder,
 			output_subdir=args.output_subdir,
+			window_size=args.window_size,
 			eps=args.eps,
 			tol=args.tol,
 			max_iter=args.max_iter,
+			outlier_capping=args.outlier_capping,
 		)
 
 	print(f"Done. Generated segment-mu outputs for {total_files} result files.")
