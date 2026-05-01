@@ -867,7 +867,7 @@ def plot_zinb_test_results(all_originals, all_reconstructions_mu,
     model_type : str
         Type of model ('ZINBAE' or 'ZINBVAE'). Default='ZINBAE'
     save_dir : str or None
-        Directory to save plots. If None, uses default 'AE/results/testing'
+        Directory to save plots. If None, uses default 'AE/results/extra_results/testing'
     n_examples : int
         Number of example reconstructions to plot. Default=5
     metrics : dict

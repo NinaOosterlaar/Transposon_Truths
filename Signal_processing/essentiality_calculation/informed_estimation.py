@@ -77,6 +77,23 @@ def parse_result_filename(filename):
 	}
 
 
+def find_window_folders(root_folder, window_size=None):
+	"""Recursively find all folders starting with 'window' under root_folder.
+	
+	Args:
+		root_folder: Root directory to search
+		window_size: Optional window size to filter (e.g., 100 for 'window100')
+	"""
+	window_folders = []
+	for dirpath, dirnames, _ in os.walk(root_folder):
+		for dirname in dirnames:
+			if dirname.startswith("window"):
+				# If window_size is specified, only include matching folders
+				if window_size is None or dirname == f"window{window_size}":
+					window_folders.append(os.path.join(dirpath, dirname))
+	return sorted(window_folders)
+
+
 def _pick_column_by_keyword(df, keyword, fallback_index):
 	keyword = keyword.lower()
 	for col in df.columns:
@@ -168,7 +185,7 @@ def estimate_segments_informed(
 					"length": 0,
 					"raw_mean": np.nan,
 					"centromere_mid_distance": np.nan,
-					"pi_centromere": np.nan,
+					"centromere_density": np.nan,
 					"segment_nucleosome_density": np.nan,
 					"global_nucleosome_density": global_nucl_density,
 					"pi_informed": np.nan,
@@ -183,7 +200,7 @@ def estimate_segments_informed(
 		centr_dist_middle = int(centromere_distances[middle])
 		centr_dist_middle = min(max(centr_dist_middle, cmin), cmax)
 
-		pi_centromere = interpolate_density(
+		centromere_density = interpolate_density(
 			centr_dist_middle,
 			centromere_lookup_df,
 			"Centromere_Distance_Bin",
@@ -192,8 +209,10 @@ def estimate_segments_informed(
 
 		seg_nucl_density = float(distance_to_density.loc[seg_nucl_dist].mean())
 		pi_informed = float(
-			np.clip(pi_centromere * (seg_nucl_density / global_nucl_density), eps, 1.0 - eps)
+			np.clip(centromere_density * (seg_nucl_density / global_nucl_density), eps, 1.0 - eps)
 		)
+
+		pi_informed = 1 - pi_informed
 
 		raw_mean = float(np.mean(segment))
 		mu_informed = float(np.clip(raw_mean / max(1.0 - pi_informed, eps), eps, None))
@@ -206,7 +225,7 @@ def estimate_segments_informed(
 				"length": end - start,
 				"raw_mean": raw_mean,
 				"centromere_mid_distance": centr_dist_middle,
-				"pi_centromere": pi_centromere,
+				"centromere_density": centromere_density,
 				"segment_nucleosome_density": seg_nucl_density,
 				"global_nucleosome_density": global_nucl_density,
 				"pi_informed": pi_informed,
@@ -217,12 +236,16 @@ def estimate_segments_informed(
 	return segment_rows
 
 
-def process_dataset(dataset_num, base_data_folder, base_results_folder, output_subdir, eps):
+def process_dataset(dataset_num, base_data_folder, base_results_folder, output_base_folder, output_subdir, window_size, eps):
 	dataset_folder = os.path.join(base_data_folder, str(dataset_num))
 	dataset_data_file = os.path.join(dataset_folder, "SATAY_with_pi.csv")
 	nucleosome_lookup_file = os.path.join(dataset_folder, "density_vs_distance_nucleosome_density.csv")
 	centromere_lookup_file = os.path.join(dataset_folder, "density_vs_distance_centromere_density.csv")
+	
+	# Try both naming conventions: "dataset_X" and "X"
 	dataset_results_folder = os.path.join(base_results_folder, str(dataset_num))
+	if not os.path.isdir(dataset_results_folder):
+		dataset_results_folder = os.path.join(base_results_folder, f"dataset_{dataset_num}")
 
 	missing = [
 		path
@@ -250,11 +273,9 @@ def process_dataset(dataset_num, base_data_folder, base_results_folder, output_s
 
 	processed_files = 0
 
-	window_folders = [
-		os.path.join(dataset_results_folder, name)
-		for name in sorted(os.listdir(dataset_results_folder))
-		if os.path.isdir(os.path.join(dataset_results_folder, name)) and name.startswith("window")
-	]
+	# Recursively find all window folders (handles nested strain/chromosome/region structure)
+	# Filter by window_size if specified
+	window_folders = find_window_folders(dataset_results_folder, window_size=window_size)
 
 	for window_folder in window_folders:
 		result_files = [
@@ -265,7 +286,10 @@ def process_dataset(dataset_num, base_data_folder, base_results_folder, output_s
 		if not result_files:
 			continue
 
-		output_folder = os.path.join(window_folder, output_subdir)
+		# Mirror the input folder structure in the output folder
+		# Replace base_results_folder path with output_base_folder path
+		relative_path = os.path.relpath(window_folder, dataset_results_folder)
+		output_folder = os.path.join(output_base_folder, f"dataset_{dataset_num}", relative_path, output_subdir)
 		os.makedirs(output_folder, exist_ok=True)
 
 		for result_name in result_files:
@@ -314,14 +338,20 @@ def parse_arguments():
 	parser.add_argument(
 		"--base_data_folder",
 		type=str,
-		default="Signal_processing/final/SATAY_synthetic",
+		default="Data/SATAY_synthetic",
 		help="Folder containing SATAY synthetic datasets (1..10).",
 	)
 	parser.add_argument(
 		"--base_results_folder",
 		type=str,
-		default="Signal_processing/results/version3",
-		help="Folder containing version3 CPD outputs.",
+		default="Signal_processing/results_new/compare_window_performance",
+		help="Folder containing version3 CPD outputs (input).",
+	)
+	parser.add_argument(
+		"--output_base_folder",
+		type=str,
+		default="Signal_processing/results_new/essentiality_score",
+		help="Base folder where segment mu outputs will be written.",
 	)
 	parser.add_argument(
 		"--datasets",
@@ -336,6 +366,12 @@ def parse_arguments():
 		default="segment_mu_informed",
 		help="Subfolder created inside each window folder for informed segment outputs.",
 	)
+	parser.add_argument(
+		"--window_size",
+		type=int,
+		default=100,
+		help="Window size to process (e.g., 100 for 'window100' folders). Set to None to process all.",
+	)
 	parser.add_argument("--eps", type=float, default=1e-10, help="Numerical epsilon.")
 	return parser.parse_args()
 
@@ -344,6 +380,7 @@ def main():
 	args = parse_arguments()
 	base_data_folder = resolve_path(args.base_data_folder)
 	base_results_folder = resolve_path(args.base_results_folder)
+	output_base_folder = resolve_path(args.output_base_folder)
 
 	total_files = 0
 	for dataset_num in args.datasets:
@@ -351,7 +388,9 @@ def main():
 			dataset_num=dataset_num,
 			base_data_folder=base_data_folder,
 			base_results_folder=base_results_folder,
+			output_base_folder=output_base_folder,
 			output_subdir=args.output_subdir,
+			window_size=args.window_size,
 			eps=args.eps,
 		)
 

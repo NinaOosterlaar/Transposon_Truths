@@ -10,7 +10,7 @@ from AE.preprocessing.preprocessing import preprocess_with_split
 from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
 from AE.training.training import train, test
-from AE.reconstruct_output import OutputReconstructor
+from AE.reconstruction.reconstruct_output import OutputReconstructor
 
 
 SPLIT_ON = 'Chrom'
@@ -98,28 +98,28 @@ VAL_CHROM = ['ChrVIII', 'ChrXIV', 'ChrXV']  # No validation set
 
 INPUT_FOLDER = "Data/combined_strains"
 FEATURES = ['Centr']
-BIN_SIZE = 19
+BIN_SIZE = 20
 MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = int(DATA_POINT_LENGTH * 0.45)
+STEP_SIZE = int(DATA_POINT_LENGTH * 0.25)
 SAMPLE_FRACTION = 1.0
 
-USE_CONV = False
-CONV_CHANNEL = 85
+USE_CONV = True
+CONV_CHANNEL = 118
 POOL_SIZE = 8
 POOLING_OPERATION = 'max'
-KERNEL_SIZE = 7
+KERNEL_SIZE = 9
 PADDING = 'same'
 STRIDE = 1
 
-EPOCHS = 141
-BATCH_SIZE = 128
+EPOCHS = 144
+BATCH_SIZE = 32
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.7
-MASKED_RECON_WEIGHT = 0.008  # gamma: weight for masked reconstruction loss
-LEARNING_RATE = 1e-4
-DROPOUT_RATE = 0.008
-LAYERS = [752]
+PI_THRESHOLD = 0.53
+MASKED_RECON_WEIGHT = 0.078
+LEARNING_RATE = 0.00002
+DROPOUT_RATE = 0.0
+LAYERS = [1600]
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 1e-5
 MU_OFFSET = 0.0
@@ -370,7 +370,7 @@ def main_with_datasets(
         print(f"Dataset size: {len(eval_dataloader.dataset)}")
         print(f"{'='*50}\n")
 
-        eval_predictions, _, split_eval_metrics, eval_mu_raw, eval_theta, eval_pi = test(
+        eval_predictions, _, split_eval_metrics, eval_mu_raw, eval_theta, eval_pi, _, _ = test(
             model=zinbae_model,
             dataloader=eval_dataloader,
             pi_threshold=pi_threshold,

@@ -6,7 +6,8 @@ import shutil
 import torch
 import numpy as np
 import pandas as pd
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import argparse
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from AE.preprocessing.preprocessing import preprocess_with_split
 from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
@@ -33,29 +34,29 @@ test_chroms = ['ChrI', 'ChrII', 'ChrV', 'ChrXII']
 # REGULARIZER = 'none'
 # REGULARIZATION_WEIGHT = 4.22e-05  # alpha - exact value
 
-MODEL_PATH = "AE/results/models/ZINBAE_layers752_ep141_noise0.150_muoff0.000.pt"
+MODEL_PATH = "AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000.pt"
 
 # Preprocessing parameters
 FEATURES = ['Centr']
-BIN_SIZE = 19
+BIN_SIZE = 20
 MOVING_AVERAGE = True
 DATA_POINT_LENGTH = 2000
-STEP_SIZE = 894
+STEP_SIZE = 500
 
 # Training parameters 
-BATCH_SIZE = 128
+BATCH_SIZE = 32
 NOISE_LEVEL = 0.15
-PI_THRESHOLD = 0.7
-MASKED_RECON_WEIGHT = 0.00872  # gamma
+PI_THRESHOLD = 0.53
+MASKED_RECON_WEIGHT = 0.079  # gamma
 REGULARIZER = 'none'
 REGULARIZATION_WEIGHT = 1e-5  # alpha
 
 STRAIN = "yEK23"
 RAW_DATA_DIR = "Data/distances_with_zeros_new"   # source data
-TEMP_DIR = "Data/temp_saturation"                # temporary combined datasets
-OUTPUT_DIR = "AE/results/saturation_skipzeros"             # where CSV results are saved
+TEMP_DIR = "Data/temp_saturation4"                # temporary combined datasets
+OUTPUT_DIR = "AE/results/main_results/saturation"             # where CSV results are saved
 
-MAX_COMBINATIONS = 8   # max combos sampled per group size
+MAX_COMBINATIONS = 10  # max combos sampled per group size
 RANDOM_SEED = 42
 
 # ====================================
@@ -258,7 +259,7 @@ def _eval_split(model, data_split, use_chrom, chrom_embedding, split_label):
         denoise_percentage=NOISE_LEVEL,
     )
 
-    _, _, metrics, _, _, _ = test(
+    _, _, metrics, _, _, _, _, _ = test(
         model=model,
         dataloader=dataloader,
         chrom=use_chrom,
@@ -310,7 +311,13 @@ def evaluate_combination(model):
     return combined_metrics if combined_metrics else None
 
 
-def run_saturation_test():
+def run_saturation_test(k_value=None):
+    """Run saturation test for a specific k value or all k values.
+    
+    Args:
+        k_value: If provided, only process combinations of size k_value.
+                 If None, process all k values from 1 to n_datasets.
+    """
     rng = random.Random(RANDOM_SEED)
 
     strain_dir, all_folders = get_dataset_folders(STRAIN)
@@ -319,6 +326,16 @@ def run_saturation_test():
     for f in all_folders:
         print(f"  {f}")
 
+    # Determine which k values to process
+    if k_value is not None:
+        if k_value < 1 or k_value > n_datasets:
+            raise ValueError(f"k_value={k_value} is out of range [1, {n_datasets}]")
+        k_range = [k_value]
+        print(f"\n*** Processing only k={k_value} (array job mode) ***\n")
+    else:
+        k_range = range(1, n_datasets + 1)
+        print(f"\n*** Processing all k values from 1 to {n_datasets} ***\n")
+
     model = load_model()
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -326,7 +343,7 @@ def run_saturation_test():
 
     all_results = []  # one row per evaluated combination
 
-    for k in range(1, n_datasets + 1):
+    for k in k_range:
         all_combos = list(itertools.combinations(range(n_datasets), k))
         selected = rng.sample(all_combos, min(MAX_COMBINATIONS, len(all_combos)))
 
@@ -367,7 +384,12 @@ def run_saturation_test():
             print(f"  Metrics: { {mk: round(mv, 6) for mk, mv in metrics.items()} }")
 
     # --- Save detailed results (one row per combination) ---
-    detailed_path = os.path.join(OUTPUT_DIR, "saturation_results_detailed.csv")
+    # If processing only one k value, include k in filename
+    if k_value is not None:
+        detailed_path = os.path.join(OUTPUT_DIR, f"saturation_results_detailed_k{k_value}.csv")
+    else:
+        detailed_path = os.path.join(OUTPUT_DIR, "saturation_results_detailed.csv")
+        
     if all_results:
         fieldnames = list(all_results[0].keys())
         with open(detailed_path, 'w', newline='') as f:
@@ -382,7 +404,7 @@ def run_saturation_test():
                    if k not in _non_metric]
 
     aggregated = []
-    for k in range(1, n_datasets + 1):
+    for k in k_range:
         group = [r for r in all_results if r['n_datasets'] == k]
         if not group:
             continue
@@ -401,7 +423,12 @@ def run_saturation_test():
 
         aggregated.append(row)
 
-    agg_path = os.path.join(OUTPUT_DIR, "saturation_results_aggregated.csv")
+    # If processing only one k value, include k in filename
+    if k_value is not None:
+        agg_path = os.path.join(OUTPUT_DIR, f"saturation_results_aggregated_k{k_value}.csv")
+    else:
+        agg_path = os.path.join(OUTPUT_DIR, "saturation_results_aggregated.csv")
+        
     if aggregated:
         fieldnames = list(aggregated[0].keys())
         with open(agg_path, 'w', newline='') as f:
@@ -420,4 +447,15 @@ def run_saturation_test():
 
 
 if __name__ == "__main__":
-    run_saturation_test()
+    parser = argparse.ArgumentParser(
+        description="Run saturation test for dataset combinations."
+    )
+    parser.add_argument(
+        '--k',
+        type=int,
+        default=None,
+        help='Number of datasets to combine (k value). If not provided, all k values will be processed.'
+    )
+    args = parser.parse_args()
+    
+    run_saturation_test(k_value=args.k)

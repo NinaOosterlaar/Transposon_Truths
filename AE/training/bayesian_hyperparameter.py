@@ -60,7 +60,7 @@ os.environ['NUMPY_MMAP_MODE'] = 'c'  # Copy mode instead of mmap
 # Preprocessing hyperparameters - CATEGORICAL
 # Note: Encode features as strings to avoid skopt Categorical distance calculation issues
 FEATURES_OPTIONS = ["Centr_Nucl", "Centr", "Nucl"]  # Will be decoded to lists later
-MOVING_AVERAGE_OPTIONS = [False]
+MOVING_AVERAGE_OPTIONS = [False, True]
 
 # Convolutional Layer hyperparameters
 USE_CONV_OPTIONS = [True, False]
@@ -132,7 +132,7 @@ RANDOM_STATE = 42  # For reproducibility
 N_INITIAL_POINTS = 10  # Random exploration before Bayesian optimization
 
 # Results directory
-RESULTS_DIR = "AE/results/bayesian_optimization"
+RESULTS_DIR = "AE/results/extra_results/bayesian_optimization"
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 

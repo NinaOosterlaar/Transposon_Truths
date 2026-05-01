@@ -273,7 +273,7 @@ if __name__ == "__main__":
     create_new = True
     save_intermediate_files = False  # Only save final chromosome files if False
     create_chromosome_files = False  # Generate 16 chromosome files
-    file_path = "Signal_processing/final/SATAY_synthetic"
+    file_path = "Data/SATAY_synthetic"
     number_of_samples = 10
     
     total_size = 500000

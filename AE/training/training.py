@@ -235,7 +235,7 @@ def train(model, dataloader, num_epochs=50, learning_rate=1e-3, chrom=False, chr
     print("EVALUATING ON TRAINING DATA")
     print("="*50)
     
-    _, _, train_metrics, _, _, _ = test(model, dataloader, chrom=chrom, chrom_embedding=chrom_embedding, 
+    _, _, train_metrics, _, _, _, _, _ = test(model, dataloader, chrom=chrom, chrom_embedding=chrom_embedding, 
                                 plot=plot, n_examples=5, beta=beta, name=name, 
                                 denoise_percent=denoise_percent, eval_mode="training", 
                                 gamma=gamma, pi_threshold=pi_threshold, regularizer=regularizer, alpha=alpha)
@@ -506,7 +506,7 @@ def test(model, dataloader, chrom=True, chrom_embedding=None, plot=True, n_examp
                               metrics=metrics, use_conv=use_conv, name=name, subdir=eval_mode, pi_threshold=pi_threshold)
     
     # Return predictions, latents, metrics, and ZINB parameters for reconstruction
-    return all_reconstructions, all_latents, metrics, all_mu_raw, all_theta, all_pi
+    return all_reconstructions, all_latents, metrics, all_mu_raw, all_theta, all_pi, all_raw_counts, all_masks
 
 
 
@@ -519,7 +519,7 @@ def parser_args():
     parser.add_argument('--filename', type=str, default='',
                         help='Base filename for loading data (default: empty string)')
     parser.add_argument('--results_subdir', type=str, default='',
-                        help='Subdirectory name for organizing results (e.g., "small_data"). Creates AE/results/training/<subdir>/ and AE/results/testing/<subdir>/')
+                        help='Subdirectory name for organizing results (e.g., "small_data"). Creates AE/results/extra_results/training/<subdir>/ and AE/results/extra_results/testing/<subdir>/')
     parser.add_argument('--denoise_percent', type=float, default=0,
                         help='Percentage of non-zero values to randomly set to zero for denoising (0.0 to 1.0, default: 0.3)')
     parser.add_argument('--sample_fraction', type=float, default=0.5,
@@ -585,7 +585,7 @@ if __name__ == "__main__":
                               chrom=chrom, chrom_embedding=chrom_embedding, plot=True, name=results_subdir, denoise_percent=args.denoise_percent,
                               regularizer=args.regularizer, alpha=args.alpha, gamma=args.gamma, pi_threshold=args.pi_threshold)
         
-        zinbae_reconstructions, zinbae_latents, zinbae_metrics, _, _, _ = test(trained_zinbae, test_dataloader, 
+        zinbae_reconstructions, zinbae_latents, zinbae_metrics, _, _, _, _, _ = test(trained_zinbae, test_dataloader, 
                                                                       chrom=chrom, chrom_embedding=chrom_embedding, 
                                                                       plot=True, n_examples=5, name=results_subdir, 
                                                                       denoise_percent=args.denoise_percent,
@@ -604,7 +604,7 @@ if __name__ == "__main__":
                                chrom=chrom, chrom_embedding=chrom_embedding, plot=True, beta=args.beta, name=results_subdir, denoise_percent=args.denoise_percent,
                                regularizer=args.regularizer, alpha=args.alpha, gamma=args.gamma, pi_threshold=args.pi_threshold)
         
-        zinbvae_reconstructions, zinbvae_latents, zinbvae_metrics, _, _, _ = test(trained_zinbvae, test_dataloader, 
+        zinbvae_reconstructions, zinbvae_latents, zinbvae_metrics, _, _, _, _, _ = test(trained_zinbvae, test_dataloader, 
                                                                          chrom=chrom, chrom_embedding=chrom_embedding, 
                                                                          plot=True, n_examples=5, beta=args.beta, name=results_subdir, 
                                                                          denoise_percent=args.denoise_percent,
