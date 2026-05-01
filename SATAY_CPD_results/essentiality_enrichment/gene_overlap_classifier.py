@@ -10,7 +10,7 @@ from Utils.SGD_API.yeast_genes import SGD_Genes
 
 class PositionClassifier:
     """
-    Lightweight wrapper around SGD_Genes for position-level classification.
+    Wrapper around SGD_Genes for position-level classification.
     """
     
     def __init__(self, gene_json_path: str):
