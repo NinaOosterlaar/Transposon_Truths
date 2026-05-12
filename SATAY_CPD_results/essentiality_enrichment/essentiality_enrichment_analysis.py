@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 from typing import List, Optional
 
-# Add parent directory to path for imports
-sys.path.append(str(Path(__file__).parent.parent))
+# Add workspace root to path for imports
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from gene_overlap_classifier import PositionClassifier
 from position_level_analysis import PositionLevelAnalyzer
@@ -20,13 +20,13 @@ class Config:
     """Configuration parameters for the analysis."""
     
     # Paths
-    BASE_DIR = Path(__file__).parent.parent
+    BASE_DIR = Path(__file__).parent.parent.parent
     GENE_DB_PATH = BASE_DIR / 'Utils/SGD_API/architecture_info/yeast_genes_with_info.json'
     SIGNAL_PROCESSING_PATH = BASE_DIR / 'SATAY_CPD_results/CPD_SATAY_results'
     OUTPUT_DIR = BASE_DIR / 'results/essentiality_enrichment'
     
     # Analysis parameters
-    STRAINS = ['FD', 'yEK19', 'yEK23']
+    STRAINS = ['yEK19']
     THRESHOLD = 3.0
     N_BINS = 15
     BIN_EDGES = None  # If None, auto-generate; otherwise provide np.array

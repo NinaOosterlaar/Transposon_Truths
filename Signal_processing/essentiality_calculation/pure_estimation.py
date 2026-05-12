@@ -219,6 +219,7 @@ def estimate_segments(data, change_points, theta_global, eps=1e-10, tol=1e-6, ma
 	
 	# Apply log transformation
 	log_mu_values = np.log(mu_values + 1)
+	# log_mu_values = np.log(np.maximum(mu_values, 1e-10))
 	
 	# Filter out NaN and inf values for statistics
 	valid_mask = np.isfinite(log_mu_values)

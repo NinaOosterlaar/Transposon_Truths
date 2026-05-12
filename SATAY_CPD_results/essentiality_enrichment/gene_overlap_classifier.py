@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import Dict, List
 import numpy as np
 
-# Add parent directory to import Utils
-sys.path.append(str(Path(__file__).parent.parent))
+# Add workspace root to import Utils
+sys.path.append(str(Path(__file__).parent.parent.parent))
 from Utils.SGD_API.yeast_genes import SGD_Genes
 
 

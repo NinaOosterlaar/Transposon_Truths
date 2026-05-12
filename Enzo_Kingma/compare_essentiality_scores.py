@@ -216,15 +216,17 @@ def plot_correlation_analysis(gene_df, output_dir):
                alpha=0.6, s=40, label=f'Essential (n={len(essential)})', 
                color=COLORS['red'], edgecolors='black', linewidth=0.3)
     
-    # Add regression line
-    z = np.polyfit(valid['fitness_score'], valid['aggregated_mu_z'], 1)
+    # Add regression line (fitted only to fitness_score >= 0)
+    valid_nonneg = valid[valid['fitness_score'] >= 0]
+    z = np.polyfit(valid_nonneg['fitness_score'], valid_nonneg['aggregated_mu_z'], 1)
     p = np.poly1d(z)
+    # Plot line across full range to show where relationship breaks down
     x_line = np.linspace(valid['fitness_score'].min(), valid['fitness_score'].max(), 100)
     ax.plot(x_line, p(x_line), color='black', linestyle='--', alpha=0.7, 
-            linewidth=2, label='Linear fit')
+            linewidth=2, label=f'Linear fit')
     
     ax.set_xlabel('Gene-Level Fitness Score', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Aggregated Position-Level μ Z-Score', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Aggregated μ Z-Score', fontsize=12, fontweight='bold')
     ax.set_title(f'Fitness Score vs μ Z-Score Comparison\n'
                  f'Pearson r={pearson_r:.3f}, Spearman r={spearman_r:.3f}',
                  fontsize=14, fontweight='bold')

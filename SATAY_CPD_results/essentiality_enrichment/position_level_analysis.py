@@ -94,7 +94,7 @@ class PositionLevelAnalyzer:
             start: Start index (inclusive)
             end: End index (exclusive)
             chromosome: Chromosome name
-            score: mu_z_score for this segment
+            score: mu_normalized for this segment
         
         Returns:
             Tuple of (positions array, classifications array)
@@ -116,12 +116,12 @@ class PositionLevelAnalyzer:
         Process:
         1. For each segment, expand to positions
         2. Classify each position
-        3. Bin by segment's mu_z_score
+        3. Bin by segment's mu_normalized
         4. Aggregate position counts per bin per class
         
         Args:
             segments_df: DataFrame with columns: start_index, end_index_exclusive, 
-                         mu_z_score, chromosome
+                         mu_normalized, chromosome
             bin_edges: Custom bin edges (if None, auto-generate)
             n_bins: Number of bins (if bin_edges not provided)
         
@@ -130,8 +130,8 @@ class PositionLevelAnalyzer:
         """
         # Determine bin edges
         if bin_edges is None:
-            min_score = segments_df['mu_z_score'].min()
-            max_score = segments_df['mu_z_score'].max()
+            min_score = segments_df['mu_normalized'].min()
+            max_score = segments_df['mu_normalized'].max()
             bin_edges = np.linspace(min_score, max_score, n_bins + 1)
         
         # Initialize counters: bin_idx -> class -> count
@@ -140,7 +140,7 @@ class PositionLevelAnalyzer:
         # Process each segment
         for idx, row in segments_df.iterrows():
             
-            score = row['mu_z_score']
+            score = row['mu_normalized']
             chromosome = row['chromosome']
             start = int(row['start_index'])
             end = int(row['end_index_exclusive'])

@@ -406,7 +406,7 @@ def parse_arguments():
         "--thresholds",
         type=float,
         nargs="+",
-        default=[0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+        default=[3.0],
         help="List of thresholds to process (e.g., 0.5 1.0 1.5 ... 5.0). If not specified, processes all available thresholds.",
     )
     parser.add_argument(
@@ -442,7 +442,7 @@ def parse_arguments():
     parser.add_argument(
         "--workers",
         type=int,
-        default=4,
+        default=8,
         help="Number of parallel workers to use for processing strains (default: 4).",
     )
     return parser.parse_args()

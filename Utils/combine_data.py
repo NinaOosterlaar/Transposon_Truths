@@ -7,6 +7,7 @@ from Utils.reader import read_csv_file_with_distances
 import random
 import itertools
 import shutil
+import argparse
 
 # Mapping of replicate names to their strain folders
 replicate_to_strain = {
@@ -436,27 +437,41 @@ def create_saturation_test_combinations(
     print(f"{'='*60}")
 
 
-if __name__ == "__main__":
-    # Create saturation test combinations
-    create_saturation_test_combinations(
-        source_folder="Data/test_CPD/1",
-        output_base="Data/test_CPD",
-        max_combinations=6,
-        random_seed=42
+def parse_arguments():
+    """Parse command line arguments for combining processed SATAY datasets."""
+    parser = argparse.ArgumentParser(
+        description="Combine distance-annotated SATAY replicate folders into strain-level datasets."
     )
-    
-    # Original code (commented out):
-    # data = read_csv_file_with_distances("Data/distances_with_zeros")
-    # # Example usage: Combine all biological replicates within each strain
-    # combine_replicates(
-    #     data=data,  # Load your data dictionary here
-    #     replicate_names=["FD7", "FD9", "dnrp1-1", "dnrp1-2"],
-    #     method="average",
-    #     save=True,
-    #     output_folder="Data/combined_replicates/"
-    # )
-    # combine_strain_datasets(
-    #     input_folder="Data/combined_replicates",
-    #     output_folder="Data/combined_strains",
-    #     method="average"
-    # )
+
+    parser.add_argument(
+        "--input_dir",
+        type=str,
+        default="Data/distances_with_zeros_new",
+        help="Folder containing strain folders with distance-annotated replicate datasets."
+    )
+
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        default="Data/combined_strains",
+        help="Folder where final strain-level datasets will be saved."
+    )
+
+    parser.add_argument(
+        "--method",
+        choices=["average", "sum"],
+        default="average",
+        help="Method used to combine insertion counts."
+    )
+
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_arguments()
+
+    combine_strain_datasets(
+        input_folder=args.input_dir,
+        output_folder=args.output_dir,
+        method=args.method
+    )

@@ -66,8 +66,10 @@ def remove_outliers(reads):
 def exclude_gene(reads, min_insertions=5):
     """Return True if gene should be excluded from fitness calculation."""
     if len(reads) < min_insertions:
+        print(f"Excluding gene with only {len(reads)} insertions after outlier removal.")
         return True
     if np.sum(reads) == 0:
+        print("Excluding gene with all zero reads after adding zero counts.")
         return True
     return False
 
@@ -158,6 +160,12 @@ def calculate_fitness(gene_stats_df):
     df.loc[valid_mask, "fitness_score"] = (
         np.log(df.loc[valid_mask, "mean_read_count"]) / median_log_mean
     )
+    # print the minimal value of mean_read_count and the corresponding fitness score for debugging
+    if valid_mask.any():
+        min_mean_read_count = df.loc[valid_mask, "mean_read_count"].min()
+        corresponding_fitness_score = df.loc[valid_mask, "mean_read_count"].idxmin()
+        print(f"Minimum mean read count: {min_mean_read_count}")
+        print(f"Corresponding fitness score: {df.loc[corresponding_fitness_score, 'fitness_score']}")
     return df, median_log_mean
 
 

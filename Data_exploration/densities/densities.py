@@ -1,9 +1,12 @@
 import json
 import numpy as np 
 import pandas as pd 
-import matplotlib.pyplot as plt 
 import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import argparse
+import tempfile
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(tempfile.gettempdir(), "matplotlib"))
+import matplotlib.pyplot as plt 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from Utils.plot_config import setup_plot_style, COLORS
 from Utils.SGD_API.yeast_architecture import Nucleosomes
 
@@ -1529,46 +1532,177 @@ def combine_centromere_mean_data(mode="All", bin_size=None, plot=True, absolute_
         raise ValueError("mode must be one of: 'All', 'Chromosomes', 'Strains', 'Datasets'")
 
 
+def parse_arguments():
+    """Parse command line arguments for generating nucleosome and centromere bias plots."""
+    parser = argparse.ArgumentParser(
+        description="Generate nucleosome and centromere insertion-bias tables and plots."
+    )
+
+    parser.add_argument(
+        "--input_dir",
+        type=str,
+        default="Data/combined_strains",
+        help="Folder containing distance-annotated CSV files. Use Data/combined_strains for strain-level plots or Data/distances_with_zeros_new for separate replicate/dataset plots."
+    )
+
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        default="Data_exploration/results/densities",
+        help="Base folder where bias tables and plots will be saved."
+    )
+
+    parser.add_argument(
+        "--target",
+        choices=["nucleosome", "centromere", "both"],
+        default="both",
+        help="Which bias analysis to run."
+    )
+
+    parser.add_argument(
+        "--step",
+        choices=["generate", "combine", "all"],
+        default="all",
+        help="Run raw density generation, combine generated density curves, or both."
+    )
+
+    parser.add_argument(
+        "--metric",
+        choices=["density", "mean", "both"],
+        default="both",
+        help="Compute insertion-rate densities, mean insertion counts, or both."
+    )
+
+    parser.add_argument(
+        "--boolean",
+        action="store_true",
+        help="Convert insertion counts to presence/absence before calculating densities."
+    )
+
+    parser.add_argument(
+        "--bin_size",
+        type=int,
+        default=10000,
+        help="Centromere-distance bin size in base pairs."
+    )
+
+    parser.add_argument(
+        "--combine_mode",
+        choices=["All", "Chromosomes", "Strains", "Datasets"],
+        default="All",
+        help="How to group generated density curves when creating combined plots."
+    )
+
+    parser.add_argument(
+        "--plot_combined",
+        action="store_true",
+        help="Create PNG plots for the combined bias curves."
+    )
+
+    parser.add_argument(
+        "--absolute_centromere_distance",
+        action="store_true",
+        help="Combine centromere curves using absolute distance from the centromere."
+    )
+
+    parser.add_argument(
+        "--min_nucleosome_distance",
+        type=int,
+        default=0,
+        help="Minimum nucleosome distance included in combined nucleosome plots."
+    )
+
+    parser.add_argument(
+        "--max_nucleosome_distance",
+        type=int,
+        default=458,
+        help="Maximum nucleosome distance included in combined nucleosome plots."
+    )
+
+    return parser.parse_args()
+
+
+def main():
+    args = parse_arguments()
+
+    density_nucleosome_output = os.path.join(args.output_dir, "density", "nucleosome")
+    density_centromere_output = os.path.join(args.output_dir, "density", "centromere")
+    mean_nucleosome_output = os.path.join(args.output_dir, "mean", "nucleosome")
+    mean_centromere_output = os.path.join(args.output_dir, "mean", "centromere")
+
+    run_nucleosome = args.target in ["nucleosome", "both"]
+    run_centromere = args.target in ["centromere", "both"]
+    run_generate = args.step in ["generate", "all"]
+    run_combine = args.step in ["combine", "all"]
+    run_density = args.metric in ["density", "both"]
+    run_mean = args.metric in ["mean", "both"]
+
+    if run_generate and run_density and run_nucleosome:
+        density_from_nucleosome(
+            input_folder=args.input_dir,
+            output_folder=density_nucleosome_output,
+            boolean=args.boolean
+        )
+
+    if run_generate and run_density and run_centromere:
+        density_from_centromere(
+            input_folder=args.input_dir,
+            output_folder=density_centromere_output,
+            bin=args.bin_size,
+            boolean=args.boolean
+        )
+
+    if run_generate and run_mean and run_nucleosome:
+        mean_from_nucleosome(
+            input_folder=args.input_dir,
+            output_folder=mean_nucleosome_output
+        )
+
+    if run_generate and run_mean and run_centromere:
+        mean_from_centromere(
+            input_folder=args.input_dir,
+            output_folder=mean_centromere_output,
+            bin=args.bin_size
+        )
+
+    if run_combine and run_density and run_nucleosome:
+        combine_nucleosome_data(
+            data=args.combine_mode,
+            boolean=args.boolean,
+            plot=args.plot_combined,
+            base_folder=density_nucleosome_output,
+            min_distance=args.min_nucleosome_distance,
+            max_distance=args.max_nucleosome_distance
+        )
+
+    if run_combine and run_density and run_centromere:
+        combine_centromere_data(
+            mode=args.combine_mode,
+            boolean=args.boolean,
+            bin_size=args.bin_size,
+            plot=args.plot_combined,
+            absolute_distance=args.absolute_centromere_distance,
+            base_folder=density_centromere_output
+        )
+
+    if run_combine and run_mean and run_nucleosome:
+        combine_nucleosome_mean_data(
+            data=args.combine_mode,
+            plot=args.plot_combined,
+            base_folder=mean_nucleosome_output,
+            min_distance=args.min_nucleosome_distance,
+            max_distance=args.max_nucleosome_distance
+        )
+
+    if run_combine and run_mean and run_centromere:
+        combine_centromere_mean_data(
+            mode=args.combine_mode,
+            bin_size=args.bin_size,
+            plot=args.plot_combined,
+            absolute_distance=args.absolute_centromere_distance,
+            base_folder=mean_centromere_output
+        )
+
+
 if __name__ == "__main__":
-    # Example usage:
-    # Generate centromere densities with specific bin size:
-    bin_size = 10000
-    # density_from_centromere("Data/combined_strains", "Data_exploration/results/densities/centromere_strains", bin=bin_size, boolean=True)
-    
-    # # Generate nucleosome densities:
-    # density_from_nucleosome("Data/combined_strains", "Data_exploration/results/densities/nucleosome_strains", boolean=True)
-    
-    # Combine nucleosome data: 
-    # combine_nucleosome_data(data="Datasets", boolean=True, plot=True, base_folder="Data_exploration/results/densities/nucleosome_strains", min_distance=0, max_distance=458)
-    combine_nucleosome_data(data="All", boolean=True, plot=True, base_folder="Data_exploration/results/densities/nucleosome_new", min_distance=0, max_distance=458)
-    # combine_nucleosome_data(data="Chromosomes", boolean=True, plot=True)
-    
-    # Combine centromere data with specific filters:
-
-    # density_from_centromere("Data_exploration/results/distances", "Data_exploration/results/densities/centromere", bin=bin_size, boolean=True)
-    # combine_centromere_data(mode="Datasets", boolean=True, bin_size=bin_size, plot=True, absolute_distance=False, base_folder="Data_exploration/results/densities/centromere_strains")
-    combine_centromere_data(mode="All", boolean=True, bin_size=bin_size, plot=True, absolute_distance=True, base_folder="Data_exploration/results/densities/centromere")
-    # combine_centromere_data(mode="Chromosomes", boolean=True, bin_size=bin_size, plot=True)
-    
-    # ========== MEAN VALUES ==========
-    # Generate mean values from raw data:
-    # mean_from_centromere("Data/distances_with_zeros_new", "Data_exploration/results/means/centromere", bin=bin_size)
-    # mean_from_nucleosome("Data/distances_with_zeros_new", "Data_exploration/results/means/nucleosome")
-    
-    # Combine and plot mean values:
-    combine_nucleosome_mean_data(data="All", plot=True, base_folder="Data_exploration/results/means/nucleosome", min_distance=0, max_distance=458)
-    # combine_nucleosome_mean_data(data="Datasets", plot=True, base_folder="Data_exploration/results/means/nucleosome", min_distance=0, max_distance=458)
-    combine_centromere_mean_data(mode="All", bin_size=bin_size, plot=True, base_folder="Data_exploration/results/means/centromere", absolute_distance=True)
-    # combine_centromere_mean_data(mode="Datasets", bin_size=bin_size, plot=True, absolute_distance=True, base_folder="Data_exploration/results/means/centromere")
-    
-    # ========== MEDIAN VALUES ==========
-    # Generate median values from raw data:
-    # median_from_nucleosome("Data/distances_with_zeros_new", "Data_exploration/results/medians/nucleosome")
-    # Combine and plot median values:
-    # combine_nucleosome_median_data(data="All", plot=True, base_folder="Data_exploration/results/medians/nucleosome", min_distance=0, max_distance=458, absolute_distance=True)
-    # combine_nucleosome_median_data(data="Datasets", plot=True, base_folder="Data_exploration/results/medians/nucleosome", min_distance=0, max_distance=458)
-
-    
-        
-
-    
+    main()
