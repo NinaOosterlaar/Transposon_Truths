@@ -131,6 +131,54 @@ MODEL_PATH_LOAD = "AE/results/models/ZINBAE_20260227_153016_noconv_layers752_ep1
 MODEL_LOAD = False
 
 
+def str_to_bool(value):
+    """Parse flexible CLI booleans."""
+    if isinstance(value, bool):
+        return value
+
+    value = value.lower()
+    if value in ("true", "t", "1", "yes", "y"):
+        return True
+    if value in ("false", "f", "0", "no", "n"):
+        return False
+
+    raise argparse.ArgumentTypeError("Boolean value expected.")
+
+
+def parse_features(value):
+    """Parse comma-separated feature names passed on the command line."""
+    features = [feature.strip() for feature in value.split(",") if feature.strip()]
+    valid_features = {"Pos", "Chrom", "Chr", "Nucl", "Centr"}
+    invalid_features = sorted(set(features) - valid_features)
+    if invalid_features:
+        raise argparse.ArgumentTypeError(
+            f"Invalid feature(s): {', '.join(invalid_features)}. "
+            f"Valid options are: {', '.join(sorted(valid_features))}."
+        )
+    return features
+
+
+def parse_int_list(value):
+    """Parse comma-separated integers for hidden layer sizes."""
+    try:
+        values = [int(item.strip()) for item in value.split(",") if item.strip()]
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("Expected comma-separated integers.") from exc
+
+    if not values:
+        raise argparse.ArgumentTypeError("Expected at least one layer size.")
+    if any(layer <= 0 for layer in values):
+        raise argparse.ArgumentTypeError("Layer sizes must be positive integers.")
+    return values
+
+
+def parse_chromosomes(value):
+    """Parse comma-separated chromosome names; an empty string means no chromosomes."""
+    if value == "":
+        return []
+    return [chrom.strip() for chrom in value.split(",") if chrom.strip()]
+
+
 def save_reconstruction_artifacts(
     predictions,
     mu_raw,
@@ -634,18 +682,20 @@ def main(
     return train_metrics, eval_metrics
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--noise_level",
-        type=float,
-        default=NOISE_LEVEL,
-        help="Denoising percentage used in dataloader/train/test (default: %(default)s).",
+    parser = argparse.ArgumentParser(
+        description="Train and evaluate a ZINB autoencoder with explicit hyperparameters."
     )
     parser.add_argument(
-        "--mu_offset",
-        type=float,
-        default=0.0,
-        help="Offset added to global mean when initializing theta_global (default: %(default)s).",
+        "--input_folder",
+        type=str,
+        default=INPUT_FOLDER,
+        help="Input folder with combined strain chromosome CSV files (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--features",
+        type=parse_features,
+        default=FEATURES,
+        help="Comma-separated features to use, e.g. 'Centr' or 'Centr,Nucl' (default: %(default)s).",
     )
     parser.add_argument(
         "--bin_size",
@@ -653,6 +703,200 @@ if __name__ == "__main__":
         default=BIN_SIZE,
         help="Bin size used during preprocessing (default: %(default)s).",
     )
+    parser.add_argument(
+        "--moving_average",
+        type=str_to_bool,
+        default=MOVING_AVERAGE,
+        help="Whether to apply moving-average preprocessing (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--data_point_length",
+        type=int,
+        default=DATA_POINT_LENGTH,
+        help="Sequence/window length used by the autoencoder (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--step_size",
+        type=int,
+        default=STEP_SIZE,
+        help="Step size between preprocessing windows (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--sample_fraction",
+        type=float,
+        default=SAMPLE_FRACTION,
+        help="Fraction of training samples to use in the dataloader (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--train_chroms",
+        type=parse_chromosomes,
+        default=TRAIN_CHROM,
+        help="Comma-separated training chromosomes (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--val_chroms",
+        type=parse_chromosomes,
+        default=VAL_CHROM,
+        help="Comma-separated validation chromosomes; use '' for none (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--test_chroms",
+        type=parse_chromosomes,
+        default=TEST_CHROM,
+        help="Comma-separated test chromosomes; use '' for none (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--use_conv",
+        type=str_to_bool,
+        default=USE_CONV,
+        help="Whether to use the convolutional front-end (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--conv_channel",
+        type=int,
+        default=CONV_CHANNEL,
+        help="Number of convolutional channels (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--pool_size",
+        type=int,
+        default=POOL_SIZE,
+        help="Convolutional pooling size (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--kernel_size",
+        type=int,
+        default=KERNEL_SIZE,
+        help="Convolutional kernel size (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--padding",
+        type=str,
+        default=PADDING,
+        help="Convolutional padding argument (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--stride",
+        type=int,
+        default=STRIDE,
+        help="Convolutional stride (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--epochs",
+        type=int,
+        default=EPOCHS,
+        help="Number of training epochs (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=BATCH_SIZE,
+        help="Training and evaluation batch size (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--noise_level",
+        type=float,
+        default=NOISE_LEVEL,
+        help="Denoising percentage used in dataloader/train/test (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--pi_threshold",
+        type=float,
+        default=PI_THRESHOLD,
+        help="Zero-inflation probability threshold for reconstruction (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--masked_recon_weight",
+        type=float,
+        default=MASKED_RECON_WEIGHT,
+        help="Weight for masked reconstruction loss during training (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--learning_rate",
+        type=float,
+        default=LEARNING_RATE,
+        help="Adam learning rate (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--dropout_rate",
+        type=float,
+        default=DROPOUT_RATE,
+        help="Dropout rate in encoder/decoder layers (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--layers",
+        type=parse_int_list,
+        default=LAYERS,
+        help="Comma-separated encoder hidden layer sizes, e.g. '1600' or '752,376' (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--regularizer",
+        type=str,
+        choices=["none", "l1", "l2"],
+        default=REGULARIZER,
+        help="Regularization type (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--regularization_weight",
+        type=float,
+        default=REGULARIZATION_WEIGHT,
+        help="Regularization weight alpha (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--mu_offset",
+        type=float,
+        default=MU_OFFSET,
+        help="Offset added to global mean when initializing theta_global (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--plot",
+        type=str_to_bool,
+        default=PLOT,
+        help="Whether to save training/evaluation plots (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--save_model",
+        type=str_to_bool,
+        default=SAVE_MODEL,
+        help="Whether to save the trained model (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--model_save_dir",
+        type=str,
+        default=MODEL_SAVE_DIR,
+        help="Directory for saved models (default: %(default)s).",
+    )
     args = parser.parse_args()
 
-    main(noise_level=args.noise_level, mu_offset=args.mu_offset, bin_size=args.bin_size)
+    main(
+        input_folder=args.input_folder,
+        features=args.features,
+        bin_size=args.bin_size,
+        moving_average=args.moving_average,
+        data_point_length=args.data_point_length,
+        step_size=args.step_size,
+        sample_fraction=args.sample_fraction,
+        train_chroms=args.train_chroms,
+        val_chroms=args.val_chroms,
+        test_chroms=args.test_chroms,
+        use_conv=args.use_conv,
+        conv_channel=args.conv_channel,
+        pool_size=args.pool_size,
+        kernel_size=args.kernel_size,
+        padding=args.padding,
+        stride=args.stride,
+        epochs=args.epochs,
+        batch_size=args.batch_size,
+        noise_level=args.noise_level,
+        pi_threshold=args.pi_threshold,
+        masked_recon_weight=args.masked_recon_weight,
+        learning_rate=args.learning_rate,
+        dropout_rate=args.dropout_rate,
+        layers=args.layers,
+        regularizer=args.regularizer,
+        regularization_weight=args.regularization_weight,
+        mu_offset=args.mu_offset,
+        plot=args.plot,
+        save_model=args.save_model,
+        model_save_dir=args.model_save_dir,
+    )

@@ -6,7 +6,10 @@ Thesis report: https://repository.tudelft.nl/record/uuid:6360bc4f-c995-4a35-b43e
 
 ## Abstract
 
-<!-- Paste the thesis abstract here. -->
+Saccharomyces cerevisiae is a model organism used for studying fundamental eukaryotic processes and genome function. While essentiality studies provide important insight into gene function, biological pathways, and evolution, they often focus on entire genes, thereby ignoring variation in essentiality within and beyond gene boundaries. SAturated Transposon Analysis in Yeast (SATAY) is a Transposon Insertion Sequencing (TIS) technique that can measure essentiality across the entire genome of S. cerevisiae. However, the resulting data is noisy and sparse, and is affected by strong insertion biases. Most existing methods for analyzing TIS data either rely on known gene annotations or are optimized for bacterial datasets. Methods optimized for bacterial datasets are difficult to apply to SATAY data due to its higher sparsity and distinct insertion patterns. We therefore aim to develop a method tailored to SATAY data that does not rely on predefined annotations.
+In this study, we developed a change-point detection (CPD) algorithm to identify genomic regions with distinct levels of essentiality directly from SATAY data.
+We explored whether an autoencoder could improve the quality of  SATAY data by denoising and imputing missing values. Although the autoencoder appeared to denoise the data, it did not perform meaningful imputation. Moreover, CPD applied to the AE output was outperformed by a CPD algorithm that modeled raw SATAY data as a zero-inflated negative binomial (ZINB) distribution. The ZINB-based CPD algorithm achieved better results by explicitly accounting for sparsity, overdispersion, and insertion biases.
+The regions produced by our CPD algorithm align with biological expectations, though they are oversegmented and remain affected by known biases in the data. Despite these limitations, our results show that CPD applied to SATAY data is a promising first step towards identifying essential genomic regions beyond predefined gene boundaries across the whole genome.
 
 ## Repository Structure
 
@@ -192,4 +195,38 @@ python Data_exploration/densities/densities.py \
 
 The `--metric both` option creates both density-based and mean-count-based bias plots. The `--boolean` option converts insertion counts to presence/absence before calculating densities; the mean-count plots always use non-zero insertion counts.
 
+## Autoencoder training and analysis
 
+The ZINB autoencoder workflow is split into two entry points:
+
+- `AE/training/bayesian_hyperparameter.py` runs Bayesian optimization through `run_bayesian_optimization(...)`. The hyperparameter search space is defined directly in that file; see the thesis appendix or the code for the exact ranges. Run `python AE/training/bayesian_hyperparameter.py --help` to see the available optimization arguments.
+- `AE/main.py` trains and evaluates one specific autoencoder configuration. Run `python AE/main.py --help` to see the available command-line options for setting preprocessing, architecture, and training hyperparameters.
+
+Bayesian optimization example:
+
+```bash
+python AE/training/bayesian_hyperparameter.py \
+  --n_calls 50 \
+  --n_initial_points 10 \
+  --metric combined
+```
+
+Specific model training example:
+
+```bash
+python AE/main.py \
+  --features Centr \
+  --bin_size 20 \
+  --moving_average true \
+  --layers 1600 \
+  --epochs 144 \
+  --batch_size 32 \
+  --learning_rate 0.00002
+```
+
+Additional autoencoder analyses were used to test the influence of the masking noise value and dataset saturation. These are implemented in `AE/test_AE/test_noise_influence.py` and `AE/test_AE/test_saturation.py`, respectively. The corresponding plotting scripts are in `AE/plotting`, including the noise-influence and saturation plotting code.
+
+When `save_reconstruction=True` in `AE/main.py`, reconstructed outputs are saved under `Data/reconstruction`. Differences between pi predictions for zero and non-zero insertion positions can then be calculated with the code in `AE/imputation/imputation.py`.
+
+
+Note: This README was generated with the assistance of Codex.

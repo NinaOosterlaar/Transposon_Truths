@@ -743,9 +743,11 @@ def run_bayesian_optimization(n_calls=N_CALLS, random_state=RANDOM_STATE,
 # ============================================================================
 # MAIN EXECUTION
 # ============================================================================
-if __name__ == "__main__":
-    
-    parser = argparse.ArgumentParser(description='Bayesian Hyperparameter Optimization')
+def parse_args():
+    """Parse command-line arguments for run_bayesian_optimization()."""
+    parser = argparse.ArgumentParser(
+        description='Run Bayesian Hyperparameter Optimization via run_bayesian_optimization().'
+    )
     parser.add_argument('--n_calls', type=int, default=N_CALLS,
                        help='Number of optimization iterations')
     parser.add_argument('--n_initial_points', type=int, default=N_INITIAL_POINTS,
@@ -759,11 +761,15 @@ if __name__ == "__main__":
                        help='Optimization metric to minimize (zinb_nll, masked_loss, combined, or total_loss)')
     parser.add_argument('--resume_from', type=str, default=None,
                        help='Path to checkpoint file to resume optimization from')
-    
-    args = parser.parse_args()
-    
-    # Run optimization
-    result = run_bayesian_optimization(
+
+    return parser.parse_args()
+
+
+def main():
+    """CLI entry point for Bayesian optimization."""
+    args = parse_args()
+
+    return run_bayesian_optimization(
         n_calls=args.n_calls,
         random_state=args.random_state,
         n_initial_points=args.n_initial_points,
@@ -772,3 +778,6 @@ if __name__ == "__main__":
         resume_from=args.resume_from
     )
 
+
+if __name__ == "__main__":
+    main()
