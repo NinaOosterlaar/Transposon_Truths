@@ -16,6 +16,7 @@ from pathlib import Path
 from collections import defaultdict
 from itertools import combinations
 from scipy.stats import pearsonr, spearmanr
+import argparse
 
 # Add parent directories to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
@@ -65,6 +66,25 @@ STRAINS = [
     'strain_yWT04a',
     'strain_ylic137'
 ]
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Compare SATAY CPD segmentations and essentiality scores across strains."
+    )
+    parser.add_argument("--base_path", default="SATAY_CPD_results/CPD_SATAY_results", help="Path to strain CPD result folders.")
+    parser.add_argument("--output_dir", default="SATAY_CPD_results/results/compare_strains", help="Folder where CSVs and heatmaps are written.")
+    parser.add_argument("--strains", nargs="+", default=STRAINS, help="Strain folders to compare, with or without the 'strain_' prefix.")
+    parser.add_argument("--thresholds", nargs="+", type=float, default=[3.0], help="CPD thresholds to compare.")
+    parser.add_argument("--tolerance", type=int, default=100, help="Tolerance in bp for tolerant Jaccard index.")
+    parser.add_argument("--mu_z_threshold", type=float, default=0.25, help="Merged-segment muZ threshold.")
+    parser.add_argument("--window_size", type=int, default=100, help="CPD window size used in result paths.")
+    parser.add_argument("--overlap", type=int, default=50, help="CPD overlap used in result paths.")
+    return parser.parse_args()
+
+
+def normalize_strain_name(strain):
+    return strain if strain.startswith("strain_") else f"strain_{strain}"
 
 
 def load_changepoints_for_strain(strain_name, threshold, window_size=100, overlap=50, muZ_threshold=0.25, base_path=None):
@@ -400,7 +420,7 @@ def compute_essentiality_correlation(strain_ess_a, strain_ess_b, method='pearson
         return np.nan
 
 
-def compute_pairwise_metrics(strain_names, threshold, tolerance=100, muZ_threshold=0.25):
+def compute_pairwise_metrics(strain_names, threshold, tolerance=100, muZ_threshold=0.25, base_path=None, window_size=100, overlap=50):
     """
     Compute all similarity metrics for all pairs of strains at a given threshold.
     
@@ -439,13 +459,27 @@ def compute_pairwise_metrics(strain_names, threshold, tolerance=100, muZ_thresho
     # Load change points for all strains from merged segments
     strain_changepoints = {}
     for strain in strain_names:
-        strain_changepoints[strain] = load_changepoints_for_strain(strain, threshold, muZ_threshold=muZ_threshold)
+        strain_changepoints[strain] = load_changepoints_for_strain(
+            strain,
+            threshold,
+            window_size=window_size,
+            overlap=overlap,
+            muZ_threshold=muZ_threshold,
+            base_path=base_path,
+        )
     
     # Load essentiality data for all strains from merged segments
     print(f"  Loading essentiality data for threshold {threshold}...")
     strain_essentiality = {}
     for strain in strain_names:
-        strain_essentiality[strain] = load_essentiality_for_strain(strain, threshold, muZ_threshold=muZ_threshold)
+        strain_essentiality[strain] = load_essentiality_for_strain(
+            strain,
+            threshold,
+            window_size=window_size,
+            overlap=overlap,
+            muZ_threshold=muZ_threshold,
+            base_path=base_path,
+        )
     
     # Compute pairwise metrics
     for i, strain_a in enumerate(strain_names):
@@ -635,7 +669,7 @@ def plot_heatmap(matrix_df, metric_name, threshold, output_dir, metric_short_nam
     
     print(f"  Saved heatmap: {output_file}")
 
-def plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=0.25):
+def plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=0.25, base_path=None, window_size=100, overlap=50):
     """
     Create bar plots showing the number of change points for each strain at each threshold.
     
@@ -658,7 +692,14 @@ def plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=
     
     for threshold in thresholds:
         for strain in strain_names:
-            strain_cps = load_changepoints_for_strain(strain, threshold, muZ_threshold=muZ_threshold)
+            strain_cps = load_changepoints_for_strain(
+                strain,
+                threshold,
+                window_size=window_size,
+                overlap=overlap,
+                muZ_threshold=muZ_threshold,
+                base_path=base_path,
+            )
             # Sum across all chromosomes
             total_cps = sum(len(cps) for cps in strain_cps.values())
             counts[threshold][strain] = total_cps
@@ -712,19 +753,16 @@ def plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=
     print()
 
 
-def main():
+def main(args=None):
     """
     Main function to compare strains using merged segments.
     """
-    # Configuration
-    strain_names = STRAINS  # Use the module-level constant
-    
-    thresholds = [3.0]  # Thresholds to analyze (using merged segments)
-    tolerance = 100  # bp tolerance for Jaccard with tolerance
-    muZ_threshold = 0.25  # muZ threshold for merged segments
-    
-    # Create output directory
-    output_dir = "SATAY_CPD_results/results/compare_strains"
+    args = parse_args() if args is None else args
+    strain_names = [normalize_strain_name(strain) for strain in args.strains]
+    thresholds = args.thresholds
+    tolerance = args.tolerance
+    muZ_threshold = args.mu_z_threshold
+    output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
     
     print("=" * 80)
@@ -736,12 +774,21 @@ def main():
     print(f"\nThresholds: {thresholds}")
     print(f"muZ threshold: {muZ_threshold}")
     print(f"Tolerance: {tolerance} bp")
+    print(f"Base path: {args.base_path}")
     print(f"Output directory: {output_dir}")
     print("=" * 80)
     print()
     
     # Plot change point counts for all strains at all thresholds
-    plot_changepoint_counts(strain_names, thresholds, output_dir, muZ_threshold=muZ_threshold)
+    plot_changepoint_counts(
+        strain_names,
+        thresholds,
+        output_dir,
+        muZ_threshold=muZ_threshold,
+        base_path=args.base_path,
+        window_size=args.window_size,
+        overlap=args.overlap,
+    )
     
     # Store all results for CSV export
     all_results = {
@@ -759,7 +806,15 @@ def main():
         print(f"Processing threshold {threshold:.1f}...")
         
         # Compute pairwise metrics (returns dict of DataFrames)
-        metrics = compute_pairwise_metrics(strain_names, threshold, tolerance=tolerance, muZ_threshold=muZ_threshold)
+        metrics = compute_pairwise_metrics(
+            strain_names,
+            threshold,
+            tolerance=tolerance,
+            muZ_threshold=muZ_threshold,
+            base_path=args.base_path,
+            window_size=args.window_size,
+            overlap=args.overlap,
+        )
         
         # Store results
         for metric_key, df in metrics.items():

@@ -6,6 +6,7 @@ Signal_processing/sample_data/Centromere_region/*.csv files.
 
 import os
 import sys
+import argparse
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -118,10 +119,13 @@ def extract_centromere_window_reconstruction(input_file, output_file, centromere
     return True
 
 
-def main():
-    # Base paths
-    base_path = Path(__file__).parent.parent / "Data" / "test_CPD"
-    output_base = base_path / "centromere_windows"
+def main_test_cpd(base_path="Data/test_CPD", output_base=None, min_folder=0, max_folder=7):
+    base_path = Path(base_path)
+    if output_base is None:
+        output_base = base_path / "centromere_windows"
+    else:
+        output_base = Path(output_base)
+
     print("=" * 60)
     print("Extracting Centromere Windows from test_CPD datasets")
     print("=" * 60)
@@ -132,8 +136,7 @@ def main():
     total_windows = 0
     total_skipped = 0
 
-    # Process folders 0-7
-    for folder_num in range(0, 8):
+    for folder_num in range(min_folder, max_folder + 1):
         input_folder = base_path / f"{folder_num}"
 
         if not input_folder.exists():
@@ -177,13 +180,15 @@ def main():
     print("=" * 60)
 
 
-def main_reconstruction():
-    # Base paths
-    base_path = Path(__file__).parent.parent / "Data" / "reconstruction_cpd_test_all_chrom"
-    output_base = base_path / "centromere_window"
+def main_reconstruction(base_path="Data/reconstruction_cpd_test_all_chrom", output_base=None, min_folder=0, max_folder=7):
+    base_path = Path(base_path)
+    if output_base is None:
+        output_base = base_path / "centromere_window"
+    else:
+        output_base = Path(output_base)
 
     print("=" * 60)
-    print("Extracting Centromere Windows from reconstruction_cpd_test_all_chrom")
+    print(f"Extracting Centromere Windows from {base_path}")
     print("=" * 60)
     print(f"Input:  {base_path}")
     print(f"Output: {output_base}/[folder_num]/[strain]")
@@ -194,8 +199,7 @@ def main_reconstruction():
     total_windows = 0
     total_skipped = 0
 
-    # Process folders 0-7
-    for folder_num in range(0, 8):
+    for folder_num in range(min_folder, max_folder + 1):
         folder_path = base_path / f"{folder_num}"
         if not folder_path.exists():
             continue
@@ -251,16 +255,57 @@ def main_reconstruction():
     print("=" * 60)
 
 
-if __name__ == "__main__":
-    # Usage:
-    #   python Utils/extract_centromere_windows.py reconstruction
-    #   python Utils/extract_centromere_windows.py test_cpd
-    mode = sys.argv[1].lower() if len(sys.argv) > 1 else "reconstruction"
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Extract centromere windows from test_CPD or AE reconstruction datasets."
+    )
+    parser.add_argument(
+        "mode",
+        nargs="?",
+        default="test_cpd",
+        choices=["test_cpd", "reconstruction"],
+        help="Input layout to process.",
+    )
+    parser.add_argument(
+        "--base_path",
+        type=str,
+        default=None,
+        help="Input base folder. Defaults to Data/test_CPD for test_cpd mode.",
+    )
+    parser.add_argument(
+        "--output_base",
+        type=str,
+        default=None,
+        help="Output base folder. Defaults to <base_path>/centromere_windows.",
+    )
+    parser.add_argument("--min_folder", type=int, default=0)
+    parser.add_argument("--max_folder", type=int, default=7)
+    return parser.parse_args()
 
-    if mode == "reconstruction":
-        main_reconstruction()
-    elif mode == "test_cpd":
-        main()
+
+def main():
+    args = parse_args()
+
+    if args.mode == "reconstruction":
+        base_path = args.base_path or "Data/reconstruction_cpd_test_all_chrom"
+        main_reconstruction(
+            base_path=base_path,
+            output_base=args.output_base,
+            min_folder=args.min_folder,
+            max_folder=args.max_folder,
+        )
+    elif args.mode == "test_cpd":
+        base_path = args.base_path or "Data/test_CPD"
+        main_test_cpd(
+            base_path=base_path,
+            output_base=args.output_base,
+            min_folder=args.min_folder,
+            max_folder=args.max_folder,
+        )
     else:
         print("Unknown mode. Use 'reconstruction' or 'test_cpd'.")
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

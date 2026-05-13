@@ -1,12 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import os, sys
+import os
+import sys
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from Utils.plot_config import setup_plot_style, COLORS
 
 
 splits = ["Train", "Val", "Test"]
 models = ["Combined", "ZINB NLL", "Masked Recon.", "Bins"]
+
 model_colors = {
     "Combined": COLORS["blue"],
     "ZINB NLL": COLORS["orange"],
@@ -124,17 +127,37 @@ split_colors = {
 
 plot_splits = ["Train", "Test"]
 
+
 def get_metric_values(metric_dict, metric_name, model_idx, selected_splits=plot_splits):
     vals = [metric_dict[metric_name]["values"][s][model_idx] for s in selected_splits]
     errs = [metric_dict[metric_name]["errors"][s][model_idx] for s in selected_splits]
     return np.array(vals), np.array(errs)
 
+
+# New order:
+# top row: pi zero-probability plots
+# bottom row: ZINB NLL and MAE
 metrics = [
-    ("ZINB NLL", recon_core, "ZINB NLL"),
-    ("MAE", recon_core, "MAE"),
     (r"$\pi$ zeros", recon_params, r"$\pi$ zeros"),
     (r"$\pi$ non-zeros", recon_params, r"$\pi$ non-zeros"),
+    ("ZINB NLL", recon_core, "ZINB NLL"),
+    ("MAE", recon_core, "MAE"),
 ]
+
+
+def format_axis(ax, title):
+    ax.set_xticks(np.arange(len(plot_splits)))
+    ax.set_xticklabels(plot_splits)
+    ax.set_title(title)
+    ax.axhline(0, color="black", linewidth=0.8)
+
+    # Force both zero-probability panels to use 0-1 y-axis.
+    if title in [r"$\pi$ zeros", r"$\pi$ non-zeros"]:
+        ax.set_ylim(0, 1)
+        ax.set_ylabel("Zero probability")
+    elif title == "MAE":
+        ax.set_ylim(bottom=0)
+
 
 def plot_zinb_only(save_path="AE/results/zinb_only_results.png"):
     compare_models = ["Combined", "ZINB NLL"]
@@ -173,15 +196,11 @@ def plot_zinb_only(save_path="AE/results/zinb_only_results.png"):
                     label=model,
                     color=model_colors[model],
                 )
+
                 if not legend_handles:
                     legend_handles.append(bars[0])
 
-        ax.set_xticks(x)
-        ax.set_xticklabels(plot_splits)
-        ax.set_title(title)
-        ax.axhline(0, color="black", linewidth=0.8)
-        if title == "MAE":
-            ax.set_ylim(bottom=0)
+        format_axis(ax, title)
 
     fig.legend(
         legend_handles,
@@ -228,12 +247,7 @@ def plot_zinb_vs_combined(save_path="AE/results/zinb_vs_combined_results.png"):
                 legend_handles.append(bars[0])
                 legend_labels.append(model)
 
-        ax.set_xticks(x)
-        ax.set_xticklabels(plot_splits)
-        ax.set_title(title)
-        ax.axhline(0, color="black", linewidth=0.8)
-        if title == "MAE":
-            ax.set_ylim(bottom=0)
+        format_axis(ax, title)
 
     fig.legend(
         legend_handles,

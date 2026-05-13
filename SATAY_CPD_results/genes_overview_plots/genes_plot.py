@@ -1,4 +1,5 @@
 import json
+import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -8,14 +9,14 @@ from pathlib import Path
 
 # Add parent directory to path for imports
 import sys
-sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append(str(Path(__file__).resolve().parents[2]))
 from Utils.plot_config import setup_plot_style
 
 # Setup plotting style
 setup_plot_style()
 
 # Configuration
-genes = [
+DEFAULT_GENES = [
     "PRO3", "CDC28", "SEC18", "KAR2", "RIB3", "POL2", "NOT1", "SUP35", "RNR1", "RNR2",
     "BEM1", "BEM2", "BEM3", "BEM4",
     "RSR1",      # BUD1 alias
@@ -35,6 +36,7 @@ genes = [
     "SHE4", "SHE5",
     "FLO11"
 ]
+genes = DEFAULT_GENES.copy()
 protein_domain = "PF"
 threshold = 3.0
 strains = ["FD", "yEK19", "yEK23"]
@@ -44,11 +46,11 @@ padding_bp = 500  # Base pairs to show before and after gene
 mu_z_threshold = 0.25  # muZ parameter for merged segments
 
 # Paths
-gene_info_path = Path(__file__).parent.parent / "Utils" / "SGD_API" / "architecture_info" / "yeast_genes_with_info.json"
-strains_data_path = Path(__file__).parent.parent / "SATAY_CPD_results" / "CPD_SATAY_results"
-count_data_path = Path(__file__).parent.parent / "Data" / "combined_strains"
-output_dir = Path(__file__).parent.parent / "results" / "genes_overview_plots"
-output_dir.mkdir(exist_ok=True, parents=True)
+BASE_DIR = Path(__file__).resolve().parents[2]
+gene_info_path = BASE_DIR / "Utils" / "SGD_API" / "architecture_info" / "yeast_genes_with_info.json"
+strains_data_path = BASE_DIR / "SATAY_CPD_results" / "CPD_SATAY_results"
+count_data_path = BASE_DIR / "Data" / "combined_strains"
+output_dir = BASE_DIR / "SATAY_CPD_results" / "results" / "genes_overview_plots"
 
 
 def load_gene_info():
@@ -377,8 +379,51 @@ def plot_gene_overview(gene_name, gene_info, strain_percentiles):
     plt.close()
 
 
-def main():
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Generate overview plots for selected genes across SATAY CPD strains."
+    )
+    parser.add_argument(
+        "--genes",
+        nargs="+",
+        default=None,
+        help="Gene names to plot. If omitted, the default gene list defined in this file is used.",
+    )
+    parser.add_argument("--protein_domain", default=protein_domain, help="Protein-domain prefix to plot.")
+    parser.add_argument("--threshold", type=float, default=threshold, help="CPD threshold used in segment filenames.")
+    parser.add_argument("--strains", nargs="+", default=strains, help="Strains to include in the plot.")
+    parser.add_argument("--window_size", type=int, default=window_size, help="Window size used in CPD results.")
+    parser.add_argument("--padding_bp", type=int, default=padding_bp, help="Base pairs to show before and after each gene.")
+    parser.add_argument("--mu_z_threshold", type=float, default=mu_z_threshold, help="Merged-segment muZ threshold.")
+    parser.add_argument("--gene_info_path", default=str(gene_info_path), help="Path to yeast gene annotation JSON.")
+    parser.add_argument("--strains_data_path", default=str(strains_data_path), help="Path to SATAY CPD result folders.")
+    parser.add_argument("--count_data_path", default=str(count_data_path), help="Path to raw strain count folders.")
+    parser.add_argument("--output_dir", default=str(output_dir), help="Folder where plots are written.")
+    return parser.parse_args()
+
+
+def apply_args(args):
+    global genes, protein_domain, threshold, strains, window_size, padding_bp, mu_z_threshold
+    global gene_info_path, strains_data_path, count_data_path, output_dir
+
+    genes = args.genes if args.genes is not None else DEFAULT_GENES.copy()
+    protein_domain = args.protein_domain
+    threshold = args.threshold
+    strains = args.strains
+    window_size = args.window_size
+    padding_bp = args.padding_bp
+    mu_z_threshold = args.mu_z_threshold
+    gene_info_path = Path(args.gene_info_path)
+    strains_data_path = Path(args.strains_data_path)
+    count_data_path = Path(args.count_data_path)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(exist_ok=True, parents=True)
+
+
+def main(args=None):
     """Main function to generate all gene overview plots."""
+    apply_args(parse_args() if args is None else args)
+
     print("Loading gene information...")
     gene_dict = load_gene_info()
     

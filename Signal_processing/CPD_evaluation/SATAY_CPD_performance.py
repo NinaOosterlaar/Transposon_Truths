@@ -18,7 +18,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".
 from Utils.plot_config import setup_plot_style, COLORS
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from Signal_processing.CPD_evaluation.evaluation_util import match_cps_one_to_one
-from Signal_processing.CPD_evaluation.sliding_performance import read_change_points
 
 setup_plot_style()
 
@@ -62,6 +61,22 @@ METHOD_DEFAULTS = {
         'output': 'Signal_processing/results_new/CPD_SATAY_v3_window/evaluation',
     },
 }
+
+
+def read_change_points(file_path):
+    """Read numeric change point lines from a CPD result text file."""
+    change_points = []
+    with open(file_path, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                change_points.append(int(float(line)))
+            except ValueError:
+                # Remaining lines contain scores/metadata.
+                continue
+    return change_points
 
 
 def evaluate_saturation_level(saturation_level, results_base, data_base, cpd_dict, window_size=100):

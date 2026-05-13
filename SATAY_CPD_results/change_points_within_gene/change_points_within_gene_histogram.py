@@ -1,5 +1,6 @@
 import json
 import sys
+import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -7,17 +8,17 @@ import numpy as np
 import pandas as pd
 
 # Add parent directory for imports
-sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append(str(Path(__file__).resolve().parents[2]))
 from Utils.plot_config import setup_plot_style, COLORS
 
 
 class Config:
     """Configuration for counting change points within gene ranges."""
 
-    BASE_DIR = Path(__file__).parent.parent
+    BASE_DIR = Path(__file__).resolve().parents[2]
     GENE_INFO_PATH = BASE_DIR / "Utils" / "SGD_API" / "architecture_info" / "yeast_genes_with_info.json"
     STRAINS_DATA_PATH = BASE_DIR / "SATAY_CPD_results" / "CPD_SATAY_results"
-    OUTPUT_DIR = BASE_DIR / "results" / "change_points_within_gene"
+    OUTPUT_DIR = BASE_DIR / "SATAY_CPD_results" / "results" / "change_points_within_gene"
 
     # Easy to modify later
     STRAINS = ["FD", "yEK19", "yEK23"]
@@ -58,6 +59,38 @@ class Config:
     # Plotting controls for normalized change-point histogram
     NORMALIZED_CP_TOP_PERCENTILE_TO_KEEP = 99
     NORMALIZED_CP_BIN_COUNT = 25
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Count and plot how many SATAY CPD change points fall inside annotated genes."
+    )
+    parser.add_argument("--gene_info_path", default=str(Config.GENE_INFO_PATH), help="Path to yeast gene annotation JSON.")
+    parser.add_argument("--strains_data_path", default=str(Config.STRAINS_DATA_PATH), help="Path to SATAY CPD result folders.")
+    parser.add_argument("--output_dir", default=str(Config.OUTPUT_DIR), help="Folder where CSVs and plots are written.")
+    parser.add_argument("--strains", nargs="+", default=Config.STRAINS, help="Strains to pool.")
+    parser.add_argument("--threshold", type=float, default=Config.THRESHOLD, help="CPD threshold for raw change-point result files.")
+    parser.add_argument("--merged_segments_threshold", type=float, default=Config.MERGED_SEGMENTS_THRESHOLD, help="muZ threshold for merged-segment change points.")
+    parser.add_argument("--window_size", type=int, default=Config.WINDOW_SIZE, help="CPD window size used in result paths.")
+    parser.add_argument("--overlap", type=int, default=Config.OVERLAP, help="CPD overlap used in result filenames.")
+    parser.add_argument("--gene_extension_bp", type=int, default=Config.GENE_EXTENSION_BP, help="Base pairs added before and after each gene.")
+    parser.add_argument("--analysis_chromosomes", nargs="+", default=Config.ANALYSIS_CHROMOSOMES, help="Chromosomes to include.")
+    return parser.parse_args()
+
+
+def config_from_args(args) -> Config:
+    config = Config()
+    config.GENE_INFO_PATH = Path(args.gene_info_path)
+    config.STRAINS_DATA_PATH = Path(args.strains_data_path)
+    config.OUTPUT_DIR = Path(args.output_dir)
+    config.STRAINS = args.strains
+    config.THRESHOLD = args.threshold
+    config.MERGED_SEGMENTS_THRESHOLD = args.merged_segments_threshold
+    config.WINDOW_SIZE = args.window_size
+    config.OVERLAP = args.overlap
+    config.GENE_EXTENSION_BP = args.gene_extension_bp
+    config.ANALYSIS_CHROMOSOMES = args.analysis_chromosomes
+    return config
 
 
 def convert_chromosome_name(chrom_name: str) -> str:
@@ -482,8 +515,8 @@ def make_length_normalized_change_point_histogram(
 
 
 
-def main() -> None:
-    config = Config()
+def main(args=None) -> None:
+    config = config_from_args(parse_args() if args is None else args)
     setup_plot_style()
 
     if not config.GENE_INFO_PATH.exists():

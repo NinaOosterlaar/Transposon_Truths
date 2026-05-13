@@ -1,4 +1,5 @@
 import sys
+import argparse
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -44,6 +45,49 @@ class Config:
     SAVE_CSV = True
 
 
+def str_to_bool(value: str) -> bool:
+    if isinstance(value, bool):
+        return value
+    value = value.lower()
+    if value in {"true", "1", "yes", "y"}:
+        return True
+    if value in {"false", "0", "no", "n"}:
+        return False
+    raise argparse.ArgumentTypeError("Expected a boolean value.")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Compare CPD segment essentiality scores with SGD essentiality annotations."
+    )
+    parser.add_argument("--gene_db_path", default=str(Config.GENE_DB_PATH), help="Path to yeast gene annotation JSON.")
+    parser.add_argument("--signal_processing_path", default=str(Config.SIGNAL_PROCESSING_PATH), help="Path to CPD SATAY result folders.")
+    parser.add_argument("--output_dir", default=str(Config.OUTPUT_DIR), help="Folder where CSVs and plots are written.")
+    parser.add_argument("--strains", nargs="+", default=Config.STRAINS, help="Strains to analyze.")
+    parser.add_argument("--threshold", type=float, default=Config.THRESHOLD, help="CPD threshold to analyze.")
+    parser.add_argument("--n_bins", type=int, default=Config.N_BINS, help="Number of bins for enrichment plots.")
+    parser.add_argument("--chromosomes", nargs="+", default=Config.CHROMOSOMES, help="Chromosomes to include.")
+    parser.add_argument("--show_plots", type=str_to_bool, default=Config.SHOW_PLOTS, help="Show plots interactively.")
+    parser.add_argument("--save_plots", type=str_to_bool, default=Config.SAVE_PLOTS, help="Save plots.")
+    parser.add_argument("--save_csv", type=str_to_bool, default=Config.SAVE_CSV, help="Save CSV summaries.")
+    return parser.parse_args()
+
+
+def config_from_args(args) -> Config:
+    config = Config()
+    config.GENE_DB_PATH = Path(args.gene_db_path)
+    config.SIGNAL_PROCESSING_PATH = Path(args.signal_processing_path)
+    config.OUTPUT_DIR = Path(args.output_dir)
+    config.STRAINS = args.strains
+    config.THRESHOLD = args.threshold
+    config.N_BINS = args.n_bins
+    config.CHROMOSOMES = args.chromosomes
+    config.SHOW_PLOTS = args.show_plots
+    config.SAVE_PLOTS = args.save_plots
+    config.SAVE_CSV = args.save_csv
+    return config
+
+
 def validate_paths(config: Config) -> bool:
     """
     Validate that all required paths exist.
@@ -79,10 +123,23 @@ def analyze_all_strains(config: Config):
     if not validate_paths(config):
         print("Path validation failed. Exiting.", file=sys.stderr)
         return
+
+    print("Running essentiality enrichment analysis")
+    print(f"Gene annotations: {config.GENE_DB_PATH}")
+    print(f"CPD results: {config.SIGNAL_PROCESSING_PATH}")
+    print(f"Output directory: {config.OUTPUT_DIR}")
+    print(f"Strains: {', '.join(config.STRAINS)}")
+    print(f"Threshold: {config.THRESHOLD}")
+    print(f"Bins: {config.N_BINS}")
+    print(f"Save CSV: {config.SAVE_CSV}")
+    print(f"Save plots: {config.SAVE_PLOTS}")
     
     # Load gene database
     try:
+        print("\nLoading gene database...")
         gene_db = PositionClassifier(str(config.GENE_DB_PATH))
+        stats = gene_db.get_statistics()
+        print(f"Loaded {stats.get('total_genes', 'unknown')} genes")
     except Exception as e:
         print(f"Failed to load gene database: {e}", file=sys.stderr)
         return
@@ -95,6 +152,7 @@ def analyze_all_strains(config: Config):
     
     for strain in config.STRAINS:
         try:
+            print(f"\nProcessing strain {strain}...")
             # Perform analysis
             summary_df = analyzer.analyze_strain(
                 base_path=config.SIGNAL_PROCESSING_PATH,
@@ -103,6 +161,7 @@ def analyze_all_strains(config: Config):
                 bin_edges=config.BIN_EDGES,
                 n_bins=config.N_BINS
             )
+            print(f"Generated enrichment summary with {len(summary_df)} bins")
             
             all_summaries[strain] = summary_df
             
@@ -110,6 +169,7 @@ def analyze_all_strains(config: Config):
             if config.SAVE_CSV:
                 csv_path = config.OUTPUT_DIR / f'strain_{strain}_enrichment_summary.csv'
                 summary_df.to_csv(csv_path, index=False)
+                print(f"Saved enrichment summary: {csv_path}")
             
             # Create plots
             if config.SAVE_PLOTS:
@@ -119,18 +179,18 @@ def analyze_all_strains(config: Config):
                     strain=strain,
                     show_plots=config.SHOW_PLOTS
                 )
+                print(f"Saved enrichment plots in: {config.OUTPUT_DIR}")
             
         except Exception as e:
             print(f"Error processing strain {strain}: {e}", file=sys.stderr)
             continue
 
+    print("\nEssentiality enrichment analysis complete.")
 
-def main():
+
+def main(args=None):
     """Main entry point."""
-    config = Config()
-    
-    # Optional: Override configuration via command line or environment
-    # (could add argparse here for flexibility)
+    config = config_from_args(parse_args() if args is None else args)
     
     try:
         analyze_all_strains(config)

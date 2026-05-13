@@ -14,6 +14,19 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import argparse
+
+
+DEFAULT_OUTPUT_FOLDER = "Data/SATAY_synthetic"
+DEFAULT_NUCLEOSOME_FILE = (
+    "Data_exploration/results/densities/nucleosome_new/"
+    "combined_All_Boolean_True/ALL_combined_Boolean_True_nucleosome_density.csv"
+)
+DEFAULT_CENTROMERE_FILE = (
+    "Data_exploration/results/densities/centromere/"
+    "combined_All_Boolean_True_bin_10000_absolute/"
+    "ALL_combined_centromere_density_Boolean_True_bin_10000_absolute.csv"
+)
 
 def sample_NB(mu, theta, size):
     """Sample from a Negative Binomial distribution parameterized by mean (mu) and dispersion (theta)."""
@@ -267,12 +280,183 @@ def plot_random_segments(counts, distances, centromere_distances, num_segments=5
         
     print(f"Saved {num_segments} random segment plots to {save_dir}")
 
-if __name__ == "__main__":
+
+def generate_synthetic_samples(
+    number_of_samples=10,
+    output_folder=DEFAULT_OUTPUT_FOLDER,
+    total_size=500000,
+    mu_mean=4.4,
+    mu_std=6.3,
+    theta=0.52,
+    length_range=(40, 1000),
+    baseline_pi=0.6,
+    baseline_centromere_density=0.038,
+    baseline_nucleosome_density=0.179,
+    nucleosome_file=DEFAULT_NUCLEOSOME_FILE,
+    centromere_file=DEFAULT_CENTROMERE_FILE,
+    plot=True,
+    plot_random=False,
+    save_intermediate_files=True,
+):
+    """Generate numbered synthetic SATAY datasets."""
+    os.makedirs(output_folder, exist_ok=True)
+
+    for i in range(number_of_samples):
+        sample_dir = os.path.join(output_folder, str(i + 1))
+        os.makedirs(sample_dir, exist_ok=True)
+
+        print(f"Creating new synthetic data {i + 1}...")
+
+        counts, region_boundaries, means = generate_NB_sample(
+            mu_mean, mu_std, theta, size=total_size, length_range=length_range
+        )
+        print(f"Generated {len(counts)} counts with mean={mu_mean}, std={mu_std}, theta={theta}")
+
+        positions = np.arange(len(counts))
+        new_total_size = len(counts)
+
+        if save_intermediate_files:
+            output_path = os.path.join(sample_dir, "SATAY_without_pi.csv")
+            df = pd.DataFrame({"Position": positions, "Value": counts})
+            df.to_csv(output_path, index=False)
+
+            params_df = pd.DataFrame({
+                "region_start": region_boundaries[:-1],
+                "region_end": region_boundaries[1:],
+                "region_mean": means
+            })
+            params_df.to_csv(os.path.join(sample_dir, "SATAY_without_pi_params.csv"), index=False)
+
+        nucl_mean = 166.95
+        nucl_std = 33.77
+        distances = create_nucleosomes_distances(nucl_mean, nucl_std, new_total_size)
+
+        if save_intermediate_files:
+            pd.DataFrame({"Distance": distances}).to_csv(
+                os.path.join(sample_dir, "nucleosome_distances.csv"),
+                index=False,
+            )
+
+        middle_position = new_total_size // 2
+        centromere_distances = [abs(pos - middle_position) for pos in range(new_total_size)]
+
+        if save_intermediate_files:
+            pd.DataFrame({"Distance": centromere_distances}).to_csv(
+                os.path.join(sample_dir, "centromere_distances.csv"),
+                index=False,
+            )
+
+        print("Generating pi values...")
+        pi_df = genereate_pi_values(
+            baseline_pi=baseline_pi,
+            baseline_centromere_density=baseline_centromere_density,
+            baseline_nucleosome_density=baseline_nucleosome_density,
+            centromere_distances=centromere_distances,
+            nucleosome_distances=distances,
+            nucleosome_file=nucleosome_file,
+            centromere_file=centromere_file
+        )
+
+        output_path = os.path.join(sample_dir, "pi_values.csv")
+        pi_df.to_csv(output_path, index=False)
+        print(f"Pi values saved to {output_path}")
+        print(
+            f"Pi value statistics: mean={pi_df['pi_value'].mean():.4f}, "
+            f"std={pi_df['pi_value'].std():.4f}, min={pi_df['pi_value'].min():.4f}, "
+            f"max={pi_df['pi_value'].max():.4f}"
+        )
+
+        final_counts = apply_pi_to_counts(counts, pi_df['pi_value'].values)
+        output_path = os.path.join(sample_dir, "SATAY_with_pi.csv")
+        final_df = pd.DataFrame({
+            "Position": np.arange(len(final_counts)),
+            "Value": final_counts,
+            "Centromere_distance": centromere_distances,
+            "Nucleosome_distance": distances,
+        })
+        final_df.to_csv(output_path, index=False)
+        print(f"Final counts with pi applied saved to {output_path}")
+
+        if plot:
+            plot_density_vs_distance(
+                file_path=os.path.join(sample_dir, "density_vs_distance.png"),
+                counts=final_counts,
+                centromere_distances=centromere_distances,
+                nucleosome_distances=distances,
+                bin_size=10000
+            )
+
+        if plot_random:
+            plot_random_segments(
+                counts=final_counts,
+                distances=distances,
+                centromere_distances=centromere_distances,
+                num_segments=5,
+                segment_size=2000,
+                save_dir=f"{sample_dir}/"
+            )
+
+
+def str_to_bool(value):
+    """Parse flexible CLI booleans."""
+    if isinstance(value, bool):
+        return value
+
+    value = value.lower()
+    if value in ("true", "t", "1", "yes", "y"):
+        return True
+    if value in ("false", "f", "0", "no", "n"):
+        return False
+
+    raise argparse.ArgumentTypeError("Boolean value expected.")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate synthetic SATAY datasets.")
+    parser.add_argument("--output_folder", type=str, default=DEFAULT_OUTPUT_FOLDER,
+                        help="Folder for generated numbered synthetic datasets.")
+    parser.add_argument("--number_of_samples", type=int, default=10,
+                        help="Number of synthetic datasets to generate.")
+    parser.add_argument("--total_size", type=int, default=500000,
+                        help="Target number of positions per synthetic dataset.")
+    parser.add_argument("--mu_mean", type=float, default=4.4,
+                        help="Mean of region-level negative-binomial means.")
+    parser.add_argument("--mu_std", type=float, default=6.3,
+                        help="Standard deviation of region-level negative-binomial means.")
+    parser.add_argument("--theta", type=float, default=0.52,
+                        help="Negative-binomial dispersion parameter.")
+    parser.add_argument("--min_region_length", type=int, default=40,
+                        help="Minimum simulated region length.")
+    parser.add_argument("--max_region_length", type=int, default=1000,
+                        help="Maximum simulated region length.")
+    parser.add_argument("--baseline_pi", type=float, default=0.6,
+                        help="Baseline zero-inflation probability.")
+    parser.add_argument("--baseline_centromere_density", type=float, default=0.038,
+                        help="Baseline centromere non-zero density.")
+    parser.add_argument("--baseline_nucleosome_density", type=float, default=0.179,
+                        help="Baseline nucleosome non-zero density.")
+    parser.add_argument("--nucleosome_file", type=str, default=DEFAULT_NUCLEOSOME_FILE,
+                        help="Nucleosome density lookup CSV.")
+    parser.add_argument("--centromere_file", type=str, default=DEFAULT_CENTROMERE_FILE,
+                        help="Centromere density lookup CSV.")
+    parser.add_argument("--plot", type=str_to_bool, default=True,
+                        help="Whether to create density plots.")
+    parser.add_argument("--plot_random", type=str_to_bool, default=False,
+                        help="Whether to create random segment plots.")
+    parser.add_argument("--save_intermediate_files", type=str_to_bool, default=True,
+                        help="Whether to save counts before pi and distance files.")
+    parser.add_argument("--create_chromosome_files", action="store_true",
+                        help="Use the legacy mode that creates 16 chromosome files.")
+    return parser.parse_args()
+
+def legacy_main(create_chromosome_files_override=None):
     plot = True
     plot_random = False
     create_new = True
     save_intermediate_files = False  # Only save final chromosome files if False
     create_chromosome_files = False  # Generate 16 chromosome files
+    if create_chromosome_files_override is not None:
+        create_chromosome_files = create_chromosome_files_override
     file_path = "Data/SATAY_synthetic"
     number_of_samples = 10
     
@@ -493,3 +677,36 @@ if __name__ == "__main__":
                     segment_size=2000,
                     save_dir=f"{file_path}/"
                 )
+
+
+def main():
+    args = parse_args()
+
+    if args.max_region_length <= args.min_region_length:
+        raise ValueError("--max_region_length must be greater than --min_region_length")
+
+    if args.create_chromosome_files:
+        legacy_main(create_chromosome_files_override=True)
+        return
+
+    generate_synthetic_samples(
+        number_of_samples=args.number_of_samples,
+        output_folder=args.output_folder,
+        total_size=args.total_size,
+        mu_mean=args.mu_mean,
+        mu_std=args.mu_std,
+        theta=args.theta,
+        length_range=(args.min_region_length, args.max_region_length),
+        baseline_pi=args.baseline_pi,
+        baseline_centromere_density=args.baseline_centromere_density,
+        baseline_nucleosome_density=args.baseline_nucleosome_density,
+        nucleosome_file=args.nucleosome_file,
+        centromere_file=args.centromere_file,
+        plot=args.plot,
+        plot_random=args.plot_random,
+        save_intermediate_files=args.save_intermediate_files,
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -259,19 +259,19 @@ def main():
         "--threshold_start",
         type=float,
         default=5.0,
-        help="Minimum threshold. Default: 3.0",
+        help="Minimum threshold. Default: 5.0",
     )
     parser.add_argument(
         "--threshold_end",
         type=float,
         default=10.0,
-        help="Maximum threshold. Default: 15.0",
+        help="Maximum threshold. Default: 10.0",
     )
     parser.add_argument(
         "--threshold_step",
         type=float,
         default=0.5,
-        help="Threshold step size. Default: 1.0",
+        help="Threshold step size. Default: 0.5",
     )
     parser.add_argument(
         "--n_strain_workers",
@@ -279,14 +279,49 @@ def main():
         default=1,
         help="Number of strains to process in parallel. Default: 1 (sequential)",
     )
+    parser.add_argument(
+        "--strains_data",
+        type=Path,
+        default=PROJECT_ROOT / "Data" / "combined_strains",
+        help="Folder containing strain-level chromosome distance files.",
+    )
+    parser.add_argument(
+        "--centromere_base",
+        type=Path,
+        default=PROJECT_ROOT / "Data_exploration" / "results" / "densities" / "centromere_strains" / "combined_Datasets_Boolean_True_bin_10000_absolute",
+        help="Folder containing strain centromere density files.",
+    )
+    parser.add_argument(
+        "--nucleosome_base",
+        type=Path,
+        default=PROJECT_ROOT / "Data_exploration" / "results" / "densities" / "nucleosome_strains" / "combined_Datasets_Boolean_True",
+        help="Folder containing strain nucleosome density files.",
+    )
+    parser.add_argument(
+        "--output_base",
+        type=Path,
+        default=PROJECT_ROOT / "SATAY_CPD_results" / "CPD_SATAY_results",
+        help="Output folder for whole-genome SATAY CPD results.",
+    )
+    parser.add_argument(
+        "--cpd_script",
+        type=Path,
+        default=PROJECT_ROOT / "Signal_processing" / "CPD_on_SATAY" / "sliding_ZINB_CPD_v3_SATAY.py",
+        help="Path to the single-file CPD script.",
+    )
+    parser.add_argument("--window_size", type=int, default=100)
+    parser.add_argument("--overlap", type=float, default=0.5)
+    parser.add_argument("--theta_block_size", type=int, default=2000)
+    parser.add_argument("--n_workers", type=int, default=1)
+    parser.add_argument("--timeout_seconds", type=int, default=1800)
     args = parser.parse_args()
     
     # Paths
-    strains_data = PROJECT_ROOT / "Data" / "combined_strains"
-    centromere_base = PROJECT_ROOT / "Data_exploration" / "results" / "densities" / "centromere_strains" / "combined_Datasets_Boolean_True_bin_10000_absolute"
-    nucleosome_base = PROJECT_ROOT / "Data_exploration" / "results" / "densities" / "nucleosome_strains" / "combined_Datasets_Boolean_True"
-    output_base = PROJECT_ROOT / "SATAY_CPD_results" / "CPD_SATAY_results"
-    cpd_script = PROJECT_ROOT / "Signal_processing" / "CPD_on_SATAY" / "sliding_ZINB_CPD_v3_SATAY.py"
+    strains_data = args.strains_data
+    centromere_base = args.centromere_base
+    nucleosome_base = args.nucleosome_base
+    output_base = args.output_base
+    cpd_script = args.cpd_script
     
     if not cpd_script.exists():
         print(f"Error: CPD script not found at {cpd_script}")
@@ -297,15 +332,15 @@ def main():
         return
     
     # Parameters
-    window_sizes = [100]
-    overlap = 0.5
+    window_sizes = [args.window_size]
+    overlap = args.overlap
     threshold_start = args.threshold_start
     threshold_end = args.threshold_end
     threshold_step = args.threshold_step
     n_strain_workers = args.n_strain_workers
-    theta_block_size = 2000  # Local theta estimation in 2000bp blocks
-    n_workers = 1
-    timeout_seconds = 1800  # 30 minutes per chromosome
+    theta_block_size = args.theta_block_size
+    n_workers = args.n_workers
+    timeout_seconds = args.timeout_seconds
     
     print("=" * 80)
     print("Running sliding_ZINB_CPD_v3_SATAY.py on all strains")

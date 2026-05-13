@@ -6,18 +6,59 @@ Uses the combined density files created for each dataset.
 import os
 import sys
 import subprocess
+import argparse
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Run ZINB CPD v3 on centromere-window SATAY/test_CPD datasets."
+    )
+    parser.add_argument(
+        "--windows_base",
+        type=Path,
+        default=PROJECT_ROOT / "Data" / "test_CPD" / "centromere_windows",
+        help="Base folder containing extracted centromere windows.",
+    )
+    parser.add_argument(
+        "--test_cpd_base",
+        type=Path,
+        default=PROJECT_ROOT / "Data" / "test_CPD",
+        help="Base folder containing density files for each saturation dataset.",
+    )
+    parser.add_argument(
+        "--output_base",
+        type=Path,
+        default=PROJECT_ROOT / "Signal_processing" / "results_new" / "CPD_SATAY_v3_window",
+        help="Output folder for centromere-window CPD results.",
+    )
+    parser.add_argument(
+        "--cpd_script",
+        type=Path,
+        default=PROJECT_ROOT / "Signal_processing" / "CPD_on_SATAY" / "sliding_ZINB_CPD_v3_SATAY.py",
+        help="Path to the single-file CPD script.",
+    )
+    parser.add_argument("--window_size", type=int, default=100)
+    parser.add_argument("--overlap", type=float, default=0.5)
+    parser.add_argument("--threshold_start", type=float, default=0.0)
+    parser.add_argument("--threshold_end", type=float, default=20.0)
+    parser.add_argument("--threshold_step", type=float, default=1.0)
+    parser.add_argument("--n_workers", type=int, default=1)
+    parser.add_argument("--min_folder", type=int, default=0)
+    parser.add_argument("--max_folder", type=int, default=7)
+    parser.add_argument("--timeout_seconds", type=int, default=300)
+    return parser.parse_args()
+
+
 def main():
-    # Paths
-    windows_base = PROJECT_ROOT / "Data" / "test_CPD" / "centromere_windows"
-    test_cpd_base = PROJECT_ROOT / "Data" / "test_CPD"
-    output_base = PROJECT_ROOT / "Signal_processing" / "results_new" / "CPD_SATAY_v3_window"
-    cpd_script = PROJECT_ROOT / "Signal_processing" / "CPD_on_SATAY" /"sliding_ZINB_CPD_v3_SATAY.py"
+    args = parse_args()
+    windows_base = args.windows_base
+    test_cpd_base = args.test_cpd_base
+    output_base = args.output_base
+    cpd_script = args.cpd_script
     
     if not cpd_script.exists():
         print(f"Error: CPD script not found at {cpd_script}")
@@ -31,19 +72,17 @@ def main():
     print(f"Script:   {cpd_script}")
     print()
     
-    # Parameters
-    window_sizes = [100]
-    overlap = 0.5
-    threshold_start = 0.0
-    threshold_end = 20.0
-    threshold_step = 1.0
-    n_workers = 1
+    window_size = args.window_size
+    overlap = args.overlap
+    threshold_start = args.threshold_start
+    threshold_end = args.threshold_end
+    threshold_step = args.threshold_step
+    n_workers = args.n_workers
     
     total_processed = 0
     total_skipped = 0
     
-    # Process folders 0-7
-    for folder_num in range(0, 8):
+    for folder_num in range(args.min_folder, args.max_folder + 1):
         windows_folder = windows_base / str(folder_num)
         
         if not windows_folder.exists():
@@ -105,7 +144,7 @@ def main():
                     str(window_file),
                     "--output_folder", str(output_folder),
                     "--dataset_name", f"{chrom_name}_centromere_window",
-                    "--window_sizes", str(window_sizes[0]),
+                    "--window_sizes", str(window_size),
                     "--overlap", str(overlap),
                     "--threshold_start", str(threshold_start),
                     "--threshold_end", str(threshold_end),
@@ -122,7 +161,7 @@ def main():
                         capture_output=True,
                         text=True,
                         cwd=PROJECT_ROOT,
-                        timeout=300  # 5 minute timeout per chromosome
+                        timeout=args.timeout_seconds
                     )
                     
                     if result.returncode == 0:

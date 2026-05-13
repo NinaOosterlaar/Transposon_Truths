@@ -358,20 +358,57 @@ def plot_precision_recall_aggregated(agg_results_df, output_folder, dataset_name
     print(f"\nAll aggregated plots saved to {plots_folder}")
 
 
+def parse_int_list(value):
+    return [int(item.strip()) for item in value.split(",") if item.strip()]
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Evaluate CPD performance across different window sizes on synthetic SATAY datasets."
+    )
+    parser.add_argument("--base_folder", type=str, default="Data/SATAY_synthetic",
+                        help="Folder containing numbered synthetic datasets.")
+    parser.add_argument("--output_folder", type=str,
+                        default="Signal_processing/results_new/compare_window_performance",
+                        help="Folder where performance outputs are written.")
+    parser.add_argument("--window_sizes", type=parse_int_list,
+                        default=[10, 20, 30, 50, 80, 100, 150, 200],
+                        help="Comma-separated window sizes to evaluate.")
+    parser.add_argument("--overlap", type=float, default=0.5,
+                        help="Window overlap fraction.")
+    parser.add_argument("--threshold_min", type=float, default=0.0,
+                        help="Minimum threshold to evaluate.")
+    parser.add_argument("--threshold_max", type=float, default=40.0,
+                        help="Maximum threshold to evaluate.")
+    parser.add_argument("--threshold_step", type=float, default=1.0,
+                        help="Threshold step size.")
+    parser.add_argument("--dataset_start", type=int, default=1,
+                        help="First synthetic dataset id to process.")
+    parser.add_argument("--dataset_end", type=int, default=10,
+                        help="Last synthetic dataset id to process.")
+    parser.add_argument("--n_workers", type=int, default=None,
+                        help="Parallel workers per dataset. Default: CPU count minus 2.")
+    return parser.parse_args()
+
+
 
 def main():
     """Main execution function."""
-    # Configuration
-    base_folder = "Data/SATAY_synthetic"
-    output_folder = "Signal_processing/results_new/compare_window_performance"
+    args = parse_args()
+    base_folder = args.base_folder
+    output_folder = args.output_folder
+    window_sizes = args.window_sizes
+    overlap = args.overlap
+    thresholds = np.arange(
+        args.threshold_min,
+        args.threshold_max + 0.5 * args.threshold_step,
+        args.threshold_step,
+    )
+    dataset_ids = range(args.dataset_start, args.dataset_end + 1)
     
-    window_sizes = [10, 20, 30, 50, 80, 100, 150, 200]
-    overlap = 0.5
-    thresholds = np.linspace(0, 40, 41)
-    dataset_ids = range(1, 11)  # Datasets 1 through 10
-    
-    # Determine number of workers (leave some CPUs free for system)
-    n_workers = max(1, multiprocessing.cpu_count() - 2)
+    n_workers = args.n_workers
+    if n_workers is None:
+        n_workers = max(1, multiprocessing.cpu_count() - 2)
     
     print(f"Configuration:")
     print(f"  Window sizes: {window_sizes}")

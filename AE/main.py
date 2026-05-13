@@ -580,7 +580,9 @@ def main(
     mu_offset=MU_OFFSET,
     plot=PLOT,
     save_model=SAVE_MODEL,
-    model_save_dir=MODEL_SAVE_DIR):
+    model_save_dir=MODEL_SAVE_DIR,
+    save_reconstruction=True,
+    reconstruction_output_dir=None):
     """
     Main function that handles data preprocessing with explicit chromosome splits.
     
@@ -674,7 +676,8 @@ def main(
         evaluate_all_splits=evaluate_all_splits,
         save_model=save_model,
         model_save_dir=model_save_dir,
-        save_reconstruction=True,
+        save_reconstruction=save_reconstruction,
+        reconstruction_output_dir=reconstruction_output_dir,
     )
     
     # Return metrics (useful for Bayesian optimization or logging)
@@ -866,6 +869,18 @@ if __name__ == "__main__":
         default=MODEL_SAVE_DIR,
         help="Directory for saved models (default: %(default)s).",
     )
+    parser.add_argument(
+        "--save_reconstruction",
+        type=str_to_bool,
+        default=True,
+        help="Whether to save reconstructed eval outputs under Data/reconstruction (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--reconstruction_output_dir",
+        type=str,
+        default=None,
+        help="Optional explicit reconstruction output directory (default: Data/reconstruction/<run>).",
+    )
     args = parser.parse_args()
 
     main(
@@ -899,4 +914,6 @@ if __name__ == "__main__":
         plot=args.plot,
         save_model=args.save_model,
         model_save_dir=args.model_save_dir,
+        save_reconstruction=args.save_reconstruction,
+        reconstruction_output_dir=args.reconstruction_output_dir,
     )

@@ -1,5 +1,7 @@
 import os
 import sys
+import shutil
+import argparse
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -272,10 +274,86 @@ def process_chrom_csv_nucleosome(chrom_name, chrom_csv_path, temp_folder, nucleo
             f.write(f"{dist},{dens}\n")
 
 
-def main_reconstruction():
-    base_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "..", "Data", "reconstruction_cpd_test_all_chrom")
-    )
+def main_test_cpd(base_path="Data/test_CPD", levels=None, bin=10000, boolean=True, cleanup=True):
+    from Data_exploration.densities.densities import density_from_centromere, density_from_nucleosome
+
+    base_path = os.path.abspath(base_path)
+    if levels is None:
+        levels = [
+            name for name in sorted(os.listdir(base_path))
+            if os.path.isdir(os.path.join(base_path, name))
+            and name != "centromere_windows"
+            and not name.startswith("_")
+        ]
+
+    for folder_name in levels:
+        input_folder = os.path.join(base_path, str(folder_name))
+        if not os.path.isdir(input_folder):
+            print(f"Skipping missing folder: {input_folder}")
+            continue
+
+        temp_path = os.path.join(base_path, f"_temp_densities_{folder_name}")
+        os.makedirs(temp_path, exist_ok=True)
+
+        print(f"\n{'='*60}")
+        print(f"Generating density files for Data/test_CPD/{folder_name}")
+        print('='*60)
+
+        print(f"  - Centromere densities (bin={bin}, boolean={boolean})...")
+        density_from_centromere(
+            input_folder=input_folder,
+            output_folder=temp_path,
+            bin=bin,
+            max_distance_global=None,
+            min_distance_global=None,
+            boolean=boolean
+        )
+
+        print(f"  - Nucleosome densities (boolean={boolean})...")
+        density_from_nucleosome(
+            input_folder=input_folder,
+            output_folder=temp_path,
+            boolean=boolean
+        )
+
+        for root, dirs, files in os.walk(temp_path):
+            csv_files = [f for f in files if f.endswith(".csv")]
+            if not csv_files:
+                continue
+
+            rel_path = os.path.relpath(root, temp_path)
+            if rel_path == ".":
+                continue
+
+            path_parts = rel_path.split(os.sep)
+            if len(path_parts) < 2:
+                continue
+
+            dataset_name = path_parts[1]
+            target_folder = os.path.join(input_folder, dataset_name)
+
+            print(f"Processing {folder_name}/{dataset_name}...")
+
+            print("  - Combining centromere densities...")
+            centromere_df = combine_chromosome_centromere_files(root, target_folder, bin=bin)
+            if centromere_df is not None:
+                create_centromere_plot(target_folder, centromere_df, bin=bin)
+                print(f"    Saved to {target_folder}")
+
+            print("  - Combining nucleosome densities...")
+            nucleosome_df = combine_chromosome_nucleosome_files(root, target_folder)
+            if nucleosome_df is not None:
+                create_nucleosome_plot(target_folder, nucleosome_df)
+                print(f"    Saved to {target_folder}")
+
+        if cleanup:
+            shutil.rmtree(temp_path)
+
+    print("\nDone. Combined density files saved next to each dataset.")
+
+
+def main_reconstruction(base_path="Data/reconstruction_cpd_test_all_chrom", bin=10000):
+    base_path = os.path.abspath(base_path)
     temp_path = os.path.join(base_path, "_temp_densities")
 
     print("Loading nucleosome normalization data...")
@@ -319,9 +397,9 @@ def main_reconstruction():
                 )
 
             print(f"  - Combining centromere densities...")
-            centromere_df = combine_chromosome_centromere_files(temp_dataset_folder, output_folder, bin=10000)
+            centromere_df = combine_chromosome_centromere_files(temp_dataset_folder, output_folder, bin=bin)
             if centromere_df is not None:
-                create_centromere_plot(output_folder, centromere_df, bin=10000)
+                create_centromere_plot(output_folder, centromere_df, bin=bin)
                 print(f"    Saved to {output_folder}")
 
             print(f"  - Combining nucleosome densities...")
@@ -333,5 +411,67 @@ def main_reconstruction():
     print("\nDone. Combined files saved next to each metadata.json.")
 
 
+def parse_levels(value):
+    if value == "":
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def str_to_bool(value):
+    if isinstance(value, bool):
+        return value
+    value = value.lower()
+    if value in ("true", "t", "1", "yes", "y"):
+        return True
+    if value in ("false", "f", "0", "no", "n"):
+        return False
+    raise argparse.ArgumentTypeError("Boolean value expected.")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Generate centromere and nucleosome density files for CPD datasets."
+    )
+    parser.add_argument(
+        "mode",
+        nargs="?",
+        default="test_cpd",
+        choices=["test_cpd", "reconstruction"],
+        help="Input layout to process.",
+    )
+    parser.add_argument(
+        "--base_path",
+        type=str,
+        default=None,
+        help="Input base folder. Defaults to Data/test_CPD for test_cpd mode.",
+    )
+    parser.add_argument("--levels", type=parse_levels, default=None,
+                        help="Comma-separated saturation folders to process. Default: all folders.")
+    parser.add_argument("--bin", type=int, default=10000,
+                        help="Centromere distance bin size.")
+    parser.add_argument("--boolean", type=str_to_bool, default=True,
+                        help="Whether to convert counts to presence/absence before density calculation.")
+    parser.add_argument("--cleanup", type=str_to_bool, default=True,
+                        help="Whether to remove temporary per-chromosome density files.")
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    if args.mode == "reconstruction":
+        main_reconstruction(
+            base_path=args.base_path or "Data/reconstruction_cpd_test_all_chrom",
+            bin=args.bin,
+        )
+    else:
+        main_test_cpd(
+            base_path=args.base_path or "Data/test_CPD",
+            levels=args.levels,
+            bin=args.bin,
+            boolean=args.boolean,
+            cleanup=args.cleanup,
+        )
+
+
 if __name__ == "__main__":
-    main_reconstruction()
+    main()

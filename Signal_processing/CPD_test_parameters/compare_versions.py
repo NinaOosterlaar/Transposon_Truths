@@ -1,4 +1,5 @@
 from concurrent.futures import ProcessPoolExecutor, as_completed
+import argparse
 import os
 import sys
 from types import SimpleNamespace
@@ -326,9 +327,34 @@ def plot_precision_recall_with_std(agg_curve_df, output_path):
 	plt.close()
 
 
-def load_run_args():
-	"""Return run settings from the in-file RUN_CONFIG block."""
-	return SimpleNamespace(**RUN_CONFIG)
+def parse_args():
+	"""Parse command-line settings, preserving RUN_CONFIG defaults."""
+	parser = argparse.ArgumentParser(
+		description="Compare reference and informed ZINB CPD algorithm versions."
+	)
+	parser.add_argument("--base_folder", type=str, default=RUN_CONFIG["base_folder"],
+						help="Folder containing numbered synthetic datasets.")
+	parser.add_argument("--output_folder", type=str, default=RUN_CONFIG["output_folder"],
+						help="Folder where comparison outputs are written.")
+	parser.add_argument("--window_size", type=int, default=RUN_CONFIG["window_size"],
+						help="Window size used by all compared methods.")
+	parser.add_argument("--overlap", type=float, default=RUN_CONFIG["overlap"],
+						help="Window overlap fraction.")
+	parser.add_argument("--theta", type=float, default=RUN_CONFIG["theta"],
+						help="Fixed theta. Use 0 or negative to estimate theta per dataset.")
+	parser.add_argument("--threshold_min", type=float, default=RUN_CONFIG["threshold_min"],
+						help="Minimum threshold to evaluate.")
+	parser.add_argument("--threshold_max", type=float, default=RUN_CONFIG["threshold_max"],
+						help="Maximum threshold to evaluate.")
+	parser.add_argument("--threshold_step", type=float, default=RUN_CONFIG["threshold_step"],
+						help="Threshold step size.")
+	parser.add_argument("--dataset_start", type=int, default=RUN_CONFIG["dataset_start"],
+						help="First synthetic dataset id to process.")
+	parser.add_argument("--dataset_end", type=int, default=RUN_CONFIG["dataset_end"],
+						help="Last synthetic dataset id to process.")
+	parser.add_argument("--n_workers", type=int, default=RUN_CONFIG["n_workers"],
+						help="Parallel method workers.")
+	return parser.parse_args()
 
 
 def resolve_theta_for_dataset(data, requested_theta, eps=1e-10, theta_max=1000):
@@ -362,7 +388,7 @@ def resolve_worker_count(requested_workers, task_count):
 
 
 def main():
-	args = load_run_args()
+	args = parse_args()
 
 	os.makedirs(args.output_folder, exist_ok=True)
 

@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 import sys
+import argparse
 from scipy.stats import pearsonr, spearmanr, mannwhitneyu, ttest_ind
 
 # Add parent directory for imports
@@ -40,6 +41,36 @@ class Config:
     CHROMOSOMES = [f'Chr{x}' for x in ['I', 'II', 'III', 'IV', 'V', 'VI',
                                         'VII', 'VIII', 'IX', 'X', 'XI', 'XII',
                                         'XIII', 'XIV', 'XV', 'XVI']]
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Compare Kingma et al. gene-level fitness scores with CPD segment essentiality scores."
+    )
+    parser.add_argument("--strain_data_path", default=Config.STRAIN_DATA_PATH, help="Path to one strain's raw count data folder.")
+    parser.add_argument("--gene_db_path", default=Config.GENE_DB_PATH, help="Path to yeast gene annotation JSON.")
+    parser.add_argument("--segments_base_path", default=str(Config.SEGMENTS_BASE_PATH), help="Path to SATAY CPD result folders.")
+    parser.add_argument("--output_dir", default=str(Config.OUTPUT_DIR), help="Folder where plots and CSVs are written.")
+    parser.add_argument("--strain", default=Config.STRAIN, help="Strain name without the 'strain_' prefix.")
+    parser.add_argument("--threshold", type=float, default=Config.THRESHOLD, help="CPD threshold used in merged-segment filenames.")
+    parser.add_argument("--mu_z", type=float, default=Config.MU_Z, help="Merged-segment muZ threshold.")
+    parser.add_argument("--min_insertions", type=int, default=Config.MIN_INSERTIONS, help="Minimum insertions for Kingma fitness calculation.")
+    parser.add_argument("--chromosomes", nargs="+", default=Config.CHROMOSOMES, help="Chromosomes to include.")
+    return parser.parse_args()
+
+
+def config_from_args(args):
+    config = Config()
+    config.STRAIN_DATA_PATH = args.strain_data_path
+    config.GENE_DB_PATH = args.gene_db_path
+    config.SEGMENTS_BASE_PATH = Path(args.segments_base_path)
+    config.OUTPUT_DIR = Path(args.output_dir)
+    config.STRAIN = args.strain
+    config.THRESHOLD = args.threshold
+    config.MU_Z = args.mu_z
+    config.MIN_INSERTIONS = args.min_insertions
+    config.CHROMOSOMES = args.chromosomes
+    return config
 
 
 # ============================================================================
@@ -416,9 +447,9 @@ def save_results(gene_df, config):
 # MAIN EXECUTION
 # ============================================================================
 
-def main():
+def main(args=None):
     """Main execution function."""
-    config = Config()
+    config = config_from_args(parse_args() if args is None else args)
     
     print("COMPARING ESSENTIALITY SCORING METHODS")
     print("=" * 60)

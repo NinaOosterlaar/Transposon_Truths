@@ -9,6 +9,7 @@ import numpy as np
 import os
 import sys
 import pandas as pd
+import argparse
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))  # Add project root to path
 from Signal_processing.CPD_algorithms.sliding_other.sliding_mean_CPD import sliding_mean_CPD
@@ -142,41 +143,70 @@ def process_saturation_level(saturation_path, saturation_level, output_dir,
     print(f"  Total chromosomes processed: {total_processed}")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Apply Gaussian sliding mean CPD to AE reconstruction centromere windows."
+    )
+    parser.add_argument(
+        "--input_dir",
+        type=str,
+        default="Data/reconstruction_cpd_test_all_chrom/centromere_window",
+        help="Input directory containing reconstruction centromere-window saturation folders.",
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        default="Signal_processing/results_new/Gaussian_AE_CPD",
+        help="Output directory for Gaussian CPD results.",
+    )
+    parser.add_argument("--window_size", type=int, default=100)
+    parser.add_argument("--overlap", type=float, default=0.5)
+    parser.add_argument("--threshold_start", type=float, default=0.0)
+    parser.add_argument("--threshold_end", type=float, default=20.0)
+    parser.add_argument("--threshold_step", type=float, default=1.0)
+    parser.add_argument(
+        "--saturation_levels",
+        type=int,
+        nargs="+",
+        default=list(range(8)),
+        help="Saturation levels to process.",
+    )
+    return parser.parse_args()
+
+
 def main():
     """Main execution function."""
-    # Parameters
-    input_dir = "Data/reconstruction_cpd_test_all_chrom/centromere_window"
-    output_dir = "Signal_processing/results_new/Gaussian_AE_CPD"
-    window_size = 100
-    overlap = 0.5
-    threshold_start = 0.0
-    threshold_end = 20.0
-    threshold_step = 1.0
-    saturation_levels = list(range(8))
-    
-    # Create threshold array
+    args = parse_args()
+
+    if args.overlap < 0 or args.overlap >= 1:
+        raise ValueError("--overlap must be in [0, 1)")
+    if args.threshold_step <= 0:
+        raise ValueError("--threshold_step must be > 0")
+    if args.window_size <= 1:
+        raise ValueError("--window_size must be > 1")
+
     thresholds = np.arange(
-        threshold_start,
-        threshold_end + (threshold_step * 0.5),
-        threshold_step,
+        args.threshold_start,
+        args.threshold_end + (args.threshold_step * 0.5),
+        args.threshold_step,
         dtype=float
     )
     
     print("="*80)
     print("Gaussian Sliding Mean CPD on Reconstruction Data")
     print("="*80)
-    print(f"Input directory: {input_dir}")
-    print(f"Output directory: {output_dir}")
-    print(f"Window size: {window_size}")
-    print(f"Overlap: {overlap}")
-    print(f"Thresholds: {threshold_start} to {threshold_end} (step {threshold_step})")
-    print(f"Saturation levels: {saturation_levels}")
+    print(f"Input directory: {args.input_dir}")
+    print(f"Output directory: {args.output_dir}")
+    print(f"Window size: {args.window_size}")
+    print(f"Overlap: {args.overlap}")
+    print(f"Thresholds: {args.threshold_start} to {args.threshold_end} (step {args.threshold_step})")
+    print(f"Saturation levels: {args.saturation_levels}")
     print(f"Preprocessing: None (raw data)")
     print("="*80)
     
     # Process each saturation level
-    for saturation_level in saturation_levels:
-        saturation_path = os.path.join(input_dir, str(saturation_level))
+    for saturation_level in args.saturation_levels:
+        saturation_path = os.path.join(args.input_dir, str(saturation_level))
         
         if not os.path.exists(saturation_path):
             print(f"\nWarning: Saturation level {saturation_level} folder not found at {saturation_path}")
@@ -185,15 +215,15 @@ def main():
         process_saturation_level(
             saturation_path,
             saturation_level,
-            output_dir,
-            window_size,
-            overlap,
+            args.output_dir,
+            args.window_size,
+            args.overlap,
             thresholds
         )
     
     print("\n" + "="*80)
     print("Processing complete!")
-    print(f"Results saved to: {output_dir}")
+    print(f"Results saved to: {args.output_dir}")
     print("="*80)
 
 

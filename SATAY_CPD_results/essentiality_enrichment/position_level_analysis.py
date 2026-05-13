@@ -94,7 +94,7 @@ class PositionLevelAnalyzer:
             start: Start index (inclusive)
             end: End index (exclusive)
             chromosome: Chromosome name
-            score: mu_normalized for this segment
+            score: essentiality score for this segment
         
         Returns:
             Tuple of (positions array, classifications array)
@@ -116,22 +116,24 @@ class PositionLevelAnalyzer:
         Process:
         1. For each segment, expand to positions
         2. Classify each position
-        3. Bin by segment's mu_normalized
+        3. Bin by segment's essentiality score
         4. Aggregate position counts per bin per class
         
         Args:
-            segments_df: DataFrame with columns: start_index, end_index_exclusive, 
-                         mu_normalized, chromosome
+            segments_df: DataFrame with columns: start_index, end_index_exclusive,
+                         chromosome, and either mu_z_score or mu_normalized
             bin_edges: Custom bin edges (if None, auto-generate)
             n_bins: Number of bins (if bin_edges not provided)
         
         Returns:
             DataFrame with bin statistics
         """
+        score_column = self._get_score_column(segments_df)
+
         # Determine bin edges
         if bin_edges is None:
-            min_score = segments_df['mu_normalized'].min()
-            max_score = segments_df['mu_normalized'].max()
+            min_score = segments_df[score_column].min()
+            max_score = segments_df[score_column].max()
             bin_edges = np.linspace(min_score, max_score, n_bins + 1)
         
         # Initialize counters: bin_idx -> class -> count
@@ -140,7 +142,7 @@ class PositionLevelAnalyzer:
         # Process each segment
         for idx, row in segments_df.iterrows():
             
-            score = row['mu_normalized']
+            score = row[score_column]
             chromosome = row['chromosome']
             start = int(row['start_index'])
             end = int(row['end_index_exclusive'])
@@ -215,6 +217,18 @@ class PositionLevelAnalyzer:
             df[f'{cls}_log2_enrichment'] = np.log2(df[f'{cls}_enrichment'].replace(0, np.nan))
         
         return df
+
+    @staticmethod
+    def _get_score_column(segments_df: pd.DataFrame) -> str:
+        """Return the segment score column used by current or legacy outputs."""
+        for column in ("mu_z_score", "mu_normalized"):
+            if column in segments_df.columns:
+                return column
+
+        raise ValueError(
+            "Segment data must contain either 'mu_z_score' or 'mu_normalized'. "
+            f"Available columns: {', '.join(segments_df.columns)}"
+        )
     
     def analyze_strain(
         self,

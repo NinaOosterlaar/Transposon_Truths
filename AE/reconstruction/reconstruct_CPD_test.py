@@ -11,7 +11,7 @@ import glob
 from datetime import datetime
 import argparse
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from AE.preprocessing.preprocessing import preprocess_with_split
 from AE.architectures.ZINBAE import ZINBAE
 from AE.training.training_utils import dataloader_from_array, ChromosomeEmbedding
@@ -21,6 +21,10 @@ from AE.reconstruction.reconstruct_output import OutputReconstructor
 # For models trained on all chromosomes, we use all chromosomes as "train" for scaler fitting
 ALL_CHROM = ['ChrI', 'ChrII', 'ChrIII', 'ChrIV', 'ChrV', 'ChrVI', 'ChrVII', 'ChrVIII', 
              'ChrIX', 'ChrX', 'ChrXI', 'ChrXII', 'ChrXIII', 'ChrXIV', 'ChrXV', 'ChrXVI']
+
+
+def parse_features(value):
+    return [feature.strip() for feature in value.split(",") if feature.strip()]
 
 
 def find_latest_model(model_dir, pattern="ZINBAE_*.pt"):
@@ -204,13 +208,25 @@ def reconstruct_test_cpd(
     print(f"Output saved to: {output_base_dir}")
 
 
-if __name__ == "__main__":
+def parse_args():
     parser = argparse.ArgumentParser(description="Reconstruct test_CPD data using trained model")
     parser.add_argument(
         "--model_path",
         type=str,
-        default="AE/results/models/ZINBAE_layers1600_ep144_noise0.150_muoff0.000_all.pt",
-        help="Path to trained model. If not provided, will use most recent model."
+        default=None,
+        help="Path to trained model. If omitted, the newest matching model in --model_dir is used."
+    )
+    parser.add_argument(
+        "--model_dir",
+        type=str,
+        default="AE/results/models",
+        help="Directory to search when --model_path is omitted."
+    )
+    parser.add_argument(
+        "--model_pattern",
+        type=str,
+        default="ZINBAE*.pt",
+        help="Glob pattern for selecting the latest model when --model_path is omitted."
     )
     parser.add_argument(
         "--test_cpd_folder",
@@ -225,6 +241,36 @@ if __name__ == "__main__":
         help="Output directory for reconstructions"
     )
     parser.add_argument(
+        "--features",
+        type=parse_features,
+        default=['Centr'],
+        help="Comma-separated features matching the trained model preprocessing."
+    )
+    parser.add_argument(
+        "--bin_size",
+        type=int,
+        default=19,
+        help="Bin size matching the trained model preprocessing."
+    )
+    parser.add_argument(
+        "--moving_average",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Whether moving-average preprocessing was used."
+    )
+    parser.add_argument(
+        "--data_point_length",
+        type=int,
+        default=2000,
+        help="Window length matching the trained model preprocessing."
+    )
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=128,
+        help="Batch size for reconstruction inference."
+    )
+    parser.add_argument(
         "--noise_level",
         type=float,
         default=0.15,
@@ -236,26 +282,63 @@ if __name__ == "__main__":
         default=900,
         help="Step size for sliding window (default: 900 = 0.45 * 2000)"
     )
+    parser.add_argument(
+        "--pi_threshold",
+        type=float,
+        default=0.7,
+        help="Zero-inflation probability threshold."
+    )
+    parser.add_argument(
+        "--masked_recon_weight",
+        type=float,
+        default=0.008,
+        help="Masked reconstruction loss weight used for metrics."
+    )
+    parser.add_argument(
+        "--regularizer",
+        type=str,
+        choices=["none", "l1", "l2"],
+        default="none",
+        help="Regularizer used for metrics."
+    )
+    parser.add_argument(
+        "--regularization_weight",
+        type=float,
+        default=1e-5,
+        help="Regularization weight used for metrics."
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
     
-    args = parser.parse_args()
-    
-    # Find model if not specified
     model_path = args.model_path
+    if model_path is None:
+        model_path = find_latest_model(args.model_dir, args.model_pattern)
+        if model_path is None:
+            raise FileNotFoundError(
+                f"No model found in {args.model_dir} matching {args.model_pattern}"
+            )
+        print(f"Using latest model: {model_path}")
     
-    # Run reconstruction with configuration matching training
     reconstruct_test_cpd(
         model_path=model_path,
         test_cpd_folder=args.test_cpd_folder,
         output_base_dir=args.output_dir,
-        features=['Centr'],
-        bin_size=19,
-        moving_average=True,
-        data_point_length=2000,
+        features=args.features,
+        bin_size=args.bin_size,
+        moving_average=args.moving_average,
+        data_point_length=args.data_point_length,
         step_size=args.step_size,
-        batch_size=128,
+        batch_size=args.batch_size,
         noise_level=args.noise_level,
-        pi_threshold=0.7,
-        masked_recon_weight=0.008,
-        regularizer='none',
-        regularization_weight=1e-5,
+        pi_threshold=args.pi_threshold,
+        masked_recon_weight=args.masked_recon_weight,
+        regularizer=args.regularizer,
+        regularization_weight=args.regularization_weight,
     )
+
+
+if __name__ == "__main__":
+    main()
